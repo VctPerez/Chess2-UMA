@@ -1,4 +1,5 @@
 ## Archivos Basura de Visual Paradigm
 
-*.bak
+*.lck
+*.vpp.*
 *.vux
