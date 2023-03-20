@@ -6,34 +6,34 @@ import com.badlogic.gdx.math.Vector2;
 public interface Button {
     /**
      * Se encarga de cambiar el tamaño del boton
-     * @param width
-     * @param height
+     * @param width Anchura.
+     * @param height Altura.
      */
     void resize(float width, float height);
 
     /**
      * Se encarga de establecer una nueva posicion para el boton
-     * @param x
-     * @param y
+     * @param x Coord x.
+     * @param y Coord y.
      */
     void setPosition(float x, float y);
 
     /**
      * Dibuja el boton a partir del batch de entrada.
-     * @param batch
+     * @param batch batch que renderiza los botones.
      */
     void draw(SpriteBatch batch);
 
     /**
      * Comprueba si se hace click en el boton, o si se presiona
-     * @param input
+     * @param input procesador de entradas (mouse y  teclado).
      */
     void checkPress(IOS input);
 
     /**
      * Establece el boton en la pantalla, es decir, lanza a la vez el checkpress y el draw.
-     * @param inputs
-     * @param batch
+     * @param inputs procesador de entradas (mouse y  teclado).
+     * @param batch batch que renderiza los botones.
      */
     void establish(IOS inputs, SpriteBatch batch);
 

@@ -3,9 +3,11 @@ package utils;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 
+/**
+ * Esta clase se encarga de la entrada por teclado, y del ratón.
+ */
 public class IOS implements InputProcessor {
-
-    public int mouseX, mouseY;
+    public int mouseX, mouseY; // posiciones "x" e "y" del mouse.
 
     @Override
     public boolean keyDown(int keycode) {
@@ -22,6 +24,10 @@ public class IOS implements InputProcessor {
         return false;
     }
 
+    /**
+     * Este metodo es lanzado cada vez que se hace click en pantalla.
+     * @return True | False.
+     */
     public boolean isClicked(){
         return Gdx.input.isTouched();
     }
