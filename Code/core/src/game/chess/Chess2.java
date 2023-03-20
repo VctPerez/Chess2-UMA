@@ -10,13 +10,13 @@ import utils.Render;
 
 public class Chess2 extends Game {
 	Texture img;
-	private PantallaJuego pantalla;
+	private GameScreen pantalla;
 	@Override
 	public void create () {
 		Render.Batch = new SpriteBatch();
 		Render.camara = new OrthographicCamera();
 		Render.app = this;
-		pantalla = new PantallaJuego(this);
+		pantalla = new GameScreen(this);
 		this.setScreen(pantalla);
 		
 	}

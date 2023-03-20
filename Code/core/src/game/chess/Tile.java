@@ -6,12 +6,12 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
-public class Casilla extends Actor{
+public class Tile extends Actor{
 	protected ShapeRenderer sprite;
 	
-	public Pieza piece;
+	public Piece piece;
 	
-	public Casilla(float x, float y, float tileSize, int color) {
+	public Tile(float x, float y, float tileSize, int color) {
 		
 		sprite = new ShapeRenderer();
 		setPosition(x,y);
@@ -42,7 +42,7 @@ public class Casilla extends Actor{
 	}
 	
 	public void move(int x, int y) {
-		PantallaJuego.board.getTile(x, y).piece = this.piece;
+		GameScreen.board.getTile(x, y).piece = this.piece;
 		this.piece = null;
 	}
 	

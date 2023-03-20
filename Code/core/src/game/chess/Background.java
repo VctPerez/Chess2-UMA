@@ -6,10 +6,10 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
-public class Fondo extends Actor{
+public class Background extends Actor{
 	private ShapeRenderer fondo;
 	
-	public Fondo() {
+	public Background() {
 		fondo = new ShapeRenderer();
 	}
 	

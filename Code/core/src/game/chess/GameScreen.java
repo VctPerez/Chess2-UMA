@@ -7,25 +7,25 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.*;
 
-public class PantallaJuego implements Screen{
+public class GameScreen implements Screen{
 	protected Chess2 game;
 	private Stage stage;
-	private Fondo fondo;
-	public static Tablero board;
+	private Background fondo;
+	public static Board board;
 	
 	int x = 2, y = 2;
 
-	public PantallaJuego(Chess2 game) {
+	public GameScreen(Chess2 game) {
 		this.game = game;
 		stage = new Stage(new FitViewport(1280, 720));
 		//Gdx.input.setInputProcessor(stage);
 		
-		board = new Tablero();
-		fondo = new Fondo();
+		board = new Board();
+		fondo = new Background();
 		fondo.setSize(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
 
 		
-		board.getTile(x, y).piece = new Pieza();
+		board.getTile(x, y).piece = new Piece();
 		
 		stage.addActor(fondo);
 		stage.addActor(board);
