@@ -97,16 +97,16 @@ nb-configuration.xml
 
 ## Gradle
 
-/local.properties
-.gradle/
-gradle/
-gradle-app.setting
-/build/
-/android/build/
-/core/build/
-/desktop/build/
-/html/build/
-/ios/build/
+Code/local.properties
+Code/.gradle/
+Code/gradle/
+Code/gradle-app.setting
+Code/build/
+Code/android/build/
+Code/core/build/
+Code/desktop/build/
+Code/html/build/
+Code/ios/build/
 
 ## OS Specific
 .DS_Store
@@ -129,3 +129,4 @@ gradlew
 
 *.bin
 *.MF
+*.jar
