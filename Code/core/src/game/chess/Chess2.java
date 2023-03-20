@@ -13,6 +13,7 @@ public class Chess2 extends ApplicationAdapter {
 	public void create () {
 		batch = new SpriteBatch();
 		img = new Texture("badlogic.jpg");
+		System.out.println("ASDASDASD");
 	}
 
 	@Override
