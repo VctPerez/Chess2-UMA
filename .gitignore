@@ -127,3 +127,5 @@ settings.gradle
 gradle.properties
 gradlew
 
+*.bin
+*.MF
