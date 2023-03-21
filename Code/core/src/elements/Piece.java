@@ -11,7 +11,7 @@ public class Piece extends Actor{
 	
 	public Piece() {
 		sprite = new Sprite(new Texture("Piece2.png"));
-		System.out.println("ADASD");
+		System.out.println("B");
 	}
 	
 	@Override
