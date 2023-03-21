@@ -1,11 +1,9 @@
 package game.chess;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.ScreenUtils;
 import utils.Render;
 
 public class Chess2 extends Game {
@@ -31,3 +29,4 @@ public class Chess2 extends Game {
 
 	}
 }
+ 
