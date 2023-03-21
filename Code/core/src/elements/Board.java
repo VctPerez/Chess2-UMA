@@ -26,7 +26,7 @@ public class Board extends Actor{
 		
 	}
 	/**
-	 * Devuelve la casilla en las posicion [x][y] del tablero
+	 * Devuelve la casilla en las posicion [x][y] del tablero ([x-1][y-1] en la matriz de casillas)
 	 * @param x
 	 * @param y
 	 * @return
