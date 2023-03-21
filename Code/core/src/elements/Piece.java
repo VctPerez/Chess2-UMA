@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public class Piece extends Actor{
 	private Sprite sprite;
+	//Soy david
 	
 	public Piece() {
 		sprite = new Sprite(new Texture("Piece2.png"));
