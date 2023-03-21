@@ -16,13 +16,16 @@ import elements.pieces.Pawn;
 import utils.IOS;
 import utils.Render;
 
+import javax.print.attribute.standard.RequestingUserName;
+
+import static utils.Render.app;
+
 public class GameScreen extends ScreenAdapter{
 	private Stage stage;
 	public static Board board;
 	
 	int x = 2, y = 2;
 	IOS inputs = new IOS();
-	
 	@Override
 	public void show() {
 		stage = new Stage(new FitViewport(1280, 720));
@@ -38,7 +41,6 @@ public class GameScreen extends ScreenAdapter{
 
 		stage.addActor(fondo);
 		stage.addActor(board);
-
 	}
 
 	@Override
@@ -71,7 +73,6 @@ public class GameScreen extends ScreenAdapter{
 		Render.SCREEN_HEIGHT = height;
 		Render.SCREEN_WIDTH = width;
 		stage.getViewport().update(width, height);
-
 	}
 
 	@Override
