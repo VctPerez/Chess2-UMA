@@ -11,11 +11,10 @@ public class Piece extends Actor{
 	
 	public Piece() {
 		sprite = new Sprite(new Texture("Piece2.png"));
-<<<<<<< HEAD
+
 		System.out.println("B");
-=======
+
 		System.out.println("A");
->>>>>>> c4a22f3a9fd1fc276ecaf9addced783adf805c99
 	}
 	
 	@Override
