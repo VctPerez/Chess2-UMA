@@ -1,10 +1,12 @@
-package game.chess;
+package elements;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+
+import game.chess.GameScreen;
 
 public class Tile extends Actor{
 	protected ShapeRenderer sprite;

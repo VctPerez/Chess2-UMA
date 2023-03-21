@@ -7,6 +7,10 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.*;
 
+import elements.Background;
+import elements.Board;
+import elements.Piece;
+
 public class GameScreen implements Screen{
 	protected Chess2 game;
 	private Stage stage;

@@ -1,4 +1,4 @@
-package game.chess;
+package elements;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
