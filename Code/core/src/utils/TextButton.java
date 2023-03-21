@@ -34,12 +34,13 @@ public class TextButton implements Button {
 
     @Override
     public void checkPress(IOS input) {
+        //System.out.println(input.mouseX + " " + input.mouseY);
         if( input.mouseX >= text.getX() && input.mouseX <= text.getX() + text.getWidth() && input.mouseY <= text.getY()
                 && input.mouseY >= text.getY() - text.getHeight()){
-            //TODO
+            text.setColor(Color.YELLOW);
             if(input.isClicked()) isSelected = true;
         }else{
-            //TODO
+            text.setColor(Color.WHITE);
             isSelected = false;
         }
     }

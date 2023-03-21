@@ -6,16 +6,16 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import utils.Render;
 
+import java.awt.*;
+
 public class Chess2 extends Game {
-	Texture img;
-	private GameScreen pantalla;
 	@Override
 	public void create () {
 		Render.Batch = new SpriteBatch();
 		Render.camara = new OrthographicCamera();
 		Render.app = this;
 
-		this.setScreen(new GameScreen());
+		this.setScreen(new MenuEjemplo());
 		
 	}
 
