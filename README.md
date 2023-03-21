@@ -20,5 +20,5 @@ Proyecto de Introducción a la Ingeniería del Software.
 -   José Ángel Bueno Ruiz
 
 
-![Logo](https://i.imgur.com/fiNfJgw.png)
+![Logo](https://i.imgur.com/ZqeEfQR.png)
 
