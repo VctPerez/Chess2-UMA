@@ -9,6 +9,9 @@ import com.badlogic.gdx.InputProcessor;
 public class IOS implements InputProcessor {
     public int mouseX, mouseY; // posiciones "x" e "y" del mouse.
 
+    public boolean justPressed(int keycode){
+        return Gdx.input.isKeyJustPressed(keycode);
+    }
     @Override
     public boolean keyDown(int keycode) {
         return Gdx.input.isKeyPressed(keycode);
@@ -51,7 +54,7 @@ public class IOS implements InputProcessor {
     public boolean mouseMoved(int screenX, int screenY) {
         mouseX = screenX;
         if(Gdx.graphics.isFullscreen())mouseY = Gdx.graphics.getHeight() - screenY;
-        else mouseY = Render.PANTALLA_ALTURA - screenY;
+        else mouseY = Render.SCREEN_HEIGHT - screenY;
         return false;
     }
 

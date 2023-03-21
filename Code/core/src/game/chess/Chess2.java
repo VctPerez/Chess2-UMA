@@ -14,8 +14,8 @@ public class Chess2 extends Game {
 		Render.Batch = new SpriteBatch();
 		Render.camara = new OrthographicCamera();
 		Render.app = this;
-		pantalla = new GameScreen(this);
-		this.setScreen(pantalla);
+
+		this.setScreen(new GameScreen());
 		
 	}
 

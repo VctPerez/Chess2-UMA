@@ -21,8 +21,8 @@ public class Render {
 
     public static Chess2 app;
 
-    public static int PANTALLA_ANCHO = 1920;
-    public static int PANTALLA_ALTURA = 1080;
+    public static int SCREEN_WIDTH = 1920;
+    public static int SCREEN_HEIGHT = 1080;
 
     /**
      * Este metodo se encarga de limpiar la pantalla al principio de cada Render.
