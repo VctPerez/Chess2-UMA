@@ -9,13 +9,13 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import game.chess.GameScreen;
 
 public class Tile extends Actor{
-	protected ShapeRenderer sprite;
+	protected ShapeRenderer tile;
 	
 	public Piece piece;
 	
 	public Tile(float x, float y, float tileSize, int color) {
 		
-		sprite = new ShapeRenderer();
+		tile = new ShapeRenderer();
 		setPosition(x,y);
 		setSize(tileSize,tileSize);
 		if(color == 1) {
@@ -30,10 +30,10 @@ public class Tile extends Actor{
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		batch.end();
-		sprite.begin(ShapeType.Filled);
-		sprite.rect(getX(), getY(), getWidth(), getHeight());
-		sprite.setColor(getColor());
-		sprite.end();
+		tile.begin(ShapeType.Filled);
+		tile.rect(getX(), getY(), getWidth(), getHeight());
+		tile.setColor(getColor());
+		tile.end();
 		batch.begin();
 		
 		if(piece != null) {
@@ -49,7 +49,7 @@ public class Tile extends Actor{
 	}
 	
 	public void dispose() {
-		sprite.dispose();
+		tile.dispose();
 		//piece.dispose();
 	}
 	
