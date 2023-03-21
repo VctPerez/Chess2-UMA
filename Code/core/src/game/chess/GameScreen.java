@@ -11,6 +11,8 @@ import com.badlogic.gdx.utils.viewport.*;
 import elements.Background;
 import elements.Board;
 import elements.Piece;
+import elements.pieces.Knight;
+import elements.pieces.Pawn;
 
 public class GameScreen extends ScreenAdapter{
 	protected Chess2 game;
@@ -30,7 +32,8 @@ public class GameScreen extends ScreenAdapter{
 		fondo.setSize(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
 
 		
-		board.getTile(x, y).piece = new Piece();
+		board.getTile(x, y).piece = new Pawn();
+		board.getTile(7, 5).piece = new Knight();
 		
 		stage.addActor(fondo);
 		stage.addActor(board);

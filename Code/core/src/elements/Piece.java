@@ -1,15 +1,18 @@
 package elements;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import utils.Image;
 
-public class Piece extends Actor{
-	private Sprite sprite;
+
+public abstract class Piece extends Actor{
+	protected String path;
+	protected Image sprite;
+	protected Boolean color;
+	protected Vector2 Movement;
 	
 	public Piece() {
-		sprite = new Sprite(new Texture("Piece2.png"));
 	}
 	
 	@Override

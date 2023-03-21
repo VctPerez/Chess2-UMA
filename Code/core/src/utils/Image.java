@@ -1,6 +1,7 @@
 package utils;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class Image {
@@ -22,8 +23,8 @@ public class Image {
     /**
      * Dibuja la imagen
      */
-    public void draw(){
-        sprt.draw(Render.Batch);
+    public void draw(Batch batch){
+        sprt.draw(batch);
     }
 
     /**
@@ -80,6 +81,10 @@ public class Image {
      */
     public void setPosition(float x, float y){
         sprt.setPosition(x,y);
+    }
+    
+    public void setScale(float x) {
+    	sprt.setScale(x);
     }
 }
 

@@ -9,4 +9,6 @@ public class Resources {
     public static final String MENU_BACKGROUND_PATH = "";
     public static final String FONT_MENU_PATH = "";
     public static final String TEXT_BOX_PATH = "";
+    public static final String PAWN_PATH = "Piece2.png";
+    public static final String KNIGHT_PATH = "Piece.png";
 }
