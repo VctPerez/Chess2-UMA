@@ -29,3 +29,4 @@ public class Chess2 extends Game {
 
 	}
 }
+ 
