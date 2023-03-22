@@ -25,10 +25,31 @@ public class Pawn extends Piece{
 	public void draw(Batch batch, float parentAlpha) {
 		super.draw(batch, parentAlpha);
 	}
+
 	
+	/**
+	 * Cambia a false el booleano que indica si una pieza no se ha movido la primera vez que se mueva la pieza
+	 */
 	@Override
 	public void hasBeenMoved() {
 		hasBeenMoved = true;
+	}
+	
+	/**
+	 * Comprueba que las casillas a las que el peon pueda moverse estan dentro del tablero y si tienen alguna pieza dentro
+	 * @param board
+	 * @param x
+	 * @param y
+	 * @return
+	 */
+	private Boolean checkBoard(Board board, int i, float x, float y) {
+		Boolean res = false;
+		if(i!=0 && board.getTile(x, y)!=null && board.getTile(x, y).getPiece()!=null) {
+			res = true;
+		}else if(i==0 && board.getTile(x, y)!=null && board.getTile(x, y).getPiece()==null) {
+			res = true;
+		}
+		return res;
 	}
 	
 	/**
@@ -38,17 +59,20 @@ public class Pawn extends Piece{
 	 * @return
 	 */
 	@Override
-	public ArrayList<Vector2> getMovement(float x, float y) {//para implementar esta función en cada pieza habrá que hacerlo de forma 
+	public ArrayList<Vector2> getMovement(float x, float y) {//para implementar esta función en cada pieza habrá que hacerlo de forma diferente
 		ArrayList<Vector2> movements = new ArrayList<>();
 		Vector2 mov;
 		for(int i = -1; i<=1; i++) {
 			mov = new Vector2(x + i, y + 1);
-			if(i!=0 && GameScreen.board.getTile(mov.x, mov.y).piece!=null) {//implimentar un método que compruebe las condicones?
+			if(checkBoard(GameScreen.board, i, mov.x, mov.y)) {
 				movements.add(mov);
 			}
 		}
 		if(!hasBeenMoved) {
-			movements.add(new Vector2(x , y + 2));
+			mov = new Vector2(x , y + 2);
+			if(checkBoard(GameScreen.board, 0, mov.x, mov.y)) {
+				movements.add(mov);				
+			}
 		}
 		
 		return movements;
