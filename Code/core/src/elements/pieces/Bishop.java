@@ -23,8 +23,26 @@ public class Bishop extends Piece{
 		super.draw(batch, parentAlpha);
 	}
 	
-	public Boolean checkBoard(Board board, float x, float y) {
-		return true;
+	private Boolean sameColor(Piece piece) {
+		return color==piece.color();
+	}
+	
+	private Boolean checkBoard(Board board, float x, float y, Boolean validDirection) {
+		Boolean res = true;
+		
+		if(board.getTile(x, y)==null) {
+			res = false;
+			validDirection = false;
+		}else {
+			if(board.getTile(x, y).getPiece()!=null && sameColor(board.getTile(x, y).getPiece())) {
+				res = false;
+				validDirection = false;
+			}else if(board.getTile(x, y).getPiece()!=null && !sameColor(board.getTile(x, y).getPiece())) {
+				res = true;
+				validDirection = false;
+			}
+		}
+		return res;
 	}
 	
 	/**
@@ -48,10 +66,9 @@ public class Bishop extends Piece{
 		
 		while(validDirection && i<8) {
 			mov = new Vector2(x + i, y + i);
-			if(checkBoard(GameScreen.board, mov.x, mov.y)) {
+			if(checkBoard(GameScreen.board, mov.x, mov.y, validDirection)) {
 				movements.add(mov);
 			}
-			
 			i++;
 		}
 		

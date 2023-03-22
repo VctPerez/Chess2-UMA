@@ -24,6 +24,10 @@ public abstract class Piece extends Actor {
 		sprite.setScale(getScaleX());
 		sprite.draw(batch);
 	}
+	
+	public Boolean color() {
+		return color;
+	}
 
 	public void hasBeenMoved() {
 
