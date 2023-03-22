@@ -17,6 +17,7 @@ public class Tile extends Actor{
 	public Piece piece;
 	
 	public Tile(int matrix_x, int matrix_y, float coord_x, float coord_y, float tileSize, int color) {
+		
 		pos = new Vector2(matrix_x, matrix_y);
 		tile = new ShapeRenderer();
 		setPosition(coord_x, coord_y);
@@ -48,7 +49,7 @@ public class Tile extends Actor{
 	
 	public void move(int x, int y) {
 		if(piece!=null) {
-			ArrayList<Vector2> movements = piece.getMovement(pos.x, pos.y);
+			ArrayList<Vector2> movements = piece.getMovement(x, y);
 			System.out.println(movements.toString());
 		
 		}
@@ -56,12 +57,12 @@ public class Tile extends Actor{
 		this.piece = null;
 	}
 	
+	/**
+	 * Devuelve la pieza contenida en la casilla
+	 * @return
+	 */
 	public Piece getPiece() {
-		Piece res = null;
-		if(this!=null) {
-			res = piece;
-		}
-		return res;
+		return piece;
 	}
 	
 	public void dispose() {

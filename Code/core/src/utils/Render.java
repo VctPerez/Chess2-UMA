@@ -5,7 +5,11 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.Viewport;
+
+import game.chess.AbstractScreen;
 import game.chess.Chess2;
+import game.chess.GameScreen;
+import game.chess.MainScreen;
 
 /**
  * Esta clase principalmente es usada para declarar aquellas variables relacionadas con la ejecución
@@ -23,6 +27,9 @@ public class Render {
 
     public static int SCREEN_WIDTH = 1280;
     public static int SCREEN_HEIGHT = 720;
+    
+    public static AbstractScreen MAINSCREEN;
+	public static AbstractScreen GAMESCREEN;
 
     /**
      * Este metodo se encarga de limpiar la pantalla al principio de cada Render.

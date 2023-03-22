@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 
+import elements.Board;
 import elements.Piece;
+import game.chess.GameScreen;
 import utils.Image;
 import utils.Resources;
 
@@ -24,11 +26,12 @@ public class Knight extends Piece{
 		super.draw(batch, parentAlpha);
 	}
 	/**
-	 * Añade a movements todos los movimientos posibles del caballo
+	 * Aï¿½ade a movements todos los movimientos posibles del caballo
 	 * @param x
 	 * @param y
 	 * @return
 	 */
+	
 	@Override
 	public ArrayList<Vector2> getMovement(float x, float y) {
 		ArrayList<Vector2> movements = new ArrayList<>();
@@ -40,6 +43,24 @@ public class Knight extends Piece{
 		movements.add(new Vector2(x-2,y+1));
 		movements.add(new Vector2(x-2,y-1));
 		movements.add(new Vector2(x-1,y+2));
+		return getValidMovements(movements,GameScreen.board);
+	}
+	
+	private Boolean sameColor(Piece piece) {
+		boolean same=false;
+		if(piece!=null) {
+			same=color==piece.color();
+		}
+		return same;
+	}
+	
+	public ArrayList<Vector2> getValidMovements(ArrayList<Vector2> movements,Board board){
+		for(int i=0;i<movements.size();i++) {
+			if(board.getTile(movements.get(i).x, movements.get(i).y)==null 
+				|| sameColor(board.getTile(movements.get(i).x, movements.get(i).y).getPiece())) {
+				movements.remove(i);
+			}
+		}
 		return movements;
 	}
 	
