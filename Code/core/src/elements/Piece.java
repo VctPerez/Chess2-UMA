@@ -12,7 +12,7 @@ public abstract class Piece extends Actor {
 	protected Image sprite;
 	protected Boolean color;
 	protected Vector2 movement;
-	protected Boolean hasBeenMoved;
+	public Boolean hasBeenMoved;
 	protected Boolean selected;
 
 	public Piece() {
@@ -30,8 +30,8 @@ public abstract class Piece extends Actor {
 		return color;
 	}
 
-	public void hasBeenMoved() {
-
+	public void Moved() {
+		hasBeenMoved=true;
 	}
 	
 	//Para cambiar la imagen de la pieza según sea necesario

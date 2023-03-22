@@ -109,9 +109,10 @@ public class GameScreen extends AbstractScreen{
 				}
 
 				if(currentTile_validMovements.contains(new Vector2(next_x, next_y))) {
+					board.getTile(current_x, current_y).getPiece().Moved();
 					currentTile.move(next_x, next_y);
 				}
-					
+				
 				seleccionada=false;
 			}
 		}		

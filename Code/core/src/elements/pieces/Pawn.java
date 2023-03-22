@@ -81,7 +81,6 @@ public class Pawn extends Piece{
 			if(checkBoard(GameScreen.board, 0, mov.x, mov.y)) {
 				movements.add(mov);				
 			}
-			hasBeenMoved=true;
 		}
 		
 		return movements;
