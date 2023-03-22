@@ -15,7 +15,7 @@ public class Bishop extends Piece{
 	
 	public Bishop() {
 		this.path = Resources.BISHOP_PATH;
-		//this.color = ;
+		this.color = true;
 		this.sprite = new Image(path);
 	}
 	
@@ -77,7 +77,7 @@ public class Bishop extends Piece{
 		checkDirection(x, y, -1, -1, movements);
 		checkDirection(x, y, 1, -1, movements);
 		checkDirection(x, y, -1, 1, movements);
-		
+
 		return movements;
 	}
 	

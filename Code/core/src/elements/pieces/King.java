@@ -13,7 +13,7 @@ import utils.Resources;
 public class King extends Piece{
 	public King() {
 		this.path = Resources.KING_PATH;
-		//this.color = true;
+		this.color = true;
 		this.sprite = new Image(path);
 	}
 	
@@ -21,7 +21,7 @@ public class King extends Piece{
 		super.draw(batch, parentAlpha);
 	}
 	/**
-	 * Añade a movements todos los movimientos posibles del rey, en todas las direcciones, 1 sola casilla
+	 * Aï¿½ade a movements todos los movimientos posibles del rey, en todas las direcciones, 1 sola casilla
 	 * @param x
 	 * @param y
 	 * @return

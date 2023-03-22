@@ -13,8 +13,8 @@ public class Chess2 extends Game {
 		Render.camera = new OrthographicCamera(Render.SCREEN_WIDTH, Render.SCREEN_HEIGHT);
 		Render.app = this;
 
-		this.setScreen(new MainScreen());
-		
+		//this.setScreen(new MainScreen());
+		this.setScreen(new GameScreen());
 	}
 
 	@Override

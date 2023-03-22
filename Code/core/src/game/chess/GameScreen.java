@@ -5,12 +5,14 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.*;
 
 import elements.Background;
 import elements.Board;
 import elements.Piece;
+import elements.Tile;
 import elements.pieces.Bishop;
 import elements.pieces.King;
 import elements.pieces.Knight;
@@ -25,12 +27,17 @@ import javax.print.attribute.standard.RequestingUserName;
 
 import static utils.Render.app;
 
+import java.util.ArrayList;
+
 public class GameScreen extends AbstractScreen{
 	private Stage stage;
 	public static Board board;
 	boolean seleccionada=false;
+	private ArrayList<Vector2> currentTile_validMovements = new ArrayList<>();
+	private int current_x,current_y;
+	private Tile currentTile = null;
 	
-	int x,y;
+	
 	IOS inputs = new IOS();
 	@Override
 	public void show() {
@@ -41,11 +48,7 @@ public class GameScreen extends AbstractScreen{
 		Background fondo = new Background();
 		fondo.setSize(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
 
-		board.getTile(2, 2).piece = new Pawn();
-		board.getTile(7, 5).piece = new Knight();
 		drawWhites();
-
-
 
 		stage.addActor(fondo);
 		stage.addActor(board);
@@ -70,29 +73,24 @@ public class GameScreen extends AbstractScreen{
 			
 			//Si no hay una pieza seleccionada
 			if(!seleccionada) {
-				int xp= (int) Math.ceil((inputs.mouseX-board.getTile(1, 1).getX())/82);
-				int yp= (int) Math.ceil((inputs.mouseY-board.getTile(1, 1).getY())/82);
+				current_x = (int) Math.ceil((inputs.mouseX-board.getTile(1, 1).getX())/82);
+				current_y = (int) Math.ceil((inputs.mouseY-board.getTile(1, 1).getY())/82);
+				currentTile = board.getTile(current_x, current_y); 
 				//Ahora se las coordenadas donde he pulsado
-				if(board.getTile(xp, yp).piece!=null) {
+				if(currentTile!=null && currentTile.getPiece()!=null) {
 					seleccionada=true;
-					//Cambio a la imagen de la misma pieza seleccionada
-					//board.getTile(xp, yp).piece.setSprite("piece.png");
-					x=xp;
-					y=yp;
+					currentTile_validMovements = currentTile.getPiece().getMovement(current_x, current_y);
+					System.out.println(currentTile_validMovements.toString());
 				}
-			}else { //Si hay pieza seleccionada
-				int xp= (int) Math.ceil((inputs.mouseX-board.getTile(1, 1).getX())/82);
-				int yp= (int) Math.ceil((inputs.mouseY-board.getTile(1, 1).getY())/82);
+			}else if(seleccionada){ //Si hay pieza seleccionada
+				int next_x= (int) Math.ceil((inputs.mouseX-board.getTile(1, 1).getX())/82);
+				int next_y= (int) Math.ceil((inputs.mouseY-board.getTile(1, 1).getY())/82);
 				//Ahora se las coordenadas donde he pulsado
 				
 					//Si no has seleccionado la misma casilla ya seleccionada
-					if(!(x==xp && y==yp)) {
-						board.getTile(x, y).move(xp, yp);
-						x=xp;
-						y=yp;
+					if(currentTile_validMovements.contains(new Vector2(next_x, next_y))) {
+						currentTile.move(next_x, next_y);
 					}
-				//Cambio a la imagen de la misma pieza sin seleccionar
-				//board.getTile(xp, yp).piece.setSprite("piece2.png");
 				seleccionada=false;
 			}
 			
@@ -144,7 +142,7 @@ public class GameScreen extends AbstractScreen{
 	
 	public void drawWhites() {
 		for(int i=1;i<9;i++) {
-			board.getTile(i, 2).piece = new King();
+			board.getTile(i, 2).piece = new Bishop();
 		}	
 		for(int i=1;i<9;i++) {
 			if(i==1 || i==8) {

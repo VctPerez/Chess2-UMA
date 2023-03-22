@@ -16,8 +16,7 @@ public class Knight extends Piece{
 	
 	public Knight() {
 		this.path = Resources.KNIGHT_PATH;
-		//this.Movement = ;
-		//this.color = ;
+		this.color = true;
 		this.sprite = new Image(path);
 	}
 	

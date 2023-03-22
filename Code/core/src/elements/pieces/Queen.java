@@ -12,7 +12,7 @@ import utils.Resources;
 public class Queen extends Piece{
 	public Queen() {
 		this.path = Resources.QUEEN_PATH;
-		//this.color = ;
+		this.color = true;
 		this.sprite = new Image(path);
 	}
 	
@@ -29,6 +29,7 @@ public class Queen extends Piece{
 	public ArrayList<Vector2> getMovement(float x, float y) {
 		ArrayList<Vector2> movements = (new Rook()).getMovement(x, y);
 		movements.addAll((new Bishop()).getMovement(x, y));
+		
 		return movements;
 	}
 	

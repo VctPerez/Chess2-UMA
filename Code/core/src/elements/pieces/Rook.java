@@ -14,7 +14,7 @@ import utils.Resources;
 public class Rook extends Piece{
 	public Rook() {
 		this.path = Resources.ROOK_PATH;
-		//this.color = true;
+		this.color = true;
 		this.sprite = new Image(path);
 	}
 	
