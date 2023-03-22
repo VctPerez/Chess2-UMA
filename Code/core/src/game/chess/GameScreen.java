@@ -141,7 +141,7 @@ public class GameScreen extends AbstractScreen{
 	
 	public void drawWhites() {
 		for(int i=1;i<9;i++) {
-			board.getTile(i, 2).piece = new Rook();
+			board.getTile(i, 2).piece = new King();
 		}	
 		for(int i=1;i<9;i++) {
 			if(i==1 || i==8) {

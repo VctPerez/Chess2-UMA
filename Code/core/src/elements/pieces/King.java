@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 
+import elements.Board;
 import elements.Piece;
 import utils.Image;
 import utils.Resources;
@@ -12,7 +13,7 @@ import utils.Resources;
 public class King extends Piece{
 	public King() {
 		this.path = Resources.KING_PATH;
-		//this.color = ;
+		//this.color = true;
 		this.sprite = new Image(path);
 	}
 	
@@ -38,4 +39,35 @@ public class King extends Piece{
 		movements.add(new Vector2(x-1,y-1));	
 		return movements;
 	}
+	
+	private Boolean sameColor(Piece piece) {
+		boolean same=false;
+		if(piece!=null) {
+			same=color==piece.color();
+		}
+		return same;
+	}
+	
+	public ArrayList<Vector2> getValidMovements(ArrayList<Vector2> movements,Board board){
+		for(int i=0;i<movements.size();i++) {
+			if(board.getTile(movements.get(i).x, movements.get(i).y)==null 
+				|| sameColor(board.getTile(movements.get(i).x, movements.get(i).y).getPiece())) {
+				movements.remove(i);
+			}
+		}
+		return movements;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
