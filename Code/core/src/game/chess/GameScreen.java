@@ -92,10 +92,12 @@ public class GameScreen extends AbstractScreen{
 					}
 					
 					System.out.println(currentTile_validMovements.toString());
+					
 				}
 			}else if(seleccionada){ //Si hay pieza seleccionada
 				int next_x= calcularX();
 				int next_y= calcularY();
+				currentTile = board.getTile(current_x, current_y);
 				
 				if(original==1) {
 					currentTile.setColor(Color.WHITE);
@@ -110,7 +112,12 @@ public class GameScreen extends AbstractScreen{
 
 				if(currentTile_validMovements.contains(new Vector2(next_x, next_y))) {
 					board.getTile(current_x, current_y).getPiece().Moved();
-					currentTile.move(next_x, next_y);
+					if(next_y==8.0 && currentTile.piece instanceof Pawn) {
+	                    currentTile.piece.remove();
+	                    board.getTile(current_x, 8).piece=new Queen(true);
+					}else {
+						currentTile.move(next_x, next_y);
+					}
 				}
 				
 				seleccionada=false;
