@@ -33,9 +33,9 @@ import java.util.ArrayList;
 public class GameScreen extends AbstractScreen{
 	private Stage stage;
 	public static Board board;
-	boolean seleccionada=false;
+	private boolean seleccionada=false;
 	private ArrayList<Vector2> currentTile_validMovements = new ArrayList<>();
-	private int current_x,current_y;
+	private int current_x,current_y,original;
 	private Tile currentTile = null;
 	
 	
@@ -74,13 +74,16 @@ public class GameScreen extends AbstractScreen{
 			
 			//Si no hay una pieza seleccionada
 			if(!seleccionada) {
-				current_x = (int) Math.ceil((inputs.mouseX-board.getTile(1, 1).getX())/84);
-				current_y = (int) Math.ceil((inputs.mouseY-board.getTile(1, 1).getY())/84);
+				current_x = calcularX();
+				current_y = calcularY();
 				currentTile = board.getTile(current_x, current_y);
 				
 				//Ahora se las coordenadas donde he pulsado
 				if(currentTile!=null && currentTile.getPiece()!=null) {
 					seleccionada=true;
+					
+					original=Color(currentTile);
+					currentTile.setColor(Color.GREEN);
 					
 					currentTile_validMovements = currentTile.getPiece().getMovement(current_x, current_y);
 					
@@ -91,8 +94,14 @@ public class GameScreen extends AbstractScreen{
 					System.out.println(currentTile_validMovements.toString());
 				}
 			}else if(seleccionada){ //Si hay pieza seleccionada
-				int next_x= (int) Math.ceil((inputs.mouseX-board.getTile(1, 1).getX())/84);
-				int next_y= (int) Math.ceil((inputs.mouseY-board.getTile(1, 1).getY())/84);
+				int next_x= calcularX();
+				int next_y= calcularY();
+				
+				if(original==1) {
+					currentTile.setColor(Color.WHITE);
+				}else {
+					currentTile.setColor(Color.BLACK);
+				}
 				
 				for(Vector2 vector : currentTile_validMovements) {
 					board.getTile(vector.x, vector.y).highlight=false;
@@ -105,7 +114,23 @@ public class GameScreen extends AbstractScreen{
 					
 				seleccionada=false;
 			}
-		}
+		}		
+		
+	
+		
+	}
+	
+	private int calcularX() {
+		return (int) Math.ceil((inputs.mouseX-board.getTile(1, 1).getX())/84);
+	}
+	
+	private int calcularY() {
+		return (int) Math.ceil((inputs.mouseY-board.getTile(1, 1).getY())/84);
+	}
+
+	private int Color(Tile tile) {
+		return tile.getColor().equals(Color.BLACK) ? -1 : 1;
+
 	}
 	
 	//Devuelve true si se clica en el tablero
