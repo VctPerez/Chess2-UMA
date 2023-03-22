@@ -21,7 +21,7 @@ public class Bishop extends Piece{
 		super.draw(batch, parentAlpha);
 	}
 	/**
-	 * Añade a movements todos los movimientos posibles del Alfil, en todas las direcciones, su maxima cantidad de movimientos
+	 * Aï¿½ade a movements todos los movimientos posibles del Alfil, en todas las direcciones, su maxima cantidad de movimientos
 	 * @param x
 	 * @param y
 	 * @return
@@ -31,17 +31,10 @@ public class Bishop extends Piece{
 		ArrayList<Vector2> movements = new ArrayList<>();
 		for(int i=1;i<8;i++) {
 			movements.add(new Vector2(x+i,y+i));
-		}
-		for(int i=1;i<8;i++) {
 			movements.add(new Vector2(x-i,y-i));
-		}
-		for(int i=1;i<8;i++) {
 			movements.add(new Vector2(x+i,y-i));
-		}
-		for(int i=1;i<8;i++) {
 			movements.add(new Vector2(x-i,y+i));
 		}
-		
 		return movements;
 	}
 	

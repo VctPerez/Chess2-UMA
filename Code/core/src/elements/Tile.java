@@ -56,12 +56,12 @@ public class Tile extends Actor{
 		this.piece = null;
 	}
 	
+	/**
+	 * Devuelve la pieza contenida en la casilla
+	 * @return
+	 */
 	public Piece getPiece() {
-		Piece res = null;
-		if(this!=null) {
-			res = piece;
-		}
-		return res;
+		return piece;
 	}
 	
 	public void dispose() {

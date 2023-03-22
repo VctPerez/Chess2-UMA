@@ -20,17 +20,26 @@ public class Queen extends Piece{
 		super.draw(batch, parentAlpha);
 	}
 	/**
-	 * Añade a movements todos los movimientos posibles de la reina, en todas las direcciones, su maxima cantidad de movimientos, la union de el movimiento del alfin y de la torre
+	 * Aï¿½ade a movements todos los movimientos posibles de la reina, en todas las direcciones, su maxima cantidad de movimientos, la union de el movimiento del alfin y de la torre
 	 * @param x
 	 * @param y
 	 * @return
 	 */
 	@Override
 	public ArrayList<Vector2> getMovement(float x, float y) {
-		Piece rook=new Rook();
-		Piece bishop=new Bishop();
-		ArrayList<Vector2> movements = rook.getMovement(x, y);
-		movements.addAll(bishop.getMovement(x, y));
+		ArrayList<Vector2> movements = new ArrayList<>();
+		for(int i=1;i<8;i++) {
+			//DIAGONAL
+			movements.add(new Vector2(x+i,y+i));
+			movements.add(new Vector2(x-i,y-i));
+			movements.add(new Vector2(x+i,y-i));
+			movements.add(new Vector2(x-i,y+i));
+			//HORIZONTAL
+			movements.add(new Vector2(x+i,y));
+			movements.add(new Vector2(x-i,y));
+			movements.add(new Vector2(x,y+i));
+			movements.add(new Vector2(x,y-i));
+		}
 		return movements;
 	}
 	
