@@ -12,9 +12,9 @@ import utils.Image;
 import utils.Resources;
 
 public class King extends Piece{
-	public King() {
+	public King(Boolean Color) {
 		this.path = Resources.KING_PATH;
-		this.color = true;
+		this.color = Color;
 		this.sprite = new Image(path);
 		this.hasBeenMoved=false;
 	}

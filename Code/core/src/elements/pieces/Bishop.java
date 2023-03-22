@@ -14,9 +14,9 @@ import utils.Resources;
 public class Bishop extends Piece{
 	private Boolean validDirection;
 	
-	public Bishop() {
+	public Bishop(Boolean Color) {
 		this.path = Resources.BISHOP_PATH;
-		this.color = true;
+		this.color = Color;
 		this.sprite = new Image(path);
 	}
 	

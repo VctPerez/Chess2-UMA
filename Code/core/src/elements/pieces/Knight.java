@@ -14,9 +14,9 @@ import utils.Resources;
 public class Knight extends Piece{
 	
 	
-	public Knight() {
+	public Knight(Boolean Color) {
 		this.path = Resources.KNIGHT_PATH;
-		this.color = true;
+		this.color = Color;
 		this.sprite = new Image(path);
 	}
 	

@@ -14,10 +14,10 @@ import utils.Resources;
 public class Pawn extends Piece{
 	
 	
-	public Pawn() {
+	public Pawn(Boolean Color) {
 		this.path = Resources.PAWN_PATH;
 		this.hasBeenMoved = false;
-		this.color = true;
+		this.color = Color;
 		this.sprite = new Image(path);
 	}
 	

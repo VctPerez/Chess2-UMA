@@ -16,6 +16,7 @@ public abstract class Piece extends Actor {
 	protected Boolean selected;
 
 	public Piece() {
+		
 	}
 
 	@Override

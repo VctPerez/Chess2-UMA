@@ -175,23 +175,23 @@ public class GameScreen extends AbstractScreen{
 	
 	public void drawWhites() {
 		for(int i=1;i<9;i++) {
-			board.getTile(i, 2).piece = new Pawn();
+			board.getTile(i, 2).piece = new Pawn(true);
 		}	
 		for(int i=1;i<9;i++) {
 			if(i==1 || i==8) {
-				board.getTile(i, 1).piece = new Rook();
+				board.getTile(i, 1).piece = new Rook(true);
 			}
 			if(i==2 || i==7) {
-				board.getTile(i, 1).piece = new Knight();
+				board.getTile(i, 1).piece = new Knight(true);
 			}
 			if(i==3 || i==6) {
-				board.getTile(i, 1).piece = new Bishop();
+				board.getTile(i, 1).piece = new Bishop(true);
 			}
 			if(i==4) {
-				board.getTile(i, 1).piece = new Queen();
+				board.getTile(i, 1).piece = new Queen(true);
 			}
 			if(i==5) {
-				board.getTile(i, 1).piece = new King();
+				board.getTile(i, 1).piece = new King(true);
 			}
 		}
 	}

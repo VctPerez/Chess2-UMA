@@ -10,9 +10,9 @@ import utils.Image;
 import utils.Resources;
 
 public class Queen extends Piece{
-	public Queen() {
+	public Queen(Boolean Color) {
 		this.path = Resources.QUEEN_PATH;
-		this.color = true;
+		this.color = Color;
 		this.sprite = new Image(path);
 	}
 	
@@ -27,8 +27,8 @@ public class Queen extends Piece{
 	 */
 	@Override
 	public ArrayList<Vector2> getMovement(float x, float y) {
-		ArrayList<Vector2> movements = (new Rook()).getMovement(x, y);
-		movements.addAll((new Bishop()).getMovement(x, y));
+		ArrayList<Vector2> movements = (new Rook(color)).getMovement(x, y);
+		movements.addAll((new Bishop(color)).getMovement(x, y));
 		
 		return movements;
 	}

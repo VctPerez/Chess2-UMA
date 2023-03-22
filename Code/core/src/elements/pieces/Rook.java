@@ -13,9 +13,9 @@ import utils.Resources;
 
 public class Rook extends Piece{
 	private Boolean validDirection;
-	public Rook() {
+	public Rook(Boolean Color) {
 		this.path = Resources.ROOK_PATH;
-		this.color = true;
+		this.color = Color;
 		this.sprite = new Image(path);
 		this.hasBeenMoved=false;
 	}
