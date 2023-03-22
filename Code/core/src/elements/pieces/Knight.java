@@ -26,7 +26,7 @@ public class Knight extends Piece{
 		super.draw(batch, parentAlpha);
 	}
 	/**
-	 * Añade a movements todos los movimientos posibles del caballo
+	 * Aï¿½ade a movements todos los movimientos posibles del caballo
 	 * @param x
 	 * @param y
 	 * @return
@@ -51,8 +51,8 @@ public class Knight extends Piece{
 	
 	public ArrayList<Vector2> getValidMovements(ArrayList<Vector2> movements,Board board){
 		for(int i=0;i<movements.size();i++) {
-			if(board.getTile(movements.get(i).x, movements.get(i).x)==null 
-				|| sameColor(board.getTile(movements.get(i).x, movements.get(i).x).getPiece())) {
+			if(board.getTile(movements.get(i).x, movements.get(i).y)==null 
+				|| sameColor(board.getTile(movements.get(i).x, movements.get(i).y).getPiece())) {
 				movements.remove(i);
 			}
 		}
