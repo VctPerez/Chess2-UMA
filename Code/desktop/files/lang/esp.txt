@@ -3,3 +3,4 @@ Inicio
 Salir
 Configuracion
 Volumen
+Idioma
