@@ -33,9 +33,9 @@ import java.util.ArrayList;
 public class GameScreen extends AbstractScreen{
 	private Stage stage;
 	public static Board board;
-	boolean seleccionada=false;
+	private boolean seleccionada=false;
 	private ArrayList<Vector2> currentTile_validMovements = new ArrayList<>();
-	private int current_x,current_y;
+	private int current_x,current_y,original;
 	private Tile currentTile = null;
 	
 	
@@ -82,6 +82,9 @@ public class GameScreen extends AbstractScreen{
 				if(currentTile!=null && currentTile.getPiece()!=null) {
 					seleccionada=true;
 					
+					original=Color(currentTile);
+					currentTile.setColor(Color.GREEN);
+					
 					currentTile_validMovements = currentTile.getPiece().getMovement(current_x, current_y);
 					
 					for(Vector2 vector : currentTile_validMovements) {
@@ -93,6 +96,12 @@ public class GameScreen extends AbstractScreen{
 			}else if(seleccionada){ //Si hay pieza seleccionada
 				int next_x= calcularX();
 				int next_y= calcularY();
+				
+				if(original==1) {
+					currentTile.setColor(Color.WHITE);
+				}else {
+					currentTile.setColor(Color.BLACK);
+				}
 				
 				for(Vector2 vector : currentTile_validMovements) {
 					board.getTile(vector.x, vector.y).highlight=false;
