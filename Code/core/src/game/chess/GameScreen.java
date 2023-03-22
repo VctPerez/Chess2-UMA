@@ -74,8 +74,8 @@ public class GameScreen extends AbstractScreen{
 			
 			//Si no hay una pieza seleccionada
 			if(!seleccionada) {
-				current_x = (int) Math.ceil((inputs.mouseX-board.getTile(1, 1).getX())/84);
-				current_y = (int) Math.ceil((inputs.mouseY-board.getTile(1, 1).getY())/84);
+				current_x = calcularX();
+				current_y = calcularY();
 				currentTile = board.getTile(current_x, current_y);
 				
 				//Ahora se las coordenadas donde he pulsado
@@ -91,8 +91,8 @@ public class GameScreen extends AbstractScreen{
 					System.out.println(currentTile_validMovements.toString());
 				}
 			}else if(seleccionada){ //Si hay pieza seleccionada
-				int next_x= (int) Math.ceil((inputs.mouseX-board.getTile(1, 1).getX())/84);
-				int next_y= (int) Math.ceil((inputs.mouseY-board.getTile(1, 1).getY())/84);
+				int next_x= calcularX();
+				int next_y= calcularY();
 				
 				for(Vector2 vector : currentTile_validMovements) {
 					board.getTile(vector.x, vector.y).highlight=false;
@@ -115,6 +115,14 @@ public class GameScreen extends AbstractScreen{
 		
 		
 		
+	}
+	
+	private int calcularX() {
+		return (int) Math.ceil((inputs.mouseX-board.getTile(1, 1).getX())/84);
+	}
+	
+	private int calcularY() {
+		return (int) Math.ceil((inputs.mouseY-board.getTile(1, 1).getY())/84);
 	}
 
 	private int Color(Tile tile) {
