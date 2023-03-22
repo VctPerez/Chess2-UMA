@@ -5,31 +5,30 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
 import utils.*;
 
-public class MainScreen extends AbstractScreen {
+public class ConfigScreen extends AbstractScreen {
 
     IOS inputs = new IOS();
-    TextButton play,exit,confg;
-    Text playText,exitText,confgText,Titulo;
+    TextButton home,exit;
+    Text homeText,exitText,Titulo,volumeText;
     Image background,Logo,news;
     
     @Override
     public void show() {
     	//Fuente Arial para probar
     	Titulo = new Text(Resources.FONT_MENU_PATH,100,Color.WHITE,5);
-    	Titulo.setText("Chess2");
-    	playText = new Text(Resources.FONT_MENU_PATH,50,Color.WHITE,5);
-    	playText.setText("Jugar");
+    	Titulo.setText("Configuración");
+    	homeText = new Text(Resources.FONT_MENU_PATH,50,Color.WHITE,5);
+    	homeText.setText("Inicio");
+    	volumeText = new Text(Resources.FONT_MENU_PATH,50,Color.WHITE,5);
+    	volumeText.setText("Volumen");
     	exitText = new Text(Resources.FONT_MENU_PATH,50,Color.WHITE,5);
     	exitText.setText("Salir");
-    	confgText = new Text(Resources.FONT_MENU_PATH,50,Color.WHITE,5);
-    	confgText.setText("Configuracion");
     	Titulo.setPosition(100,600);
-        playText.setPosition(100,400);
+        homeText.setPosition(100,400);
+        volumeText.setPosition(100,300);
         exitText.setPosition(100,200);
-        confgText.setPosition(100,300);
-        play = new TextButton(playText);
+        home = new TextButton(homeText);
         exit = new TextButton(exitText);
-        confg = new TextButton(confgText);
         Logo = new Image("Logo.png");
         Logo.setPosition(800,-50);
         Logo.setSize(500, 500);
@@ -52,18 +51,15 @@ public class MainScreen extends AbstractScreen {
         Titulo.draw();
         Logo.draw(Render.Batch);
         //news.draw(Render.Batch);
-        play.establish(inputs, Render.Batch);
+        home.establish(inputs, Render.Batch);
+        volumeText.draw();
         exit.establish(inputs, Render.Batch);
-        confg.establish(inputs, Render.Batch);
         
-        if(play.isSelected()){
-            Render.app.setScreen(new GameScreen());
+        if(home.isSelected()){
+            Render.app.setScreen(new MainScreen());
         }
         if(exit.isSelected()) {
         	Gdx.app.exit();
-        }
-        if(confg.isSelected()) {
-        	Render.app.setScreen(new ConfigScreen());
         }
         
         //-----------------
