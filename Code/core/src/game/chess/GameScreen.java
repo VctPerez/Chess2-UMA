@@ -38,32 +38,14 @@ public class GameScreen extends ScreenAdapter{
 		board = new Board();
 		Background fondo = new Background();
 		fondo.setSize(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
-
-		for(int i=1;i<9;i++) {
-			board.getTile(i, 2).piece = new Pawn();
-		}
+		drawWhites();
 		
-		for(int i=1;i<9;i++) {
-			if(i==1 || i==8) {
-				board.getTile(i, 1).piece = new Rook();
-			}
-			if(i==2 || i==7) {
-				board.getTile(i, 1).piece = new Bishop();
-			}
-			if(i==3 || i==6) {
-				board.getTile(i, 1).piece = new Knight();
-			}
-			if(i==4) {
-				board.getTile(i, 1).piece = new Queen();
-			}
-			if(i==5) {
-				board.getTile(i, 1).piece = new King();
-			}
-		}
 
 		stage.addActor(fondo);
 		stage.addActor(board);
 	}
+	
+	
 
 	@Override
 	public void render(float delta) {
@@ -123,6 +105,29 @@ public class GameScreen extends ScreenAdapter{
 	public void dispose() {
 		stage.dispose();
 		
+	}
+	
+	public void drawWhites() {
+		for(int i=1;i<9;i++) {
+			board.getTile(i, 2).piece = new Pawn();
+		}	
+		for(int i=1;i<9;i++) {
+			if(i==1 || i==8) {
+				board.getTile(i, 1).piece = new Rook();
+			}
+			if(i==2 || i==7) {
+				board.getTile(i, 1).piece = new Bishop();
+			}
+			if(i==3 || i==6) {
+				board.getTile(i, 1).piece = new Knight();
+			}
+			if(i==4) {
+				board.getTile(i, 1).piece = new Queen();
+			}
+			if(i==5) {
+				board.getTile(i, 1).piece = new King();
+			}
+		}
 	}
 
 }
