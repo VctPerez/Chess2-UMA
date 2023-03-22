@@ -45,6 +45,20 @@ public class Bishop extends Piece{
 		return res;
 	}
 	
+	private void checkDirection(float x, float y, int i, int j, ArrayList<Vector2> movements) {
+		Boolean validDirection = true;
+		Vector2 mov;
+		int k = 1;
+		
+		while(validDirection && i<8) {
+			mov = new Vector2(x + i*k, y + j*k);
+			if(checkBoard(GameScreen.board, mov.x, mov.y, validDirection)) {
+				movements.add(mov);
+			}
+			i++;
+		}
+	}
+	
 	/**
 	 * Anyade a movements todos los movimientos posibles del Alfil, en todas las direcciones, su maxima cantidad de movimientos
 	 * @param x
@@ -54,24 +68,11 @@ public class Bishop extends Piece{
 	@Override
 	public ArrayList<Vector2> getMovement(float x, float y) {
 		ArrayList<Vector2> movements = new ArrayList<>();
-		Boolean validDirection = true;
-		Vector2 mov;
-		int i = 1;
-		for(int j=1;i<8;i++) {
-			movements.add(new Vector2(x+i,y+i));
-			movements.add(new Vector2(x-i,y-i));
-			movements.add(new Vector2(x+i,y-i));
-			movements.add(new Vector2(x-i,y+i));
-		}
 		
-		while(validDirection && i<8) {
-			mov = new Vector2(x + i, y + i);
-			if(checkBoard(GameScreen.board, mov.x, mov.y, validDirection)) {
-				movements.add(mov);
-			}
-			i++;
-		}
-		
+		checkDirection(x, y, 1, 1, movements);
+		checkDirection(x, y, -1, -1, movements);
+		checkDirection(x, y, 1, -1, movements);
+		checkDirection(x, y, -1, 1, movements);
 		
 		return movements;
 	}
