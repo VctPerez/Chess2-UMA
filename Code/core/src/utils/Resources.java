@@ -11,6 +11,9 @@ public class Resources {
     public static final String LOGO_PATH="Logo.png";
     public static final String TEXT_BOX_PATH = "";
     public static final String CHECK_PATH = "sprites/Testing-Pieces/Testing-Pawn.png";
+    public static final String CONTROLBAR_PATH = "sprites/volumeBar/volumeBar_bar(x2size).png";
+    public static final String SELECTEDBAR_PATH = "sprites/volumeBar/volumeBar_selected(x2size).png";
+    public static final String UNSELECTEDBAR_PATH = "sprites/volumeBar/volumeBar_unselected(x2size).png";
 
     // RECURSOS PARTIDA
     public static final String PAWN_PATH = "sprites/Testing-Pieces/Testing-Pawn.png";

@@ -63,7 +63,7 @@ public class MainScreen extends AbstractScreen {
         	Gdx.app.exit();
         }
         if(confg.isSelected()) {
-        	//TO DO
+        	//TODO
         }
         
         //-----------------

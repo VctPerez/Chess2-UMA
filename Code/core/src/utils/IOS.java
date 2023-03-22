@@ -35,6 +35,9 @@ public class IOS implements InputProcessor {
     public boolean isClicked(){
         return Gdx.input.isButtonJustPressed(Input.Buttons.LEFT);
     }
+    public boolean isMousePressed(){
+        return Gdx.input.isTouched();
+    }
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {

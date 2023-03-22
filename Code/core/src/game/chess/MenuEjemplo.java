@@ -10,6 +10,7 @@ public class MenuEjemplo extends ScreenAdapter {
     IOS inputs = new IOS();
     TextButton boton;
     CheckBox pruebaCheck;
+    ControlBar pruebaBarra;
 
     Image background;
 
@@ -21,6 +22,9 @@ public class MenuEjemplo extends ScreenAdapter {
         boton.setPosition(400,400);
         pruebaCheck = new CheckBox();
         pruebaCheck.setPosition(200, 200);
+
+        pruebaBarra = new ControlBar();
+        pruebaBarra.setPosition(600,600);
 
         Gdx.input.setInputProcessor(inputs);
     }
@@ -38,6 +42,7 @@ public class MenuEjemplo extends ScreenAdapter {
         if(boton.isSelected()){
             Render.app.setScreen(new GameScreen());
         }
+        pruebaBarra.establish(inputs,Render.Batch);
         Render.Batch.end();
     }
 
