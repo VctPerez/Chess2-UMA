@@ -66,8 +66,7 @@ public class GameScreen extends AbstractScreen{
 			Render.app.setScreen(Render.MAINSCREEN);
 		}else if(inputs.justPressed(Keys.RIGHT)) {
 			board.getTile(x, y).move(x+1, y);
-			x++;
-			
+			x++;		
 		}else if(inputs.justPressed(Keys.LEFT)) {
 			board.getTile(x, y).move(x-1, y);
 			x--;
@@ -156,7 +155,7 @@ public class GameScreen extends AbstractScreen{
 	
 	public void drawWhites() {
 		for(int i=1;i<9;i++) {
-			board.getTile(i, 2).piece = new Knight();
+			board.getTile(i, 2).piece = new Rook();
 		}	
 		for(int i=1;i<9;i++) {
 			if(i==1 || i==8) {
