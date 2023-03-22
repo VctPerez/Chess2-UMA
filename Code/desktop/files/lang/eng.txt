@@ -3,4 +3,4 @@ Home
 Exit
 Configuration
 Volume
-Idioma
+Language
