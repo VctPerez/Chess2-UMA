@@ -9,6 +9,8 @@ public class MenuEjemplo extends ScreenAdapter {
 
     IOS inputs = new IOS();
     TextButton boton;
+    CheckBox pruebaCheck;
+
     Image background;
 
     @Override
@@ -17,6 +19,7 @@ public class MenuEjemplo extends ScreenAdapter {
         Text ejemplo = new Text("Ejemplo", Resources.FONT_MENU_PATH, 100, Color.WHITE, 3);
         boton = new TextButton(ejemplo);
         boton.setPosition(400,400);
+
         Gdx.input.setInputProcessor(inputs);
     }
 

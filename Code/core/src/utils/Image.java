@@ -3,6 +3,7 @@ package utils;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Vector2;
 
 public class Image {
     public Texture img;
@@ -82,9 +83,21 @@ public class Image {
     public void setPosition(float x, float y){
         sprt.setPosition(x,y);
     }
+
+    public Vector2 getPosition(){
+        return new Vector2(sprt.getX(), sprt.getY());
+    }
+
+    public Vector2 getDimensions(){
+        return new Vector2(sprt.getWidth(),sprt.getHeight());
+    }
     
     public void setScale(float x) {
     	sprt.setScale(x);
+    }
+
+    public void dispose(){
+        img.dispose();
     }
 }
 
