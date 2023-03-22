@@ -98,22 +98,16 @@ public class GameScreen extends AbstractScreen{
 					board.getTile(vector.x, vector.y).highlight=false;
 
 				}
-				
-				//Ahora se las coordenadas donde he pulsado
-				
-					//Si no has seleccionado la misma casilla ya seleccionada
-					if(currentTile_validMovements.contains(new Vector2(next_x, next_y))) {
-						currentTile.move(next_x, next_y);
-					}
-					Vector2 v;
+
+				if(currentTile_validMovements.contains(new Vector2(next_x, next_y))) {
+					currentTile.move(next_x, next_y);
+				}
 					
 				seleccionada=false;
 			}
-			
-		}
+		}		
 		
-		
-		
+	
 		
 	}
 	
@@ -127,6 +121,7 @@ public class GameScreen extends AbstractScreen{
 
 	private int Color(Tile tile) {
 		return tile.getColor().equals(Color.BLACK) ? -1 : 1;
+
 	}
 	
 	//Devuelve true si se clica en el tablero
