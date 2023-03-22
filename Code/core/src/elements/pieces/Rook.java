@@ -12,6 +12,7 @@ import utils.Image;
 import utils.Resources;
 
 public class Rook extends Piece{
+	private Boolean validDirection;
 	public Rook() {
 		this.path = Resources.ROOK_PATH;
 		this.color = true;
@@ -27,7 +28,7 @@ public class Rook extends Piece{
 		return color==piece.color();
 	}
 	
-	private Boolean checkBoard(Board board, float x, float y, Boolean validDirection) {
+	private Boolean checkBoard(Board board, float x, float y) {
 		Boolean res = true;
 		
 		if(board.getTile(x, y)==null) {
@@ -46,13 +47,13 @@ public class Rook extends Piece{
 	}
 	
 	private void checkDirection(float x, float y, int i, int j, ArrayList<Vector2> movements) {
-		Boolean validDirection = true;
+	    validDirection = true;
 		Vector2 mov;
 		int k = 1;
 		
 		while(validDirection && k<8) {
 			mov = new Vector2(x + i*k, y + j*k);
-			if(checkBoard(GameScreen.board, mov.x, mov.y, validDirection)) {
+			if(checkBoard(GameScreen.board, mov.x, mov.y)) {
 				movements.add(mov);
 			}
 			k++;
