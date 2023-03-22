@@ -79,30 +79,36 @@ public class GameScreen extends AbstractScreen{
 				current_y = (int) Math.ceil((inputs.mouseY-board.getTile(1, 1).getY())/84);
 				currentTile = board.getTile(current_x, current_y);
 				
-				original = Color(currentTile);
-				Vector2 v;
+				//original = Color(currentTile);
+				//Vector2 v;
 				
-				currentTile.setColor(Color.YELLOW);
+				//currentTile.setColor(Color.YELLOW);
 				//Ahora se las coordenadas donde he pulsado
 				if(currentTile!=null && currentTile.getPiece()!=null) {
 					seleccionada=true;
+					
 					currentTile_validMovements = currentTile.getPiece().getMovement(current_x, current_y);
-					for(int i=0;i<currentTile_validMovements.size();i++) {
-						v=currentTile_validMovements.get(i);
-						originales.add(Color(board.getTile(v.x, v.y)));
-						board.getTile(v.x, v.y).setColor(Color.GREEN);
+					
+					for(Vector2 vector : currentTile_validMovements) {
+						board.getTile(vector.x, vector.y).highlight=true;
 					}
+					
 					System.out.println(currentTile_validMovements.toString());
 				}
 			}else if(seleccionada){ //Si hay pieza seleccionada
 				int next_x= (int) Math.ceil((inputs.mouseX-board.getTile(1, 1).getX())/84);
 				int next_y= (int) Math.ceil((inputs.mouseY-board.getTile(1, 1).getY())/84);
 				
+<<<<<<< Updated upstream
 				
 				if(original==1) {
 					currentTile.setColor(Color.WHITE);
 				}else {
 					currentTile.setColor(Color.BLACK);
+=======
+				for(Vector2 vector : currentTile_validMovements) {
+					board.getTile(vector.x, vector.y).highlight=false;
+>>>>>>> Stashed changes
 				}
 				
 				//Ahora se las coordenadas donde he pulsado

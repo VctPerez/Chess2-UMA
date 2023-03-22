@@ -15,6 +15,7 @@ public class Tile extends Actor{
 	protected ShapeRenderer tile;
 	protected Vector2 pos;	
 	public Piece piece;
+	public Boolean highlight;
 	
 	public Tile(int matrix_x, int matrix_y, float coord_x, float coord_y, float tileSize, int color) {
 		
@@ -29,6 +30,7 @@ public class Tile extends Actor{
 			setColor(Color.WHITE);
 		}
 		piece = null;
+		highlight = false;
 	}
 	
 	@Override
@@ -36,7 +38,11 @@ public class Tile extends Actor{
 		batch.end();
 		tile.begin(ShapeType.Filled);
 		tile.rect(getX(), getY(), getWidth(), getHeight());
-		tile.setColor(getColor());
+		if(highlight) {
+			tile.setColor(Color.YELLOW);
+		}else {			
+			tile.setColor(getColor());
+		}
 		tile.end();
 		batch.begin();
 		
