@@ -35,6 +35,14 @@ public class Pawn extends Piece{
 		hasBeenMoved = true;
 	}
 	
+	private Boolean sameColor(Piece piece) {
+		boolean same=false;
+		if(piece!=null) {
+			same=color==piece.color();
+		}
+		return same;
+	}
+	
 	/**
 	 * Comprueba que las casillas a las que el peon pueda moverse estan dentro del tablero y si tienen alguna pieza dentro
 	 * @param board
@@ -44,7 +52,7 @@ public class Pawn extends Piece{
 	 */
 	private Boolean checkBoard(Board board, int i, float x, float y) {
 		Boolean res = false;
-		if(i!=0 && board.getTile(x, y)!=null && board.getTile(x, y).getPiece()!=null) {
+		if(i!=0 && board.getTile(x, y)!=null && board.getTile(x, y).getPiece()!=null && !sameColor(board.getTile(x, y).getPiece())) {
 			res = true;
 		}else if(i==0 && board.getTile(x, y)!=null && board.getTile(x, y).getPiece()==null) {
 			res = true;
