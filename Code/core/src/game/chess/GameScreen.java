@@ -35,8 +35,7 @@ public class GameScreen extends AbstractScreen{
 	public static Board board;
 	boolean seleccionada=false;
 	private ArrayList<Vector2> currentTile_validMovements = new ArrayList<>();
-	private ArrayList<Integer> originales = new ArrayList<>();
-	private int current_x,current_y,original;
+	private int current_x,current_y;
 	private Tile currentTile = null;
 	
 	
@@ -79,10 +78,6 @@ public class GameScreen extends AbstractScreen{
 				current_y = (int) Math.ceil((inputs.mouseY-board.getTile(1, 1).getY())/84);
 				currentTile = board.getTile(current_x, current_y);
 				
-				//original = Color(currentTile);
-				//Vector2 v;
-				
-				//currentTile.setColor(Color.YELLOW);
 				//Ahora se las coordenadas donde he pulsado
 				if(currentTile!=null && currentTile.getPiece()!=null) {
 					seleccionada=true;
@@ -99,16 +94,9 @@ public class GameScreen extends AbstractScreen{
 				int next_x= (int) Math.ceil((inputs.mouseX-board.getTile(1, 1).getX())/84);
 				int next_y= (int) Math.ceil((inputs.mouseY-board.getTile(1, 1).getY())/84);
 				
-<<<<<<< Updated upstream
-				
-				if(original==1) {
-					currentTile.setColor(Color.WHITE);
-				}else {
-					currentTile.setColor(Color.BLACK);
-=======
 				for(Vector2 vector : currentTile_validMovements) {
 					board.getTile(vector.x, vector.y).highlight=false;
->>>>>>> Stashed changes
+
 				}
 				
 				//Ahora se las coordenadas donde he pulsado
@@ -118,15 +106,7 @@ public class GameScreen extends AbstractScreen{
 						currentTile.move(next_x, next_y);
 					}
 					Vector2 v;
-					for(int i=0;i<currentTile_validMovements.size();i++) {
-						v=currentTile_validMovements.get(i);
-						originales.add(Color(board.getTile(v.x, v.y)));
-						if(originales.get(i)==1) {
-							board.getTile(v.x, v.y).setColor(Color.WHITE);
-						}else {
-							board.getTile(v.x, v.y).setColor(Color.BLACK);
-						}
-					}
+					
 				seleccionada=false;
 			}
 			
