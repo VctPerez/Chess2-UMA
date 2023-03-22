@@ -88,6 +88,10 @@ public class GameScreen extends ScreenAdapter{
 			board.getTile(x, y).move(x, y-1);
 			y--;
 		}
+		
+		
+		
+		
 	}
 
 	@Override
