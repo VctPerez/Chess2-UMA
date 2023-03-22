@@ -43,7 +43,7 @@ public class GameScreen extends AbstractScreen{
 
 		board.getTile(2, 2).piece = new Pawn();
 		board.getTile(7, 5).piece = new Knight();
-		drawWhites();
+		//drawWhites();
 
 
 		stage.addActor(fondo);
@@ -79,11 +79,11 @@ public class GameScreen extends AbstractScreen{
 			y--;
 		}else if(enTablero()) { // si se ha clicado dentro del tablero
 			
-			//Si hay una pieza seleccionada
+			//Si no hay una pieza seleccionada
 			if(!seleccionada) {
 				int xp= (int) Math.ceil((inputs.mouseX-board.getTile(1, 1).getX())/82);
 				int yp= (int) Math.ceil((inputs.mouseY-board.getTile(1, 1).getY())/82);
-				
+				//Ahora se las coordenadas donde he pulsado
 				if(board.getTile(xp, yp).piece!=null) {
 					seleccionada=true;
 					//Cambio a la imagen de la misma pieza seleccionada
@@ -91,8 +91,7 @@ public class GameScreen extends AbstractScreen{
 					x=xp;
 					y=yp;
 				}
-			//Ahora se las coordenadas donde he pulsado
-			}else { //Si no hay pieza seleccionada
+			}else { //Si hay pieza seleccionada
 				int xp= (int) Math.ceil((inputs.mouseX-board.getTile(1, 1).getX())/82);
 				int yp= (int) Math.ceil((inputs.mouseY-board.getTile(1, 1).getY())/82);
 				//Ahora se las coordenadas donde he pulsado
