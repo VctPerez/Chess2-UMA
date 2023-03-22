@@ -13,8 +13,7 @@ import game.chess.GameScreen;
 
 public class Tile extends Actor{
 	protected ShapeRenderer tile;
-	protected Vector2 pos;
-	
+	protected Vector2 pos;	
 	public Piece piece;
 	
 	public Tile(int matrix_x, int matrix_y, float coord_x, float coord_y, float tileSize, int color) {
