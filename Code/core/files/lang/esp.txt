@@ -1,5 +1,0 @@
-Jugar
-Inicio
-Salir
-Configuracion
-Volumen
