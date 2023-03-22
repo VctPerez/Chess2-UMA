@@ -25,16 +25,16 @@ public class LanguageScreen extends AbstractScreen {
     	//Fuente Arial para probar
     	Language = new Text(Resources.FONT_MENU_PATH,100,Color.WHITE,5);
     	Language.setText(languageReader.leerLinea(6)); //Idioma = Linea 6
-    	homeText = new Text(Resources.FONT_MENU_PATH,50,Color.WHITE,5);
+    	homeText = new Text(Resources.FONT_MENU_PATH,28,Color.WHITE,5);
     	homeText.setText(languageReader.leerLinea(2)); //Inicio = Linea 2
-    	configText = new Text(Resources.FONT_MENU_PATH,50,Color.WHITE,5);
+    	configText = new Text(Resources.FONT_MENU_PATH,28,Color.WHITE,5);
     	configText.setText(languageReader.leerLinea(4)); //Configuracion = Linea 4
-    	exitText = new Text(Resources.FONT_MENU_PATH,50,Color.WHITE,5);
+    	exitText = new Text(Resources.FONT_MENU_PATH,28,Color.WHITE,5);
     	exitText.setText(languageReader.leerLinea(3)); //Salir = Linea 3
-    	Language.setPosition(300,600);
-        homeText.setPosition(100,400);
-        configText.setPosition(100,300);
-        exitText.setPosition(100,200);
+    	Language.setPosition(500,600);
+        homeText.setPosition(100,100);
+        configText.setPosition(220,100);
+        exitText.setPosition(480,100);
         home = new TextButton(homeText);
         config = new TextButton(configText);
         exit = new TextButton(exitText);
