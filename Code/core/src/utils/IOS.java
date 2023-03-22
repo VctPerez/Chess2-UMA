@@ -1,6 +1,7 @@
 package utils;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 
 /**
@@ -32,7 +33,7 @@ public class IOS implements InputProcessor {
      * @return True | False.
      */
     public boolean isClicked(){
-        return Gdx.input.isTouched();
+        return Gdx.input.isButtonJustPressed(Input.Buttons.LEFT);
     }
 
     @Override

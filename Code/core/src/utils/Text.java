@@ -97,7 +97,7 @@ public class Text {
     }
 
     /**
-     * Devuelve la coordenada y.
+     * Devuelve la coordenada (esquina superior).
      * @return Coord y
      */
     public int getY() {

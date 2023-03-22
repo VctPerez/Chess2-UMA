@@ -13,8 +13,7 @@ import game.chess.GameScreen;
 
 public class Tile extends Actor{
 	protected ShapeRenderer tile;
-	protected Vector2 pos;
-	
+	protected Vector2 pos;	
 	public Piece piece;
 	
 	public Tile(int matrix_x, int matrix_y, float coord_x, float coord_y, float tileSize, int color) {
@@ -50,6 +49,7 @@ public class Tile extends Actor{
 	public void move(int x, int y) {
 		if(piece!=null) {
 			ArrayList<Vector2> movements = piece.getMovement(pos.x, pos.y);
+			System.out.println(movements.toString());
 		
 		}
 		GameScreen.board.getTile(x, y).piece = this.piece;
@@ -57,7 +57,11 @@ public class Tile extends Actor{
 	}
 	
 	public Piece getPiece() {
-		return piece;
+		Piece res = null;
+		if(this!=null) {
+			res = piece;
+		}
+		return res;
 	}
 	
 	public void dispose() {

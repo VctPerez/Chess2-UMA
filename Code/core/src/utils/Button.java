@@ -2,8 +2,9 @@ package utils;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 
-public interface Button {
+public interface Button{
     /**
      * Se encarga de cambiar el tamaño del boton
      * @param width Anchura.

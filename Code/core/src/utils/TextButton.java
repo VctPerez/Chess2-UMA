@@ -3,8 +3,9 @@ package utils;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 
-public class TextButton implements Button {
+public class TextButton extends Actor implements Button {
 
     private Text text;
     private boolean isSelected = false;
