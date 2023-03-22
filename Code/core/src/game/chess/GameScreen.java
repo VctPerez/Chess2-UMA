@@ -40,9 +40,6 @@ public class GameScreen extends AbstractScreen{
 		board = new Board();
 		Background fondo = new Background();
 		fondo.setSize(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
-
-		board.getTile(2, 2).piece = new Pawn();
-		board.getTile(7, 5).piece = new Knight();
 		drawWhites();
 
 
@@ -64,18 +61,7 @@ public class GameScreen extends AbstractScreen{
 		//Escape para volver al menú principal (Prueba)
 		if(inputs.justPressed(Keys.ESCAPE)) {
 			Render.app.setScreen(Render.MAINSCREEN);
-		}else if(inputs.justPressed(Keys.RIGHT)) {
-			board.getTile(x, y).move(x+1, y);
-			x++;		
-		}else if(inputs.justPressed(Keys.LEFT)) {
-			board.getTile(x, y).move(x-1, y);
-			x--;
-		}else if(inputs.justPressed(Keys.UP)) {
-			board.getTile(x, y).move(x, y+1);
-			y++;
-		}else if(inputs.justPressed(Keys.DOWN)) {
-			board.getTile(x, y).move(x, y-1);
-			y--;
+		
 		}else if(enTablero()) { // si se ha clicado dentro del tablero
 			
 			//Si hay una pieza seleccionada
@@ -86,7 +72,7 @@ public class GameScreen extends AbstractScreen{
 				if(board.getTile(xp, yp).piece!=null) {
 					seleccionada=true;
 					//Cambio a la imagen de la misma pieza seleccionada
-					board.getTile(xp, yp).piece.setSprite("piece.png");
+					//board.getTile(xp, yp).piece.setSprite("piece.png");
 					x=xp;
 					y=yp;
 				}
@@ -103,7 +89,7 @@ public class GameScreen extends AbstractScreen{
 						y=yp;
 					}
 				//Cambio a la imagen de la misma pieza sin seleccionar
-				board.getTile(xp, yp).piece.setSprite("piece2.png");
+				//board.getTile(xp, yp).piece.setSprite("piece2.png");
 				seleccionada=false;
 			}
 			
@@ -162,10 +148,10 @@ public class GameScreen extends AbstractScreen{
 				board.getTile(i, 1).piece = new Rook();
 			}
 			if(i==2 || i==7) {
-				board.getTile(i, 1).piece = new Bishop();
+				board.getTile(i, 1).piece = new Knight();
 			}
 			if(i==3 || i==6) {
-				board.getTile(i, 1).piece = new Knight();
+				board.getTile(i, 1).piece = new Bishop();
 			}
 			if(i==4) {
 				board.getTile(i, 1).piece = new Queen();
