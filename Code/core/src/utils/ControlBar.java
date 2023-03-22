@@ -3,17 +3,25 @@ package utils;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 
 public class ControlBar extends Actor implements Button{
 
     Image bar;
     ImageButton controller;
 
+    /**
+     * Crea la barra con su controlador
+     */
     public ControlBar(){
         bar = new Image(Resources.CONTROLBAR_PATH);
         controller = new ImageButton(new Image(Resources.UNSELECTEDBAR_PATH));
-        resize(bar.getDimensions().x * 2, bar.getDimensions().y * 2);
+        resize(bar.getDimensions().x * 3, bar.getDimensions().y * 3);
     }
+
+    /**
+     * Centra el controlador con la barra
+     */
     private void centerController(){
         controller.setPosition(bar.getPosition().x + bar.getDimensions().x /2 - controller.getDimensions().x / 2,
                bar.getPosition().y + bar.getDimensions().y /2 - controller.getDimensions().y / 2);
@@ -40,9 +48,12 @@ public class ControlBar extends Actor implements Button{
 
     @Override
     public void checkPress(IOS input) {
-        System.out.println(input.mouseX);
         if(controller.isSelected()){
             controller.setImage(new Image(Resources.SELECTEDBAR_PATH));
+            if(controller.getCoords().x + controller.getDimensions().x >= bar.getPosition().x
+                    &&controller.getCoords().x + controller.getDimensions().x <= bar.getPosition().x + bar.getDimensions().x){
+                controller.setPosition(input.mouseX - controller.getDimensions().x / 2, controller.getCoords().y);
+            }
         }else{
             controller.setImage(new Image(Resources.UNSELECTEDBAR_PATH));
         }
@@ -54,7 +65,6 @@ public class ControlBar extends Actor implements Button{
         checkPress(inputs);
         controller.establish(inputs, batch);
     }
-
     @Override
     public Vector2 getCoords() {
         return bar.getPosition();
