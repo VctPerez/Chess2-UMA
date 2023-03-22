@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -34,7 +35,7 @@ public class GameScreen extends AbstractScreen{
 	public static Board board;
 	boolean seleccionada=false;
 	private ArrayList<Vector2> currentTile_validMovements = new ArrayList<>();
-	private int current_x,current_y;
+	private int current_x,current_y,original;
 	private Tile currentTile = null;
 	
 	
@@ -73,9 +74,13 @@ public class GameScreen extends AbstractScreen{
 			
 			//Si no hay una pieza seleccionada
 			if(!seleccionada) {
-				current_x = (int) Math.ceil((inputs.mouseX-board.getTile(1, 1).getX())/82);
-				current_y = (int) Math.ceil((inputs.mouseY-board.getTile(1, 1).getY())/82);
-				currentTile = board.getTile(current_x, current_y); 
+				current_x = (int) Math.ceil((inputs.mouseX-board.getTile(1, 1).getX())/84);
+				current_y = (int) Math.ceil((inputs.mouseY-board.getTile(1, 1).getY())/84);
+				currentTile = board.getTile(current_x, current_y);
+				original = Color(currentTile);
+				
+				
+				currentTile.setColor(Color.YELLOW);
 				//Ahora se las coordenadas donde he pulsado
 				if(currentTile!=null && currentTile.getPiece()!=null) {
 					seleccionada=true;
@@ -83,8 +88,15 @@ public class GameScreen extends AbstractScreen{
 					System.out.println(currentTile_validMovements.toString());
 				}
 			}else if(seleccionada){ //Si hay pieza seleccionada
-				int next_x= (int) Math.ceil((inputs.mouseX-board.getTile(1, 1).getX())/82);
-				int next_y= (int) Math.ceil((inputs.mouseY-board.getTile(1, 1).getY())/82);
+				int next_x= (int) Math.ceil((inputs.mouseX-board.getTile(1, 1).getX())/84);
+				int next_y= (int) Math.ceil((inputs.mouseY-board.getTile(1, 1).getY())/84);
+				
+				if(original==1) {
+					currentTile.setColor(Color.WHITE);
+				}else {
+					currentTile.setColor(Color.BLACK);
+				}
+				
 				//Ahora se las coordenadas donde he pulsado
 				
 					//Si no has seleccionado la misma casilla ya seleccionada
@@ -101,6 +113,10 @@ public class GameScreen extends AbstractScreen{
 		
 	}
 
+	private int Color(Tile tile) {
+		return tile.getColor().equals(Color.BLACK) ? -1 : 1;
+	}
+	
 	//Devuelve true si se clica en el tablero
 	private boolean enTablero() {
 		return inputs.isClicked() && inputs.mouseX>=board.getTile(1,1).getX()
