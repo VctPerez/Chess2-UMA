@@ -14,7 +14,7 @@ public class Chess2 extends Game {
 		Render.app = this;
 
 		//this.setScreen(new MainScreen());
-		this.setScreen(new GameScreen());
+		this.setScreen(new MainScreen()); //Si queremos acceder directamente al juego para testear ponemos (new GameScreen())
 	}
 
 	@Override

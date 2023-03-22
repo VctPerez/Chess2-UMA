@@ -117,7 +117,7 @@ public class LectorLineas
 	 * @return
 	 * Devuelve el entero leido del fichero
 	 */
-	public int leerINTLinea(int numeroDeLinea) //Para funcionar necesita que en la linea solo esté el numero
+	public int leerINTLinea(int numeroDeLinea) //Para funcionar necesita que en la linea solo este el numero
 	{
 		String n = leerLinea(numeroDeLinea);
 		return (int) Integer.parseInt(n);
@@ -131,7 +131,7 @@ public class LectorLineas
 	 * @return
 	 * Devuelve el double leido del fichero
 	 */
-	public double leerDOUBLELinea(int numeroDeLinea) //Para funcionar necesita que en la linea solo esté el numero
+	public double leerDOUBLELinea(int numeroDeLinea) //Para funcionar necesita que en la linea solo este el numero
 	{
 		String n = leerLinea(numeroDeLinea);
 		return (double) Double.parseDouble(n);
@@ -147,7 +147,7 @@ public class LectorLineas
 	 * @return
 	 * Devuelve el double leido del fichero
 	 */
-	public boolean leerBOOLEANLinea(int numeroDeLinea) //Para funcionar necesita que en la linea solo esté el boolean ("true" para que devuelva true; "loQueSea" para que devuelva false)
+	public boolean leerBOOLEANLinea(int numeroDeLinea) //Para funcionar necesita que en la linea solo este el boolean ("true" para que devuelva true; "loQueSea" para que devuelva false)
 	{
 		String n = leerLinea(numeroDeLinea);
 		return (boolean) Boolean.parseBoolean(n);
