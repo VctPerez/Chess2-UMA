@@ -13,6 +13,7 @@ public class MenuEjemplo extends ScreenAdapter {
 
     @Override
     public void show() {
+
         Text ejemplo = new Text("Ejemplo", Resources.FONT_MENU_PATH, 100, Color.WHITE, 3);
         boton = new TextButton(ejemplo);
         boton.setPosition(400,400);
@@ -23,17 +24,22 @@ public class MenuEjemplo extends ScreenAdapter {
     public void render(float delta) {
         Render.clearScreen();
 
+        Render.camera.update();
+        Render.Batch.setProjectionMatrix(Render.camera.combined);
+
         Render.Batch.begin();
         boton.establish(inputs, Render.Batch);
         if(boton.isSelected()){
-            System.out.println("presionado");
+            Render.app.setScreen(new GameScreen());
         }
         Render.Batch.end();
     }
 
     @Override
     public void resize(int width, int height) {
-        super.resize(width, height);
+        Render.SCREEN_WIDTH = width;
+        Render.SCREEN_HEIGHT = height;
+        Render.camera.setToOrtho(false, width, height);
     }
 
     @Override

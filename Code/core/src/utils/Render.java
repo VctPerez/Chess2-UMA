@@ -15,14 +15,14 @@ import game.chess.Chess2;
 public class Render {
     public static SpriteBatch Batch;
 
-    public static OrthographicCamera camara;
+    public static OrthographicCamera camera;
 
     public static Viewport viewport;
 
     public static Chess2 app;
 
-    public static int SCREEN_WIDTH = 1920;
-    public static int SCREEN_HEIGHT = 1080;
+    public static int SCREEN_WIDTH = 1280;
+    public static int SCREEN_HEIGHT = 720;
 
     /**
      * Este metodo se encarga de limpiar la pantalla al principio de cada Render.

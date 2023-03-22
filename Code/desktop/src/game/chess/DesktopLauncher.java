@@ -12,9 +12,7 @@ public class DesktopLauncher {
 		
 		config.setForegroundFPS(60);
 		config.setTitle("Chess2");
-		//config.setWindowedMode(1366, 768);
 		config.setWindowedMode(Render.SCREEN_WIDTH, Render.SCREEN_HEIGHT);
-		//config.setWindowedMode(1920, 1080);
 		new Lwjgl3Application(new Chess2(), config);
 	}
 }

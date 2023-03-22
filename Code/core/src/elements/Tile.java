@@ -1,23 +1,26 @@
 package elements;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import game.chess.GameScreen;
 
 public class Tile extends Actor{
 	protected ShapeRenderer tile;
-	
+	protected Vector2 pos;	
 	public Piece piece;
 	
-	public Tile(float x, float y, float tileSize, int color) {
-		
+	public Tile(int matrix_x, int matrix_y, float coord_x, float coord_y, float tileSize, int color) {
+		pos = new Vector2(matrix_x, matrix_y);
 		tile = new ShapeRenderer();
-		setPosition(x,y);
-		setSize(tileSize,tileSize);
+		setPosition(coord_x, coord_y);
+		setSize(tileSize, tileSize);
 		if(color == 1) {
 			setColor(Color.BLACK);
 			
@@ -44,8 +47,21 @@ public class Tile extends Actor{
 	}
 	
 	public void move(int x, int y) {
+		if(piece!=null) {
+			ArrayList<Vector2> movements = piece.getMovement(pos.x, pos.y);
+			System.out.println(movements.toString());
+		
+		}
 		GameScreen.board.getTile(x, y).piece = this.piece;
 		this.piece = null;
+	}
+	
+	public Piece getPiece() {
+		Piece res = null;
+		if(this!=null) {
+			res = piece;
+		}
+		return res;
 	}
 	
 	public void dispose() {
