@@ -32,7 +32,8 @@ public class Knight extends Piece{
 	 * @return
 	 */
 	
-	public ArrayList<Vector2> getMovements(float x, float y) {
+	@Override
+	public ArrayList<Vector2> getMovement(float x, float y) {
 		ArrayList<Vector2> movements = new ArrayList<>();
 		movements.add(new Vector2(x+2,y+1));
 		movements.add(new Vector2(x+1,y+2));
@@ -46,7 +47,11 @@ public class Knight extends Piece{
 	}
 	
 	private Boolean sameColor(Piece piece) {
-		return color==piece.color();
+		boolean same=false;
+		if(piece!=null) {
+			same=color==piece.color();
+		}
+		return same;
 	}
 	
 	public ArrayList<Vector2> getValidMovements(ArrayList<Vector2> movements,Board board){

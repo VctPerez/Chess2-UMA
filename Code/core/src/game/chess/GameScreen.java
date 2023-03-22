@@ -109,7 +109,7 @@ public class GameScreen extends ScreenAdapter{
 	
 	public void drawWhites() {
 		for(int i=1;i<9;i++) {
-			board.getTile(i, 2).piece = new Pawn();
+			board.getTile(i, 2).piece = new Knight();
 		}	
 		for(int i=1;i<9;i++) {
 			if(i==1 || i==8) {
