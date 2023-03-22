@@ -11,8 +11,12 @@ import com.badlogic.gdx.utils.viewport.*;
 import elements.Background;
 import elements.Board;
 import elements.Piece;
+import elements.pieces.Bishop;
+import elements.pieces.King;
 import elements.pieces.Knight;
 import elements.pieces.Pawn;
+import elements.pieces.Queen;
+import elements.pieces.Rook;
 import utils.IOS;
 import utils.Render;
 import utils.Resources;
@@ -39,10 +43,14 @@ public class GameScreen extends AbstractScreen{
 
 		board.getTile(2, 2).piece = new Pawn();
 		board.getTile(7, 5).piece = new Knight();
+		drawWhites();
+
 
 		stage.addActor(fondo);
 		stage.addActor(board);
 	}
+	
+	
 
 	@Override
 	public void render(float delta) {
@@ -101,6 +109,10 @@ public class GameScreen extends AbstractScreen{
 			}
 			
 		}
+		
+		
+		
+		
 	}
 
 	//Devuelve true si se clica en el tablero
@@ -140,6 +152,29 @@ public class GameScreen extends AbstractScreen{
 	public void dispose() {
 		stage.dispose();
 		
+	}
+	
+	public void drawWhites() {
+		for(int i=1;i<9;i++) {
+			board.getTile(i, 2).piece = new Knight();
+		}	
+		for(int i=1;i<9;i++) {
+			if(i==1 || i==8) {
+				board.getTile(i, 1).piece = new Rook();
+			}
+			if(i==2 || i==7) {
+				board.getTile(i, 1).piece = new Bishop();
+			}
+			if(i==3 || i==6) {
+				board.getTile(i, 1).piece = new Knight();
+			}
+			if(i==4) {
+				board.getTile(i, 1).piece = new Queen();
+			}
+			if(i==5) {
+				board.getTile(i, 1).piece = new King();
+			}
+		}
 	}
 
 }
