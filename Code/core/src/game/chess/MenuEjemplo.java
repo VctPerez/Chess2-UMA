@@ -19,6 +19,8 @@ public class MenuEjemplo extends ScreenAdapter {
         Text ejemplo = new Text("Ejemplo", Resources.FONT_MENU_PATH, 100, Color.WHITE, 3);
         boton = new TextButton(ejemplo);
         boton.setPosition(400,400);
+        pruebaCheck = new CheckBox();
+        pruebaCheck.setPosition(200, 200);
 
         Gdx.input.setInputProcessor(inputs);
     }
@@ -32,6 +34,7 @@ public class MenuEjemplo extends ScreenAdapter {
 
         Render.Batch.begin();
         boton.establish(inputs, Render.Batch);
+        pruebaCheck.establish(inputs, Render.Batch);
         if(boton.isSelected()){
             Render.app.setScreen(new GameScreen());
         }
