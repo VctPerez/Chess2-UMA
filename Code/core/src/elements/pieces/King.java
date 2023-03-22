@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 
 import elements.Board;
 import elements.Piece;
+import game.chess.GameScreen;
 import utils.Image;
 import utils.Resources;
 
@@ -15,6 +16,7 @@ public class King extends Piece{
 		this.path = Resources.KING_PATH;
 		this.color = true;
 		this.sprite = new Image(path);
+		this.hasBeenMoved=false;
 	}
 	
 	public void draw(Batch batch, float parentAlpha) {
@@ -37,7 +39,7 @@ public class King extends Piece{
 		movements.add(new Vector2(x-1,y+1));
 		movements.add(new Vector2(x-1,y));
 		movements.add(new Vector2(x-1,y-1));	
-		return movements;
+		return getValidMovements(movements,GameScreen.board);
 	}
 	
 	private Boolean sameColor(Piece piece) {

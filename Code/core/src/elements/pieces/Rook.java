@@ -16,6 +16,7 @@ public class Rook extends Piece{
 		this.path = Resources.ROOK_PATH;
 		this.color = true;
 		this.sprite = new Image(path);
+		this.hasBeenMoved=false;
 	}
 	
 	public void draw(Batch batch, float parentAlpha) {

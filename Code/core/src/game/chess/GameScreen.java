@@ -98,6 +98,7 @@ public class GameScreen extends AbstractScreen{
 				int next_x= (int) Math.ceil((inputs.mouseX-board.getTile(1, 1).getX())/84);
 				int next_y= (int) Math.ceil((inputs.mouseY-board.getTile(1, 1).getY())/84);
 				
+				
 				if(original==1) {
 					currentTile.setColor(Color.WHITE);
 				}else {
