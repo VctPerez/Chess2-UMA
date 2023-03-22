@@ -15,7 +15,7 @@ public class Pawn extends Piece{
 	
 	
 	public Pawn() {
-		this.path = Resources.PAWN_PATH;
+		this.path = "piece2.png";
 		this.hasBeenMoved = false;
 		//this.color = ;
 		this.sprite = new Image(path);

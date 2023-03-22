@@ -33,9 +33,9 @@ public class MainScreen extends AbstractScreen {
         Logo = new Image("Logo.png");
         Logo.setPosition(800,-50);
         Logo.setSize(500, 500);
-        news = new Image("prueba.jpg");
-        news.setPosition(850,400);
-        news.setSize(300, 200);
+        //news = new Image("prueba.jpg");
+        //news.setPosition(850,400);
+        //news.setSize(300, 200);
         Gdx.input.setInputProcessor(inputs);
     }
 
@@ -51,7 +51,7 @@ public class MainScreen extends AbstractScreen {
         
         Titulo.draw();
         Logo.draw(Render.Batch);
-        news.draw(Render.Batch);
+        //news.draw(Render.Batch);
         play.establish(inputs, Render.Batch);
         exit.establish(inputs, Render.Batch);
         confg.establish(inputs, Render.Batch);

@@ -17,6 +17,7 @@ public class Tile extends Actor{
 	public Piece piece;
 	
 	public Tile(int matrix_x, int matrix_y, float coord_x, float coord_y, float tileSize, int color) {
+		
 		pos = new Vector2(matrix_x, matrix_y);
 		tile = new ShapeRenderer();
 		setPosition(coord_x, coord_y);

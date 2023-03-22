@@ -13,6 +13,7 @@ public abstract class Piece extends Actor {
 	protected Boolean color;
 	protected Vector2 movement;
 	protected Boolean hasBeenMoved;
+	protected Boolean selected;
 
 	public Piece() {
 	}
@@ -28,6 +29,12 @@ public abstract class Piece extends Actor {
 	public void hasBeenMoved() {
 
 	}
+	
+	//Para cambiar la imagen de la pieza según sea necesario
+	public void setSprite(String path) {
+		this.sprite = new Image(path);
+	}
+	
 	/*
 	 * public Boolean checkBoard(Board board, float x, float y) { return false; }
 	 */

@@ -24,7 +24,7 @@ public class Knight extends Piece{
 		super.draw(batch, parentAlpha);
 	}
 	/**
-	 * Añade a movements todos los movimientos posibles del caballo
+	 * Aï¿½ade a movements todos los movimientos posibles del caballo
 	 * @param x
 	 * @param y
 	 * @return
