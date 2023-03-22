@@ -20,7 +20,7 @@ import javax.print.attribute.standard.RequestingUserName;
 
 import static utils.Render.app;
 
-public class GameScreen extends ScreenAdapter{
+public class GameScreen extends AbstractScreen{
 	private Stage stage;
 	public static Board board;
 	
@@ -52,6 +52,10 @@ public class GameScreen extends ScreenAdapter{
 
 	}
 	public void update(float delta) {
+		//Escape para volver al menú principal (Prueba)
+		if(inputs.justPressed(Keys.ESCAPE)) {
+			Render.app.setScreen(Render.MAINSCREEN);
+		}
 		if(inputs.justPressed(Keys.RIGHT)) {
 			board.getTile(x, y).move(x+1, y);
 			x++;
