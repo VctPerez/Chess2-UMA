@@ -3,6 +3,7 @@ package utils;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
@@ -13,54 +14,71 @@ public class CheckBox extends Actor implements  Button{
     ShapeRenderer box;
 
     public CheckBox(){
-        // TODO: 22/03/2023     
+    	tick = new Image(Resources.CHECK_PATH);
+    	selected = false;
+    	box = new ShapeRenderer();
+    	resize(100, 100);
     }
 
     @Override
     public void resize(float width, float height) {
-        // TODO: 22/03/2023  
+        tick.setSize(width, height);
     }
 
     @Override
     public void setPosition(float x, float y) {
-        // TODO: 22/03/2023  
+        tick.setPosition(x, y);
     }
 
     @Override
     public void draw(SpriteBatch batch) {
-        // TODO: 22/03/2023  
+        batch.end();
+        box.begin(ShapeType.Line);
+        box.rect(tick.getPosition().x, tick.getPosition().y, tick.getDimensions().x, tick.getDimensions().y);
+        box.end();
+        batch.begin();
+        if(selected) {
+        	tick.draw(batch);
+        }
     }
 
     @Override
     public void checkPress(IOS input) {
-        // TODO: 22/03/2023  
+    	if(input.mouseX>= tick.getPosition().x && input.mouseX <= tick.getPosition().x + tick.getDimensions().x
+        && input.mouseY>= tick.getPosition().y && input.mouseY <= tick.getPosition().y + tick.getDimensions().y) {
+    		box.setColor(Color.WHITE);
+	       	if(input.isClicked()) {
+	       		selected = !selected;
+	       	}
+       }else {
+    	   box.setColor(Color.YELLOW);
+       }
     }
 
     @Override
     public void establish(IOS inputs, SpriteBatch batch) {
-        // TODO: 22/03/2023  
+    	draw(batch);
+    	checkPress(inputs);
     }
 
     @Override
     public Vector2 getCoords() {
-        // TODO: 22/03/2023  
-        return null;
+        return tick.getPosition();
     }
 
     @Override
     public Vector2 getDimensions() {
-//      TODO: 22/03/2023      
-        return null;
+    	return tick.getDimensions();
     }
 
     @Override
     public boolean isSelected() {
-        // TODO: 22/03/2023  
-        return false;
+    	return selected;
     }
 
     @Override
     public void dispose() {
-        // TODO: 22/03/2023  
+        tick.dispose();
+        box.dispose();
     }
 }

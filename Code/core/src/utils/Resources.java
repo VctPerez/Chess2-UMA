@@ -10,7 +10,6 @@ public class Resources {
     public static final String FONT_MENU_PATH = "fonts/Arial.ttf";
     public static final String LOGO_PATH="Logo.png";
     public static final String TEXT_BOX_PATH = "";
-    public static final String CHECK_PATH = "pawn.png";
     public static final String CHECK_PATH = "sprites/Testing-Pieces/Testing-Pawn.png";
 
     // RECURSOS PARTIDA

@@ -24,7 +24,11 @@ public class Bishop extends Piece{
 	}
 	
 	private Boolean sameColor(Piece piece) {
-		return color==piece.color();
+		boolean same=false;
+		if(piece!=null) {
+			same=color==piece.color();
+		}
+		return same;
 	}
 	
 	private Boolean checkBoard(Board board, float x, float y, Boolean validDirection) {
