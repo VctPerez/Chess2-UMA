@@ -8,11 +8,12 @@ public class Board extends Actor{
 	public static Tile[][] board;
 	//private final float X_OFFSET = 128;
 	//private final float Tile_Size = (Gdx.graphics.getWidth() - 2*X_OFFSET)/8;
-	private final float Y_OFFSET = 16;
+	private final float Y_OFFSET = 24;
 	private final float Tile_Size = (Gdx.graphics.getHeight()-2*Y_OFFSET)/8;
 	private final float X_OFFSET = Y_OFFSET + (Gdx.graphics.getWidth()-Gdx.graphics.getHeight())/2;
 	
 	public Board() {
+		System.out.println(Tile_Size);
 		board = new Tile[8][8];
 		int color = 1;
 		
@@ -32,7 +33,11 @@ public class Board extends Actor{
 	 * @return
 	 */
 	public Tile getTile(float x, float y) {
-		return board[(int)x-1][(int)y-1];
+		Tile res = null;
+		if(x>0 && x<=8 && y>0 && y<=8) {
+			res = board[(int)x-1][(int)y-1];
+		}
+		return res;
 	}
 	
 	@Override

@@ -9,22 +9,18 @@ import elements.Piece;
 import utils.Image;
 import utils.Resources;
 
-public class Knight extends Piece{
-	
-	
-	public Knight() {
-		this.path = Resources.KNIGHT_PATH;
-		//this.Movement = ;
+public class King extends Piece{
+	public King() {
+		this.path = Resources.KING_PATH;
 		//this.color = ;
 		this.sprite = new Image(path);
 	}
 	
-	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		super.draw(batch, parentAlpha);
 	}
 	/**
-	 * Añade a movements todos los movimientos posibles del caballo
+	 * Añade a movements todos los movimientos posibles del rey, en todas las direcciones, 1 sola casilla
 	 * @param x
 	 * @param y
 	 * @return
@@ -32,22 +28,14 @@ public class Knight extends Piece{
 	@Override
 	public ArrayList<Vector2> getMovement(float x, float y) {
 		ArrayList<Vector2> movements = new ArrayList<>();
-		movements.add(new Vector2(x+2,y+1));
-		movements.add(new Vector2(x+1,y+2));
-		movements.add(new Vector2(x+2,y-1));
-		movements.add(new Vector2(x+1,y-2));
-		movements.add(new Vector2(x-1,y-2));
-		movements.add(new Vector2(x-2,y+1));
-		movements.add(new Vector2(x-2,y-1));
-		movements.add(new Vector2(x-1,y+2));
+		movements.add(new Vector2(x+1,y+1));
+		movements.add(new Vector2(x+1,y));
+		movements.add(new Vector2(x+1,y-1));
+		movements.add(new Vector2(x,y+1));
+		movements.add(new Vector2(x,y-1));
+		movements.add(new Vector2(x-1,y+1));
+		movements.add(new Vector2(x-1,y));
+		movements.add(new Vector2(x-1,y-1));	
 		return movements;
 	}
-	
-	
-	
-	
-	
-	
-	
-
 }
