@@ -31,15 +31,22 @@ public class King extends Piece{
 	@Override
 	public ArrayList<Vector2> getMovement(float x, float y) {
 		ArrayList<Vector2> movements = new ArrayList<>();
-		movements.add(new Vector2(x+1,y+1));
-		movements.add(new Vector2(x+1,y));
-		movements.add(new Vector2(x+1,y-1));
-		movements.add(new Vector2(x,y+1));
-		movements.add(new Vector2(x,y-1));
-		movements.add(new Vector2(x-1,y+1));
-		movements.add(new Vector2(x-1,y));
-		movements.add(new Vector2(x-1,y-1));	
-		return getValidMovements(movements,GameScreen.board);
+		Board board = GameScreen.board;
+		addMovement(x+1,y+1, board, movements);
+		addMovement(x+1,y, board, movements);
+		addMovement(x+1,y-1, board, movements);
+		addMovement(x,y+1, board, movements);
+		addMovement(x,y-1, board, movements);
+		addMovement(x-1,y+1, board, movements);
+		addMovement(x-1,y, board, movements);
+		addMovement(x-1,y-1, board, movements);	
+		return movements;
+	}
+	
+	public void addMovement(float x, float y, Board board, ArrayList<Vector2> movements) {
+		if(board.getTile(x, y)!=null && !sameColor(board.getTile(x, y).getPiece())) {
+			movements.add(new Vector2(x, y));
+		}
 	}
 	
 	private Boolean sameColor(Piece piece) {
@@ -49,16 +56,7 @@ public class King extends Piece{
 		}
 		return same;
 	}
-	
-	public ArrayList<Vector2> getValidMovements(ArrayList<Vector2> movements,Board board){
-		for(int i=0;i<movements.size();i++) {
-			if(board.getTile(movements.get(i).x, movements.get(i).y)==null 
-				|| sameColor(board.getTile(movements.get(i).x, movements.get(i).y).getPiece())) {
-				movements.remove(i);
-			}
-		}
-		return movements;
-	}
+
 	
 	
 	
