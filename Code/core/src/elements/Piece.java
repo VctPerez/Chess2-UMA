@@ -44,8 +44,14 @@ public abstract class Piece extends Actor {
 	 * public Boolean checkBoard(Board board, float x, float y) { return false; }
 	 */
 
+	
+	public void dispose() {
+		sprite.dispose();
+	}
+	
 	public ArrayList<Vector2> getMovement(float x, float y) {
 		return null;
 	}
+
 
 }
