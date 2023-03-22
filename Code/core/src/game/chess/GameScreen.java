@@ -35,6 +35,7 @@ public class GameScreen extends AbstractScreen{
 	public static Board board;
 	boolean seleccionada=false;
 	private ArrayList<Vector2> currentTile_validMovements = new ArrayList<>();
+	private ArrayList<Integer> originales = new ArrayList<>();
 	private int current_x,current_y,original;
 	private Tile currentTile = null;
 	
@@ -77,14 +78,20 @@ public class GameScreen extends AbstractScreen{
 				current_x = (int) Math.ceil((inputs.mouseX-board.getTile(1, 1).getX())/84);
 				current_y = (int) Math.ceil((inputs.mouseY-board.getTile(1, 1).getY())/84);
 				currentTile = board.getTile(current_x, current_y);
-				original = Color(currentTile);
 				
+				original = Color(currentTile);
+				Vector2 v;
 				
 				currentTile.setColor(Color.YELLOW);
 				//Ahora se las coordenadas donde he pulsado
 				if(currentTile!=null && currentTile.getPiece()!=null) {
 					seleccionada=true;
 					currentTile_validMovements = currentTile.getPiece().getMovement(current_x, current_y);
+					for(int i=0;i<currentTile_validMovements.size();i++) {
+						v=currentTile_validMovements.get(i);
+						originales.add(Color(board.getTile(v.x, v.y)));
+						board.getTile(v.x, v.y).setColor(Color.GREEN);
+					}
 					System.out.println(currentTile_validMovements.toString());
 				}
 			}else if(seleccionada){ //Si hay pieza seleccionada
@@ -102,6 +109,16 @@ public class GameScreen extends AbstractScreen{
 					//Si no has seleccionado la misma casilla ya seleccionada
 					if(currentTile_validMovements.contains(new Vector2(next_x, next_y))) {
 						currentTile.move(next_x, next_y);
+					}
+					Vector2 v;
+					for(int i=0;i<currentTile_validMovements.size();i++) {
+						v=currentTile_validMovements.get(i);
+						originales.add(Color(board.getTile(v.x, v.y)));
+						if(originales.get(i)==1) {
+							board.getTile(v.x, v.y).setColor(Color.WHITE);
+						}else {
+							board.getTile(v.x, v.y).setColor(Color.BLACK);
+						}
 					}
 				seleccionada=false;
 			}
