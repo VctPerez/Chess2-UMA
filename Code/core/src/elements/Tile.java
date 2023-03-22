@@ -48,7 +48,7 @@ public class Tile extends Actor{
 	
 	public void move(int x, int y) {
 		if(piece!=null) {
-			ArrayList<Vector2> movements = piece.getMovement(pos.x, pos.y);
+			ArrayList<Vector2> movements = piece.getMovement(x, y);
 			System.out.println(movements.toString());
 		
 		}

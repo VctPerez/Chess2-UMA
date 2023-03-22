@@ -50,12 +50,12 @@ public class Bishop extends Piece{
 		Vector2 mov;
 		int k = 1;
 		
-		while(validDirection && i<8) {
+		while(validDirection && k<8) {
 			mov = new Vector2(x + i*k, y + j*k);
 			if(checkBoard(GameScreen.board, mov.x, mov.y, validDirection)) {
 				movements.add(mov);
 			}
-			i++;
+			k++;
 		}
 	}
 	
