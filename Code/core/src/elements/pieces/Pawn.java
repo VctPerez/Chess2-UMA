@@ -30,10 +30,7 @@ public class Pawn extends Piece{
 	/**
 	 * Cambia a false el booleano que indica si una pieza no se ha movido la primera vez que se mueva la pieza
 	 */
-	@Override
-	public void hasBeenMoved() {
-		hasBeenMoved = true;
-	}
+	
 	
 	private Boolean sameColor(Piece piece) {
 		boolean same=false;
