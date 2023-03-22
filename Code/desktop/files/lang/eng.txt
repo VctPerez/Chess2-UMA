@@ -1,0 +1,5 @@
+Play
+Home
+Exit
+Configuration
+Volume

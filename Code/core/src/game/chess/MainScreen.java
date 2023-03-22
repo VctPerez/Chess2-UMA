@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
 import utils.*;
+import interaccionFichero.*;
 
 public class MainScreen extends AbstractScreen {
 
@@ -11,18 +12,24 @@ public class MainScreen extends AbstractScreen {
     TextButton play,exit,confg;
     Text playText,exitText,confgText,Titulo;
     Image background,Logo,news;
+    LectorLineas languageReader, configReader;
     
     @Override
     public void show() {
+    	
+    	//Abrir los ficheros de configuracion e idioma
+    	configReader = new LectorLineas("files/config.txt"); //Lector del txt configuracion para sacar el idioma
+    	languageReader = new LectorLineas("files/lang/"+ configReader.leerLinea(1)); //Abrimos el idioma que toca del archivo configuracion
+    	
     	//Fuente Arial para probar
     	Titulo = new Text(Resources.FONT_MENU_PATH,100,Color.WHITE,5);
     	Titulo.setText("Chess2");
     	playText = new Text(Resources.FONT_MENU_PATH,50,Color.WHITE,5);
-    	playText.setText("Jugar");
+    	playText.setText(languageReader.leerLinea(1)); //Jugar = Linea 1
     	exitText = new Text(Resources.FONT_MENU_PATH,50,Color.WHITE,5);
-    	exitText.setText("Salir");
+    	exitText.setText(languageReader.leerLinea(3)); //Salir = Linea 3
     	confgText = new Text(Resources.FONT_MENU_PATH,50,Color.WHITE,5);
-    	confgText.setText("Configuracion");
+    	confgText.setText(languageReader.leerLinea(4)); //Configuracion = Linea 4
     	Titulo.setPosition(100,600);
         playText.setPosition(100,400);
         exitText.setPosition(100,200);
