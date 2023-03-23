@@ -28,8 +28,8 @@ public class ManualScreen extends AbstractScreen{
 	    	
 	    	//Fuente Arial para probar
 	    	Titulo = new Text(Resources.FONT_MENU_PATH,100,Color.WHITE,5);
-	    	Titulo.setText("Instrucciones: ");
-	    	volverText = new Text(Resources.FONT_MENU_PATH,50,Color.WHITE,5);
+	    	Titulo.setText(languageReader.leerLinea(4));
+	    	volverText = new Text(Resources.FONT_MENU_PATH,28,Color.WHITE,5);
 	    	volverText.setText(languageReader.leerLinea(1)); //Jugar = Linea 1
 	    	clasicoText = new Text(Resources.FONT_MENU_PATH,50,Color.WHITE,5);
 	    	clasicoText.setText(languageReader.leerLinea(2)); //Salir = Linea 3
@@ -37,8 +37,8 @@ public class ManualScreen extends AbstractScreen{
 	    	modificadoText.setText(languageReader.leerLinea(3)); //Configuracion = Linea 
 	    	
 	    	Titulo.setPosition(100,600);
-	        volverText.setPosition(100,400);
-	        clasicoText.setPosition(100,100);
+	        volverText.setPosition(100,100);
+	        clasicoText.setPosition(100,400);
 	        modificadoText.setPosition(100,300);
 	        volver = new TextButton(volverText);
 	        clasico = new TextButton(clasicoText);
@@ -70,13 +70,13 @@ public class ManualScreen extends AbstractScreen{
 	        modificado.establish(inputs, Render.Batch);
 	        
 	        if(volver.isSelected()){
-	            Render.app.setScreen(new MainScreen());
+	            Render.app.setScreen(Render.MAINSCREEN);
 	        }
 	        if(clasico.isSelected()) {
-	        	//
+	        	Render.app.setScreen(new ClassicManScreen());
 	        }
 	        if(modificado.isSelected()) {
-	        	//
+	        	//TODO
 	        }
 	        
 	        //-----------------

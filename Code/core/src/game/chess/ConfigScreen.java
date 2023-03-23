@@ -63,10 +63,10 @@ public class ConfigScreen extends AbstractScreen {
         language.establish(inputs, Render.Batch);
         
         if(home.isSelected()){
-            Render.app.setScreen(new MainScreen());
+            Render.app.setScreen(Render.MAINSCREEN);
         }
         if(language.isSelected()){
-            Render.app.setScreen(new LanguageScreen());
+            Render.app.setScreen(Render.LANGUAGESCREEN);
         }
         
         //-----------------

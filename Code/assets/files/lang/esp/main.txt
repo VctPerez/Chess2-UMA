@@ -5,3 +5,4 @@ Configuración
 Volumen
 Idioma
 Manual
+Chess2

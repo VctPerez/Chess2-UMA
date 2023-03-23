@@ -69,53 +69,43 @@ public class GameScreen extends AbstractScreen {
 
 
 	public void update(float delta) {
-		// Escape para volver al menú principal (Prueba)
-		if (inputs.justPressed(Keys.ESCAPE)) {
-			Render.app.setScreen(Render.MAINSCREEN);
+        // Escape para volver al menÃº principal (Prueba)
+        if (inputs.justPressed(Keys.ESCAPE)) {
+        	 Render.app.setScreen(Render.MAINSCREEN);
 
-		} else if (isBoardClicked()) {
+        } else if (isBoardClicked()) {
 
-			if (!isPieceSelected) {
-				current_x = calculateX();
-				current_y = calculateY();
-				currentTile = board.getTile(current_x, current_y);
+            if (!isPieceSelected) {
+                current_x = calculateX();
+                current_y = calculateY();
+                currentTile = board.getTile(current_x, current_y);
 
-				select(currentTile);
+                select(currentTile);
 
-				if(currentTile_validMovements.contains(new Vector2(next_x, next_y))) {
-					
-					//Coronación en caso de peón
-					if(next_y==8.0 && currentTile.piece instanceof Pawn) {
-						board.getTile(current_x, current_y).getPiece().Moved();
-						currentTile.move(next_x, next_y);
-	                    board.getTile(next_x, 8).piece=new Queen(true);
-					}else {
-						board.getTile(current_x, current_y).getPiece().Moved();
-						currentTile.move(next_x, next_y);
-					}
-			} else if (isPieceSelected) {
+            } else if (isPieceSelected) {
 
-				int next_x = calculateX();
-				int next_y = calculateY();
-				Tile nextTile = board.getTile(next_x, next_y);
+                int next_x = calculateX();
+                int next_y = calculateY();
+                Tile nextTile = board.getTile(next_x, next_y);
 
-				if (nextTile.getPiece() != null && currentTile.getPiece().sameColor(nextTile.getPiece())) {
-					currentTile = nextTile;
-					current_x = next_x;
-					current_y = next_y;
+                if (nextTile.getPiece() != null && currentTile.getPiece().sameColor(nextTile.getPiece())) {
+                    currentTile = nextTile;
+                    current_x = next_x;
+                    current_y = next_y;
 
-					lowlight();
-					select(currentTile);
+                    lowlight();
+                    select(currentTile);
 
-				} else {
-					lowlight();
-					moveCurrentPieceTo(next_x, next_y);
-					isPieceSelected = false;
-				}
-				
-			}
-		}
-	}
+                } else {
+                    lowlight();
+                    moveCurrentPieceTo(next_x, next_y);
+                    isPieceSelected = false;
+                }
+
+            }
+        }
+    }
+
 
 	
 	/**
@@ -157,16 +147,16 @@ public class GameScreen extends AbstractScreen {
 	 * @param next_y
 	 */
 	private void moveCurrentPieceTo(int next_x, int next_y) {
-		if (currentTile_validMovements.contains(new Vector2(next_x, next_y))) {
-			if (next_y == 8.0 && currentTile.getPiece() instanceof Pawn) {
-				currentTile.move(next_x, next_y);
-				board.getTile(next_x, next_y).setPiece(new Queen(board.getTile(next_x, next_y).getPiece().color()));
-			} else {
-				currentTile.move(next_x, next_y);
-			}
-			PLAYER1 = !PLAYER1;
-		}	
-	}
+        if (currentTile_validMovements.contains(new Vector2(next_x, next_y))) {
+            if ((next_y == 8.0 || next_y == 1.0) && currentTile.getPiece() instanceof Pawn) {
+                currentTile.move(next_x, next_y);
+                board.getTile(next_x, next_y).setPiece(new Queen(board.getTile(next_x, next_y).getPiece().color()));
+            } else {
+                currentTile.move(next_x, next_y);
+            }
+            PLAYER1 = !PLAYER1;
+        }
+    }
 	
 	private int calculateX() {
 		return (int) Math.ceil((inputs.mouseX - board.getTile(1, 1).getX()) / 84);

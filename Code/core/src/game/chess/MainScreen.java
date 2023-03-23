@@ -23,7 +23,7 @@ public class MainScreen extends AbstractScreen {
     	
     	//Fuente Arial para probar
     	Titulo = new Text(Resources.FONT_MENU_PATH,100,Color.WHITE,5);
-    	Titulo.setText("Chess2");
+    	Titulo.setText(languageReader.leerLinea(8));
     	playText = new Text(Resources.FONT_MENU_PATH,50,Color.WHITE,5);
     	playText.setText(languageReader.leerLinea(1)); //Jugar = Linea 1
     	exitText = new Text(Resources.FONT_MENU_PATH,50,Color.WHITE,5);
@@ -73,16 +73,16 @@ public class MainScreen extends AbstractScreen {
         confg.establish(inputs, Render.Batch);
         
         if(play.isSelected()){
-            Render.app.setScreen(new GameScreen());
+            Render.app.setScreen(Render.GAMESCREEN);
         }
         if(exit.isSelected()) {
         	Gdx.app.exit();
         }
         if(confg.isSelected()) {
-        	Render.app.setScreen(new ConfigScreen());
+        	Render.app.setScreen(Render.CONFIGSCREEN);
         }
         if(reglas.isSelected()) {
-        	Render.app.setScreen(new ManualScreen());
+        	Render.app.setScreen(Render.MANUALSCREEN);
         }
         
         //-----------------

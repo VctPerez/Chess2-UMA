@@ -5,3 +5,4 @@ Configuration
 Volume
 Language
 Manual
+Chess2
