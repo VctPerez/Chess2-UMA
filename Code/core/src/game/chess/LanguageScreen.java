@@ -25,7 +25,7 @@ public class LanguageScreen extends AbstractScreen {
     	//Abrir los ficheros de configuracion e idioma
     	configReader = new LectorLineas("files/config.txt"); //Lector del txt configuracion para sacar el idioma
     	languageConfigReader = new LectorLineas("files/languages.txt"); //Lector del txt donde vienen todos los idiomas implementados
-    	languageReader = new LectorLineas("files/lang/"+ configReader.leerLinea(1)); //Abrimos el idioma que toca del archivo configuracion
+    	languageReader = new LectorLineas("files/lang/"+ configReader.leerLinea(1) + "main.txt"); //Abrimos el idioma que toca del archivo configuracion
     	languageSettingWriter = new EscritorLineas("files/config.txt"); //Para actualizar la configuracion abrimos el escritor en el config.txt 
     	
     	//Fuente Arial para probar
@@ -86,11 +86,11 @@ public class LanguageScreen extends AbstractScreen {
         exit.establish(inputs, Render.Batch);
         
         if(spanish.isSelected()) {
-        	languageSettingWriter.escribirLinea(1, "esp.txt"); //La linea 1 de la configuracion contiene el idioma
+        	languageSettingWriter.escribirLinea(1, "esp/"); //La linea 1 de la configuracion contiene el idioma
         	Render.app.setScreen(new LanguageScreen());
         }
         if(english.isSelected()) {
-        	languageSettingWriter.escribirLinea(1, "eng.txt"); //El nombre es el nombre del archivo txt de idioma
+        	languageSettingWriter.escribirLinea(1, "eng/"); //El nombre es el nombre del archivo txt de idioma
         	Render.app.setScreen(new LanguageScreen());
         }
         
