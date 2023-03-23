@@ -49,7 +49,8 @@ public class GameScreen extends AbstractScreen {
 		Background fondo = new Background();
 		fondo.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
-		drawWhites();
+		placeWhites();
+		placeBlacks();
 
 		stage.addActor(fondo);
 		stage.addActor(board);
@@ -144,9 +145,9 @@ public class GameScreen extends AbstractScreen {
 	 */
 	private void moveCurrentPieceTo(int next_x, int next_y) {
 		if (currentTile_validMovements.contains(new Vector2(next_x, next_y))) {
-			if (next_y == 8.0 && currentTile.piece instanceof Pawn) {
+			if (next_y == 8.0 && currentTile.getPiece() instanceof Pawn) {
 				currentTile.move(next_x, next_y);
-				board.getTile(next_x, 8).piece = new Queen(true);
+				board.getTile(next_x, next_y).setPiece(new Queen(board.getTile(next_x, next_y).getPiece().color()));
 			} else {
 				currentTile.move(next_x, next_y);
 			}
@@ -199,7 +200,7 @@ public class GameScreen extends AbstractScreen {
 
 	}
 
-	public void drawWhites() {
+	public void placeWhites() {
 		for (int i = 1; i < 9; i++) {
 			board.getTile(i, 2).piece = new Pawn(true);
 		}
@@ -218,6 +219,29 @@ public class GameScreen extends AbstractScreen {
 			}
 			if (i == 5) {
 				board.getTile(i, 1).piece = new King(true);
+			}
+		}
+	}
+	
+	private void placeBlacks() {
+		for (int i = 1; i < 9; i++) {
+			board.getTile(i, 7).piece = new Pawn(false);
+		}
+		for (int i = 1; i < 9; i++) {
+			if (i == 1 || i == 8) {
+				board.getTile(i, 8).piece = new Rook(false);
+			}
+			if (i == 2 || i == 7) {
+				board.getTile(i, 8).piece = new Knight(false);
+			}
+			if (i == 3 || i == 6) {
+				board.getTile(i, 8).piece = new Bishop(false);
+			}
+			if (i == 4) {
+				board.getTile(i, 8).piece = new Queen(false);
+			}
+			if (i == 5) {
+				board.getTile(i, 8).piece = new King(false);
 			}
 		}
 	}

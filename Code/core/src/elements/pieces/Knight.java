@@ -14,10 +14,8 @@ import utils.Resources;
 public class Knight extends Piece{
 	
 	
-	public Knight(Boolean Color) {
-		this.path = Resources.KNIGHT_PATH;
-		this.color = Color;
-		this.sprite = new Image(path);
+	public Knight(Boolean color) {
+		super(color, Resources.KNIGHT_PATH);
 	}
 	
 	@Override

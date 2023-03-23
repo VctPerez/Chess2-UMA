@@ -13,11 +13,8 @@ import utils.Resources;
 
 public class Rook extends Piece{
 	private Boolean validDirection;
-	public Rook(Boolean Color) {
-		this.path = Resources.ROOK_PATH;
-		this.color = Color;
-		this.sprite = new Image(path);
-		this.hasBeenMoved=false;
+	public Rook(Boolean color) {
+		super(color, Resources.ROOK_PATH);
 	}
 	
 	public void draw(Batch batch, float parentAlpha) {

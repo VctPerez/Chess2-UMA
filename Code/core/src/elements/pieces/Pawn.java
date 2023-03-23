@@ -14,11 +14,8 @@ import utils.Resources;
 public class Pawn extends Piece{
 	
 	
-	public Pawn(Boolean Color) {
-		this.path = Resources.PAWN_PATH;
-		this.hasBeenMoved = false;
-		this.color = Color;
-		this.sprite = new Image(path);
+	public Pawn(Boolean color) {
+		super(color, Resources.PAWN_PATH);
 	}
 	
 	@Override

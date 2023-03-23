@@ -12,11 +12,8 @@ import utils.Image;
 import utils.Resources;
 
 public class King extends Piece{
-	public King(Boolean Color) {
-		this.path = Resources.KING_PATH;
-		this.color = Color;
-		this.sprite = new Image(path);
-		this.hasBeenMoved=false;
+	public King(Boolean color) {
+		super(color, Resources.KING_PATH);
 	}
 	
 	public void draw(Batch batch, float parentAlpha) {

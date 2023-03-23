@@ -14,10 +14,8 @@ import utils.Resources;
 public class Bishop extends Piece{
 	private Boolean validDirection;
 	
-	public Bishop(Boolean Color) {
-		this.path = Resources.BISHOP_PATH;
-		this.color = Color;
-		this.sprite = new Image(path);
+	public Bishop(Boolean color) {
+		super(color, Resources.BISHOP_PATH);
 	}
 	
 	public void draw(Batch batch, float parentAlpha) {

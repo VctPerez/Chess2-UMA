@@ -39,7 +39,7 @@ public class Tile extends Actor{
 		tile.begin(ShapeType.Filled);
 		tile.rect(getX(), getY(), getWidth(), getHeight());
 		if(highlight) {
-			tile.setColor(Color.YELLOW);
+			tile.setColor(0.97f, 0.9f, 0.33f, 1f);
 		}else {			
 			tile.setColor(getColor());
 		}
@@ -55,7 +55,7 @@ public class Tile extends Actor{
 	
 	public void move(int x, int y) {
 		this.piece.hasBeenMoved();
-		GameScreen.board.getTile(x, y).piece = this.piece;
+		GameScreen.board.getTile(x, y).setPiece(this.piece);
 		this.piece = null;
 	}
 	
@@ -65,6 +65,10 @@ public class Tile extends Actor{
 	 */
 	public Piece getPiece() {
 		return piece;
+	}
+	
+	public void setPiece(Piece piece) {
+		this.piece = piece;
 	}
 	
 	public void dispose() {

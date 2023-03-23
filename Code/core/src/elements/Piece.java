@@ -2,6 +2,7 @@ package elements;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -15,8 +16,17 @@ public abstract class Piece extends Actor {
 	public Boolean hasBeenMoved;
 	protected Boolean selected;
 
-	public Piece() {
+	public Piece(Boolean color, String path) {
+		this.path = path;
+		this.sprite = new Image(path);
+		this.hasBeenMoved=false;
+		this.color = color;
 		
+		if(color) {
+			setColor(Color.WHITE);
+		}else {
+			setColor(0.25f, 0.25f, 0.25f, 1f);
+		}
 	}
 
 	@Override
@@ -24,6 +34,7 @@ public abstract class Piece extends Actor {
 		sprite.setPosition(getX(), getY());
 		sprite.setSize(getWidth(), getHeight());
 		sprite.setScale(getScaleX());
+		sprite.sprt.setColor(getColor());
 		sprite.draw(batch);
 	}
 	
