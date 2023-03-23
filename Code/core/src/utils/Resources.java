@@ -10,16 +10,16 @@ public class Resources {
     public static final String FONT_MENU_PATH = "fonts/Arial.ttf";
     public static final String LOGO_PATH="Logo.png";
     public static final String TEXT_BOX_PATH = "";
-<<<<<<< Updated upstream
+
     public static final String CHECK_PATH = "sprites/Testing-Pieces/Testing-Pawn.png";
     public static final String CONTROLBAR_PATH = "sprites/volumeBar/volumeBar_bar(x2size).png";
     public static final String SELECTEDBAR_PATH = "sprites/volumeBar/volumeBar_selected(x2size).png";
     public static final String UNSELECTEDBAR_PATH = "sprites/volumeBar/volumeBar_unselected(x2size).png";
-=======;
+
     public static final String CHECKBOX_SELECTED = "sprites/checkBox/checkBox_selected.png";
     public static final String CHECKBOX_UNSELECTED = "sprites/checkBox/checkBox_unselected.png";
     //public static final String CHECK_PATH = "sprites/Testing-Pieces/Testing-Pawn.png";
->>>>>>> Stashed changes
+
 
     // RECURSOS PARTIDA
     public static final String PAWN_PATH = "sprites/Testing-Pieces/Testing-Pawn.png";
