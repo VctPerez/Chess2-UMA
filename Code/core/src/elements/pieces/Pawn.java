@@ -14,11 +14,8 @@ import utils.Resources;
 public class Pawn extends Piece{
 	
 	
-	public Pawn(Boolean Color) {
-		this.path = Resources.PAWN_PATH;
-		this.hasBeenMoved = false;
-		this.color = Color;
-		this.sprite = new Image(path);
+	public Pawn(Boolean color) {
+		super(color, Resources.PAWN_PATH);
 	}
 	
 	@Override
@@ -26,20 +23,6 @@ public class Pawn extends Piece{
 		super.draw(batch, parentAlpha);
 	}
 
-	
-	/**
-	 * Cambia a false el booleano que indica si una pieza no se ha movido la primera vez que se mueva la pieza
-	 */
-	
-	
-	private Boolean sameColor(Piece piece) {
-		boolean same=false;
-		if(piece!=null) {
-			same=color==piece.color();
-		}
-		return same;
-	}
-	
 	/**
 	 * Comprueba que las casillas a las que el peon pueda moverse estan dentro del tablero y si tienen alguna pieza dentro
 	 * @param board
@@ -67,15 +50,21 @@ public class Pawn extends Piece{
 	public ArrayList<Vector2> getMovement(float x, float y) {//para implementar esta función en cada pieza habrá que hacerlo de forma diferente
 		ArrayList<Vector2> movements = new ArrayList<>();
 		Vector2 mov;
+		int direction = 1;
+		if(!color) {
+			direction = -1;
+		}
+		
+		
 		for(int i = -1; i<=1; i++) {
-			mov = new Vector2(x + i, y + 1);
+			mov = new Vector2(x + i, y + direction);
 			if(checkBoard(GameScreen.board, i, mov.x, mov.y)) {
 				movements.add(mov);
 			}
 		}
 		if(!hasBeenMoved) {
-			mov = new Vector2(x , y + 2);
-			if(checkBoard(GameScreen.board, 0, mov.x, mov.y)) {
+			mov = new Vector2(x , y + 2*direction);
+			if(checkBoard(GameScreen.board, 0, mov.x, mov.y) && GameScreen.board.getTile(x, y+direction).getPiece()==null) {
 				movements.add(mov);				
 			}
 		}

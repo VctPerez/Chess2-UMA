@@ -10,10 +10,8 @@ import utils.Image;
 import utils.Resources;
 
 public class Queen extends Piece{
-	public Queen(Boolean Color) {
-		this.path = Resources.QUEEN_PATH;
-		this.color = Color;
-		this.sprite = new Image(path);
+	public Queen(Boolean color) {
+		super(color, Resources.QUEEN_PATH);
 	}
 	
 	public void draw(Batch batch, float parentAlpha) {

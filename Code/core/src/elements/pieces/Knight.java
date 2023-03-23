@@ -14,10 +14,8 @@ import utils.Resources;
 public class Knight extends Piece{
 	
 	
-	public Knight(Boolean Color) {
-		this.path = Resources.KNIGHT_PATH;
-		this.color = Color;
-		this.sprite = new Image(path);
+	public Knight(Boolean color) {
+		super(color, Resources.KNIGHT_PATH);
 	}
 	
 	@Override
@@ -52,7 +50,8 @@ public class Knight extends Piece{
 		}
 	}
 	
-	private Boolean sameColor(Piece piece) {
+	@Override
+	public Boolean sameColor(Piece piece) {
 		boolean same=false;
 		if(piece!=null) {
 			same=color==piece.color();

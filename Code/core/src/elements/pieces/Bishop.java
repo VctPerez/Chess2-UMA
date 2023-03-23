@@ -14,18 +14,12 @@ import utils.Resources;
 public class Bishop extends Piece{
 	private Boolean validDirection;
 	
-	public Bishop(Boolean Color) {
-		this.path = Resources.BISHOP_PATH;
-		this.color = Color;
-		this.sprite = new Image(path);
+	public Bishop(Boolean color) {
+		super(color, Resources.BISHOP_PATH);
 	}
 	
 	public void draw(Batch batch, float parentAlpha) {
 		super.draw(batch, parentAlpha);
-	}
-	
-	private Boolean sameColor(Piece piece) {
-		return color==piece.color();
 	}
 	
 	private Boolean checkBoard(Board board, float x, float y) {

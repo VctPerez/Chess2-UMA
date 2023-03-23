@@ -9,6 +9,7 @@ public class ImageButton extends Actor implements Button{
 
     private Image image;
     private boolean selected;
+    private boolean initialPress;
 
     /**
      * Constructor de una imagen boton.
@@ -47,11 +48,19 @@ public class ImageButton extends Actor implements Button{
 
     @Override
     public void checkPress(IOS input) {
-        selected = input.mouseX >= image.getPosition().x &&
-                    input.mouseX <= image.getPosition().x + image.getDimensions().x &&
-                    input.mouseY >= image.getPosition().y &&
-                    input.mouseY <= image.getPosition().y + image.getDimensions().y &&
-                    input.isMousePressed();
+        if(initialPress) {
+        	if(!input.isMousePressed()) {
+        		initialPress = false;
+        		selected = false;
+        	}
+        }else{
+	        if(input.mouseX >= image.getPosition().x && input.mouseX <= image.getPosition().x + image.getDimensions().x
+	        && input.mouseY >= image.getPosition().y && input.mouseY <= image.getPosition().y + image.getDimensions().y
+	        && input.isMousePressed()) {
+	        	selected = true;
+	        	initialPress = true;
+	        }
+        }
     }
 
     @Override

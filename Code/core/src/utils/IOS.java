@@ -51,6 +51,9 @@ public class IOS implements InputProcessor {
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
+        mouseX = screenX;
+        if(Gdx.graphics.isFullscreen()) mouseY= Gdx.graphics.getHeight() - screenY;
+        else mouseY = Render.SCREEN_HEIGHT - screenY ;
         return false;
     }
 

@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import utils.Render;
 
+import java.awt.*;
+
 public class Chess2 extends Game {
 	@Override
 	public void create () {
@@ -13,7 +15,7 @@ public class Chess2 extends Game {
 		Render.camera = new OrthographicCamera(Render.SCREEN_WIDTH, Render.SCREEN_HEIGHT);
 		Render.app = this;
 
-		this.setScreen(new MainScreen());
+		this.setScreen(new MenuEjemplo());
 		//this.setScreen(new GameScreen());
 	}
 

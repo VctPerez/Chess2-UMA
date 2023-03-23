@@ -2,6 +2,7 @@ package elements;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -11,12 +12,20 @@ public abstract class Piece extends Actor {
 	protected String path;
 	protected Image sprite;
 	protected Boolean color;
-	protected Vector2 movement;
 	public Boolean hasBeenMoved;
 	protected Boolean selected;
 
-	public Piece() {
+	public Piece(Boolean color, String path) {
+		this.path = path;
+		this.sprite = new Image(path);
+		this.hasBeenMoved=false;
+		this.color = color;
 		
+		if(color) {
+			setColor(Color.WHITE);
+		}else {
+			setColor(0.25f, 0.25f, 0.25f, 1f);
+		}
 	}
 
 	@Override
@@ -24,6 +33,7 @@ public abstract class Piece extends Actor {
 		sprite.setPosition(getX(), getY());
 		sprite.setSize(getWidth(), getHeight());
 		sprite.setScale(getScaleX());
+		sprite.sprt.setColor(getColor());
 		sprite.draw(batch);
 	}
 	
@@ -31,11 +41,10 @@ public abstract class Piece extends Actor {
 		return color;
 	}
 
-	public void Moved() {
+	public void hasBeenMoved() {
 		hasBeenMoved=true;
 	}
 	
-	//Para cambiar la imagen de la pieza según sea necesario
 	public void setSprite(String path) {
 		this.sprite = new Image(path);
 	}
@@ -43,6 +52,10 @@ public abstract class Piece extends Actor {
 	/*
 	 * public Boolean checkBoard(Board board, float x, float y) { return false; }
 	 */
+	
+	public Boolean sameColor(Piece piece) {
+		return color==piece.color();
+	}
 
 	
 	public void dispose() {
@@ -50,6 +63,13 @@ public abstract class Piece extends Actor {
 	}
 	
 	public ArrayList<Vector2> getMovement(float x, float y) {
+		return null;
+	}
+	private void checkDirection(float x, float y, int i, int j, ArrayList<Vector2> movements) {
+		
+	}
+	
+	private Boolean checkBoard(Board board, float x, float y) {
 		return null;
 	}
 
