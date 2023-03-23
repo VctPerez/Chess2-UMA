@@ -31,7 +31,7 @@ public abstract class Piece extends Actor {
 		return color;
 	}
 
-	public void Moved() {
+	public void hasBeenMoved() {
 		hasBeenMoved=true;
 	}
 	

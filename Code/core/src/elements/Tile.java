@@ -54,6 +54,7 @@ public class Tile extends Actor{
 	}
 	
 	public void move(int x, int y) {
+		this.piece.hasBeenMoved();
 		GameScreen.board.getTile(x, y).piece = this.piece;
 		this.piece = null;
 	}
