@@ -37,6 +37,8 @@ public class GameScreen extends AbstractScreen {
 	private ArrayList<Vector2> currentTile_validMovements = new ArrayList<>();
 	private int current_x, current_y;
 	private Tile currentTile = null;
+	
+	private boolean PLAYER1 = true;
 
 	IOS inputs = new IOS();
 
@@ -128,7 +130,7 @@ public class GameScreen extends AbstractScreen {
 	 * @param tile
 	 */
 	private void select(Tile tile) {
-		if (currentTile.getPiece() != null) {
+		if (currentTile.getPiece() != null && currentTile.getPiece().color()==PLAYER1) {
 			
 			currentTile_validMovements = currentTile.getPiece().getMovement(current_x, current_y);
 			highlight();
@@ -151,6 +153,7 @@ public class GameScreen extends AbstractScreen {
 			} else {
 				currentTile.move(next_x, next_y);
 			}
+			PLAYER1 = !PLAYER1;
 		}	
 	}
 	
