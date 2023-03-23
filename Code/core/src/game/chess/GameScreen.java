@@ -65,64 +65,80 @@ public class GameScreen extends AbstractScreen{
 		stage.draw();
 
 	}
+	
+	private void select(Tile tile) {
+		if(currentTile.getPiece()!=null) {
+			seleccionada=true;
+			
+			currentTile_validMovements = currentTile.getPiece().getMovement(current_x, current_y);
+			
+			highlight();
+			
+			System.out.println(currentTile_validMovements.toString());
+			
+		}
+	}
+	
+	private void highlight() {
+		for(Vector2 vector : currentTile_validMovements) {
+			board.getTile(vector.x, vector.y).highlight=true;
+		}
+	}
+	
+	private void lowlight() {
+		for(Vector2 vector : currentTile_validMovements) {
+			board.getTile(vector.x, vector.y).highlight=false;
+		}
+	}
+	
 	public void update(float delta) {
 		//Escape para volver al menú principal (Prueba)
 		if(inputs.justPressed(Keys.ESCAPE)) {
 			Render.app.setScreen(Render.MAINSCREEN);
 		
 		}else if(enTablero()) { // si se ha clicado dentro del tablero
-			
-			//Si no hay una pieza seleccionada
+	
 			if(!seleccionada) {
 				current_x = calcularX();
 				current_y = calcularY();
 				currentTile = board.getTile(current_x, current_y);
 				
-				//Ahora se las coordenadas donde he pulsado
-				if(currentTile!=null && currentTile.getPiece()!=null) {
-					seleccionada=true;
-					
-					original=Color(currentTile);
-					currentTile.setColor(Color.GREEN);
-					
-					currentTile_validMovements = currentTile.getPiece().getMovement(current_x, current_y);
-					
-					for(Vector2 vector : currentTile_validMovements) {
-						board.getTile(vector.x, vector.y).highlight=true;
-					}
-					
-					System.out.println(currentTile_validMovements.toString());
-					
-				}
+				select(currentTile);
+				
 			}else if(seleccionada){ //Si hay pieza seleccionada
+				
 				int next_x= calcularX();
 				int next_y= calcularY();
+				Tile nextTile = board.getTile(next_x, next_y);
 				
-				if(original==1) {
-					currentTile.setColor(Color.WHITE);
-				}else {
-					currentTile.setColor(Color.BLACK);
-				}
-				
-				for(Vector2 vector : currentTile_validMovements) {
-					board.getTile(vector.x, vector.y).highlight=false;
-
-				}
-
-				if(currentTile_validMovements.contains(new Vector2(next_x, next_y))) {
+				if(nextTile.getPiece()!=null && currentTile.getPiece().sameColor(nextTile.getPiece())) {
+					currentTile = nextTile;
+					current_x = next_x;
+					current_y = next_y;
+					lowlight();
+					select(currentTile);
 					
-					if(next_y==8.0 && currentTile.piece instanceof Pawn) {
-						board.getTile(current_x, current_y).getPiece().Moved();
-						currentTile.move(next_x, next_y);
-	                    board.getTile(next_x, 8).piece=new Queen(true);
-					}else {
-						board.getTile(current_x, current_y).getPiece().Moved();
-						currentTile.move(next_x, next_y);
+				}else {
+					
+					lowlight();
+					
+					if(currentTile_validMovements.contains(new Vector2(next_x, next_y))) {
+						
+						if(next_y==8.0 && currentTile.piece instanceof Pawn) {
+							currentTile.getPiece().Moved();
+							currentTile.move(next_x, next_y);
+							board.getTile(next_x, 8).piece = new Queen(true);
+						}else {
+							currentTile.getPiece().Moved();
+							currentTile.move(next_x, next_y);
+						}
 					}
+					
+					seleccionada=false;
+				}
+					
 				}
 				
-				seleccionada=false;
-			}
 		}		
 		
 	

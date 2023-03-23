@@ -24,10 +24,6 @@ public class Rook extends Piece{
 		super.draw(batch, parentAlpha);
 	}
 	
-	private Boolean sameColor(Piece piece) {
-		return color==piece.color();
-	}
-	
 	private Boolean checkBoard(Board board, float x, float y) {
 		Boolean res = true;
 		

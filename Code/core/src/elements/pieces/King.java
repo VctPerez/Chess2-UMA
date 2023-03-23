@@ -49,7 +49,8 @@ public class King extends Piece{
 		}
 	}
 	
-	private Boolean sameColor(Piece piece) {
+	@Override
+	public Boolean sameColor(Piece piece) {
 		boolean same=false;
 		if(piece!=null) {
 			same=color==piece.color();

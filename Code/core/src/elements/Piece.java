@@ -35,7 +35,6 @@ public abstract class Piece extends Actor {
 		hasBeenMoved=true;
 	}
 	
-	//Para cambiar la imagen de la pieza según sea necesario
 	public void setSprite(String path) {
 		this.sprite = new Image(path);
 	}
@@ -43,6 +42,10 @@ public abstract class Piece extends Actor {
 	/*
 	 * public Boolean checkBoard(Board board, float x, float y) { return false; }
 	 */
+	
+	public Boolean sameColor(Piece piece) {
+		return color==piece.color();
+	}
 
 	
 	public void dispose() {

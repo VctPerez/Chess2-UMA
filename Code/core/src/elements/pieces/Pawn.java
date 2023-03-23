@@ -26,20 +26,6 @@ public class Pawn extends Piece{
 		super.draw(batch, parentAlpha);
 	}
 
-	
-	/**
-	 * Cambia a false el booleano que indica si una pieza no se ha movido la primera vez que se mueva la pieza
-	 */
-	
-	
-	private Boolean sameColor(Piece piece) {
-		boolean same=false;
-		if(piece!=null) {
-			same=color==piece.color();
-		}
-		return same;
-	}
-	
 	/**
 	 * Comprueba que las casillas a las que el peon pueda moverse estan dentro del tablero y si tienen alguna pieza dentro
 	 * @param board
