@@ -50,15 +50,21 @@ public class Pawn extends Piece{
 	public ArrayList<Vector2> getMovement(float x, float y) {//para implementar esta función en cada pieza habrá que hacerlo de forma diferente
 		ArrayList<Vector2> movements = new ArrayList<>();
 		Vector2 mov;
+		int direction = 1;
+		if(!color) {
+			direction = -1;
+		}
+		
+		
 		for(int i = -1; i<=1; i++) {
-			mov = new Vector2(x + i, y + 1);
+			mov = new Vector2(x + i, y + direction);
 			if(checkBoard(GameScreen.board, i, mov.x, mov.y)) {
 				movements.add(mov);
 			}
 		}
 		if(!hasBeenMoved) {
-			mov = new Vector2(x , y + 2);
-			if(checkBoard(GameScreen.board, 0, mov.x, mov.y) && GameScreen.board.getTile(x, y+1).getPiece()==null) {
+			mov = new Vector2(x , y + 2*direction);
+			if(checkBoard(GameScreen.board, 0, mov.x, mov.y) && GameScreen.board.getTile(x, y+direction).getPiece()==null) {
 				movements.add(mov);				
 			}
 		}
