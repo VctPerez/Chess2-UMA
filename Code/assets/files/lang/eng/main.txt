@@ -1,6 +1,7 @@
 Play
 Home
-Exit
+Exit Game
 Configuration
 Volume
 Language
+Manual

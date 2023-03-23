@@ -9,8 +9,8 @@ import interaccionFichero.*;
 public class MainScreen extends AbstractScreen {
 
     IOS inputs = new IOS();
-    TextButton play,exit,confg;
-    Text playText,exitText,confgText,Titulo;
+    TextButton play,exit,confg,reglas;
+    Text playText,exitText,confgText,Titulo,reglasText;
     Image background,Logo,news;
     LectorLineas languageReader, configReader;
     
@@ -19,7 +19,7 @@ public class MainScreen extends AbstractScreen {
     	
     	//Abrir los ficheros de configuracion e idioma
     	configReader = new LectorLineas("files/config.txt"); //Lector del txt configuracion para sacar el idioma
-    	languageReader = new LectorLineas("files/lang/"+ configReader.leerLinea(1)); //Abrimos el idioma que toca del archivo configuracion
+    	languageReader = new LectorLineas("files/lang/"+ configReader.leerLinea(1) + "main.txt"); //Abrimos el idioma que toca del archivo configuracion
     	
     	//Fuente Arial para probar
     	Titulo = new Text(Resources.FONT_MENU_PATH,100,Color.WHITE,5);
@@ -30,16 +30,24 @@ public class MainScreen extends AbstractScreen {
     	exitText.setText(languageReader.leerLinea(3)); //Salir = Linea 3
     	confgText = new Text(Resources.FONT_MENU_PATH,50,Color.WHITE,5);
     	confgText.setText(languageReader.leerLinea(4)); //Configuracion = Linea 4
+    	reglasText = new Text(Resources.FONT_MENU_PATH,50,Color.WHITE,5);
+    	reglasText.setText(languageReader.leerLinea(7)); //Configuracion = Linea 4
+    	
     	Titulo.setPosition(100,600);
         playText.setPosition(100,400);
-        exitText.setPosition(100,200);
+        exitText.setPosition(100,100);
         confgText.setPosition(100,300);
+        reglasText.setPosition(100, 200);
         play = new TextButton(playText);
         exit = new TextButton(exitText);
         confg = new TextButton(confgText);
-        Logo = new Image("Logo.png");
+        reglas = new TextButton(reglasText);
+        
+        Logo = new Image("Logo_Blanco.png");
         Logo.setPosition(800,-50);
         Logo.setSize(500, 500);
+        Logo.setTransparency(0.25f);
+        //TODO scroll con imagenes estilo "noticias del juego"
         //news = new Image("prueba.jpg");
         //news.setPosition(850,400);
         //news.setSize(300, 200);
@@ -59,6 +67,7 @@ public class MainScreen extends AbstractScreen {
         Titulo.draw();
         Logo.draw(Render.Batch);
         //news.draw(Render.Batch);
+        reglas.establish(inputs, Render.Batch);
         play.establish(inputs, Render.Batch);
         exit.establish(inputs, Render.Batch);
         confg.establish(inputs, Render.Batch);
@@ -71,6 +80,9 @@ public class MainScreen extends AbstractScreen {
         }
         if(confg.isSelected()) {
         	Render.app.setScreen(new ConfigScreen());
+        }
+        if(reglas.isSelected()) {
+        	Render.app.setScreen(new ManualScreen());
         }
         
         //-----------------

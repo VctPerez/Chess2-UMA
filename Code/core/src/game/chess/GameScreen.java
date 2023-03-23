@@ -82,6 +82,17 @@ public class GameScreen extends AbstractScreen {
 
 				select(currentTile);
 
+				if(currentTile_validMovements.contains(new Vector2(next_x, next_y))) {
+					
+					//Coronación en caso de peón
+					if(next_y==8.0 && currentTile.piece instanceof Pawn) {
+						board.getTile(current_x, current_y).getPiece().Moved();
+						currentTile.move(next_x, next_y);
+	                    board.getTile(next_x, 8).piece=new Queen(true);
+					}else {
+						board.getTile(current_x, current_y).getPiece().Moved();
+						currentTile.move(next_x, next_y);
+					}
 			} else if (isPieceSelected) {
 
 				int next_x = calculateX();
