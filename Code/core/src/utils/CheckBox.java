@@ -1,22 +1,36 @@
 package utils;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
-public class CheckBox extends Actor implements  Button{
+public class CheckBox extends Actor implements Button{
 
     Image tick;
+    Texture unselectedTexture,selectedTexture;
+    Sprite button;
     boolean selected;
-    ShapeRenderer box;
-
+    /**
+     * Constructor de una Check Box
+     * No tiene parámetros.
+     * La clase extiende de {@link Actor} e implementa la interfaz {@link Button}
+     */
     public CheckBox(){
     	tick = new Image(Resources.CHECK_PATH);
+    	
+    	unselectedTexture = new Texture(Resources.CHECKBOX_UNSELECTED);
+    	selectedTexture = new Texture(Resources.CHECKBOX_SELECTED);
+    	
     	selected = false;
-    	box = new ShapeRenderer();
+    	
+    	button = new Sprite(unselectedTexture);
+    	button.setSize(100, 100);
+    	
     	resize(100, 100);
     }
 
@@ -28,15 +42,12 @@ public class CheckBox extends Actor implements  Button{
     @Override
     public void setPosition(float x, float y) {
         tick.setPosition(x, y);
+        button.setPosition(x, y);
     }
 
     @Override
     public void draw(SpriteBatch batch) {
-        batch.end();
-        box.begin(ShapeType.Line);
-        box.rect(tick.getPosition().x, tick.getPosition().y, tick.getDimensions().x, tick.getDimensions().y);
-        box.end();
-        batch.begin();
+        button.draw(batch);
         if(selected) {
         	tick.draw(batch);
         }
@@ -46,12 +57,12 @@ public class CheckBox extends Actor implements  Button{
     public void checkPress(IOS input) {
     	if(input.mouseX>= tick.getPosition().x && input.mouseX <= tick.getPosition().x + tick.getDimensions().x
         && input.mouseY>= tick.getPosition().y && input.mouseY <= tick.getPosition().y + tick.getDimensions().y) {
-    		box.setColor(Color.WHITE);
+    		button.setTexture(selectedTexture);
 	       	if(input.isClicked()) {
 	       		selected = !selected;
 	       	}
        }else {
-    	   box.setColor(Color.YELLOW);
+    	   button.setTexture(unselectedTexture);
        }
     }
 
@@ -79,6 +90,5 @@ public class CheckBox extends Actor implements  Button{
     @Override
     public void dispose() {
         tick.dispose();
-        box.dispose();
     }
 }
