@@ -12,7 +12,6 @@ public abstract class Piece extends Actor {
 	protected String path;
 	protected Image sprite;
 	protected Boolean color;
-	protected Vector2 movement;
 	public Boolean hasBeenMoved;
 	protected Boolean selected;
 
@@ -64,6 +63,13 @@ public abstract class Piece extends Actor {
 	}
 	
 	public ArrayList<Vector2> getMovement(float x, float y) {
+		return null;
+	}
+	private void checkDirection(float x, float y, int i, int j, ArrayList<Vector2> movements) {
+		
+	}
+	
+	private Boolean checkBoard(Board board, float x, float y) {
 		return null;
 	}
 
