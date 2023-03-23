@@ -10,7 +10,7 @@ public class MenuEjemplo extends ScreenAdapter {
     IOS inputs = new IOS();
     TextButton boton;
     CheckBox pruebaCheck;
-    ControlBar pruebaBarra;
+    Slider pruebaBarra;
 
     Image background;
 
@@ -23,7 +23,7 @@ public class MenuEjemplo extends ScreenAdapter {
         pruebaCheck = new CheckBox();
         pruebaCheck.setPosition(200, 200);
 
-        pruebaBarra = new ControlBar();
+        pruebaBarra = new Slider();
         pruebaBarra.setPosition(600,600);
 
         Gdx.input.setInputProcessor(inputs);

@@ -47,15 +47,11 @@ public class ImageButton extends Actor implements Button{
 
     @Override
     public void checkPress(IOS input) {
-       if (input.mouseX >= image.getPosition().x &&
-                    input.mouseX <= image.getPosition().x + image.getDimensions().x &&
-                    input.mouseY >= image.getPosition().y &&
-                    input.mouseY <= image.getPosition().y + image.getDimensions().y &&
-                    input.isMousePressed()){
-           selected = true;
-       }else{
-           selected = false;
-       }
+        selected = input.mouseX >= image.getPosition().x &&
+                input.mouseX <= image.getPosition().x + image.getDimensions().x &&
+                input.mouseY >= image.getPosition().y &&
+                input.mouseY <= image.getPosition().y + image.getDimensions().y &&
+                input.isMousePressed();
     }
 
     @Override

@@ -3,20 +3,21 @@ package utils;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 
-public class ControlBar extends Actor implements Button{
+public class Slider extends Actor implements Button{
 
     Image bar;
     ImageButton controller;
 
+    int value= 50;
+
     /**
      * Crea la barra con su controlador
      */
-    public ControlBar(){
+    public Slider(){
         bar = new Image(Resources.CONTROLBAR_PATH);
         controller = new ImageButton(new Image(Resources.UNSELECTEDBAR_PATH));
-        resize(bar.getDimensions().x * 3, bar.getDimensions().y * 3);
+        resize(bar.getDimensions().x * 1.5f, bar.getDimensions().y * 1.5f);
     }
 
     /**
@@ -24,7 +25,7 @@ public class ControlBar extends Actor implements Button{
      */
     private void centerController(){
         controller.setPosition(bar.getPosition().x + bar.getDimensions().x /2 - controller.getDimensions().x / 2,
-               bar.getPosition().y + bar.getDimensions().y /2 - controller.getDimensions().y / 2);
+                bar.getPosition().y + bar.getDimensions().y /2 - controller.getDimensions().y / 2);
     }
 
     @Override
@@ -50,9 +51,14 @@ public class ControlBar extends Actor implements Button{
     public void checkPress(IOS input) {
         if(controller.isSelected()){
             controller.setImage(new Image(Resources.SELECTEDBAR_PATH));
-            if(controller.getCoords().x + controller.getDimensions().x >= bar.getPosition().x
-                    &&controller.getCoords().x + controller.getDimensions().x <= bar.getPosition().x + bar.getDimensions().x){
+            if(input.mouseX  >= bar.getPosition().x
+                    && input.mouseX - controller.getDimensions().x / 2 <= bar.getPosition().x + bar.getDimensions().x - controller.getDimensions().x / 2){
                 controller.setPosition(input.mouseX - controller.getDimensions().x / 2, controller.getCoords().y);
+                if(input.mouseX - controller.getDimensions().x / 2 == bar.getPosition().x){
+                    value = 0;
+                }else{
+                    value = (int) ((controller.getCoords().x + controller.getDimensions().x /2 - bar.getPosition().x) * 100 / bar.getDimensions().x);
+                }
             }
         }else{
             controller.setImage(new Image(Resources.UNSELECTEDBAR_PATH));
@@ -78,6 +84,10 @@ public class ControlBar extends Actor implements Button{
     @Override
     public boolean isSelected() {
         return controller.isSelected();
+    }
+
+    public float getValue() {
+        return value;
     }
 
     @Override
