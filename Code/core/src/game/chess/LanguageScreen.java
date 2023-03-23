@@ -34,7 +34,7 @@ public class LanguageScreen extends AbstractScreen {
     	
     	//Menu idiomas
     	spanishText = new Text(Resources.FONT_MENU_PATH,50,Color.WHITE,5);
-    	spanishText.setText(languageConfigReader.leerLinea(1)); //Español = Linea 1 
+    	spanishText.setText(languageConfigReader.leerLinea(1)); //Espaï¿½ol = Linea 1 
     	englishText = new Text(Resources.FONT_MENU_PATH,50,Color.WHITE,5);
     	englishText.setText(languageConfigReader.leerLinea(2)); //Ingles = Linea 2 
     	
@@ -59,9 +59,6 @@ public class LanguageScreen extends AbstractScreen {
         Logo = new Image("Logo.png");
         Logo.setPosition(800,-50);
         Logo.setSize(500, 500);
-        //news = new Image("prueba.jpg");
-        //news.setPosition(850,400);
-        //news.setSize(300, 200);
         Gdx.input.setInputProcessor(inputs);
     }
 
