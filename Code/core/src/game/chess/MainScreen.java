@@ -31,7 +31,7 @@ public class MainScreen extends AbstractScreen {
     	confgText = new Text(Resources.FONT_MENU_PATH,50,Color.WHITE,5);
     	confgText.setText(languageReader.leerLinea(4)); //Configuracion = Linea 4
     	reglasText = new Text(Resources.FONT_MENU_PATH,50,Color.WHITE,5);
-    	reglasText.setText(languageReader.leerLinea(4)); //Configuracion = Linea 4
+    	reglasText.setText(languageReader.leerLinea(7)); //Configuracion = Linea 4
     	
     	Titulo.setPosition(100,600);
         playText.setPosition(100,400);
@@ -43,10 +43,10 @@ public class MainScreen extends AbstractScreen {
         confg = new TextButton(confgText);
         reglas = new TextButton(reglasText);
         
-        Logo = new Image("Logo.png");
+        Logo = new Image("Logo_Blanco.png");
         Logo.setPosition(800,-50);
         Logo.setSize(500, 500);
-        //Logo.setTransparency(0.25f);
+        Logo.setTransparency(0.25f);
         //TODO scroll con imagenes estilo "noticias del juego"
         //news = new Image("prueba.jpg");
         //news.setPosition(850,400);

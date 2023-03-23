@@ -10,8 +10,8 @@ import utils.*;
 public class LanguageScreen extends AbstractScreen {
 
     IOS inputs = new IOS();
-    TextButton home,exit,config;
-    Text homeText,exitText,Language,configText;
+    TextButton home,config;
+    Text homeText,Language,configText;
     Image background,Logo,news;
     LectorLineas languageReader, configReader, languageConfigReader;
     EscritorLineas languageSettingWriter;
@@ -43,22 +43,20 @@ public class LanguageScreen extends AbstractScreen {
     	homeText.setText(languageReader.leerLinea(2)); //Inicio = Linea 2
     	configText = new Text(Resources.FONT_MENU_PATH,28,Color.WHITE,5);
     	configText.setText(languageReader.leerLinea(4)); //Configuracion = Linea 4
-    	exitText = new Text(Resources.FONT_MENU_PATH,28,Color.WHITE,5);
-    	exitText.setText(languageReader.leerLinea(3)); //Salir = Linea 3
     	Language.setPosition(500,600);
     	spanishText.setPosition(100, 400);
     	englishText.setPosition(100, 300);
         homeText.setPosition(100,100);
         configText.setPosition(220,100);
-        exitText.setPosition(480,100);
         home = new TextButton(homeText);
         config = new TextButton(configText);
-        exit = new TextButton(exitText);
         spanish = new TextButton(spanishText);
         english = new TextButton(englishText);
-        Logo = new Image("Logo.png");
+        Logo = new Image("Logo_Blanco.png");
         Logo.setPosition(800,-50);
         Logo.setSize(500, 500);
+        Logo.setTransparency(0.25f);
+        
         Gdx.input.setInputProcessor(inputs);
     }
 
@@ -80,7 +78,6 @@ public class LanguageScreen extends AbstractScreen {
         
         home.establish(inputs, Render.Batch);
         config.establish(inputs, Render.Batch);
-        exit.establish(inputs, Render.Batch);
         
         if(spanish.isSelected()) {
         	languageSettingWriter.escribirLinea(1, "esp/"); //La linea 1 de la configuracion contiene el idioma
@@ -97,9 +94,6 @@ public class LanguageScreen extends AbstractScreen {
         }
         if(config.isSelected()) {
         	Render.app.setScreen(new ConfigScreen());
-        }
-        if(exit.isSelected()) {
-        	Gdx.app.exit();
         }
         
         //-----------------

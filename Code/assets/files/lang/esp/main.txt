@@ -1,6 +1,7 @@
 Jugar
-Inicio
-Salir
-Configuracion
+Volver
+Salir del Juego
+Configuración
 Volumen
 Idioma
+Manual

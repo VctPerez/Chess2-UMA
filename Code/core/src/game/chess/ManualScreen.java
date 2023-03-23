@@ -24,7 +24,7 @@ public class ManualScreen extends AbstractScreen{
 	    	
 	    	//Abrir los ficheros de configuracion e idioma
 	    	configReader = new LectorLineas("files/config.txt"); //Lector del txt configuracion para sacar el idioma
-	    	languageReader = new LectorLineas("files/lang/"+ configReader.leerLinea(1)); //Abrimos el idioma que toca del archivo configuracion
+	    	languageReader = new LectorLineas("files/lang/"+ configReader.leerLinea(1) + "Manual.txt"); //Abrimos el idioma que toca del archivo configuracion
 	    	
 	    	//Fuente Arial para probar
 	    	Titulo = new Text(Resources.FONT_MENU_PATH,100,Color.WHITE,5);
@@ -32,9 +32,9 @@ public class ManualScreen extends AbstractScreen{
 	    	volverText = new Text(Resources.FONT_MENU_PATH,50,Color.WHITE,5);
 	    	volverText.setText(languageReader.leerLinea(1)); //Jugar = Linea 1
 	    	clasicoText = new Text(Resources.FONT_MENU_PATH,50,Color.WHITE,5);
-	    	clasicoText.setText(languageReader.leerLinea(3)); //Salir = Linea 3
+	    	clasicoText.setText(languageReader.leerLinea(2)); //Salir = Linea 3
 	    	modificadoText = new Text(Resources.FONT_MENU_PATH,50,Color.WHITE,5);
-	    	modificadoText.setText(languageReader.leerLinea(4)); //Configuracion = Linea 
+	    	modificadoText.setText(languageReader.leerLinea(3)); //Configuracion = Linea 
 	    	
 	    	Titulo.setPosition(100,600);
 	        volverText.setPosition(100,400);
@@ -44,10 +44,10 @@ public class ManualScreen extends AbstractScreen{
 	        clasico = new TextButton(clasicoText);
 	        modificado = new TextButton(modificadoText);
 	        
-	        Logo = new Image("Logo.png");
+	        Logo = new Image("Logo_Blanco.png");
 	        Logo.setPosition(800,-50);
 	        Logo.setSize(500, 500);
-	        Logo.setTransparency(0.75f);
+	        Logo.setTransparency(0.25f);
 	        
 	        Gdx.input.setInputProcessor(inputs);
 	    }
