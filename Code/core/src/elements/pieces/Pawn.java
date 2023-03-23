@@ -58,7 +58,7 @@ public class Pawn extends Piece{
 		}
 		if(!hasBeenMoved) {
 			mov = new Vector2(x , y + 2);
-			if(checkBoard(GameScreen.board, 0, mov.x, mov.y)) {
+			if(checkBoard(GameScreen.board, 0, mov.x, mov.y) && GameScreen.board.getTile(x, y+1).getPiece()==null) {
 				movements.add(mov);				
 			}
 		}
