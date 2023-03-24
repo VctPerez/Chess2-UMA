@@ -56,6 +56,7 @@ public class MainScreen extends AbstractScreen {
         //news.setSize(300, 200);
         Gdx.input.setInputProcessor(inputs);
         Render.bgMusic = Render.app.getManager().get(Resources.MENU_THEME);
+        Render.bgMusic.setLooping(true);
         Render.bgMusic.play();
     }
 
