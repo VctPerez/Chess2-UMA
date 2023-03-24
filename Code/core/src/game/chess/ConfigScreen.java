@@ -10,8 +10,8 @@ import utils.*;
 public class ConfigScreen extends AbstractScreen {
 
     IOS inputs = new IOS();
-    TextButton home,exit,language;
-    Text homeText,exitText,Titulo,volumeText,languageText;
+    TextButton home,language;
+    Text homeText,Titulo,volumeText,languageText;
     Image background,Logo,news;
     LectorLineas languageReader, configReader;
     
@@ -20,7 +20,7 @@ public class ConfigScreen extends AbstractScreen {
     	
     	//Abrir los ficheros de configuracion e idioma
     	configReader = new LectorLineas("files/config.txt"); //Lector del txt configuracion para sacar el idioma
-    	languageReader = new LectorLineas("files/lang/"+ configReader.leerLinea(1)); //Abrimos el idioma que toca del archivo configuracion
+    	languageReader = new LectorLineas("files/lang/"+ configReader.leerLinea(1) + "main.txt"); //Abrimos el idioma que toca del archivo configuracion
     	
     	//Fuente Arial para probar
     	Titulo = new Text(Resources.FONT_MENU_PATH,100,Color.WHITE,5);
@@ -31,22 +31,17 @@ public class ConfigScreen extends AbstractScreen {
     	volumeText.setText(languageReader.leerLinea(5)); //Volumen = Linea 5
     	languageText = new Text(Resources.FONT_MENU_PATH,50,Color.WHITE,5);
     	languageText.setText(languageReader.leerLinea(6)); //Idioma = Linea 6
-    	exitText = new Text(Resources.FONT_MENU_PATH,50,Color.WHITE,5);
-    	exitText.setText(languageReader.leerLinea(3)); //Salir = Linea 3
     	Titulo.setPosition(100,600);
         homeText.setPosition(100,400);
         volumeText.setPosition(100,300);
         languageText.setPosition(100,200);
-        exitText.setPosition(100,100);
         home = new TextButton(homeText);
         language = new TextButton(languageText);
-        exit = new TextButton(exitText);
-        Logo = new Image("Logo.png");
+        Logo = new Image("Logo_Blanco.png");
         Logo.setPosition(800,-50);
         Logo.setSize(500, 500);
-        //news = new Image("prueba.jpg");
-        //news.setPosition(850,400);
-        //news.setSize(300, 200);
+        Logo.setTransparency(0.25f);
+        
         Gdx.input.setInputProcessor(inputs);
     }
 
@@ -66,16 +61,12 @@ public class ConfigScreen extends AbstractScreen {
         home.establish(inputs, Render.Batch);
         volumeText.draw();
         language.establish(inputs, Render.Batch);
-        exit.establish(inputs, Render.Batch);
         
         if(home.isSelected()){
-            Render.app.setScreen(new MainScreen());
+            Render.app.setScreen(Render.MAINSCREEN);
         }
         if(language.isSelected()){
-            Render.app.setScreen(new LanguageScreen());
-        }
-        if(exit.isSelected()) {
-        	Gdx.app.exit();
+            Render.app.setScreen(Render.LANGUAGESCREEN);
         }
         
         //-----------------

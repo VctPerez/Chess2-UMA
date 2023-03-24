@@ -1,6 +1,0 @@
-Play
-Home
-Exit
-Configuration
-Volume
-Language
