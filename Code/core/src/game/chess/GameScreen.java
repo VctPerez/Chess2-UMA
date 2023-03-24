@@ -105,7 +105,7 @@ public class GameScreen extends AbstractScreen {
                     	moveCurrentPieceTo(next_x, next_y);
 						noEnPassant();
 						((Pawn) nextTile.getPiece()).enPassantable = true;
-						System.out.println(((Pawn)nextTile.getPiece()).enPassantable);
+						System.out.println("Puede hacer en passant: "+((Pawn)nextTile.getPiece()).enPassantable);
                     }else if (currentTile.getPiece() instanceof Pawn && isEnPassant(current_x,current_y,next_x,next_y,(Pawn)currentTile.getPiece())){
 						moveCurrentPieceTo(next_x,next_y);
 						board.getTile(next_x,next_y + (nextTile.getPiece().color()?-1:1)).setPiece(null);
@@ -159,15 +159,18 @@ public class GameScreen extends AbstractScreen {
 	 */
 	private void noEnPassant(){
 		Tile atajo;
+		Pawn p;
 		for (int x = 1; x < 9; x++){
 			atajo = board.getTile(x,4);
-			if (atajo != null && atajo.getPiece() instanceof Pawn p){
+			if (atajo != null && atajo.getPiece() instanceof Pawn){
+				p = (Pawn) atajo.getPiece();
 				p.enPassantable = false;
 			}
 		}
 		for (int x = 1; x < 9; x++){
 			atajo = board.getTile(x,5);
-			if (atajo != null && atajo.getPiece() instanceof Pawn p){
+			if (atajo != null && atajo.getPiece() instanceof Pawn){
+				p = (Pawn) atajo.getPiece();
 				p.enPassantable = false;
 			}
 		}
