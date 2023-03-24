@@ -27,13 +27,13 @@ public class ManualScreen extends AbstractScreen{
 	    	languageReader = new LectorLineas("files/lang/"+ configReader.leerLinea(1) + "Manual.txt"); //Abrimos el idioma que toca del archivo configuracion
 	    	
 	    	//Fuente Arial para probar
-	    	Titulo = new Text(Resources.FONT_MENU_PATH,100,Color.WHITE,5);
+	    	Titulo = new Text(Resources.FONT_MENU_PATH,100,Color.WHITE,3);
 	    	Titulo.setText(languageReader.leerLinea(4));
-	    	volverText = new Text(Resources.FONT_MENU_PATH,28,Color.WHITE,5);
+	    	volverText = new Text(Resources.FONT_MENU_PATH,28,Color.WHITE,3);
 	    	volverText.setText(languageReader.leerLinea(1)); //Jugar = Linea 1
-	    	clasicoText = new Text(Resources.FONT_MENU_PATH,50,Color.WHITE,5);
+	    	clasicoText = new Text(Resources.FONT_MENU_PATH,50,Color.WHITE,3);
 	    	clasicoText.setText(languageReader.leerLinea(2)); //Salir = Linea 3
-	    	modificadoText = new Text(Resources.FONT_MENU_PATH,50,Color.WHITE,5);
+	    	modificadoText = new Text(Resources.FONT_MENU_PATH,50,Color.WHITE,3);
 	    	modificadoText.setText(languageReader.leerLinea(3)); //Configuracion = Linea 
 	    	
 	    	Titulo.setPosition(100,600);

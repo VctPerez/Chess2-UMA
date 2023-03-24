@@ -3,21 +3,20 @@ package elements;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import utils.Image;
 
 public abstract class Piece extends Actor {
-	protected String path;
 	protected Image sprite;
 	protected Boolean color;
 	public Boolean hasBeenMoved;
 	protected Boolean selected;
 
-	public Piece(Boolean color, String path) {
-		this.path = path;
-		this.sprite = new Image(path);
+	public Piece(Boolean color, Texture texture) {
+		this.sprite = new Image(texture);
 		this.hasBeenMoved=false;
 		this.color = color;
 		

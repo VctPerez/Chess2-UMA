@@ -23,13 +23,13 @@ public class ConfigScreen extends AbstractScreen {
     	languageReader = new LectorLineas("files/lang/"+ configReader.leerLinea(1) + "main.txt"); //Abrimos el idioma que toca del archivo configuracion
     	
     	//Fuente Arial para probar
-    	Titulo = new Text(Resources.FONT_MENU_PATH,100,Color.WHITE,5);
+    	Titulo = new Text(Resources.FONT_MENU_PATH,100,Color.WHITE,3);
     	Titulo.setText(languageReader.leerLinea(4)); //Configuracion = Linea 4
-    	homeText = new Text(Resources.FONT_MENU_PATH,50,Color.WHITE,5);
+    	homeText = new Text(Resources.FONT_MENU_PATH,50,Color.WHITE,3);
     	homeText.setText(languageReader.leerLinea(2)); //Inicio = Linea 2
-    	volumeText = new Text(Resources.FONT_MENU_PATH,50,Color.WHITE,5);
+    	volumeText = new Text(Resources.FONT_MENU_PATH,50,Color.WHITE,3);
     	volumeText.setText(languageReader.leerLinea(5)); //Volumen = Linea 5
-    	languageText = new Text(Resources.FONT_MENU_PATH,50,Color.WHITE,5);
+    	languageText = new Text(Resources.FONT_MENU_PATH,50,Color.WHITE,3);
     	languageText.setText(languageReader.leerLinea(6)); //Idioma = Linea 6
     	Titulo.setPosition(100,600);
         homeText.setPosition(100,400);

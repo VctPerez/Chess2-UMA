@@ -2,6 +2,7 @@ package elements.pieces;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 
@@ -9,13 +10,14 @@ import elements.Board;
 import elements.Piece;
 import game.chess.GameScreen;
 import utils.Image;
+import utils.Render;
 import utils.Resources;
 
 public class Pawn extends Piece{
 	
 	
 	public Pawn(Boolean color) {
-		super(color, Resources.PAWN_PATH);
+		super(color, Render.app.getManager().get(Resources.PAWN_PATH, Texture.class));
 	}
 	
 	@Override

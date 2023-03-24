@@ -2,16 +2,18 @@ package elements.pieces;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 
 import elements.Piece;
 import utils.Image;
+import utils.Render;
 import utils.Resources;
 
 public class Queen extends Piece{
 	public Queen(Boolean color) {
-		super(color, Resources.QUEEN_PATH);
+		super(color, Render.app.getManager().get(Resources.QUEEN_PATH, Texture.class));
 	}
 	
 	public void draw(Batch batch, float parentAlpha) {
