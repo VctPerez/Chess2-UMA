@@ -47,6 +47,11 @@ public class ImageButton extends Actor implements Button{
     }
 
     @Override
+    /**
+     * CheckPress comprueba en cada frame si el ImageButton esta pulsado.
+     * Para mantener la pulsacion fuera de los límites del boton se utiliza la variable initialPress. Mientras este valor se mantenga
+     * a true, la pieza seguirá seleccionada.
+     */
     public void checkPress(IOS input) {
         if(initialPress) {
         	if(!input.isMousePressed()) {
