@@ -72,21 +72,24 @@ public class GameScreen extends AbstractScreen {
         // Escape para volver al menÃº principal (Prueba)
         if (inputs.justPressed(Keys.ESCAPE)) {
         	 Render.app.setScreen(Render.MAINSCREEN);
-
-        } else if (isBoardClicked()) {
+        // R para reiniciar la partida (Pruebas)
+        }else if(inputs.justPressed(Keys.R)) {
+       	 Render.app.setScreen(new GameScreen());
+        }else if(isBoardClicked()) {
 
             if (!isPieceSelected) {
                 current_x = calculateX();
                 current_y = calculateY();
                 currentTile = board.getTile(current_x, current_y);
-
+                         
                 select(currentTile);
-
+                   
             } else if (isPieceSelected) {
 
                 int next_x = calculateX();
                 int next_y = calculateY();
                 Tile nextTile = board.getTile(next_x, next_y);
+                
 
                 if (nextTile.getPiece() != null && currentTile.getPiece().sameColor(nextTile.getPiece())) {
                     currentTile = nextTile;
@@ -95,25 +98,61 @@ public class GameScreen extends AbstractScreen {
 
                     lowlight();
                     select(currentTile);
-
+            
                 } else {
                     lowlight();
-                    moveCurrentPieceTo(next_x, next_y);
+                    if(currentTile.getPiece() instanceof King && next_x==current_x-2 && board.getTile(1, current_y).piece!=null) {
+                    	moveCurrentPieceTo(next_x, next_y);
+                    	System.out.println("siguiente x: " + next_x);
+                    	board.getTile(1, current_y).move(current_x-1,current_y);
+                    }else if(currentTile.getPiece() instanceof King && next_x==current_x+2 && board.getTile(8, current_y).piece!=null){
+                    	moveCurrentPieceTo(next_x, next_y);
+                    	board.getTile(8, current_y).move(current_x+1,current_y);	
+                    }else {
+                    	moveCurrentPieceTo(next_x, next_y);
+                    }
                     isPieceSelected = false;
+                    }
+                    
                 }
 
             }
         }
-    }
 
 
-	
+	//Comprueba que se pueda enrocar, queda comprobar que el camino no esté amenazado, que será implementado en este método también
+	private boolean freetocast(int x, int y,int dest) {
+		boolean res=true; 
+		if(dest>x) {
+			for(int i=x+1; i<dest;i++) {
+				System.out.println(i);
+				if(board.getTile(i, y).piece!=null) {
+					res=false;
+				}
+			}
+		}else {
+			for(int i=x-1; i>dest;i--) {
+				if(board.getTile(i, y).piece!=null) {
+					res=false;
+				}
+			}
+		}
+		return res;
+	}
+
 	/**
 	 * Resalta las casillas contenidas en el array de movimientos válidos
+	 * @param b 
 	 */
-	private void highlight() {
+	private void highlight(Boolean b) {
 		for (Vector2 vector : currentTile_validMovements) {
-			board.getTile(vector.x, vector.y).highlight = true;
+			Tile tile = board.getTile(vector.x, vector.y);
+			//En caso de que haya una pieza enemiga la resalta en rojo
+			if(tile.piece!=null && tile.piece.color()!=b) {
+				tile.attacked=true;
+			}else {
+				tile.highlight = true;
+			}
 		}
 	}
 	
@@ -122,7 +161,12 @@ public class GameScreen extends AbstractScreen {
 	 */
 	private void lowlight() {
 		for (Vector2 vector : currentTile_validMovements) {
-			board.getTile(vector.x, vector.y).highlight = false;
+			Tile tile = board.getTile(vector.x, vector.y);
+			if(tile.piece!=null) {
+				tile.attacked=false;
+			}else {
+				tile.highlight = false;
+			}
 		}
 	}
 	
@@ -133,12 +177,31 @@ public class GameScreen extends AbstractScreen {
 	private void select(Tile tile) {
 		if (currentTile.getPiece() != null && currentTile.getPiece().color()==PLAYER1) {
 			
-			currentTile_validMovements = currentTile.getPiece().getMovement(current_x, current_y);
-			highlight();
+			currentTile_validMovements = (currentTile.getPiece().getMovement(current_x, current_y));
+			
+			castling();
+			highlight(currentTile.piece.color());
 			
 			System.out.println(currentTile_validMovements.toString());
 			isPieceSelected = true;
 		}
+	}
+	
+	//Caso Especial Enroque
+	private void castling() {
+        if(currentTile.getPiece() instanceof King && currentTile.getPiece().hasBeenMoved==false) {
+        		
+        	//Se prueba tanto el enroque largo como el corto, se aplica en los dos equipos
+        	if(board.getTile(1,current_y).piece instanceof Rook && board.getTile(1, current_y).piece.hasBeenMoved==false){
+            	if(freetocast(current_x,current_y,1)) {
+            		currentTile_validMovements.add(new Vector2(current_x-2,current_y));
+            	}
+        	}
+        	if(board.getTile(8,current_y).piece instanceof Rook && board.getTile(8, current_y).piece.hasBeenMoved==false) {
+        		if(freetocast(current_x,current_y,8))
+            		currentTile_validMovements.add(new Vector2(current_x+2,current_y));
+        	}
+        }
 	}
 	
 	/**
@@ -151,7 +214,7 @@ public class GameScreen extends AbstractScreen {
             if ((next_y == 8.0 || next_y == 1.0) && currentTile.getPiece() instanceof Pawn) {
                 currentTile.move(next_x, next_y);
                 board.getTile(next_x, next_y).setPiece(new Queen(board.getTile(next_x, next_y).getPiece().color()));
-            } else {
+            }else {
                 currentTile.move(next_x, next_y);
             }
             PLAYER1 = !PLAYER1;

@@ -3,12 +3,16 @@ package game.chess;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Color;
-
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
-	
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane.ScrollPaneStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+
 import interaccionFichero.LectorLineas;
 import utils.IOS;
 import utils.Image;
@@ -76,10 +80,21 @@ public class ClassicManScreen extends AbstractScreen{
 		label.setWrap(true);
 		ScrollPane scrollPane = new ScrollPane(label);
 		scrollPane.setSize(700f, 400f);
-		scrollPane.setPosition(100f, 120f);
+		scrollPane.setPosition(100f, 140f);
 			
 		// Agrega el ScrollPane al Stage
 		stage.addActor(scrollPane);
+		
+		scrollPane.setScrollingDisabled(false, false);
+		
+		scrollPane.setScrollbarsOnTop(true);
+		scrollPane.setScrollbarsVisible(true);
+		
+		//ScrollPaneStyle style = new ScrollPaneStyle();
+		//style.vScroll = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("White.png"))));
+		//style.vScrollKnob = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("red.png"))));
+		//scrollPane.setStyle(style);
+		
 			
 		Logo = new Image("Logo_Blanco.png");
 		Logo.setPosition(800,-50);
@@ -101,7 +116,7 @@ public void render(float delta) {
 	
 		Render.camera.update();
 		Render.Batch.setProjectionMatrix(Render.camera.combined);
-	
+		
 		Render.Batch.begin();
 		      
 		Titulo.draw();
@@ -109,7 +124,7 @@ public void render(float delta) {
 		volver.establish(inputs, Render.Batch);
 		      
 	    // Actualiza y dibuja el Stage
-	    stage.act(delta);
+	    stage.act();
 	    stage.draw();
 	          
 	    if(volver.isSelected()){
