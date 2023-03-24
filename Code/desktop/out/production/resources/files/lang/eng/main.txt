@@ -1,0 +1,8 @@
+Play
+Home
+Exit Game
+Configuration
+Volume
+Language
+Manual
+Chess2
