@@ -125,8 +125,8 @@ public class GameScreen extends AbstractScreen {
 	private boolean isEnPassant(int current_x, int current_y, int next_x, int next_y, Pawn pawn) {
 		boolean res = false;
 		if (next_y == current_y + (pawn.color()?1:-1) && (next_x == current_x + 1 || next_x == current_x -1)){ //Si avanza a una casilla diagonal sin pieza, está tomando al paso
-			if (board.getTile(next_x,next_y).getPiece() == null){ //Suponemos que hay un peón atrás o si no no se movería ahí
-				res = true;
+			if (board.getTile(next_x,current_y).getPiece() instanceof Pawn){
+				res = ((Pawn)board.getTile(next_x,current_y).getPiece()).enPassantable; //Es en passant si se le puede hacer al peón objetivo
 			}
 		}
 		return res;
