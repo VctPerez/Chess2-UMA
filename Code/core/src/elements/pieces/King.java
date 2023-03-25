@@ -39,6 +39,11 @@ public class King extends Piece{
 		addMovement(x-1,y+1, board, movements);
 		addMovement(x-1,y, board, movements);
 		addMovement(x-1,y-1, board, movements);	
+		
+		if (!hasBeenMoved) {
+			castling(x, y, movements);
+		}
+		
 		return movements;
 	}
 	
@@ -46,6 +51,33 @@ public class King extends Piece{
 		if(board.getTile(x, y)!=null && !sameColor(board.getTile(x, y).getPiece())) {
 			movements.add(new Vector2(x, y));
 		}
+	}
+	
+	
+	public void castling(float x, float y, ArrayList<Vector2> movements) {//falta implementar q sea un movimiento seguro
+		if (GameScreen.board.getTile(1, y).getPiece() instanceof Rook && GameScreen.board.getTile(1, y).getPiece().hasBeenMoved == false && isFreeSpace(1, y, x)) {
+			movements.add(new Vector2(x - 2, y));
+		}
+		if (GameScreen.board.getTile(8, y).piece instanceof Rook && GameScreen.board.getTile(8, y).piece.hasBeenMoved == false && isFreeSpace(x, y, 8)) {
+				movements.add(new Vector2(x + 2, y));
+		}
+	}
+	
+	/**
+	 * Comprueba que el espacio que hay entre las casillas de start y dest en la fila y este vacio, devuelve true si lo esta y false si no lo esta
+	 * @param start
+	 * @param dest
+	 * @return
+	 */
+	private boolean isFreeSpace(float start, float y, float dest) {
+		boolean res=true;
+			for(int i=(int) start+1; i<dest;i++) {
+				System.out.println(i);
+				if(GameScreen.board.getTile(i, y).piece!=null) {
+					res=false;
+				}
+			}
+		return res;
 	}
 	
 	@Override

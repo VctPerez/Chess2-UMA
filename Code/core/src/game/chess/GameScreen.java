@@ -92,28 +92,10 @@ public class GameScreen extends AbstractScreen {
             
                 } else {
                     lowlight();
-                    if(currentTile.getPiece() instanceof King && next_x==current_x-2 && board.getTile(1, current_y).piece!=null) {
-                    	moveCurrentPieceTo(next_x, next_y);
-                    	System.out.println("siguiente x: " + next_x);
-                    	board.getTile(1, current_y).move(current_x-1,current_y);
-						noEnPassant(); //Siempre se pone porque un peón se puede tomar al paso un movimiento después de moverse
-                    }else if(currentTile.getPiece() instanceof King && next_x==current_x+2 && board.getTile(8, current_y).piece!=null){
-                    	moveCurrentPieceTo(next_x, next_y);
-                    	board.getTile(8, current_y).move(current_x+1,current_y);
-						noEnPassant();
-                    }else if (currentTile.getPiece() instanceof Pawn && (next_y==current_y + 2 || next_y==current_y-2)){
-                    	moveCurrentPieceTo(next_x, next_y);
-						noEnPassant();
-						((Pawn) nextTile.getPiece()).enPassantable = true;
-						System.out.println("Puede hacer en passant: "+((Pawn)nextTile.getPiece()).enPassantable);
-                    }else if (currentTile.getPiece() instanceof Pawn && isEnPassant(current_x,current_y,next_x,next_y,(Pawn)currentTile.getPiece())){
-						moveCurrentPieceTo(next_x,next_y);
-						board.getTile(next_x,next_y + (nextTile.getPiece().color()?-1:1)).setPiece(null);
-						noEnPassant();
-					} else {
-						moveCurrentPieceTo(next_x,next_y);
-						noEnPassant();
-					}
+                    
+						
+					moveCurrentPieceTo(next_x,next_y);
+					
                     isPieceSelected = false;
                     }
                     
@@ -122,17 +104,20 @@ public class GameScreen extends AbstractScreen {
             }
         }
 
-	private boolean isEnPassant(int current_x, int current_y, int next_x, int next_y, Pawn pawn) {
+	private boolean isEnPassant(int next_x, int next_y, Pawn pawn) {
 		boolean res = false;
 		if (next_y == current_y + (pawn.color()?1:-1) && (next_x == current_x + 1 || next_x == current_x -1)){ //Si avanza a una casilla diagonal sin pieza, está tomando al paso
 			if (board.getTile(next_x,current_y).getPiece() instanceof Pawn){
-				res = ((Pawn)board.getTile(next_x,current_y).getPiece()).enPassantable; //Es en passant si se le puede hacer al peón objetivo
+				res = ((Pawn)board.getTile(next_x,current_y).getPiece()).isPassantable; //Es en passant si se le puede hacer al peón objetivo
 			}
+		}
+		if(res) {
 		}
 		return res;
 	}
 
 
+<<<<<<< Updated upstream
 	//Comprueba que se pueda enrocar, queda comprobar que el camino no esté amenazado, que será implementado en este método también
 	private boolean freetocast(int x, int y,int dest) {
 		boolean res=true; 
@@ -151,6 +136,9 @@ public class GameScreen extends AbstractScreen {
 		}
 		return res;
 	}
+=======
+	
+>>>>>>> Stashed changes
 
 	/**
 	 * Hace que ningún peón pueda ser tomado al paso
@@ -163,14 +151,14 @@ public class GameScreen extends AbstractScreen {
 			atajo = board.getTile(x,4);
 			if (atajo != null && atajo.getPiece() instanceof Pawn){
 				p = (Pawn) atajo.getPiece();
-				p.enPassantable = false;
+				p.isPassantable = false;
 			}
 		}
 		for (int x = 1; x < 9; x++){
 			atajo = board.getTile(x,5);
 			if (atajo != null && atajo.getPiece() instanceof Pawn){
 				p = (Pawn) atajo.getPiece();
-				p.enPassantable = false;
+				p.isPassantable = false;
 			}
 		}
 	}
@@ -214,7 +202,6 @@ public class GameScreen extends AbstractScreen {
 			
 			currentTile_validMovements = (currentTile.getPiece().getMovement(current_x, current_y));
 			
-			castling();
 			highlight(currentTile.piece.color());
 			
 			System.out.println(currentTile_validMovements.toString());
@@ -222,20 +209,30 @@ public class GameScreen extends AbstractScreen {
 		}
 	}
 	
-	//Caso Especial Enroque
-	private void castling() {
-        if(currentTile.getPiece() instanceof King && currentTile.getPiece().hasBeenMoved==false) {
-        		
-        	//Se prueba tanto el enroque largo como el corto, se aplica en los dos equipos
-        	if(board.getTile(1,current_y).piece instanceof Rook && board.getTile(1, current_y).piece.hasBeenMoved==false){
-            	if(freetocast(current_x,current_y,1)) {
-            		currentTile_validMovements.add(new Vector2(current_x-2,current_y));
-            	}
-        	}
-        	if(board.getTile(8,current_y).piece instanceof Rook && board.getTile(8, current_y).piece.hasBeenMoved==false) {
-        		if(freetocast(current_x,current_y,8))
-            		currentTile_validMovements.add(new Vector2(current_x+2,current_y));
-        	}
+	/**
+	 * Comprueba si el ultimo movimiento era un enroque para mover tambien la torre que corresponda
+	 * @param next_x
+	 */
+	private void checkCastling(float next_x) {
+		if(currentTile.getPiece() instanceof King && next_x==current_x-2) {
+        	board.getTile(1, current_y).move(current_x-1,current_y);
+			
+        }else if(currentTile.getPiece() instanceof King && next_x==current_x+2){
+        	board.getTile(8, current_y).move(current_x+1,current_y);
+        }
+	}
+	
+	/**
+	 * Comprueba si el ultimo movimiento permite relizar una promoción (peon llega al lado contrario)
+	 * @param next_x
+	 * @param next_y
+	 */
+	private void checkPromotion(float next_x, float next_y) {
+		if ((next_y == 8.0 || next_y == 1.0) && board.getTile(next_x, next_y).getPiece() instanceof Pawn) {//Implementar que se pueda escoger entre todas las piezas posibles
+        	Pawn p = (Pawn) board.getTile(next_x, next_y).getPiece();
+            board.getTile(next_x, next_y).setPiece(new Queen(board.getTile(next_x, next_y).getPiece().color()));
+            p.dispose();
+            
         }
 	}
 	
@@ -246,13 +243,25 @@ public class GameScreen extends AbstractScreen {
 	 */
 	private void moveCurrentPieceTo(int next_x, int next_y) {
         if (currentTile_validMovements.contains(new Vector2(next_x, next_y))) {
-            if ((next_y == 8.0 || next_y == 1.0) && currentTile.getPiece() instanceof Pawn) {
-                currentTile.move(next_x, next_y);
-                board.getTile(next_x, next_y).setPiece(new Queen(board.getTile(next_x, next_y).getPiece().color()));
-            }else {
-                currentTile.move(next_x, next_y);
-            }
+        	
+        	checkCastling(next_x);
+            
+        	currentTile.move(next_x, next_y);
+        	
+        	checkPromotion(next_x, next_y);
+        	
             PLAYER1 = !PLAYER1;
+            
+            if (board.getTile(next_x, next_y).getPiece() instanceof Pawn && isEnPassant(next_x, next_y, (Pawn)board.getTile(next_x, next_y).getPiece())){ //Otro metodo separado
+            	
+            	board.getTile(next_x,next_y + (board.getTile(next_x, next_y).getPiece().color()?-1:1)).setPiece(null);
+            }
+            noEnPassant();
+            
+            if(board.getTile(next_x, next_y).getPiece() instanceof Pawn && (next_y == current_y + 2 || next_y == current_y - 2)){//Crear metodo separado
+            	((Pawn) board.getTile(next_x, next_y).getPiece()).isPassantable = true ;
+            }
+            
         }
     }
 	
