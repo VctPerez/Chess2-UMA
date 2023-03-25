@@ -125,7 +125,6 @@ public class GameScreen extends AbstractScreen {
 		boolean res=true; 
 		if(dest>x) {
 			for(int i=x+1; i<dest;i++) {
-				System.out.println(i);
 				if(board.getTile(i, y).piece!=null) {
 					res=false;
 				}
