@@ -29,6 +29,7 @@ public class GameScreen extends AbstractScreen {
 	private ArrayList<Vector2> currentTile_validMovements = new ArrayList<>();
 	private int current_x, current_y;
 	private Tile currentTile = null;
+	private Tile nextTile = null;
 	
 	private Pawn lastPawn;
 	
@@ -82,7 +83,7 @@ public class GameScreen extends AbstractScreen {
 
                 int next_x = calculateX();
                 int next_y = calculateY();
-                Tile nextTile = board.getTile(next_x, next_y);
+                nextTile = board.getTile(next_x, next_y);
                 
 
                 if (nextTile.getPiece() != null && currentTile.getPiece().sameColor(nextTile.getPiece())) {
@@ -96,7 +97,6 @@ public class GameScreen extends AbstractScreen {
                 } else {
                     lowlight();
                     
-						
 					moveCurrentPieceTo(next_x,next_y);
 					
                     isPieceSelected = false;
@@ -106,41 +106,6 @@ public class GameScreen extends AbstractScreen {
 
             }
         }
-
-	private boolean isEnPassant(int next_x, int next_y, Pawn pawn) {
-		boolean res = false;
-		if (next_y == current_y + (pawn.color()?1:-1) && (next_x == current_x + 1 || next_x == current_x -1)){ //Si avanza a una casilla diagonal sin pieza, está tomando al paso
-			if (board.getTile(next_x,current_y).getPiece() instanceof Pawn){
-				res = ((Pawn)board.getTile(next_x,current_y).getPiece()).isPassantable; //Es en passant si se le puede hacer al peón objetivo
-			}
-		}
-		if(res) {
-		}
-		return res;
-	}
-
-	/**
-	 * Hace que ningún peón pueda ser tomado al paso
-	 * <p>(Usado tras decidir el movimiento)
-	 */
-	private void noEnPassant(){
-		Tile atajo;
-		Pawn p;
-		for (int x = 1; x < 9; x++){
-			atajo = board.getTile(x,4);
-			if (atajo != null && atajo.getPiece() instanceof Pawn){
-				p = (Pawn) atajo.getPiece();
-				p.isPassantable = false;
-			}
-		}
-		for (int x = 1; x < 9; x++){
-			atajo = board.getTile(x,5);
-			if (atajo != null && atajo.getPiece() instanceof Pawn){
-				p = (Pawn) atajo.getPiece();
-				p.isPassantable = false;
-			}
-		}
-	}
 
 	/**
 	 * Resalta las casillas contenidas en el array de movimientos válidos
@@ -188,32 +153,6 @@ public class GameScreen extends AbstractScreen {
 		}
 	}
 	
-	/**
-	 * Comprueba si el ultimo movimiento era un enroque para mover tambien la torre que corresponda
-	 * @param next_x
-	 */
-	private void checkCastling(float next_x) {
-		if(currentTile.getPiece() instanceof King && next_x==current_x-2) {
-        	board.getTile(1, current_y).move(current_x-1,current_y);
-			
-        }else if(currentTile.getPiece() instanceof King && next_x==current_x+2){
-        	board.getTile(8, current_y).move(current_x+1,current_y);
-        }
-	}
-	
-	/**
-	 * Comprueba si el ultimo movimiento permite relizar una promoción (peon llega al lado contrario)
-	 * @param next_x
-	 * @param next_y
-	 */
-	private void checkPromotion(float next_x, float next_y) {
-		if ((next_y == 8.0 || next_y == 1.0) && board.getTile(next_x, next_y).getPiece() instanceof Pawn) {//Implementar que se pueda escoger entre todas las piezas posibles
-        	Pawn p = (Pawn) board.getTile(next_x, next_y).getPiece();
-            board.getTile(next_x, next_y).setPiece(new Queen(board.getTile(next_x, next_y).getPiece().color()));
-            p.dispose();
-            
-        }
-	}
 	
 	/**
 	 * Mueve la pieza que está en currentTile a la casilla con coordenadas (next_x, next_y), comprueba los casos de movimientos especiales
@@ -222,31 +161,80 @@ public class GameScreen extends AbstractScreen {
 	 */
 	private void moveCurrentPieceTo(int next_x, int next_y) {
         if (currentTile_validMovements.contains(new Vector2(next_x, next_y))) {
-        	
+
         	checkCastling(next_x);
             
         	currentTile.move(next_x, next_y);
         	
-        	checkPromotion(next_x, next_y);
+        	if(nextTile.getPiece() instanceof Pawn) {
+        		checkPromotion(next_x, next_y);
+        		
+        		checkPassant(next_x, next_y);
+        		
+        		updateLastPawn(next_x, next_y);        		
+        	}
         	
-            PLAYER1 = !PLAYER1;
-            
-            if (board.getTile(next_x, next_y).getPiece() instanceof Pawn && isEnPassant(next_x, next_y, (Pawn)board.getTile(next_x, next_y).getPiece())){ //Otro metodo separado (si se captura al paaso borra la ficha)
-            	
-            	board.getTile(next_x,next_y + (board.getTile(next_x, next_y).getPiece().color()?-1:1)).setPiece(null);
-            }
-            //noEnPassant();
-            
-            if(board.getTile(next_x, next_y).getPiece() instanceof Pawn && (next_y == current_y + 2 || next_y == current_y - 2)){//Crear metodo separado (si un peon se mueve dos se pone enPassant)
-            	lastPawn = ((Pawn) board.getTile(next_x, next_y).getPiece());
-            	lastPawn.isPassantable = true ;
-            }else {
-            	lastPawn.isPassantable = false;
-            }
+            changeTurn();
             
         }
     }
 	
+	/**
+	 * Comprueba si el ultimo movimiento era un enroque para mover tambien la torre que corresponda
+	 * @param next_x
+	 */
+	private void checkCastling(float next_x) {
+		if(currentTile.getPiece() instanceof King && next_x==current_x-2) {
+			board.getTile(1, current_y).move(current_x-1,current_y);
+			
+		}else if(currentTile.getPiece() instanceof King && next_x==current_x+2){
+			board.getTile(8, current_y).move(current_x+1,current_y);
+		}
+	}
+	
+	/**
+	 * Comprueba si el ultimo movimiento permite relizar una promoción (peon llega al lado contrario)
+	 * @param next_x
+	 * @param next_y
+	 */
+	private void checkPromotion(float next_x, float next_y) {
+		if ((next_y == 8.0 || next_y == 1.0)) {//Implementar que se pueda escoger entre todas las piezas posibles
+			Pawn p = (Pawn) nextTile.getPiece();
+			nextTile.setPiece(new Queen(board.getTile(next_x, next_y).getPiece().color()));
+			p.dispose();
+
+		}
+	}
+	
+	private void checkPassant(float next_x, float next_y) {
+		if (isEnPassant(next_x, next_y, (Pawn)nextTile.getPiece())){ //Otro metodo separado (si se captura al paaso borra la ficha)
+			
+			board.getTile(next_x,next_y + (nextTile.getPiece().color()?-1:1)).setPiece(null);
+		}
+	}
+	
+	private boolean isEnPassant(float next_x, float next_y, Pawn pawn) {
+		boolean res = false;
+		if (next_y == current_y + (pawn.color()?1:-1) && (next_x == current_x + 1 || next_x == current_x -1)){ //Si avanza a una casilla diagonal sin pieza, está tomando al paso
+			if (board.getTile(next_x,current_y).getPiece() instanceof Pawn){
+				res = ((Pawn)board.getTile(next_x,current_y).getPiece()).isPassantable; //Es en passant si se le puede hacer al peón objetivo
+			}
+		}
+		return res;
+	}
+	
+	private void updateLastPawn(float next_x, float next_y) {
+		if((next_y == current_y + 2 || next_y == current_y - 2)){//Crear metodo separado (si un peon se mueve dos se pone enPassant)
+			lastPawn = ((Pawn) nextTile.getPiece());
+			lastPawn.isPassantable = true ;
+		}else {
+			lastPawn.isPassantable = false;
+		}
+	}
+	
+	private void changeTurn() {
+		PLAYER1 = !PLAYER1;
+	}
 	private int calculateX() {
 		return (int) Math.ceil((inputs.mouseX - board.getTile(1, 1).getX()) / 84);
 	}
