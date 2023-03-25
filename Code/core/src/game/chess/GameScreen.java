@@ -24,10 +24,13 @@ import java.util.ArrayList;
 public class GameScreen extends AbstractScreen {
 	private Stage stage;
 	public static Board board;
+	
 	private boolean isPieceSelected = false;
 	private ArrayList<Vector2> currentTile_validMovements = new ArrayList<>();
 	private int current_x, current_y;
 	private Tile currentTile = null;
+	
+	private Pawn lastPawn;
 	
 	private boolean PLAYER1 = true;
 
@@ -115,30 +118,6 @@ public class GameScreen extends AbstractScreen {
 		}
 		return res;
 	}
-
-
-<<<<<<< Updated upstream
-	//Comprueba que se pueda enrocar, queda comprobar que el camino no esté amenazado, que será implementado en este método también
-	private boolean freetocast(int x, int y,int dest) {
-		boolean res=true; 
-		if(dest>x) {
-			for(int i=x+1; i<dest;i++) {
-				if(board.getTile(i, y).piece!=null) {
-					res=false;
-				}
-			}
-		}else {
-			for(int i=x-1; i>dest;i--) {
-				if(board.getTile(i, y).piece!=null) {
-					res=false;
-				}
-			}
-		}
-		return res;
-	}
-=======
-	
->>>>>>> Stashed changes
 
 	/**
 	 * Hace que ningún peón pueda ser tomado al paso
@@ -252,14 +231,17 @@ public class GameScreen extends AbstractScreen {
         	
             PLAYER1 = !PLAYER1;
             
-            if (board.getTile(next_x, next_y).getPiece() instanceof Pawn && isEnPassant(next_x, next_y, (Pawn)board.getTile(next_x, next_y).getPiece())){ //Otro metodo separado
+            if (board.getTile(next_x, next_y).getPiece() instanceof Pawn && isEnPassant(next_x, next_y, (Pawn)board.getTile(next_x, next_y).getPiece())){ //Otro metodo separado (si se captura al paaso borra la ficha)
             	
             	board.getTile(next_x,next_y + (board.getTile(next_x, next_y).getPiece().color()?-1:1)).setPiece(null);
             }
-            noEnPassant();
+            //noEnPassant();
             
-            if(board.getTile(next_x, next_y).getPiece() instanceof Pawn && (next_y == current_y + 2 || next_y == current_y - 2)){//Crear metodo separado
-            	((Pawn) board.getTile(next_x, next_y).getPiece()).isPassantable = true ;
+            if(board.getTile(next_x, next_y).getPiece() instanceof Pawn && (next_y == current_y + 2 || next_y == current_y - 2)){//Crear metodo separado (si un peon se mueve dos se pone enPassant)
+            	lastPawn = ((Pawn) board.getTile(next_x, next_y).getPiece());
+            	lastPawn.isPassantable = true ;
+            }else {
+            	lastPawn.isPassantable = false;
             }
             
         }
