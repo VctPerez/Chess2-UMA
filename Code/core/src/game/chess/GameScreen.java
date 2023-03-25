@@ -2,10 +2,6 @@ package game.chess;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.*;
@@ -22,11 +18,6 @@ import elements.pieces.Queen;
 import elements.pieces.Rook;
 import utils.IOS;
 import utils.Render;
-import utils.Resources;
-
-import javax.print.attribute.standard.RequestingUserName;
-
-import static utils.Render.app;
 
 import java.util.ArrayList;
 
@@ -105,12 +96,24 @@ public class GameScreen extends AbstractScreen {
                     	moveCurrentPieceTo(next_x, next_y);
                     	System.out.println("siguiente x: " + next_x);
                     	board.getTile(1, current_y).move(current_x-1,current_y);
+						noEnPassant(); //Siempre se pone porque un peón se puede tomar al paso un movimiento después de moverse
                     }else if(currentTile.getPiece() instanceof King && next_x==current_x+2 && board.getTile(8, current_y).piece!=null){
                     	moveCurrentPieceTo(next_x, next_y);
-                    	board.getTile(8, current_y).move(current_x+1,current_y);	
-                    }else {
+                    	board.getTile(8, current_y).move(current_x+1,current_y);
+						noEnPassant();
+                    }else if (currentTile.getPiece() instanceof Pawn && (next_y==current_y + 2 || next_y==current_y-2)){
                     	moveCurrentPieceTo(next_x, next_y);
-                    }
+						noEnPassant();
+						((Pawn) nextTile.getPiece()).enPassantable = true;
+						System.out.println("Puede hacer en passant: "+((Pawn)nextTile.getPiece()).enPassantable);
+                    }else if (currentTile.getPiece() instanceof Pawn && isEnPassant(current_x,current_y,next_x,next_y,(Pawn)currentTile.getPiece())){
+						moveCurrentPieceTo(next_x,next_y);
+						board.getTile(next_x,next_y + (nextTile.getPiece().color()?-1:1)).setPiece(null);
+						noEnPassant();
+					} else {
+						moveCurrentPieceTo(next_x,next_y);
+						noEnPassant();
+					}
                     isPieceSelected = false;
                     }
                     
@@ -118,6 +121,16 @@ public class GameScreen extends AbstractScreen {
 
             }
         }
+
+	private boolean isEnPassant(int current_x, int current_y, int next_x, int next_y, Pawn pawn) {
+		boolean res = false;
+		if (next_y == current_y + (pawn.color()?1:-1) && (next_x == current_x + 1 || next_x == current_x -1)){ //Si avanza a una casilla diagonal sin pieza, está tomando al paso
+			if (board.getTile(next_x,current_y).getPiece() instanceof Pawn){
+				res = ((Pawn)board.getTile(next_x,current_y).getPiece()).enPassantable; //Es en passant si se le puede hacer al peón objetivo
+			}
+		}
+		return res;
+	}
 
 
 	//Comprueba que se pueda enrocar, queda comprobar que el camino no esté amenazado, que será implementado en este método también
@@ -137,6 +150,29 @@ public class GameScreen extends AbstractScreen {
 			}
 		}
 		return res;
+	}
+
+	/**
+	 * Hace que ningún peón pueda ser tomado al paso
+	 * <p>(Usado tras decidir el movimiento)
+	 */
+	private void noEnPassant(){
+		Tile atajo;
+		Pawn p;
+		for (int x = 1; x < 9; x++){
+			atajo = board.getTile(x,4);
+			if (atajo != null && atajo.getPiece() instanceof Pawn){
+				p = (Pawn) atajo.getPiece();
+				p.enPassantable = false;
+			}
+		}
+		for (int x = 1; x < 9; x++){
+			atajo = board.getTile(x,5);
+			if (atajo != null && atajo.getPiece() instanceof Pawn){
+				p = (Pawn) atajo.getPiece();
+				p.enPassantable = false;
+			}
+		}
 	}
 
 	/**
