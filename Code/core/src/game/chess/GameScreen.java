@@ -26,12 +26,20 @@ public class GameScreen extends AbstractScreen {
 	
 	private boolean isPieceSelected = false;
 
+	//----------------------------
 	//CONTROL JAQUE
+	//----------------------------
+	
 	//Guardamos en todo momento donde esta el rey blanco y el negro (ÚTIL)
+	//No sé si habrá que controlar que pieza está poniendo el jaque y guardarla, posiciones interesantes a guardar en caso de jaque...
 	private Vector2 kingW = new Vector2(5,1), kingB = new Vector2(5,8);
+	
 	//Saber para cada rey si está en jaque o no
 	private boolean  jaqueW=false,jaqueB=false;
+	
+	//----------------------------
 	//FIN CONTROL JAQUE
+	//----------------------------
 	
 	
 	private ArrayList<Vector2> currentTile_validMovements = new ArrayList<>();
@@ -119,10 +127,12 @@ public class GameScreen extends AbstractScreen {
 		if(team==true) {
 			if(mov.contains(kingB)) {
 				jaqueB=true;
+				jaqueW=false;
 			}
 		}else {
 			if(mov.contains(kingW)) {
 				jaqueW=true;
+				jaqueB=false;
 			}
 		}
 		
@@ -170,6 +180,7 @@ public class GameScreen extends AbstractScreen {
 			
 			
 			//TODO if(jaque){... en funcion de si hay jaque o no y si eres el rey o una pieza defensora los calculos de movimientos van variando
+			//Si se mueve el rey se actualiza si sigue en jaque o no... esto es durísimo
 			
 			currentTile_validMovements = (currentTile.getPiece().getMovement(current_x, current_y));
 			
