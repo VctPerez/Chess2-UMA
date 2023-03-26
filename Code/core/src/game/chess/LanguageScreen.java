@@ -43,7 +43,7 @@ public class LanguageScreen extends AbstractScreen {
     	homeText.setText(languageReader.leerLinea(2)); //Inicio = Linea 2
     	configText = new Text(Resources.FONT_MENU_PATH,28,Color.WHITE,5);
     	configText.setText(languageReader.leerLinea(4)); //Configuracion = Linea 4
-    	Language.setPosition(500,600);
+    	Language.setPosition(100,600);
     	spanishText.setPosition(100, 400);
     	englishText.setPosition(100, 300);
         homeText.setPosition(100,100);
@@ -81,19 +81,19 @@ public class LanguageScreen extends AbstractScreen {
         
         if(spanish.isSelected()) {
         	languageSettingWriter.escribirLinea(1, "esp/"); //La linea 1 de la configuracion contiene el idioma
-        	Render.app.setScreen(new LanguageScreen());
+        	Render.app.setScreen(Render.LANGUAGESCREEN);
         }
         if(english.isSelected()) {
         	languageSettingWriter.escribirLinea(1, "eng/"); //El nombre es el nombre del archivo txt de idioma
-        	Render.app.setScreen(new LanguageScreen());
+        	Render.app.setScreen(Render.LANGUAGESCREEN);
         }
         
         
         if(home.isSelected()){
-            Render.app.setScreen(new MainScreen());
+            Render.app.setScreen(Render.MAINSCREEN);
         }
         if(config.isSelected()) {
-        	Render.app.setScreen(new ConfigScreen());
+        	Render.app.setScreen(Render.CONFIGSCREEN);
         }
         
         //-----------------

@@ -1,6 +1,8 @@
 package utils;
 
+import com.badlogic.gdx.Audio;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -19,6 +21,8 @@ import game.chess.MainScreen;
 public class Render {
     public static SpriteBatch Batch;
 
+    public static Audio audio;
+    public static Music bgMusic;
     public static OrthographicCamera camera;
 
     public static Viewport viewport;
@@ -30,6 +34,10 @@ public class Render {
     
     public static AbstractScreen MAINSCREEN;
 	public static AbstractScreen GAMESCREEN;
+	public static AbstractScreen MANUALSCREEN;
+	public static AbstractScreen CLASSICMANSCREEN;
+	public static AbstractScreen LANGUAGESCREEN;
+	public static AbstractScreen CONFIGSCREEN;
 
     /**
      * Este metodo se encarga de limpiar la pantalla al principio de cada Render.
