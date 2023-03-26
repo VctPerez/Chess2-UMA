@@ -161,16 +161,6 @@ public class GameScreen extends AbstractScreen {
 	 */
 	private void moveCurrentPieceTo(int next_x, int next_y) {
 
-		if (currentTile_validMovements.contains(new Vector2(next_x, next_y))) {
-			if ((next_y == 8.0 || next_y == 1.0) && currentTile.getPiece() instanceof Pawn) {
-				currentTile.move(next_x, next_y);
-				board.getTile(next_x, next_y).setPiece(new Queen(board.getTile(next_x, next_y).getPiece().color()));
-			} else {
-				currentTile.move(next_x, next_y);
-			}
-			PLAYER1 = !PLAYER1;
-		}	
-
         if (currentTile_validMovements.contains(new Vector2(next_x, next_y))) {
 
         	checkCastling(next_x);
