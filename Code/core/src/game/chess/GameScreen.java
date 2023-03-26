@@ -25,7 +25,9 @@ public class GameScreen extends AbstractScreen {
 	private Stage stage;
 	public static Board board;
 	
-	private boolean isPieceSelected = false;
+	private boolean isPieceSelected = false, jaqueW=false,jaqueB=false;
+	//Guardamos en todo momento donde esta el rey blanco y el negro
+	private Vector2 kingW = new Vector2(5,1), kingB = new Vector2(5,8);
 	private ArrayList<Vector2> currentTile_validMovements = new ArrayList<>();
 	private int current_x, current_y;
 	private Tile currentTile = null;
@@ -99,6 +101,12 @@ public class GameScreen extends AbstractScreen {
                     
 					moveCurrentPieceTo(next_x,next_y);
 					
+					if(jaqueB) {
+						board.getTile(kingB.x, kingB.y).attacked=true;
+					}else if(jaqueW) {
+						board.getTile(kingW.x, kingW.y).attacked=true;
+					}
+					
                     isPieceSelected = false;
                     }
                     
@@ -106,6 +114,20 @@ public class GameScreen extends AbstractScreen {
 
             }
         }
+	
+	private void Jaque(ArrayList<Vector2> mov,boolean team) {
+		if(team==true) {
+			if(mov.contains(kingB)) {
+				jaqueB=true;
+			}
+		}else {
+			if(mov.contains(kingW)) {
+				jaqueW=true;
+			}
+		}
+		
+	}
+
 
 	/**
 	 * Resalta las casillas contenidas en el array de movimientos válidos
@@ -144,7 +166,10 @@ public class GameScreen extends AbstractScreen {
 	private void select(Tile tile) {
 		if (currentTile.getPiece() != null && currentTile.getPiece().color()==PLAYER1) {
 			
-			currentTile_validMovements = (currentTile.getPiece().getMovement(current_x, current_y));
+			
+			//TODO if(jaque){... en funcion de si hay jaque o no y si eres el rey o una pieza defensora los calculos de movimientos van variando
+			
+				currentTile_validMovements = (currentTile.getPiece().getMovement(current_x, current_y));
 			
 			highlight(currentTile.piece.color());
 			
@@ -175,11 +200,23 @@ public class GameScreen extends AbstractScreen {
         		updateLastPawn(next_x, next_y);        		
         	}
         	
+        	//Tras moverla se comprueba si hay jaque
+        	if(nextTile.getPiece() instanceof King) {
+        		if(nextTile.getPiece().color()==true) {
+        			kingW.set(next_x, next_y);
+        		}else {
+        			kingB.set(next_x, next_y);
+        		}
+        	}
+        		
+        	currentTile_validMovements = (board.getTile(next_x, next_y).getPiece().getMovement(next_x, next_y));
+			Jaque(currentTile_validMovements,nextTile.getPiece().color());
+        	
             changeTurn();
             
         }
     }
-	
+
 	/**
 	 * Comprueba si el ultimo movimiento era un enroque para mover tambien la torre que corresponda
 	 * @param next_x
