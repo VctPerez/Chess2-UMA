@@ -2,9 +2,7 @@ package game.chess;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import utils.*;
 import interaccionFichero.*;
 
@@ -15,7 +13,6 @@ public class MainScreen extends AbstractScreen {
     Text playText,exitText,confgText,Titulo,reglasText;
     Image background,Logo,news;
     LectorLineas languageReader, configReader;
-
     
     @Override
     public void show() {
@@ -25,15 +22,15 @@ public class MainScreen extends AbstractScreen {
     	languageReader = new LectorLineas("files/lang/"+ configReader.leerLinea(1) + "main.txt"); //Abrimos el idioma que toca del archivo configuracion
     	
     	//Fuente Arial para probar
-    	Titulo = new Text(Resources.FONT_MENU_PATH,100,Color.WHITE,3);
-    	Titulo.setText(languageReader.leerLinea(8));
-    	playText = new Text(Resources.FONT_MENU_PATH,50,Color.WHITE,3);
+    	Titulo = new Text(Resources.FONT_MENU_PATH,100,Color.WHITE,5);
+    	Titulo.setText("Chess2");
+    	playText = new Text(Resources.FONT_MENU_PATH,50,Color.WHITE,5);
     	playText.setText(languageReader.leerLinea(1)); //Jugar = Linea 1
-    	exitText = new Text(Resources.FONT_MENU_PATH,50,Color.WHITE,3);
+    	exitText = new Text(Resources.FONT_MENU_PATH,50,Color.WHITE,5);
     	exitText.setText(languageReader.leerLinea(3)); //Salir = Linea 3
-    	confgText = new Text(Resources.FONT_MENU_PATH,50,Color.WHITE,3);
+    	confgText = new Text(Resources.FONT_MENU_PATH,50,Color.WHITE,5);
     	confgText.setText(languageReader.leerLinea(4)); //Configuracion = Linea 4
-    	reglasText = new Text(Resources.FONT_MENU_PATH,50,Color.WHITE,3);
+    	reglasText = new Text(Resources.FONT_MENU_PATH,50,Color.WHITE,5);
     	reglasText.setText(languageReader.leerLinea(7)); //Configuracion = Linea 4
     	
     	Titulo.setPosition(100,600);
@@ -55,9 +52,6 @@ public class MainScreen extends AbstractScreen {
         //news.setPosition(850,400);
         //news.setSize(300, 200);
         Gdx.input.setInputProcessor(inputs);
-        Render.bgMusic = Render.app.getManager().get(Resources.MENU_THEME);
-        Render.bgMusic.setLooping(true);
-        Render.bgMusic.play();
     }
 
     @Override
@@ -69,7 +63,7 @@ public class MainScreen extends AbstractScreen {
 
         Render.Batch.begin();
         //---------------
-
+        
         Titulo.draw();
         Logo.draw(Render.Batch);
         //news.draw(Render.Batch);
@@ -79,26 +73,20 @@ public class MainScreen extends AbstractScreen {
         confg.establish(inputs, Render.Batch);
         
         if(play.isSelected()){
-            Render.bgMusic.stop();
-            Render.app.setScreen(Render.GAMESCREEN);
+            Render.app.setScreen(new GameScreen());
         }
         if(exit.isSelected()) {
         	Gdx.app.exit();
         }
         if(confg.isSelected()) {
-        	Render.app.setScreen(Render.CONFIGSCREEN);
+        	Render.app.setScreen(new ConfigScreen());
         }
         if(reglas.isSelected()) {
-        	Render.app.setScreen(Render.MANUALSCREEN);
+        	Render.app.setScreen(new ManualScreen());
         }
         
         //-----------------
         Render.Batch.end();
-    }
-
-    @Override
-    public void hide() {
-        super.hide();
     }
 
     @Override

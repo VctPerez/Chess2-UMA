@@ -17,7 +17,7 @@ public class CheckBox extends Actor implements Button{
     boolean selected;
     /**
      * Constructor de una Check Box
-     * No tiene parametros.
+     * No tiene parámetros.
      * La clase extiende de {@link Actor} e implementa la interfaz {@link Button}
      */
     public CheckBox(){
