@@ -1,5 +1,6 @@
 package utils;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -15,8 +16,8 @@ public class Slider extends Actor implements Button{
      * Crea la barra con su controlador
      */
     public Slider(){
-        bar = new Image(Resources.CONTROLBAR_PATH);
-        controller = new ImageButton(new Image(Resources.UNSELECTEDBAR_PATH));
+        bar = new Image(Render.app.getManager().get(Resources.SLIDER_PATH, Texture.class));
+        controller = new ImageButton(new Image(Render.app.getManager().get(Resources.UNSELECTEDBAR_PATH, Texture.class)));
         resize(bar.getDimensions().x * 1.5f, bar.getDimensions().y * 1.5f);
     }
 
@@ -50,7 +51,7 @@ public class Slider extends Actor implements Button{
     @Override
     public void checkPress(IOS input) {
         if(controller.isSelected()){
-            controller.setImage(new Image(Resources.SELECTEDBAR_PATH));
+            controller.setImage(new Image(Render.app.getManager().get(Resources.SELECTEDBAR_PATH, Texture.class)));
             if(input.mouseX  >= bar.getPosition().x
                     && input.mouseX - controller.getDimensions().x / 2 <= bar.getPosition().x + bar.getDimensions().x - controller.getDimensions().x / 2){
                 controller.setPosition(input.mouseX - controller.getDimensions().x / 2, controller.getCoords().y);
@@ -61,7 +62,7 @@ public class Slider extends Actor implements Button{
                 }
             }
         }else{
-            controller.setImage(new Image(Resources.UNSELECTEDBAR_PATH));
+            controller.setImage(new Image(Render.app.getManager().get(Resources.UNSELECTEDBAR_PATH, Texture.class)));
         }
     }
 

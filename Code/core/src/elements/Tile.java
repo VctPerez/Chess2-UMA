@@ -15,7 +15,7 @@ public class Tile extends Actor{
 	protected ShapeRenderer tile;
 	protected Vector2 pos;	
 	public Piece piece;
-	public Boolean highlight;
+	public Boolean highlight,attacked;
 	
 	public Tile(int matrix_x, int matrix_y, float coord_x, float coord_y, float tileSize, int color) {
 		
@@ -31,6 +31,7 @@ public class Tile extends Actor{
 		}
 		piece = null;
 		highlight = false;
+		attacked=false;
 	}
 	
 	@Override
@@ -40,7 +41,9 @@ public class Tile extends Actor{
 		tile.rect(getX(), getY(), getWidth(), getHeight());
 		if(highlight) {
 			tile.setColor(0.97f, 0.9f, 0.33f, 1f);
-		}else {			
+		}else if(attacked) {			
+			tile.setColor(Color.RED);
+		}else {
 			tile.setColor(getColor());
 		}
 		tile.end();

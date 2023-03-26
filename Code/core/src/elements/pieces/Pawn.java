@@ -2,20 +2,24 @@ package elements.pieces;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 
 import elements.Board;
 import elements.Piece;
+import elements.Tile;
 import game.chess.GameScreen;
 import utils.Image;
+import utils.Render;
 import utils.Resources;
 
 public class Pawn extends Piece{
 	
-	
+	public Boolean isPassantable = false;
+
 	public Pawn(Boolean color) {
-		super(color, Resources.PAWN_PATH);
+		super(color, Render.app.getManager().get(Resources.PAWN_PATH, Texture.class));
 	}
 	
 	@Override
@@ -60,16 +64,41 @@ public class Pawn extends Piece{
 			mov = new Vector2(x + i, y + direction);
 			if(checkBoard(GameScreen.board, i, mov.x, mov.y)) {
 				movements.add(mov);
-			}
-		}
-		if(!hasBeenMoved) {
-			mov = new Vector2(x , y + 2*direction);
-			if(checkBoard(GameScreen.board, 0, mov.x, mov.y) && GameScreen.board.getTile(x, y+direction).getPiece()==null) {
-				movements.add(mov);				
+				isPassantable = false;
 			}
 		}
 		
+		if(!hasBeenMoved) {
+			mov = new Vector2(x , y + 2*direction);
+			if(checkBoard(GameScreen.board, 0, mov.x, mov.y) && GameScreen.board.getTile(x, y+direction).getPiece()==null) {
+				movements.add(mov);
+				isPassantable = true;
+			}
+		}
+
+		if (y == 5 - (color?0:1)){ //Si está en la fila donde puede hacer en passant(5 para blancas, 4 para negras)
+			Piece aux;
+			if (GameScreen.board.getTile(x-1,y) != null){
+				aux = GameScreen.board.getTile(x-1,y).getPiece(); //Mira a la izquierda
+				if (aux instanceof Pawn && ((Pawn) aux).isPassantable){ //Si la pieza puede tomarse al paso(habrá que cambiar el if si se incluyen más)
+					mov = new Vector2(x-1,y+direction);
+					movements.add(mov);
+				}
+			}
+			if (GameScreen.board.getTile(x+1,y) != null){
+				aux = GameScreen.board.getTile(x+1,y).getPiece(); //Mira a la derecha
+				if (aux instanceof Pawn && ((Pawn) aux).isPassantable){
+					mov = new Vector2(x+1,y+direction);
+					movements.add(mov);
+				}
+			}
+		}
+
 		return movements;
+	}
+	
+	public void dispose() {
+		sprite.dispose();
 	}
 
 }
