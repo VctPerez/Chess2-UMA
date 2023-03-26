@@ -206,12 +206,14 @@ public class GameScreen extends AbstractScreen {
         	currentTile.move(next_x, next_y);
         	
         	if(nextTile.getPiece() instanceof Pawn) {
-        		checkPromotion(next_x, next_y);
-        		
+   
         		checkPassant(next_x, next_y);
         		
-        		updateLastPawn(next_x, next_y);        		
+        		updateLastPawn(next_x, next_y);      
+        		
+        		checkPromotion(next_x, next_y);
         	}
+        	/*
         	
         	//Tras moverla se comprueba si hay jaque
         	if(nextTile.getPiece() instanceof King) {
@@ -232,6 +234,7 @@ public class GameScreen extends AbstractScreen {
 			}else if(jaqueW) {
 				board.getTile(kingW.x, kingW.y).attacked=true;
 			}
+			*/
         	
             changeTurn();
             
@@ -259,15 +262,12 @@ public class GameScreen extends AbstractScreen {
 	 */
 	private void checkPromotion(float next_x, float next_y) {
 		if ((next_y == 8.0 || next_y == 1.0)) {//Implementar que se pueda escoger entre todas las piezas posibles
-			Pawn p = (Pawn) nextTile.getPiece();
 			nextTile.setPiece(new Queen(board.getTile(next_x, next_y).getPiece().color()));
-			p.dispose();
-
 		}
 	}
 	
 	private void checkPassant(float next_x, float next_y) {
-		if (isEnPassant(next_x, next_y, (Pawn)nextTile.getPiece())){ //Otro metodo separado (si se captura al paaso borra la ficha)
+		if (isEnPassant(next_x, next_y, (Pawn)nextTile.getPiece())){
 			
 			board.getTile(next_x,next_y + (nextTile.getPiece().color()?-1:1)).setPiece(null);
 		}
@@ -284,10 +284,10 @@ public class GameScreen extends AbstractScreen {
 	}
 	
 	private void updateLastPawn(float next_x, float next_y) {
-		if((next_y == current_y + 2 || next_y == current_y - 2)){//Crear metodo separado (si un peon se mueve dos se pone enPassant)
+		if((next_y == current_y + 2 || next_y == current_y - 2)){
 			lastPawn = ((Pawn) nextTile.getPiece());
 			lastPawn.isPassantable = true ;
-		}else {
+		}else if(lastPawn!=null) {
 			lastPawn.isPassantable = false;
 		}
 	}
