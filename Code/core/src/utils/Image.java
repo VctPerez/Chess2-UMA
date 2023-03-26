@@ -22,15 +22,6 @@ public class Image {
     }
 
     /**
-     * Constructor de una imagen
-     * @param img Textura a utilizar
-     */
-    public Image(Texture img){
-        this.img = img;
-        sprt = new Sprite(img);
-    }
-
-    /**
      * Dibuja la imagen
      */
     public void draw(Batch batch){
