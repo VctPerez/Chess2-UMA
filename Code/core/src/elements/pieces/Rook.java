@@ -2,6 +2,7 @@ package elements.pieces;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 
@@ -9,12 +10,13 @@ import elements.Board;
 import elements.Piece;
 import game.chess.GameScreen;
 import utils.Image;
+import utils.Render;
 import utils.Resources;
 
 public class Rook extends Piece{
 	private Boolean validDirection;
 	public Rook(Boolean color) {
-		super(color, Resources.ROOK_PATH);
+		super(color, Render.app.getManager().get(Resources.ROOK_PATH, Texture.class));
 	}
 	
 	public void draw(Batch batch, float parentAlpha) {
