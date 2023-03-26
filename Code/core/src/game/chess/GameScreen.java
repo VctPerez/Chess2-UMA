@@ -8,7 +8,6 @@ import com.badlogic.gdx.utils.viewport.*;
 
 import elements.Background;
 import elements.Board;
-import elements.Piece;
 import elements.Tile;
 import elements.pieces.Bishop;
 import elements.pieces.King;
@@ -25,9 +24,16 @@ public class GameScreen extends AbstractScreen {
 	private Stage stage;
 	public static Board board;
 	
-	private boolean isPieceSelected = false, jaqueW=false,jaqueB=false;
-	//Guardamos en todo momento donde esta el rey blanco y el negro
+	private boolean isPieceSelected = false;
+
+	//CONTROL JAQUE
+	//Guardamos en todo momento donde esta el rey blanco y el negro (ÚTIL)
 	private Vector2 kingW = new Vector2(5,1), kingB = new Vector2(5,8);
+	//Saber para cada rey si está en jaque o no
+	private boolean  jaqueW=false,jaqueB=false;
+	//FIN CONTROL JAQUE
+	
+	
 	private ArrayList<Vector2> currentTile_validMovements = new ArrayList<>();
 	private int current_x, current_y;
 	private Tile currentTile = null;
@@ -101,12 +107,6 @@ public class GameScreen extends AbstractScreen {
                     
 					moveCurrentPieceTo(next_x,next_y);
 					
-					if(jaqueB) {
-						board.getTile(kingB.x, kingB.y).attacked=true;
-					}else if(jaqueW) {
-						board.getTile(kingW.x, kingW.y).attacked=true;
-					}
-					
                     isPieceSelected = false;
                     }
                     
@@ -149,6 +149,8 @@ public class GameScreen extends AbstractScreen {
 	 * Elimina el resaltado de las casillas contenidas en el array de movimientos válidos
 	 */
 	private void lowlight() {
+		board.getTile(kingB.x, kingB.y).attacked=false;
+		board.getTile(kingW.x, kingW.y).attacked=false;
 		for (Vector2 vector : currentTile_validMovements) {
 			Tile tile = board.getTile(vector.x, vector.y);
 			if(tile.piece!=null) {
@@ -169,7 +171,7 @@ public class GameScreen extends AbstractScreen {
 			
 			//TODO if(jaque){... en funcion de si hay jaque o no y si eres el rey o una pieza defensora los calculos de movimientos van variando
 			
-				currentTile_validMovements = (currentTile.getPiece().getMovement(current_x, current_y));
+			currentTile_validMovements = (currentTile.getPiece().getMovement(current_x, current_y));
 			
 			highlight(currentTile.piece.color());
 			
@@ -208,9 +210,17 @@ public class GameScreen extends AbstractScreen {
         			kingB.set(next_x, next_y);
         		}
         	}
-        		
+        	
+        	//Calcula los siguientes movimientos tras mover para saber si este movimiento ha puesto en jaque al rey
         	currentTile_validMovements = (board.getTile(next_x, next_y).getPiece().getMovement(next_x, next_y));
 			Jaque(currentTile_validMovements,nextTile.getPiece().color());
+			
+			//Para probar visualmente que el rey estará atacado a partir de este movimiento
+			if(jaqueB) {
+				board.getTile(kingB.x, kingB.y).attacked=true;
+			}else if(jaqueW) {
+				board.getTile(kingW.x, kingW.y).attacked=true;
+			}
         	
             changeTurn();
             
