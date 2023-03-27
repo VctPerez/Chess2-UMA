@@ -64,7 +64,6 @@ public class Pawn extends Piece{
 			mov = new Vector2(x + i, y + direction);
 			if(checkBoard(GameScreen.board, i, mov.x, mov.y)) {
 				movements.add(mov);
-				isPassantable = false;
 			}
 		}
 		
@@ -72,7 +71,6 @@ public class Pawn extends Piece{
 			mov = new Vector2(x , y + 2*direction);
 			if(checkBoard(GameScreen.board, 0, mov.x, mov.y) && GameScreen.board.getTile(x, y+direction).getPiece()==null) {
 				movements.add(mov);
-				isPassantable = true;
 			}
 		}
 

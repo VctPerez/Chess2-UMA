@@ -221,7 +221,7 @@ public class GameScreen extends AbstractScreen {
         	
         	//Tras moverla se comprueba si hay jaque
         	if(nextTile.getPiece() instanceof King) {
-        		if(nextTile.getPiece().color()==true) {
+        		if(nextTile.getPiece().color()) {
         			kingW.set(next_x, next_y);
         		}else {
         			kingB.set(next_x, next_y);
@@ -276,7 +276,6 @@ public class GameScreen extends AbstractScreen {
 	
 	private void checkPassant(float next_x, float next_y) {
 		if (isEnPassant(next_x, next_y, (Pawn)nextTile.getPiece())){
-			
 			board.getTile(next_x,next_y + (nextTile.getPiece().color()?-1:1)).setPiece(null);
 		}
 	}
@@ -292,11 +291,16 @@ public class GameScreen extends AbstractScreen {
 	}
 	
 	private void updateLastPawn(float next_x, float next_y) {
-		if((next_y == current_y + 2 || next_y == current_y - 2)){
-			lastPawn = ((Pawn) nextTile.getPiece());
-			lastPawn.isPassantable = true ;
-		}else if(lastPawn!=null) {
+		if((lastPawn != null && (next_y == current_y + 2 || next_y == current_y - 2))){
+			//No importa que el primer peon no se actualize porque ningún otro peón puede tomarlo al paso por ser el primero en moverse
 			lastPawn.isPassantable = false;
+			lastPawn = ((Pawn) nextTile.getPiece());
+			lastPawn.isPassantable = true;
+			//System.out.println("Holy hell");
+		} else {
+			lastPawn = ((Pawn) nextTile.getPiece());
+			lastPawn.isPassantable = false;
+			//System.out.println(":(");
 		}
 	}
 	
