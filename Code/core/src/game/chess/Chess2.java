@@ -29,6 +29,8 @@ public class Chess2 extends Game {
 		manager.load(Resources.KING_PATH, Texture.class);
 		manager.load(Resources.ROOK_PATH, Texture.class);
 		manager.load(Resources.KNIGHT_PATH, Texture.class);
+		
+		manager.load(Resources.FRAME_PATH, Texture.class);
 
 		//CUSTOMS BUTTONS
 		manager.load(Resources.CHECK_PATH, Texture.class);

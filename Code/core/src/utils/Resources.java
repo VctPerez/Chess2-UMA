@@ -30,6 +30,6 @@ public class Resources {
     public static final String QUEEN_PATH = "sprites/Testing-Pieces/Testing-Queen.png";
     public static final String KING_PATH = "sprites/Testing-Pieces/Testing-King.png";
     
-    public static final String FRAME_PATH = "selectionFrame.png";
+    public static final String FRAME_PATH = "sprites/selectionFrame.png";
     
 }
