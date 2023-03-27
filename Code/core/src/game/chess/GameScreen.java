@@ -291,15 +291,13 @@ public class GameScreen extends AbstractScreen {
 	}
 	
 	private void updateLastPawn(float next_x, float next_y) {
-		if (lastPawn != null){ //Si es nulo es el primer peon que se mueve
-			lastPawn.isPassantable = false; //El ultimo peon ya ha sido tomado o no asi que no puede tomarse al paso otra vez
-			//System.out.println("No more french move");
+		if (lastPawn != null){ 
+			lastPawn.isPassantable = false; 
+		}
+		if (next_y == current_y + 2 || next_y == current_y - 2){
 			lastPawn = ((Pawn) nextTile.getPiece());
-			if (next_y == current_y + 2 || next_y == current_y - 2){
-				lastPawn.isPassantable = true;
-				//System.out.println("Holy hell");
-			}
-		} else lastPawn = ((Pawn) nextTile.getPiece());
+			lastPawn.isPassantable = true;
+		}
 	}
 	
 	private void changeTurn() {
