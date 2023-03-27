@@ -128,11 +128,15 @@ public class GameScreen extends AbstractScreen {
 			if(mov.contains(kingB)) {
 				jaqueB=true;
 				jaqueW=false;
+				board.getTile(kingB.x,kingB.y ).attacked = true;
+				board.getTile(kingW.x, kingW.y).attacked = false;
 			}
 		}else {
 			if(mov.contains(kingW)) {
 				jaqueW=true;
 				jaqueB=false;
+				board.getTile(kingB.x,kingB.y ).attacked = false;
+				board.getTile(kingW.x, kingW.y).attacked = true;
 			}
 		}
 		
@@ -213,7 +217,7 @@ public class GameScreen extends AbstractScreen {
         		
         		checkPromotion(next_x, next_y);
         	}
-        	/*
+        	
         	
         	//Tras moverla se comprueba si hay jaque
         	if(nextTile.getPiece() instanceof King) {
@@ -228,14 +232,18 @@ public class GameScreen extends AbstractScreen {
         	currentTile_validMovements = (board.getTile(next_x, next_y).getPiece().getMovement(next_x, next_y));
 			Jaque(currentTile_validMovements,nextTile.getPiece().color());
 			
+		/*
 			//Para probar visualmente que el rey estará atacado a partir de este movimiento
 			if(jaqueB) {
 				board.getTile(kingB.x, kingB.y).attacked=true;
 			}else if(jaqueW) {
 				board.getTile(kingW.x, kingW.y).attacked=true;
+			}else {
+				board.getTile(kingB.x,kingB.y ).attacked = false;
+				board.getTile(kingW.x, kingW.y).attacked = false;
 			}
-			*/
-        	
+			
+        	*/
             changeTurn();
             
         }
