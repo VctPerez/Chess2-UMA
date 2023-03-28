@@ -29,7 +29,8 @@ public class Tile extends Actor{
 		setPosition(coord_x, coord_y);
 		setSize(tileSize, tileSize);
 		if(color == 1) {
-			setColor(Color.BLACK);
+			setColor(new Color(0.1745f, 0.23f, 0.3f,1f));//color azul apagado que queda bastante bien
+			//setColor(new Color(0.1745f, 0.1745f, 0.1745f,1f)); //color gris mas oscuro que las piezas
 			
 		}else {
 			setColor(Color.WHITE);
@@ -76,9 +77,26 @@ public class Tile extends Actor{
 	}
 	
 	public void move(int x, int y) {
+		Tile nextTile = GameScreen.board.getTile(x, y);
+		
+		if(nextTile.getPiece()!=null) {
+			nextTile.sendPieceToGraveyard();
+		}
+		
 		this.piece.hasBeenMoved();
-		GameScreen.board.getTile(x, y).setPiece(this.piece);
+		
+		
+		nextTile.setPiece(this.piece);
 		this.piece = null;
+	}
+	
+	public void sendPieceToGraveyard() {
+		if(piece.color) {
+			GameScreen.graveyardBlack.add(piece);
+		}else {
+			GameScreen.graveyardWhite.add(piece);
+		}
+		this.piece=null;
 	}
 	
 	/**

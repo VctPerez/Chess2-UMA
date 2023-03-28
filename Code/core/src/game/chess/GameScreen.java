@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.viewport.*;
 
 import elements.Background;
 import elements.Board;
+import elements.Graveyard;
 import elements.Tile;
 import elements.pieces.Bishop;
 import elements.pieces.King;
@@ -24,7 +25,12 @@ public class GameScreen extends AbstractScreen {
 	private Stage stage;
 	public static Board board;
 	
+	//Control selección de piezas
 	private boolean isPieceSelected = false;
+	private ArrayList<Vector2> currentTile_validMovements = new ArrayList<>();
+	private int current_x, current_y;
+	private Tile currentTile = null;
+	private Tile nextTile = null;
 
 	//----------------------------
 	//CONTROL JAQUE
@@ -42,15 +48,17 @@ public class GameScreen extends AbstractScreen {
 	//----------------------------
 	
 	
-	private ArrayList<Vector2> currentTile_validMovements = new ArrayList<>();
-	private int current_x, current_y;
-	private Tile currentTile = null;
-	private Tile nextTile = null;
-	
+	//Control captura al paso
 	private Pawn lastPawn;
 	
+	//Control turno
 	private boolean PLAYER1 = true;
 
+	//Cementerios
+	
+	public static Graveyard graveyardWhite;
+	public static Graveyard graveyardBlack;
+	
 	IOS inputs = new IOS();
 
 	@Override
@@ -59,6 +67,8 @@ public class GameScreen extends AbstractScreen {
 		Gdx.input.setInputProcessor(inputs);
 
 		board = new Board();
+		graveyardWhite = new Graveyard(0,21);
+		graveyardBlack = new Graveyard(Gdx.graphics.getWidth()-42,21);
 		Background fondo = new Background();
 		fondo.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
@@ -67,6 +77,8 @@ public class GameScreen extends AbstractScreen {
 
 		stage.addActor(fondo);
 		stage.addActor(board);
+		stage.addActor(graveyardWhite);
+		stage.addActor(graveyardBlack);
 	}
 
 	@Override
