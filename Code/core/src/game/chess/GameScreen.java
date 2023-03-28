@@ -124,7 +124,6 @@ public class GameScreen extends AbstractScreen {
             
                 } else {
                     lowlight();
-                    
 					moveCurrentPieceTo(next_x,next_y);
 					
                     isPieceSelected = false;
@@ -175,8 +174,7 @@ public class GameScreen extends AbstractScreen {
 	 * Elimina el resaltado de las casillas contenidas en el array de movimientos válidos
 	 */
 	private void lowlight() {
-		board.getTile(kingB.x, kingB.y).attacked=false;
-		board.getTile(kingW.x, kingW.y).attacked=false;
+		
 		for (Vector2 vector : currentTile_validMovements) {
 			Tile tile = board.getTile(vector.x, vector.y);
 			if(tile.piece!=null) {
@@ -185,6 +183,15 @@ public class GameScreen extends AbstractScreen {
 				tile.highlight = false;
 			}
 		}
+	}
+	
+	/**
+	 * Elimina el resaltado de las casillas de los reyes tras mover una pieza
+	 */
+	
+	private void resetlight () {
+		board.getTile(kingB.x, kingB.y).attacked=false;
+		board.getTile(kingW.x, kingW.y).attacked=false;
 	}
 	
 	/**
@@ -230,7 +237,7 @@ public class GameScreen extends AbstractScreen {
         		checkPromotion(next_x, next_y);
         	}
         	
-        	
+        	resetlight();
         	//Tras moverla se comprueba si hay jaque
         	if(nextTile.getPiece() instanceof King) {
         		if(nextTile.getPiece().color()) {
@@ -244,18 +251,6 @@ public class GameScreen extends AbstractScreen {
         	currentTile_validMovements = (board.getTile(next_x, next_y).getPiece().getMovement(next_x, next_y));
 			Jaque(currentTile_validMovements,nextTile.getPiece().color());
 			
-		/*
-			//Para probar visualmente que el rey estará atacado a partir de este movimiento
-			if(jaqueB) {
-				board.getTile(kingB.x, kingB.y).attacked=true;
-			}else if(jaqueW) {
-				board.getTile(kingW.x, kingW.y).attacked=true;
-			}else {
-				board.getTile(kingB.x,kingB.y ).attacked = false;
-				board.getTile(kingW.x, kingW.y).attacked = false;
-			}
-			
-        	*/
             changeTurn();
             
         }
