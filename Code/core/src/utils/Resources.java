@@ -24,7 +24,7 @@ public class Resources {
 
     // RECURSOS PARTIDA
     public static final String PAWN_PATH = "sprites/Testing-Pieces/Testing-Pawn.png";
-    public static final String KNIGHT_PATH = "sprites/Testing-Pieces/Testing-Knight.png";
+    public static final String KNIGHT_PATH = "sprites/Testing-Pieces/KnightW.png";
     public static final String BISHOP_PATH = "sprites/Testing-Pieces/Testing-Bishop.png";
     public static final String ROOK_PATH = "sprites/Testing-Pieces/Testing-Rook.png";
     public static final String QUEEN_PATH = "sprites/Testing-Pieces/Testing-Queen.png";
