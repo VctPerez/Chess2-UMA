@@ -288,7 +288,7 @@ public class GameScreen extends AbstractScreen {
 	
 	private void checkPassant(float next_x, float next_y) {
 		if (isEnPassant(next_x, next_y, (Pawn)nextTile.getPiece())){
-			board.getTile(next_x,next_y + (nextTile.getPiece().color()?-1:1)).setPiece(null);
+			board.getTile(next_x,next_y + (nextTile.getPiece().color()?-1:1)).sendPieceToGraveyard();
 		}
 	}
 	
