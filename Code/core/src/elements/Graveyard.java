@@ -2,6 +2,7 @@ package elements;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -12,6 +13,8 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 public class Graveyard extends Actor {
 	private ArrayList<Piece> graveyard;
 	protected ShapeRenderer frame;
+	private final float Y_OFFSET = 24;
+	private final float X_OFFSET = 24;
 
 	public Graveyard(float x, float y) {
 		graveyard = new ArrayList<>();
