@@ -144,8 +144,7 @@ public class GameScreen extends AbstractScreen {
 			blackMate=true;
 			board.getTile(blackKing.x,blackKing.y ).attacked = true;
 			
-			threatPiece = nextTile.getPiece();
-			threatPiecePosition= new Vector2(next_x, next_y);
+			updateThreat(next_x, next_y);
 			
 			System.out.println("REY NEGRO EN JAQUE");
 			
@@ -153,12 +152,16 @@ public class GameScreen extends AbstractScreen {
 			whiteMate=true;
 			board.getTile(whiteKing.x, whiteKing.y).attacked = true;
 			
-			threatPiece = nextTile.getPiece();
-			threatPiecePosition= new Vector2(next_x, next_y);
+			updateThreat(next_x, next_y);
 			
 			System.out.println("REY BLANCO EN JAQUE");
 		}
 		
+	}
+	
+	private void updateThreat(float next_x, float next_y) {
+		threatPiece = nextTile.getPiece();
+		threatPiecePosition= new Vector2(next_x, next_y);
 	}
 	
 	private void checkCheckMate() {
@@ -190,7 +193,10 @@ public class GameScreen extends AbstractScreen {
 			}else if(!nextPiece.color()) {
 				nextTile.setPiece(graveyardBlack.reviveLastPiece());
 			}
-		}		
+		}
+		if(currentTile.getPiece() instanceof Pawn && ((Pawn) currentTile.getPiece()).hasBeenMoved) {
+			((Pawn) currentTile.getPiece()).hasBeenMoved=false;
+		}
 	}
 
 
