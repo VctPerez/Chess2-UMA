@@ -14,11 +14,13 @@ public abstract class Piece extends Actor {
 	protected Boolean color;
 	public Boolean hasBeenMoved;
 	protected Boolean selected;
+	public Boolean alive;
 
 	public Piece(Boolean color, Texture texture) {
 		this.sprite = new Image(texture);
 		this.hasBeenMoved=false;
 		this.color = color;
+		this.alive = true;
 		
 		if(color) {
 			setColor(Color.WHITE);
@@ -46,6 +48,10 @@ public abstract class Piece extends Actor {
 	
 	public void setSprite(String path) {
 		this.sprite = new Image(path);
+	}
+	
+	public boolean alive() {
+		return alive;
 	}
 	
 	/*

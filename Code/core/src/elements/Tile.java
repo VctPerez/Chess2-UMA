@@ -92,9 +92,11 @@ public class Tile extends Actor{
 	
 	public void sendPieceToGraveyard() {
 		if(piece.color) {
-			GameScreen.graveyardBlack.add(piece);
-		}else {
+
 			GameScreen.graveyardWhite.add(piece);
+		}else {
+			
+			GameScreen.graveyardBlack.add(piece);
 		}
 		this.piece=null;
 	}

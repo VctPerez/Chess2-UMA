@@ -25,7 +25,18 @@ public class Graveyard extends Actor {
 	}
 	
 	public void add(Piece piece) {
+		piece.alive=false;
 		graveyard.add(piece);
+	}
+	
+	public Piece reviveLastPiece() {
+		Piece piece = null;
+		if(!graveyard.isEmpty()) {
+			piece = graveyard.get(graveyard.size()-1);
+			piece.alive=true;
+			piece = graveyard.remove(graveyard.size()-1);
+		}
+		return piece;
 	}
 	
 	public void draw(Batch batch, float parentAlpha) {

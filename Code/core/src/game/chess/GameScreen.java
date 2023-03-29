@@ -32,6 +32,7 @@ public class GameScreen extends AbstractScreen {
 	private int current_x, current_y;
 	private Tile currentTile = null;
 	private Tile nextTile = null;
+	private Piece nextPiece = null;
 
 	//----------------------------
 	//CONTROL JAQUE
@@ -161,20 +162,20 @@ public class GameScreen extends AbstractScreen {
 	}
 	
 	private void checkCheckMate() {
-		if(blackMate && threatPiece.getMovement(threatPiecePosition.x, threatPiecePosition.y).contains(blackKing)) {
+		if(blackMate && threatPiece.alive() && threatPiece.getMovement(threatPiecePosition.x, threatPiecePosition.y).contains(blackKing)) {
 			System.out.println("MOVIMIENTO INVALIDO: el rey negro sigue en jaque");
 			 lowlight();
 			 undoLastMovement();
-             //select(currentTile);
-		} else if(whiteMate && threatPiece.getMovement(threatPiecePosition.x, threatPiecePosition.y).contains(whiteKing)) {
+
+		} else if(whiteMate && threatPiece.alive() && threatPiece.getMovement(threatPiecePosition.x, threatPiecePosition.y).contains(whiteKing)) {
 			System.out.println("MOVIMIENTO INVALIDO: el rey blanco sigue en jaque");
 			 lowlight();
 			 undoLastMovement();
-			 //select(currentTile);
-		}else {//borrar este else, es solo para testear
+
+		}else {
 			blackMate=false;
 			whiteMate=false;
-			board.getTile(blackKing.x,blackKing.y ).attacked = false;
+			board.getTile(blackKing.x,blackKing.y).attacked = false;
 			board.getTile(whiteKing.x, whiteKing.y).attacked = false;
         	changeTurn();
 			System.out.println("MOVIMIENTO VALIDO");
@@ -183,6 +184,13 @@ public class GameScreen extends AbstractScreen {
 	
 	private void undoLastMovement() {
 		nextTile.move(current_x, current_y);
+		if(nextPiece!=null && !nextPiece.alive()) {
+			if(nextPiece.color()) {
+				nextTile.setPiece(graveyardWhite.reviveLastPiece());
+			}else if(!nextPiece.color()) {
+				nextTile.setPiece(graveyardBlack.reviveLastPiece());
+			}
+		}		
 	}
 
 
@@ -216,15 +224,7 @@ public class GameScreen extends AbstractScreen {
 			}
 		}
 	}
-	
-	/**
-	 * Elimina el resaltado de las casillas de los reyes tras mover una pieza
-	 */
-	
-	private void resetlight () {
-		//board.getTile(kingB.x, kingB.y).attacked=false;
-		//board.getTile(kingW.x, kingW.y).attacked=false;
-	}
+
 	
 	/**
 	 * Selecciona la casilla pasada como parámetro, es decir, si tiene una pieza calcula los posibles movimientos y los resalta
@@ -248,8 +248,10 @@ public class GameScreen extends AbstractScreen {
 	
 	private void updateKings(float next_x, float next_y) {
 		if(nextTile.getPiece().color()) {
+			board.getTile(whiteKing.x, whiteKing.y).attacked = false;
 			whiteKing.set(next_x, next_y);
 		}else {
+			board.getTile(blackKing.x,blackKing.y).attacked = false;
 			blackKing.set(next_x, next_y);
 		}
 	}
@@ -269,12 +271,12 @@ public class GameScreen extends AbstractScreen {
 
         	checkCastling(next_x);
         	
+        	nextPiece = nextTile.getPiece();
                      	
             currentTile.move(next_x, next_y);
             
             if(nextTile.getPiece() instanceof King) {
         		updateKings(next_x, next_y);
-    	
         	}
             
             if(isMate()) {
@@ -291,13 +293,6 @@ public class GameScreen extends AbstractScreen {
         		
         			checkPromotion(next_x, next_y);
             	}
-        	
-            	resetlight();
-        	//Tras moverla se comprueba si hay jaque
-            	
-        	
-        	//Calcula los siguientes movimientos tras mover para saber si este movimiento ha puesto en jaque al rey
-        	////Jaque(currentTile_validMovements,nextTile.getPiece().color());
 			
             	changeTurn();
             }
