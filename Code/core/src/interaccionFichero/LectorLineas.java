@@ -104,7 +104,7 @@ public class LectorLineas
 		String text = "";
 		for(int i=primeraLinea; i<=ultimaLinea; ++i)
 		{
-			text += leerLinea(i) + " ";
+			text += leerLinea(i) + "\n";
 		}
 		return text;
 	}
