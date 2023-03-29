@@ -3,3 +3,182 @@ Classic
 Modified
 Manual
 Classic Mode:
+
+-Players:
+ Two.
+
+-Objective:
+To checkmate the opposing King.
+
+-Mechanics:
+By turns, starting with White, with exactly one move per turn and with a fixed initial
+with a fixed initial position of the pieces, until a player achieves the objective, 
+surrender or a draw occurs. objective, surrenders or a draw situation occurs (stalemate).
+It is not possible to pass or move more than once in any case.
+
+-Specifications:
+Both players are positioned facing each other and separated by the board, which
+must be placed between them in such a way that the square in the right corner closest to 
+each player is white.Each of the horizontal lines are called rows and the vertical lines
+are called columns.
+
+The squares are usually identified by coordinates in the following way: one
+letter [a..h] for the column followed by a number [1..8] for the row, and taking as the
+originating from the lower left corner of the player with White.
+Each player has at his disposal a group of 16 pieces of the same color with specific 
+names and characteristics that represent his army.names and characteristics that represent
+his army. The player can in move pieces only from his army according to the legal rules of
+the particular move.In addition, each piece has the ability to capture enemy pieces,which 
+are removed from the board.
+
+ The 16 pieces of each army consist of:
+	 1 King
+	 1 Queen
+	 2 Bishops
+	 2 Knights
+	 2 Rooks
+	 8 Pawns
+
+ The initial arrangement of the pieces in the game is as follows:
+	 The 8 Pawns occupy the eight squares of the second row of each player.
+	 The 2 Rooks occupy the corners of the first row.
+	 Next to the Rooks are placed the Knights and then the Bishops.
+	 In the central squares of the first row are placed the King and the Queen in such
+	 a way that the color of the Queen coincides with the color of the King.
+	 that the color of the Queen coincides with the color of the square. 
+
+-Moves:
+Any move made by a player during his turn must always respect these
+maxims, which are considered a priority:
+	 No piece can leave the board, nor can there be two on the same square.
+	 A player may not capture pieces from his own army.
+	 A player may not make a move that leaves his own King in check at the end of the 
+	 turn, i.e.,that leaves two pieces on the same square.
+	 the opponent could capture it in his turn.
+Each type of piece moves as follows (in order of simplicity):
+
+Rook
+
+Movement: as many squares as desired along the same row or column as the original one, 
+with a limit at the end of the board or the first piece found on the way. If the
+piece is an enemy piece, it is within range.
+
+Capture: if an enemy piece is reachable, it can be captured by placing the rook on the 
+square occupied by the piece. rook on the square occupied by the enemy piece and removing
+it from the board.
+
+Bishop
+
+Movement: as many squares as desired along one of the four diagonals starting from the 
+piece, up to the square occupied by the enemy piece. starting from the piece, until the
+end of the board or the first piece found. If the piece is an enemy piece, it is within 
+range.
+
+Capture: the Bishop is placed on the square occupied by the opponent's piece, and the 
+latter withdraws retreats.
+
+King
+
+Movement: it works like the Queen but only one square at a time, i.e. it can only move
+to adjacent squares.
+ 
+Capture: any enemy piece placed on any of the 8 adjacent squares can be captured, placing
+the King on it and removing the enemy piece.
+
+Note that in particular it implies that the King cannot be moved next to the other, as it 
+would be in turn the other, since it would be in turn attacked by the opponent.
+
+Knight
+
+Movement: it can move to one of the 8 squares that are located at a certain distance from
+it, regardless of the enemy pieces. distance from it, regardless of the pieces that may be
+in between. Each of these each of these destination squares forms an "L" shape from the 
+initial square. All of them are of a different color from the initial square. 
+
+Capture: any enemy piece located in a destination square of a Knight, regardless of the 
+pieces in between, can in between, can be captured by moving it there and removing the 
+captured piece.
+
+Pawn
+
+Movement: forward, on the same column, one square at a time. If it is the
+first time this pawn is moved (it is still in the second row) it can move 1 or 2 squares.
+1 or 2 squares.
+
+Capture: unlike the other pieces, they do not capture as they move. Each
+Each pawn attacks the two squares that are diagonally forward, so that when capturing, they
+change column.they change column. Any enemy piece that is located on these attacked squares
+can be captured.
+
+In addition, a Pawn has an additional way to capture enemy pawns
+in a certain circumstance (en passant capture). To do so:
+	 The original Pawn must be on its fifth rank.
+	 The opponent's pawn must be in its original position on an adjacent column.
+	 The opponent must advance his pawn two steps, so that both pawns are on the same 
+	 file.together on the same row.
+	 At that moment, if the player wants, he can capture the enemy as if he had only moved 
+	 one square, i.e., moving his own diagonally to the next row and withdrawing his
+	 to the next row and withdrawing the captured one. If he decides to ignore the capture
+	 in that turn, he will lose the right to do so.
+
+This is the only capture in the game in which the capturing piece does not end up on the 
+captured piece's square of the captured piece.
+
+-Crowning: when a pawn reaches the last row it has to be exchanged (crowned)
+by a Knight, Bishop, Rook or Queen, even if the player already has that piece. In this way
+This way it is possible to increase one's own strength by being able to have, for example,
+several Checkers at one's disposal Checkers. This substitution is included in the same 
+turn of the pawn.
+
+-A special move: castling
+Castling is the only move in which two pieces are moved in the same turn: the King and
+a Rook.own pieces: the King and a Rook. This move can only be made by each player once
+in the whole game. the whole game, being optional but complying with a series of 
+requirements, one of them being that would make it permanently impossible and others
+only temporarily:
+	 It must be the first move of both the King and Rook to castle.
+	 If the King is moved, castling is impossible for the rest of the game.
+	 If the Rook is moved, it is still possible to use the other Rook.
+	 There must not be any piece between the King and the Rook, neither friendly nor opposing.
+	 The King cannot be in check (attacked) at that moment, neither its destination square, nor 
+	 the one in between.
+	 or the square in between. Other squares, such as the Rook's origin, can be in check.
+	 be in check.
+
+The move is carried out in this order regardless of the side on which it is made.
+
+castling: first the King is moved two squares towards the Rook and then the Rook is moved
+to the adjacent square. the Rook is moved to the square adjacent to the other side of 
+the King. 
+
+-Check
+A player is said to be in check when his King is being attacked by one or two enemy pieces.
+or two enemy pieces, and it would be possible for the opponent to capture it the following
+turn. No is not obligatory to explicitly announce the check. Following the rules, the 
+player must act accordingly so that this situation disappears in his turn. To do so, he
+can:
+	 Capture the attacking piece, if he has any piece that does so, and there is only
+	 one piece attacking.there is only one piece attacking.
+	 Put a piece in the middle as a shield, if the attacking piece is not a Knight 
+	 and there is no more than one piece attacking. Knight and there is not more than 
+	 one piece attacking.
+	 Move the King to a square such that it is no longer in check, if there is a King attacking.
+
+-Checkmate
+
+When a check occurs and a player cannot execute any move that would allow him to resolve
+the situation, he has that allows him to resolve the situation, he has lost the game.
+
+-Tables
+
+There are many possibilities to end a game in a draw:
+	 A player who is not in check cannot move on his turn (stalemate).
+	 Both players have agreed to a draw.
+	 There has been a repetition of the same position 3 times (not necessarily with the same
+	 moves, but with the same moves).
+	 moves necessarily, but with the same pieces and the same possible moves for both sides).
+	 There are not enough pieces on either side to force a checkmate.
+	 If there are any pawns left, it does not apply. Possible cases: King vs. King, King vs.
+	 King against King and Knight or Bishop.
+	 There is a sequence of 50 moves of each side in a row without a capture or pawn move.
+	 capture or pawn move. 

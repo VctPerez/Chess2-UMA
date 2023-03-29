@@ -66,10 +66,10 @@ public class Chess2 extends Game {
 		Render.MAINSCREEN = new MainScreen();
 		Render.CONFIGSCREEN = new ConfigScreen();
 		Render.LANGUAGESCREEN = new LanguageScreen();
-		//Render.CLASSICMANSCREEN = new ClassicManScreen();
-		//Render.MANUALSCREEN = new ManualScreen();
+		Render.CLASSICMANSCREEN = new ClassicManScreen();
+		Render.MANUALSCREEN = new ManualScreen();
 
-		this.setScreen(new GameScreen());
+		this.setScreen(Render.MAINSCREEN);
 
 	}
 
