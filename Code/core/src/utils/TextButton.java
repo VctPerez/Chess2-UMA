@@ -3,6 +3,7 @@ package utils;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -37,32 +38,28 @@ public class TextButton extends Actor implements Button {
     }
 
     @Override
-    public void draw(SpriteBatch batch) {
+    public void draw(Batch batch, float parentAlpha) {
         text.draw();
+        checkPress();
     }
 
     @Override
-    public void checkPress(IOS input) {
+    public void checkPress() {
     	if(initalMouseOver) {
-    		if(!mouseOver(input)){
+    		if(!mouseOver(Render.inputs)){
     			text.setColor(Color.WHITE);
     			initalMouseOver = false;
-    		}else if(input.isClicked()) {
+    		}else if(Render.inputs.isClicked()) {
     			clickSound.play(0.4f);
     			isSelected = true;
     		}
         }else{
-            if(mouseOver(input)) {
+            if(mouseOver(Render.inputs)) {
             	initalMouseOver = true;
             	mouseOverSound.play(0.4f);
             	text.setColor(Color.WHITE);
             }
         }
-    }
-    @Override
-    public void establish(IOS inputs, SpriteBatch batch) {
-        draw(batch);
-        checkPress(inputs);
     }
 
     @Override

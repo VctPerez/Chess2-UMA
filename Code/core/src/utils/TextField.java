@@ -1,5 +1,6 @@
 package utils;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -19,17 +20,12 @@ public class TextField extends Actor implements Button{
     }
 
     @Override
-    public void draw(SpriteBatch batch) {
+    public void draw(Batch batch, float parentAlpha) {
         // TODO: 23/03/2023
     }
 
     @Override
-    public void checkPress(IOS input) {
-        // TODO: 23/03/2023
-    }
-
-    @Override
-    public void establish(IOS inputs, SpriteBatch batch) {
+    public void checkPress() {
         // TODO: 23/03/2023
     }
 

@@ -23,8 +23,6 @@ import utils.TextButton;
 	
 	
 public class ClassicManScreen extends AbstractScreen{
-	
-	IOS inputs = new IOS();
 	Stage stage;
 	Image Logo;
 	Text volverText,Titulo;
@@ -88,10 +86,9 @@ public class ClassicManScreen extends AbstractScreen{
 		//Para tener dos inputs:
 		InputMultiplexer inputMultiplexer = new InputMultiplexer();
 		inputMultiplexer.addProcessor(stage);
-		inputMultiplexer.addProcessor(inputs);
+		inputMultiplexer.addProcessor(Render.inputs);
 		     
 		Gdx.input.setInputProcessor(inputMultiplexer);
-	
 		}
 		
 @Override
@@ -105,7 +102,7 @@ public void render(float delta) {
 		      
 		Titulo.draw();
 		Logo.draw(Render.Batch);
-		volver.establish(inputs, Render.Batch);
+		volver.draw(Render.Batch,0);
 		      
 	    // Actualiza y dibuja el Stage
 	    stage.act();

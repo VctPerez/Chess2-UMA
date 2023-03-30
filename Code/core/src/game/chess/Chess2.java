@@ -1,11 +1,13 @@
 package game.chess;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import utils.IOS;
 import utils.Render;
 import utils.Resources;
 
@@ -57,6 +59,8 @@ public class Chess2 extends Game {
 		Render.Batch = new SpriteBatch();
 		Render.camera = new OrthographicCamera(Render.SCREEN_WIDTH, Render.SCREEN_HEIGHT);
 		Render.app = this;
+		Render.inputs = new IOS();
+		Gdx.input.setInputProcessor(Render.inputs);
 
 		manager = new AssetManager();
 		loadResources();

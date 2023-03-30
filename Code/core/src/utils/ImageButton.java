@@ -1,5 +1,6 @@
 package utils;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -42,31 +43,26 @@ public class ImageButton extends Actor implements Button{
     }
 
     @Override
-    public void draw(SpriteBatch batch) {
+    public void draw(Batch batch, float parentAlpha) {
         image.draw(batch);
+        checkPress();
     }
 
     @Override
-    public void checkPress(IOS input) {
+    public void checkPress() {
         if(initialPress) {
-        	if(!input.isMousePressed()) {
+        	if(!Render.inputs.isMousePressed()) {
         		initialPress = false;
         		selected = false;
         	}
         }else{
-	        if(input.mouseX >= image.getPosition().x && input.mouseX <= image.getPosition().x + image.getDimensions().x
-	        && input.mouseY >= image.getPosition().y && input.mouseY <= image.getPosition().y + image.getDimensions().y
-	        && input.isMousePressed()) {
+	        if(Render.inputs.mouseX >= image.getPosition().x && Render.inputs.mouseX <= image.getPosition().x + image.getDimensions().x
+	        && Render.inputs.mouseY >= image.getPosition().y && Render.inputs.mouseY <= image.getPosition().y + image.getDimensions().y
+	        && Render.inputs.isMousePressed()) {
 	        	selected = true;
 	        	initialPress = true;
 	        }
         }
-    }
-
-    @Override
-    public void establish(IOS inputs, SpriteBatch batch) {
-        draw(batch);
-        checkPress(inputs);
     }
 
     @Override

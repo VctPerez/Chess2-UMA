@@ -20,24 +20,9 @@ public interface Button{
     void setPosition(float x, float y);
 
     /**
-     * Dibuja el boton a partir del batch de entrada.
-     * @param batch batch que renderiza los botones.
-     */
-    void draw(SpriteBatch batch);
-
-    /**
      * Comprueba si se hace click en el boton, o si se presiona
-     * @param input procesador de entradas (mouse y  teclado).
      */
-    void checkPress(IOS input);
-
-    /**
-     * Establece el boton en la pantalla, es decir, lanza a la vez el checkpress y el draw.
-     * @param inputs procesador de entradas (mouse y  teclado).
-     * @param batch batch que renderiza los botones.
-     */
-    void establish(IOS inputs, SpriteBatch batch);
-
+    void checkPress();
     /**
      *  Devuelve las coordenadas de la esquina inferior izquierda del botón.
      * @return Vector con su posicion

@@ -1,6 +1,7 @@
 package utils;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -44,18 +45,20 @@ public class Slider extends Actor implements Button{
     }
 
     @Override
-    public void draw(SpriteBatch batch) {
+    public void draw(Batch batch, float parentAlpha) {
         bar.draw(batch);
+        checkPress();
+        controller.draw(Render.Batch,0);
     }
 
     @Override
-    public void checkPress(IOS input) {
-        if(controller.isSelected() || input.isClicked()){
+    public void checkPress() {
+        if(controller.isSelected() || Render.inputs.isClicked()){
             controller.setImage(new Image(Render.app.getManager().get(Resources.SELECTEDBAR_PATH, Texture.class)));
-            if(input.mouseX  >= bar.getPosition().x
-                    && input.mouseX - controller.getDimensions().x / 2 <= bar.getPosition().x + bar.getDimensions().x - controller.getDimensions().x / 2){
-                controller.setPosition(input.mouseX - controller.getDimensions().x / 2, controller.getCoords().y);
-                if(input.mouseX - controller.getDimensions().x / 2 == bar.getPosition().x){
+            if(Render.inputs.mouseX  >= bar.getPosition().x
+                    && Render.inputs.mouseX - controller.getDimensions().x / 2 <= bar.getPosition().x + bar.getDimensions().x - controller.getDimensions().x / 2){
+                controller.setPosition(Render.inputs.mouseX - controller.getDimensions().x / 2, controller.getCoords().y);
+                if(Render.inputs.mouseX - controller.getDimensions().x / 2 == bar.getPosition().x){
                     value = 0;
                 }else{
                     value = (int) ((controller.getCoords().x + controller.getDimensions().x /2 - bar.getPosition().x) * 100 / bar.getDimensions().x);
@@ -64,13 +67,6 @@ public class Slider extends Actor implements Button{
         }else{
             controller.setImage(new Image(Render.app.getManager().get(Resources.UNSELECTEDBAR_PATH, Texture.class)));
         }
-    }
-
-    @Override
-    public void establish(IOS inputs, SpriteBatch batch) {
-        draw(batch);
-        checkPress(inputs);
-        controller.establish(inputs, batch);
     }
     @Override
     public Vector2 getCoords() {

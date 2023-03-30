@@ -65,9 +65,9 @@ public class ManualScreen extends AbstractScreen{
 	        Titulo.draw();
 	        Logo.draw(Render.Batch);
 	        //news.draw(Render.Batch);
-	        volver.establish(inputs, Render.Batch);
-	        clasico.establish(inputs, Render.Batch);
-	        modificado.establish(inputs, Render.Batch);
+	        volver.draw(Render.Batch,0);
+	        clasico.draw(Render.Batch,0);
+	        modificado.draw(Render.Batch,0);
 	        
 	        if(volver.isSelected()){
 	            Render.app.setScreen(Render.MAINSCREEN);

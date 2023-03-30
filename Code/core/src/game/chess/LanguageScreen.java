@@ -8,8 +8,6 @@ import interaccionFichero.*;
 import utils.*;
 
 public class LanguageScreen extends AbstractScreen {
-
-    IOS inputs = new IOS();
     TextButton home,config;
     Text homeText,Language,configText;
     Image background,Logo,news;
@@ -57,7 +55,7 @@ public class LanguageScreen extends AbstractScreen {
         Logo.setSize(500, 500);
         Logo.setTransparency(0.25f);
         
-        Gdx.input.setInputProcessor(inputs);
+        Gdx.input.setInputProcessor(Render.inputs);
     }
 
     @Override
@@ -73,11 +71,11 @@ public class LanguageScreen extends AbstractScreen {
         Language.draw();
         Logo.draw(Render.Batch);
         //news.draw(Render.Batch);
-        spanish.establish(inputs, Render.Batch);
-        english.establish(inputs, Render.Batch);
+        spanish.draw(Render.Batch,0);
+        english.draw(Render.Batch,0);
         
-        home.establish(inputs, Render.Batch);
-        config.establish(inputs, Render.Batch);
+        home.draw(Render.Batch,0);
+        config.draw(Render.Batch,0);
         
         if(spanish.isSelected()) {
         	languageSettingWriter.escribirLinea(1, "esp/"); //La linea 1 de la configuracion contiene el idioma

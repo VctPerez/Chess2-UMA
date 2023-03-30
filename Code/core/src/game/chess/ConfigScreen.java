@@ -8,8 +8,6 @@ import interaccionFichero.LectorLineas;
 import utils.*;
 
 public class ConfigScreen extends AbstractScreen {
-
-    IOS inputs = new IOS();
     TextButton home,language;
     Text homeText,Titulo,volumeText,languageText;
     Image background,Logo,news;
@@ -42,7 +40,7 @@ public class ConfigScreen extends AbstractScreen {
         Logo.setSize(500, 500);
         Logo.setTransparency(0.25f);
         
-        Gdx.input.setInputProcessor(inputs);
+        Gdx.input.setInputProcessor(Render.inputs);
     }
 
     @Override
@@ -58,9 +56,9 @@ public class ConfigScreen extends AbstractScreen {
         Titulo.draw();
         Logo.draw(Render.Batch);
         //news.draw(Render.Batch);
-        home.establish(inputs, Render.Batch);
+        home.draw(Render.Batch,0);
         volumeText.draw();
-        language.establish(inputs, Render.Batch);
+        language.draw(Render.Batch,0);
         
         if(home.isSelected()){
             Render.app.setScreen(Render.MAINSCREEN);

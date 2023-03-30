@@ -29,6 +29,8 @@ public class Render {
 
     public static Chess2 app;
 
+    public static IOS inputs;
+
     public static int SCREEN_WIDTH = 1280;
     public static int SCREEN_HEIGHT = 720;
     

@@ -2,6 +2,7 @@ package utils;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -47,30 +48,25 @@ public class CheckBox extends Actor implements Button{
     }
 
     @Override
-    public void draw(SpriteBatch batch) {
+    public void draw(Batch batch, float parentAlpha) {
         button.draw(batch);
         if(value) {
         	tick.draw(batch);
         }
+        checkPress();
     }
 
     @Override
-    public void checkPress(IOS input) {
-    	if(input.mouseX>= tick.getPosition().x && input.mouseX <= tick.getPosition().x + tick.getDimensions().x
-        && input.mouseY>= tick.getPosition().y && input.mouseY <= tick.getPosition().y + tick.getDimensions().y) {
+    public void checkPress() {
+    	if(Render.inputs.mouseX>= tick.getPosition().x && Render.inputs.mouseX <= tick.getPosition().x + tick.getDimensions().x
+        && Render.inputs.mouseY>= tick.getPosition().y && Render.inputs.mouseY <= tick.getPosition().y + tick.getDimensions().y) {
     		button.setTexture(selectedTexture);
-	       	if(input.isClicked()) {
+	       	if(Render.inputs.isClicked()) {
 	       		value = !value;
 	       	}
        }else {
     	   button.setTexture(unselectedTexture);
        }
-    }
-
-    @Override
-    public void establish(IOS inputs, SpriteBatch batch) {
-    	draw(batch);
-    	checkPress(inputs);
     }
 
     @Override

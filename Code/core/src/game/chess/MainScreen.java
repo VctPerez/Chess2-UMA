@@ -9,8 +9,6 @@ import utils.*;
 import interaccionFichero.*;
 
 public class MainScreen extends AbstractScreen {
-
-    IOS inputs = new IOS();
     TextButton play,exit,confg,reglas;
     Text playText,exitText,confgText,Titulo,reglasText;
     Image background,Logo,news;
@@ -54,7 +52,7 @@ public class MainScreen extends AbstractScreen {
         //news = new Image("prueba.jpg");
         //news.setPosition(850,400);
         //news.setSize(300, 200);
-        Gdx.input.setInputProcessor(inputs);
+        Gdx.input.setInputProcessor(Render.inputs);
         Render.bgMusic = Render.app.getManager().get(Resources.MENU_THEME);
         Render.bgMusic.setLooping(true);
         Render.bgMusic.play();
@@ -73,10 +71,10 @@ public class MainScreen extends AbstractScreen {
         Titulo.draw();
         Logo.draw(Render.Batch);
         //news.draw(Render.Batch);
-        reglas.establish(inputs, Render.Batch);
-        play.establish(inputs, Render.Batch);
-        exit.establish(inputs, Render.Batch);
-        confg.establish(inputs, Render.Batch);
+        reglas.draw(Render.Batch,0);
+        play.draw(Render.Batch,0);
+        exit.draw(Render.Batch,0);
+        confg.draw(Render.Batch,0);
         
         if(play.isSelected()){
             Render.bgMusic.stop();
