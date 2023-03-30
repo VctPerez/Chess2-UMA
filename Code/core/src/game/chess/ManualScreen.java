@@ -12,8 +12,6 @@ import utils.Text;
 import utils.TextButton;
 
 public class ManualScreen extends AbstractScreen{
-
-	  	IOS inputs = new IOS();
 	    TextButton volver,clasico,modificado;
 	    Text volverText,Titulo,clasicoText,modificadoText;
 	    Image Logo;
@@ -49,7 +47,7 @@ public class ManualScreen extends AbstractScreen{
 	        Logo.setSize(500, 500);
 	        Logo.setTransparency(0.25f);
 	        
-	        Gdx.input.setInputProcessor(inputs);
+	        Gdx.input.setInputProcessor(Render.inputs);
 	    }
 
 	    @Override

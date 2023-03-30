@@ -62,13 +62,11 @@ public class GameScreen extends AbstractScreen {
 	
 	public static Graveyard graveyardWhite;
 	public static Graveyard graveyardBlack;
-	
-	IOS inputs = new IOS();
 
 	@Override
 	public void show() {
 		stage = new Stage(new FitViewport(1280, 720));
-		Gdx.input.setInputProcessor(inputs);
+		Gdx.input.setInputProcessor(Render.inputs);
 
 		board = new Board();
 		graveyardWhite = new Graveyard(21,21);
@@ -97,10 +95,10 @@ public class GameScreen extends AbstractScreen {
 
 	public void update(float delta) {
         // Escape para volver al menÃº principal (Prueba)
-        if (inputs.justPressed(Keys.ESCAPE)) {
+        if (Render.inputs.justPressed(Keys.ESCAPE)) {
         	 Render.app.setScreen(Render.MAINSCREEN);
         // R para reiniciar la partida (Pruebas)
-        }else if(inputs.justPressed(Keys.R)) {
+        }else if(Render.inputs.justPressed(Keys.R)) {
        	 Render.app.setScreen(new GameScreen());
         }else if(isBoardClicked()) {
 
@@ -361,18 +359,18 @@ public class GameScreen extends AbstractScreen {
 		PLAYER1 = !PLAYER1;
 	}
 	private int calculateX() {
-		return (int) Math.ceil((inputs.mouseX - board.getTile(1, 1).getX()) / 84);
+		return (int) Math.ceil((Render.inputs.mouseX - board.getTile(1, 1).getX()) / 84);
 	}
 
 	private int calculateY() {
-		return (int) Math.ceil((inputs.mouseY - board.getTile(1, 1).getY()) / 84);
+		return (int) Math.ceil((Render.inputs.mouseY - board.getTile(1, 1).getY()) / 84);
 	}
 
 	private boolean isBoardClicked() {
-		return inputs.isClicked() && inputs.mouseX >= board.getTile(1, 1).getX()
-				&& inputs.mouseX <= (board.getTile(8, 1).getWidth() + board.getTile(8, 1).getX())
-				&& inputs.mouseY >= board.getTile(1, 1).getY()
-				&& inputs.mouseY <= board.getTile(1, 8).getHeight() + board.getTile(1, 8).getY();
+		return Render.inputs.isClicked() && Render.inputs.mouseX >= board.getTile(1, 1).getX()
+				&& Render.inputs.mouseX <= (board.getTile(8, 1).getWidth() + board.getTile(8, 1).getX())
+				&& Render.inputs.mouseY >= board.getTile(1, 1).getY()
+				&& Render.inputs.mouseY <= board.getTile(1, 8).getHeight() + board.getTile(1, 8).getY();
 	}
 
 	@Override
