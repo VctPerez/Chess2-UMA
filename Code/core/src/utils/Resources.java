@@ -5,12 +5,16 @@ package utils;
  * en nuestro proyecto; como imágenes, fuentes de letras, música, videos, etc...
  */
 public class Resources {
-    public static final String MENU_THEME = "menuTheme.ogg";
     public static final String LOADINGSCREEN_PATH = "sprites/loadingScreen.jpg";
     public static final String MENU_BACKGROUND_PATH = "";
     public static final String FONT_MENU_PATH = "fonts/Arial.ttf";
     public static final String LOGO_PATH="Logo.png";
     public static final String TEXT_BOX_PATH = "";
+    
+    //SONIDOS
+    public static final String MENU_THEME = "menuTheme.ogg";
+    public static final String TEXTBUTTON_HOVERSOUND = "sound/buttonMouseOverSound.mp3";
+    public static final String TEXTBUTTON_CLICKSOUND = "sound/buttonClickedSound.mp3";
 
     public static final String CHECK_PATH = "sprites/Testing-Pieces/Testing-Pawn.png";
     public static final String SLIDER_PATH = "sprites/volumeBar/volumeBar_bar(x2size).png";

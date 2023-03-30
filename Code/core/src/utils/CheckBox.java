@@ -14,7 +14,8 @@ public class CheckBox extends Actor implements Button{
     Image tick;
     Texture unselectedTexture,selectedTexture;
     Sprite button;
-    boolean selected;
+    boolean value;
+    
     /**
      * Constructor de una Check Box
      * No tiene parametros.
@@ -26,7 +27,7 @@ public class CheckBox extends Actor implements Button{
     	unselectedTexture = new Texture(Resources.CHECKBOX_UNSELECTED);
     	selectedTexture = new Texture(Resources.CHECKBOX_SELECTED);
     	
-    	selected = false;
+    	value = false;
     	
     	button = new Sprite(unselectedTexture);
     	button.setSize(100, 100);
@@ -48,7 +49,7 @@ public class CheckBox extends Actor implements Button{
     @Override
     public void draw(SpriteBatch batch) {
         button.draw(batch);
-        if(selected) {
+        if(value) {
         	tick.draw(batch);
         }
     }
@@ -59,7 +60,7 @@ public class CheckBox extends Actor implements Button{
         && input.mouseY>= tick.getPosition().y && input.mouseY <= tick.getPosition().y + tick.getDimensions().y) {
     		button.setTexture(selectedTexture);
 	       	if(input.isClicked()) {
-	       		selected = !selected;
+	       		value = !value;
 	       	}
        }else {
     	   button.setTexture(unselectedTexture);
@@ -84,7 +85,7 @@ public class CheckBox extends Actor implements Button{
 
     @Override
     public boolean isSelected() {
-    	return selected;
+    	return value;
     }
 
     @Override

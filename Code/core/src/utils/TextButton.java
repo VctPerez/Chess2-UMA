@@ -1,5 +1,7 @@
 package utils;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -9,6 +11,10 @@ public class TextButton extends Actor implements Button {
 
     private Text text;
     private boolean isSelected = false;
+    private boolean initalMouseOver = false;
+    private Sound mouseOverSound;
+    private Sound clickSound;
+    
 
     /**
      * Constructor de un Boton Texto
@@ -16,6 +22,8 @@ public class TextButton extends Actor implements Button {
      */
     public TextButton(Text txt){
         text = txt;
+        mouseOverSound = Gdx.audio.newSound(Gdx.files.internal(Resources.TEXTBUTTON_HOVERSOUND));
+        clickSound = Gdx.audio.newSound(Gdx.files.internal(Resources.TEXTBUTTON_CLICKSOUND));
     }
 
     @Override
@@ -35,14 +43,20 @@ public class TextButton extends Actor implements Button {
 
     @Override
     public void checkPress(IOS input) {
-        //System.out.println(input.mouseX + " " + input.mouseY);
-        if( input.mouseX >= text.getX() && input.mouseX <= text.getX() + text.getWidth() && input.mouseY <= text.getY()
-                && input.mouseY >= text.getY() - text.getHeight()){
-            text.setColor(Color.YELLOW);
-            if(input.isClicked()) isSelected = true;
+    	if(initalMouseOver) {
+    		if(!mouseOver(input)){
+    			text.setColor(Color.WHITE);
+    			initalMouseOver = false;
+    		}else if(input.isClicked()) {
+    			clickSound.play(0.4f);
+    			isSelected = true;
+    		}
         }else{
-            text.setColor(Color.WHITE);
-            isSelected = false;
+            if(mouseOver(input)) {
+            	initalMouseOver = true;
+            	mouseOverSound.play(0.4f);
+            	text.setColor(Color.WHITE);
+            }
         }
     }
     @Override
@@ -65,10 +79,17 @@ public class TextButton extends Actor implements Button {
     public boolean isSelected() {
         return isSelected;
     }
+    
+    public boolean mouseOver(IOS input) {
+    	return  input.mouseX >= text.getX() && input.mouseX <= text.getX() + text.getWidth() && input.mouseY <= text.getY()
+    			&& input.mouseY >= text.getY() - text.getHeight();
+    }
 
     @Override
     public void dispose() {
         text.dispose();
+        mouseOverSound.dispose();
+        clickSound.dispose();
     }
 }
 

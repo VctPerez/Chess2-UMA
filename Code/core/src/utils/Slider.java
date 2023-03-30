@@ -50,7 +50,7 @@ public class Slider extends Actor implements Button{
 
     @Override
     public void checkPress(IOS input) {
-        if(controller.isSelected()){
+        if(controller.isSelected() || input.isClicked()){
             controller.setImage(new Image(Render.app.getManager().get(Resources.SELECTEDBAR_PATH, Texture.class)));
             if(input.mouseX  >= bar.getPosition().x
                     && input.mouseX - controller.getDimensions().x / 2 <= bar.getPosition().x + bar.getDimensions().x - controller.getDimensions().x / 2){
