@@ -74,8 +74,8 @@ public class GameScreen extends AbstractScreen {
 		Background fondo = new Background();
 		fondo.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
-		placeWhites();
-		placeBlacks();
+		placeBelow(true);
+		placeAbove(false);
 
 		stage.addActor(fondo);
 		stage.addActor(board);
@@ -404,48 +404,48 @@ public class GameScreen extends AbstractScreen {
 
 	}
 
-	public void placeWhites() {
+	public void placeBelow(boolean color) {
 		for (int i = 1; i < 9; i++) {
-			board.getTile(i, 2).piece = new Pawn(true);
+			board.getTile(i, 2).piece = new Pawn(color);
 		}
 		for (int i = 1; i < 9; i++) {
 			if (i == 1 || i == 8) {
-				board.getTile(i, 1).piece = new Rook(true);
+				board.getTile(i, 1).piece = new Rook(color);
 			}
 			if (i == 2 || i == 7) {
-				board.getTile(i, 1).piece = new Knight(true);
+				board.getTile(i, 1).piece = new Knight(color);
 			}
 			if (i == 3 || i == 6) {
-				board.getTile(i, 1).piece = new Bishop(true);
+				board.getTile(i, 1).piece = new Bishop(color);
 			}
 			if (i == 4) {
-				board.getTile(i, 1).piece = new Queen(true);
+				board.getTile(i, 1).piece = new Queen(color);
 			}
 			if (i == 5) {
-				board.getTile(i, 1).piece = new King(true);
+				board.getTile(i, 1).piece = new King(color);
 			}
 		}
 	}
 	
-	private void placeBlacks() {
+	private void placeAbove(boolean color) {
 		for (int i = 1; i < 9; i++) {
-			board.getTile(i, 7).piece = new Pawn(false);
+			board.getTile(i, 7).piece = new Pawn(color);
 		}
 		for (int i = 1; i < 9; i++) {
 			if (i == 1 || i == 8) {
-				board.getTile(i, 8).piece = new Rook(false);
+				board.getTile(i, 8).piece = new Rook(color);
 			}
 			if (i == 2 || i == 7) {
-				board.getTile(i, 8).piece = new Knight(false);
+				board.getTile(i, 8).piece = new Knight(color);
 			}
 			if (i == 3 || i == 6) {
-				board.getTile(i, 8).piece = new Bishop(false);
+				board.getTile(i, 8).piece = new Bishop(color);
 			}
 			if (i == 4) {
-				board.getTile(i, 8).piece = new Queen(false);
+				board.getTile(i, 8).piece = new Queen(color);
 			}
 			if (i == 5) {
-				board.getTile(i, 8).piece = new King(false);
+				board.getTile(i, 8).piece = new King(color);
 			}
 		}
 	}
