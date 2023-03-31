@@ -74,9 +74,9 @@ public class GameScreen extends AbstractScreen {
 		graveyardBlack = new Graveyard(Gdx.graphics.getWidth()-63,21);
 		Background fondo = new Background();
 		fondo.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-
-		placeBelow(true);
-		placeAbove(false);
+		
+		placeWhites();
+		placeBlacks();
 
 		stage.addActor(fondo);
 		stage.addActor(board);
@@ -99,7 +99,7 @@ public class GameScreen extends AbstractScreen {
         if (Render.inputs.justPressed(Keys.ESCAPE)) {
         	 Render.app.setScreen(Render.MAINSCREEN);
         // R para reiniciar la partida (Pruebas) -> no funciona
-        }else if(inputs.justPressed(Keys.R)) {
+        }else if(Gdx.input.isKeyJustPressed(Keys.R)) {
        	 Render.app.setScreen(new GameScreen());
         }else if(isBoardClicked() && !whiteCheckMate && !blackCheckMate) {
 
