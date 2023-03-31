@@ -1,7 +1,5 @@
 package elements;
 
-import java.util.ArrayList;
-
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -76,18 +74,23 @@ public class Tile extends Actor{
 		}
 	}
 	
-	public void move(int x, int y) {
-		Tile nextTile = GameScreen.board.getTile(x, y);
-		
+	public void moveTo(Tile nextTile) {
 		if(nextTile.getPiece()!=null) {
 			nextTile.sendPieceToGraveyard();
 		}
 		
-		this.piece.hasBeenMoved();
-		
 		
 		nextTile.setPiece(this.piece);
 		this.piece = null;
+	}
+	
+	public void move(int x, int y) {
+		Tile nextTile = GameScreen.board.getTile(x, y);
+		this.piece.hasBeenMoved();		
+		
+		moveTo(nextTile);
+		
+		nextTile.getPiece().updateXY(x, y);
 	}
 	
 	public void sendPieceToGraveyard() {
