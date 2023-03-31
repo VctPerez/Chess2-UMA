@@ -8,9 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 
 import elements.Board;
 import elements.Piece;
-import elements.Tile;
 import game.chess.GameScreen;
-import utils.Image;
 import utils.Render;
 import utils.Resources;
 
@@ -18,8 +16,8 @@ public class Pawn extends Piece{
 	
 	public Boolean isPassantable = false;
 
-	public Pawn(Boolean color) {
-		super(color, Render.app.getManager().get(Resources.PAWN_PATH, Texture.class));
+	public Pawn(Boolean color, int x, int y) {
+		super(color, Render.app.getManager().get(Resources.PAWN_PATH, Texture.class), x ,y);
 	}
 	
 	@Override
@@ -51,7 +49,7 @@ public class Pawn extends Piece{
 	 * @return
 	 */
 	@Override
-	public ArrayList<Vector2> getMovement(float x, float y) {//para implementar esta función en cada pieza habrá que hacerlo de forma diferente
+	public ArrayList<Vector2> posibleMovements() {//para implementar esta función en cada pieza habrá que hacerlo de forma diferente
 		ArrayList<Vector2> movements = new ArrayList<>();
 		Vector2 mov;
 		int direction = 1;

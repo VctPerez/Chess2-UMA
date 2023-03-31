@@ -8,19 +8,54 @@ import com.badlogic.gdx.math.Vector2;
 
 import elements.Board;
 import elements.Piece;
+import elements.Tile;
 import game.chess.GameScreen;
-import utils.Image;
 import utils.Render;
 import utils.Resources;
 
 public class King extends Piece{
-	public King(Boolean color) {
-		super(color, Render.app.getManager().get(Resources.KING_PATH, Texture.class));
+	public King(Boolean color, int x, int y) {
+		super(color, Render.app.getManager().get(Resources.KING_PATH, Texture.class), x, y);
 	}
 	
 	public void draw(Batch batch, float parentAlpha) {
 		super.draw(batch, parentAlpha);
 	}
+	
+	@Override
+	protected void updateXY(int x, int y) {
+		GameScreen.board.getTile(this.x, this.y).attacked = false;
+		this.x = x;
+		this.y = y;
+		
+		if(color) {
+			GameScreen.whiteKing.set(x, y);
+		}else {
+			
+			GameScreen.blackKing.set(x, y);
+		}
+	}
+	
+	@Override
+	protected void simulateMovement(Tile currentTile, Vector2 move, ArrayList<Vector2> removeMovements) {
+		Tile nextTile = GameScreen.board.getTile((int)move.x,(int) move.y);
+		Piece nextTilePiece = null;
+		if(nextTile.getPiece()!=null) {
+			nextTilePiece = nextTile.getPiece();
+		}
+		currentTile.moveTo(nextTile);
+		
+			//check king
+			if(color && !isKingSafe(GameScreen.blackPieces, new Vector2(move.x, move.y))) {
+				removeMovements.add(move);
+			}else if(!color && !isKingSafe(GameScreen.whitePieces, new Vector2(move.x, move.y))) {
+				removeMovements.add(move);
+			}
+			
+		undoLastMovement(currentTile,  nextTile, nextTilePiece);
+	}
+
+	
 	/**
 	 * A�ade a movements todos los movimientos posibles del rey, en todas las direcciones, 1 sola casilla
 	 * @param x
@@ -28,7 +63,7 @@ public class King extends Piece{
 	 * @return
 	 */
 	@Override
-	public ArrayList<Vector2> getMovement(float x, float y) {
+	public ArrayList<Vector2> posibleMovements() {
 		ArrayList<Vector2> movements = new ArrayList<>();
 		Board board = GameScreen.board;
 		addMovement(x+1,y+1, board, movements);
@@ -72,13 +107,14 @@ public class King extends Piece{
 	private boolean isFreeSpace(float start, float y, float dest) {
 		boolean res=true;
 			for(int i=(int) start+1; i<dest;i++) {
-				System.out.println(i);
+
 				if(GameScreen.board.getTile(i, y).piece!=null) {
 					res=false;
 				}
 			}
 		return res;
 	}
+	
 	
 	@Override
 	public Boolean sameColor(Piece piece) {

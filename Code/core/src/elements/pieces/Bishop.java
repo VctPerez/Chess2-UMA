@@ -9,15 +9,14 @@ import com.badlogic.gdx.math.Vector2;
 import elements.Board;
 import elements.Piece;
 import game.chess.GameScreen;
-import utils.Image;
 import utils.Render;
 import utils.Resources;
 
 public class Bishop extends Piece{
 	private Boolean validDirection;
 	
-	public Bishop(Boolean color) {
-		super(color, Render.app.getManager().get(Resources.BISHOP_PATH, Texture.class));
+	public Bishop(Boolean color, int x, int y) {
+		super(color, Render.app.getManager().get(Resources.BISHOP_PATH, Texture.class), x, y);
 	}
 	
 	public void draw(Batch batch, float parentAlpha) {
@@ -63,7 +62,7 @@ public class Bishop extends Piece{
 	 * @return
 	 */
 	@Override
-	public ArrayList<Vector2> getMovement(float x, float y) {
+	public ArrayList<Vector2> posibleMovements() {
 		ArrayList<Vector2> movements = new ArrayList<>();
 		
 		checkDirection(x, y, 1, 1, movements);

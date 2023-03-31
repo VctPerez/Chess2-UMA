@@ -9,14 +9,13 @@ import com.badlogic.gdx.math.Vector2;
 import elements.Board;
 import elements.Piece;
 import game.chess.GameScreen;
-import utils.Image;
 import utils.Render;
 import utils.Resources;
 
 public class Knight extends Piece {
 
-	public Knight(Boolean color) {
-		super(color, Render.app.getManager().get(Resources.KNIGHT_PATH, Texture.class));
+	public Knight(Boolean color, int x, int y) {
+		super(color, Render.app.getManager().get(Resources.KNIGHT_PATH, Texture.class), x, y);
 	}
 
 	@Override
@@ -33,7 +32,7 @@ public class Knight extends Piece {
 	 */
 
 	@Override
-	public ArrayList<Vector2> getMovement(float x, float y) {
+	public ArrayList<Vector2> posibleMovements() {
 		ArrayList<Vector2> movements = new ArrayList<>();
 		Board board = GameScreen.board;
 		addMovement(x + 2, y + 1, board, movements);

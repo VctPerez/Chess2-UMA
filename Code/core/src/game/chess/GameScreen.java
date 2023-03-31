@@ -32,7 +32,6 @@ public class GameScreen extends AbstractScreen {
 	private int current_x, current_y;
 	private Tile currentTile = null;
 	private Tile nextTile = null;
-	private Piece nextPiece = null;
 
 	//----------------------------
 	//CONTROL JAQUE
@@ -40,12 +39,12 @@ public class GameScreen extends AbstractScreen {
 	
 	//Guardamos en todo momento donde esta el rey blanco y el negro (ÚTIL)
 	//No sé si habrá que controlar que pieza está poniendo el jaque y guardarla, posiciones interesantes a guardar en caso de jaque...
-	private Vector2 whiteKing = new Vector2(5,1), blackKing = new Vector2(5,8);
+	public static Vector2 whiteKing = new Vector2(5,1), blackKing = new Vector2(5,8);
 	
 	//Saber para cada rey si está en jaque o no
-	private boolean  whiteMate=false,blackMate=false;
-	private Piece threatPiece = null;
-	private Vector2 threatPiecePosition; 
+	private boolean  whiteMate=false,blackMate=false, whiteCheckMate = false, blackCheckMate=false;
+	public static ArrayList<Piece> whitePieces;
+	public static ArrayList<Piece> blackPieces;
 	
 	//----------------------------
 	//FIN CONTROL JAQUE
@@ -56,7 +55,7 @@ public class GameScreen extends AbstractScreen {
 	private Pawn lastPawn;
 	
 	//Control turno
-	private boolean PLAYER1 = true;
+	private boolean PLAYER = true;
 
 	//Cementerios
 	
@@ -71,6 +70,8 @@ public class GameScreen extends AbstractScreen {
 		Gdx.input.setInputProcessor(inputs);
 
 		board = new Board();
+		whitePieces = new ArrayList<>();
+		blackPieces = new ArrayList<>();
 		graveyardWhite = new Graveyard(21,21);
 		graveyardBlack = new Graveyard(Gdx.graphics.getWidth()-63,21);
 		Background fondo = new Background();
@@ -99,10 +100,10 @@ public class GameScreen extends AbstractScreen {
         // Escape para volver al menÃº principal (Prueba)
         if (inputs.justPressed(Keys.ESCAPE)) {
         	 Render.app.setScreen(Render.MAINSCREEN);
-        // R para reiniciar la partida (Pruebas)
+        // R para reiniciar la partida (Pruebas) -> no funciona
         }else if(inputs.justPressed(Keys.R)) {
        	 Render.app.setScreen(new GameScreen());
-        }else if(isBoardClicked()) {
+        }else if(isBoardClicked() && !whiteCheckMate && !blackCheckMate) {
 
             if (!isPieceSelected) {
                 current_x = calculateX();
@@ -131,77 +132,13 @@ public class GameScreen extends AbstractScreen {
 					moveCurrentPieceTo(next_x,next_y);
 					
                     isPieceSelected = false;
-                    }
-                    
+                    }       
                 }
-
             }
         }
-	
-	private void isMate(float next_x, float next_y) {
-		ArrayList<Vector2> nextTile_validMovements = nextTile.getPiece().getMovement(next_x, next_y);
-		if(nextTile.getPiece().color() && nextTile_validMovements.contains(blackKing)) {
-			blackMate=true;
-			board.getTile(blackKing.x,blackKing.y ).attacked = true;
-			
-			updateThreat(next_x, next_y);
-			
-			System.out.println("REY NEGRO EN JAQUE");
-			
-		}else if(!nextTile.getPiece().color() && nextTile_validMovements.contains(whiteKing)){
-			whiteMate=true;
-			board.getTile(whiteKing.x, whiteKing.y).attacked = true;
-			
-			updateThreat(next_x, next_y);
-			
-			System.out.println("REY BLANCO EN JAQUE");
-		}
-		
-	}
-	
-	private void updateThreat(float next_x, float next_y) {
-		threatPiece = nextTile.getPiece();
-		threatPiecePosition= new Vector2(next_x, next_y);
-	}
-	
-	private void checkCheckMate() {
-		if(blackMate && threatPiece.alive() && threatPiece.getMovement(threatPiecePosition.x, threatPiecePosition.y).contains(blackKing)) {
-			System.out.println("MOVIMIENTO INVALIDO: el rey negro sigue en jaque");
-			 lowlight();
-			 undoLastMovement();
-
-		} else if(whiteMate && threatPiece.alive() && threatPiece.getMovement(threatPiecePosition.x, threatPiecePosition.y).contains(whiteKing)) {
-			System.out.println("MOVIMIENTO INVALIDO: el rey blanco sigue en jaque");
-			 lowlight();
-			 undoLastMovement();
-
-		}else {
-			blackMate=false;
-			whiteMate=false;
-			board.getTile(blackKing.x,blackKing.y).attacked = false;
-			board.getTile(whiteKing.x, whiteKing.y).attacked = false;
-        	changeTurn();
-			System.out.println("MOVIMIENTO VALIDO");
-		}
-	}
-	
-	private void undoLastMovement() {
-		nextTile.move(current_x, current_y);
-		if(nextPiece!=null && !nextPiece.alive()) {
-			if(nextPiece.color()) {
-				nextTile.setPiece(graveyardWhite.reviveLastPiece());
-			}else if(!nextPiece.color()) {
-				nextTile.setPiece(graveyardBlack.reviveLastPiece());
-			}
-		}
-		if(currentTile.getPiece() instanceof Pawn && ((Pawn) currentTile.getPiece()).hasBeenMoved) {
-			((Pawn) currentTile.getPiece()).hasBeenMoved=false;
-		}
-	}
-
 
 	/**
-	 * Resalta las casillas contenidas en el array de movimientos válidos
+	 * Resalta las casillas contenidas en el array de movimientos válidos.
 	 * @param b 
 	 */
 	private void highlight(Boolean b) {
@@ -217,7 +154,7 @@ public class GameScreen extends AbstractScreen {
 	}
 	
 	/**
-	 * Elimina el resaltado de las casillas contenidas en el array de movimientos válidos
+	 * Elimina el resaltado de las casillas contenidas en el array de movimientos válidos.
 	 */
 	private void lowlight() {
 		
@@ -233,17 +170,13 @@ public class GameScreen extends AbstractScreen {
 
 	
 	/**
-	 * Selecciona la casilla pasada como parámetro, es decir, si tiene una pieza calcula los posibles movimientos y los resalta
+	 * Selecciona la casilla pasada como parámetro, es decir, si tiene una pieza calcula los posibles movimientos y los resalta.
 	 * @param tile
 	 */
 	private void select(Tile tile) {
-		if (currentTile.getPiece() != null && currentTile.getPiece().color()==PLAYER1) {
+		if (currentTile.getPiece() != null && currentTile.getPiece().color()==PLAYER) {
 			
-			
-			//TODO if(jaque){... en funcion de si hay jaque o no y si eres el rey o una pieza defensora los calculos de movimientos van variando
-			//Si se mueve el rey se actualiza si sigue en jaque o no... esto es durísimo
-			
-			currentTile_validMovements = (currentTile.getPiece().getMovement(current_x, current_y));
+			currentTile_validMovements = (currentTile.getPiece().getValidMovements());
 			
 			highlight(currentTile.piece.color());
 			
@@ -251,19 +184,78 @@ public class GameScreen extends AbstractScreen {
 			isPieceSelected = true;
 		}
 	}
+
+	/**
+	 * 
+	 * @return true si alguno de los reyes está en mate.
+	 */
+	private boolean isMate() {
+		return blackMate || whiteMate;
+	}
 	
-	private void updateKings(float next_x, float next_y) {
-		if(nextTile.getPiece().color()) {
-			board.getTile(whiteKing.x, whiteKing.y).attacked = false;
-			whiteKing.set(next_x, next_y);
-		}else {
-			board.getTile(blackKing.x,blackKing.y).attacked = false;
-			blackKing.set(next_x, next_y);
+	/**
+	 * Comprueba si la pieza en la posición [next_x, next_y] pone en peligro al rey con alguno de sus posibles movimientos.
+	 * @param next_x
+	 * @param next_y
+	 */
+	private void isMate(float next_x, float next_y) {
+		ArrayList<Vector2> nextTile_validMovements = nextTile.getPiece().getValidMovements();
+		if(nextTile.getPiece().color() && nextTile_validMovements.contains(blackKing)) {
+			blackMate=true;
+			board.getTile(blackKing.x,blackKing.y ).attacked = true;
+			
+			System.out.println("REY NEGRO EN JAQUE");
+			
+		}else if(!nextTile.getPiece().color() && nextTile_validMovements.contains(whiteKing)){
+			whiteMate=true;
+			board.getTile(whiteKing.x, whiteKing.y).attacked = true;
+			
+			System.out.println("REY BLANCO EN JAQUE");
 		}
 	}
 	
-	private boolean isMate() {
-		return blackMate || whiteMate;
+	/**
+	 * 
+	 * @param Mate
+	 * @param pieces
+	 * @return true si el color que está en mate no tiene movimientos disponibles que hagan que el rey esté a salvo.
+	 */
+	private boolean isCheckMate(boolean Mate, ArrayList<Piece> pieces) {
+		boolean isCheckMate = false;
+		if(Mate) {
+			ArrayList<Vector2> validMovements = new ArrayList<>();
+			for(Piece piece: pieces) {
+				validMovements.addAll(piece.getValidMovements());
+			}
+			System.out.println("LISTA DE MOVIMIMIENTOS LEGALES -> " + validMovements);
+			if(validMovements.isEmpty()) {
+				isCheckMate=true;
+			}
+		}
+		return isCheckMate;
+	}
+	/**
+	 * Elimina los jaques a cualquier rey ya que si estaba en jaque ya que si has podido hacer un movimiento, lo has puesto a salvo, si no se pudiera seria jaque mate
+	 */
+	private void resetMate() {
+		blackMate=false;
+        whiteMate=false;
+        board.getTile(blackKing.x,blackKing.y ).attacked = false;
+        board.getTile(whiteKing.x, whiteKing.y).attacked = false;
+	}
+	
+	private void mateControl(float next_x, float next_y) {
+		isMate(next_x, next_y);
+        
+        if(isMate()) {
+        	whiteCheckMate = isCheckMate(whiteMate, whitePieces);
+        	blackCheckMate = isCheckMate(blackMate, blackPieces);
+        	if(whiteCheckMate) {
+        		System.out.println("JAQUE MATE AL REY BLANCO");
+        	}else if(blackCheckMate) {
+        		System.out.println("JAQUE MATE AL REY NEGRO");
+        	}
+        }
 	}
 	
 	/**
@@ -276,33 +268,24 @@ public class GameScreen extends AbstractScreen {
         if (currentTile_validMovements.contains(new Vector2(next_x, next_y))) {
 
         	checkCastling(next_x);
-        	
-        	nextPiece = nextTile.getPiece();
-                     	
+            
             currentTile.move(next_x, next_y);
             
-            if(nextTile.getPiece() instanceof King) {
-        		updateKings(next_x, next_y);
-        	}
-            
-            if(isMate()) {
-            	checkCheckMate();  	
-            }else {
-            	isMate(next_x, next_y);            	
-            
-        	
-            	if(nextTile.getPiece() instanceof Pawn) {
-   
-            		checkPassant(next_x, next_y);
+            resetMate();
+        	 
+            if(nextTile.getPiece() instanceof Pawn) {
+            	System.out.println("PASSANT");
+            	checkPassant(next_x, next_y);
         		
-        			updateLastPawn(next_x, next_y);      
+        		updateLastPawn(next_x, next_y);      
         		
-        			checkPromotion(next_x, next_y);
-            	}
-			
-            	changeTurn();
+        		checkPromotion(next_x, next_y);
             }
-            
+			
+            mateControl(next_x, next_y);
+
+            changeTurn();
+
         }
     }
 
@@ -327,16 +310,33 @@ public class GameScreen extends AbstractScreen {
 	 */
 	private void checkPromotion(float next_x, float next_y) {
 		if ((next_y == 8.0 || next_y == 1.0)) {//Implementar que se pueda escoger entre todas las piezas posibles
-			nextTile.setPiece(new Queen(board.getTile(next_x, next_y).getPiece().color()));
+			if(nextTile.getPiece().color()) {
+				whitePieces.remove(nextTile.getPiece());
+				nextTile.setPiece(new Queen(board.getTile(next_x, next_y).getPiece().color(), (int)next_x, (int)next_y));
+				whitePieces.add(nextTile.getPiece());
+			}else {
+				
+			}
 		}
 	}
-	
+	/**
+	 * Comprueba si se ha realizado una captura al paso
+	 * @param next_x
+	 * @param next_y
+	 */
 	private void checkPassant(float next_x, float next_y) {
 		if (isEnPassant(next_x, next_y, (Pawn)nextTile.getPiece())){
 			board.getTile(next_x,next_y + (nextTile.getPiece().color()?-1:1)).sendPieceToGraveyard();
 		}
 	}
 	
+	/**
+	 * 
+	 * @param next_x
+	 * @param next_y
+	 * @param pawn
+	 * @return true si se ha realizado una captura al paso, false si no se ha hecho
+	 */
 	private boolean isEnPassant(float next_x, float next_y, Pawn pawn) {
 		boolean res = false;
 		if (next_y == current_y + (pawn.color()?1:-1) && (next_x == current_x + 1 || next_x == current_x -1)){ //Si avanza a una casilla diagonal sin pieza, está tomando al paso
@@ -347,6 +347,11 @@ public class GameScreen extends AbstractScreen {
 		return res;
 	}
 	
+	/**
+	 * actualiza el ultimo peon que se ha movido
+	 * @param next_x
+	 * @param next_y
+	 */
 	private void updateLastPawn(float next_x, float next_y) {
 		if (lastPawn != null){ 
 			lastPawn.isPassantable = false; 
@@ -357,8 +362,11 @@ public class GameScreen extends AbstractScreen {
 		}
 	}
 	
+	/**
+	 * Alterna el turno entre un jugador y otro
+	 */
 	private void changeTurn() {
-		PLAYER1 = !PLAYER1;
+		PLAYER = !PLAYER;
 	}
 	private int calculateX() {
 		return (int) Math.ceil((inputs.mouseX - board.getTile(1, 1).getX()) / 84);
@@ -407,49 +415,85 @@ public class GameScreen extends AbstractScreen {
 	}
 
 	public void placeWhites() {
+		Piece piece;
 		for (int i = 1; i < 9; i++) {
-			board.getTile(i, 2).piece = new Pawn(true);
+			piece =  new Pawn(true, i, 2);
+			whitePieces.add(piece);
+			board.getTile(i, 2).piece = piece;
 		}
 		for (int i = 1; i < 9; i++) {
 			if (i == 1 || i == 8) {
-				board.getTile(i, 1).piece = new Rook(true);
+				
+				piece = new Rook(true, i, 1);
+				whitePieces.add(piece);
+				board.getTile(i, 1).piece = piece;
 			}
 			if (i == 2 || i == 7) {
-				board.getTile(i, 1).piece = new Knight(true);
+				
+				piece = new Knight(true, i, 1);
+				whitePieces.add(piece);
+				board.getTile(i, 1).piece = piece;
 			}
 			if (i == 3 || i == 6) {
-				board.getTile(i, 1).piece = new Bishop(true);
+				
+				piece = new Bishop(true, i, 1);
+				whitePieces.add(piece);
+				board.getTile(i, 1).piece = piece;
 			}
 			if (i == 4) {
-				board.getTile(i, 1).piece = new Queen(true);
+				
+				piece = new Queen(true, i, 1);
+				whitePieces.add(piece);
+				board.getTile(i, 1).piece = piece;
 			}
 			if (i == 5) {
-				board.getTile(i, 1).piece = new King(true);
+				
+				piece = new King(true, i, 1);
+				whitePieces.add(piece);
+				board.getTile(i, 1).piece = piece;
 			}
 		}
 	}
 	
 	private void placeBlacks() {
+		Piece piece;
 		for (int i = 1; i < 9; i++) {
-			board.getTile(i, 7).piece = new Pawn(false);
+			piece =  new Pawn(false, i, 7);
+			blackPieces.add(piece);
+			board.getTile(i, 7).piece = piece;
 		}
 		for (int i = 1; i < 9; i++) {
 			if (i == 1 || i == 8) {
-				board.getTile(i, 8).piece = new Rook(false);
+				
+				piece = new Rook(false, i, 8);
+				blackPieces.add(piece);
+				board.getTile(i, 8).piece = piece;
 			}
 			if (i == 2 || i == 7) {
-				board.getTile(i, 8).piece = new Knight(false);
+				
+				piece = new Knight(false, i, 8);
+				blackPieces.add(piece);
+				board.getTile(i, 8).piece = piece;
 			}
 			if (i == 3 || i == 6) {
-				board.getTile(i, 8).piece = new Bishop(false);
+				
+				piece = new Bishop(false, i, 8);
+				blackPieces.add(piece);
+				board.getTile(i, 8).piece = piece;
 			}
 			if (i == 4) {
-				board.getTile(i, 8).piece = new Queen(false);
+				
+				piece = new Queen(false, i, 8);
+				blackPieces.add(piece);
+				board.getTile(i, 8).piece = piece;
 			}
 			if (i == 5) {
-				board.getTile(i, 8).piece = new King(false);
+				
+				piece = new King(false, i, 8);
+				blackPieces.add(piece);
+				board.getTile(i, 8).piece = piece;
 			}
-		}
+		}		
 	}
 
 }

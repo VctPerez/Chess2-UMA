@@ -10,6 +10,8 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
+import game.chess.GameScreen;
+
 public class Graveyard extends Actor {
 	private ArrayList<Piece> graveyard;
 	protected ShapeRenderer frame;
@@ -26,6 +28,11 @@ public class Graveyard extends Actor {
 	
 	public void add(Piece piece) {
 		piece.alive=false;
+		if(piece.color) {//implementar método que haga esto en gamescreen
+			GameScreen.whitePieces.remove(piece);
+		}else {
+			GameScreen.blackPieces.remove(piece);
+		}
 		graveyard.add(piece);
 	}
 	
@@ -34,7 +41,13 @@ public class Graveyard extends Actor {
 		if(!graveyard.isEmpty()) {
 			piece = graveyard.get(graveyard.size()-1);
 			piece.alive=true;
-			piece = graveyard.remove(graveyard.size()-1);
+			graveyard.remove(graveyard.size()-1);
+			
+			if(piece.color) {//implementar método que haga esto en gamescreen
+				GameScreen.whitePieces.add(piece);
+			}else {
+				GameScreen.blackPieces.add(piece);
+			}
 		}
 		return piece;
 	}
