@@ -1,7 +1,6 @@
 package game.chess;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
 
 import interaccionFichero.*;
@@ -68,7 +67,7 @@ public class LanguageScreen extends AbstractScreen {
         Render.Batch.begin();
         //---------------
         
-        Language.draw();
+        Language.draw(Render.Batch, 0);
         Logo.draw(Render.Batch);
         //news.draw(Render.Batch);
         spanish.draw(Render.Batch,0);

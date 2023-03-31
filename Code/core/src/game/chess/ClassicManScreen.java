@@ -3,7 +3,6 @@ package game.chess;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -14,7 +13,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane.ScrollPaneStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import interaccionFichero.LectorLineas;
-import utils.IOS;
 import utils.Image;
 import utils.Render;
 import utils.Resources;
@@ -100,7 +98,7 @@ public void render(float delta) {
 		
 		Render.Batch.begin();
 		      
-		Titulo.draw();
+		Titulo.draw(Render.Batch, 0);
 		Logo.draw(Render.Batch);
 		volver.draw(Render.Batch,0);
 		      

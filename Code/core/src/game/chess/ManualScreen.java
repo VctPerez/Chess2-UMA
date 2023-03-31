@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 
 import interaccionFichero.LectorLineas;
-import utils.IOS;
 import utils.Image;
 import utils.Render;
 import utils.Resources;
@@ -60,7 +59,7 @@ public class ManualScreen extends AbstractScreen{
 	        Render.Batch.begin();
 	        //---------------
 	        
-	        Titulo.draw();
+	        Titulo.draw(Render.Batch, 0);
 	        Logo.draw(Render.Batch);
 	        //news.draw(Render.Batch);
 	        volver.draw(Render.Batch,0);

@@ -1,7 +1,6 @@
 package game.chess;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
 
 import interaccionFichero.LectorLineas;
@@ -53,11 +52,11 @@ public class ConfigScreen extends AbstractScreen {
         Render.Batch.begin();
         //---------------
         
-        Titulo.draw();
+        Titulo.draw(Render.Batch, 0);
         Logo.draw(Render.Batch);
         //news.draw(Render.Batch);
         home.draw(Render.Batch,0);
-        volumeText.draw();
+        volumeText.draw(Render.Batch, 0);
         language.draw(Render.Batch,0);
         
         if(home.isSelected()){

@@ -2,13 +2,15 @@ package utils;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 
-public class Text {
+public class Text extends Actor {
 
     BitmapFont font;
     GlyphLayout layout;
@@ -67,8 +69,9 @@ public class Text {
     /**
      * Dibuja el texto
      */
-    public void draw(){
-        font.draw(Render.Batch, text, getX(), getY());
+    @Override
+    public void draw(Batch batch, float parentAlpha){
+        font.draw(batch, text, getX(), getY());
     }
 
     /**
@@ -98,9 +101,10 @@ public class Text {
 
     /**
      * Devuelve la coordenada (esquina superior).
+     *
      * @return Coord y
      */
-    public int getY() {
+    public float getY() {
         return (int) y;
     }
     /**
@@ -113,9 +117,10 @@ public class Text {
 
     /**
      * Devuelve la coordenada x.
+     *
      * @return Coord. x
      */
-    public int getX() {
+    public float getX() {
         return (int) x;
     }
 

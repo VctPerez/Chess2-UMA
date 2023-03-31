@@ -1,10 +1,7 @@
 package game.chess;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import utils.*;
 import interaccionFichero.*;
 
@@ -68,7 +65,7 @@ public class MainScreen extends AbstractScreen {
         Render.Batch.begin();
         //---------------
 
-        Titulo.draw();
+        Titulo.draw(Render.Batch, 0);
         Logo.draw(Render.Batch);
         //news.draw(Render.Batch);
         reglas.draw(Render.Batch,0);

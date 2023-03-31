@@ -5,26 +5,21 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Host {
-    private static Socket player2;
-    private static ServerSocket gameServer;
+    private Socket player2;
+    private ServerSocket gameServer;
+    private Player p2, p1;
 
-    private static boolean p2connected = false;
-    private static Player p2;
-
-    public static void createMatch() throws IOException {
+    public Host(Player p1) throws IOException {
         gameServer = new ServerSocket(8000);
-        player2 = gameServer.accept();
-        InputStreamReader in = new InputStreamReader(player2.getInputStream());
-        BufferedReader buffer = new BufferedReader(in);
+        this.p1 = p1;
+    }
 
-        String nameP2 = buffer.readLine();
-        p2 = new Player(nameP2);
-
-        p2connected = true;
+    public void waitConnection() throws IOException {
+        gameServer.accept();
     }
 
     public boolean isP2connected() {
-        return p2connected;
+        return player2.isConnected();
     }
 
     public Player getPlayer2(){
