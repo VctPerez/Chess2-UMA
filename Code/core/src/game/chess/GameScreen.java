@@ -175,7 +175,9 @@ public class GameScreen extends AbstractScreen {
 		if (currentTile.getPiece() != null && currentTile.getPiece().color()==PLAYER) {
 			
 			currentTile_validMovements = (currentTile.getPiece().getValidMovements());
-			
+
+			castleCancel();
+
 			highlight(currentTile.piece.color());
 			
 			System.out.println(currentTile_validMovements.toString());
@@ -262,7 +264,6 @@ public class GameScreen extends AbstractScreen {
 	 * @param next_y
 	 */
 	private void moveCurrentPieceTo(int next_x, int next_y) {
-
         if (currentTile_validMovements.contains(new Vector2(next_x, next_y))) {
 
         	checkCastling(next_x);
@@ -299,6 +300,18 @@ public class GameScreen extends AbstractScreen {
 			board.getTile(8, current_y).move(current_x+1,current_y);
 		}
 
+	}
+
+	/**
+	 * Elimina el enroque si se ha seleccionado el rey y está en jaque
+	 */
+	private void castleCancel(){
+		if (isMate() && currentTile.getPiece() instanceof King){
+			//Si es jaque se le quita al rey su habilidad de enrocar por la fuerza
+			currentTile_validMovements.remove(new Vector2(current_x - 2, current_y));
+
+			currentTile_validMovements.remove(new Vector2(current_x - 2, current_y));
+		}
 	}
 	
 	/**
