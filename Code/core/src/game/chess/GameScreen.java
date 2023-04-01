@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.viewport.*;
 
 import elements.Background;
 import elements.Board;
+import elements.DropDownMenu;
 import elements.Graveyard;
 import elements.Piece;
 import elements.Tile;
@@ -63,6 +64,9 @@ public class GameScreen extends AbstractScreen {
 	
 	//Control turno
 	private boolean PLAYER = true;
+	
+	//Control promocion
+	public static boolean promoting = false;
 
 	//Cementerios
 	public static Graveyard graveyardWhite;
@@ -114,7 +118,10 @@ public class GameScreen extends AbstractScreen {
 		timersRender();
 		checkTimerEnd();
 		
+		if(!promoting) {	
 		update(delta);
+		}
+
 		
 		stage.draw();
 
@@ -379,13 +386,17 @@ public class GameScreen extends AbstractScreen {
 	 */
 	private void checkPromotion(float next_x, float next_y) {
 		if ((next_y == 8.0 || next_y == 1.0)) {//Implementar que se pueda escoger entre todas las piezas posibles
-			if(nextTile.getPiece().color()) {
-				whitePieces.remove(nextTile.getPiece());
-				nextTile.setPiece(new Queen(board.getTile(next_x, next_y).getPiece().color(), (int)next_x, (int)next_y));
-				whitePieces.add(nextTile.getPiece());
-			}else {
-				
-			}
+			System.out.println("A");
+			promoting = true;
+			DropDownMenu menu = new DropDownMenu(nextTile);
+			stage.addActor(menu);
+			
+			
+			/*
+			whitePieces.remove(nextTile.getPiece());
+			nextTile.setPiece(new Queen(nextTile.getPiece().color(), (int)next_x, (int)next_y));
+			whitePieces.add(nextTile.getPiece());
+			*/
 		}
 	}
 	/**

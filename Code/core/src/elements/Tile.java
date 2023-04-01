@@ -116,6 +116,10 @@ public class Tile extends Actor{
 		this.piece = piece;
 	}
 	
+	public Vector2 getPos() {
+		return pos;
+	}
+	
 	public void dispose() {
 		tile.dispose();
 		//piece.dispose();
