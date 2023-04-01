@@ -2,6 +2,7 @@ package game.chess;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.*;
@@ -11,20 +12,23 @@ import elements.Board;
 import elements.Graveyard;
 import elements.Piece;
 import elements.Tile;
+import elements.Timer;
 import elements.pieces.Bishop;
 import elements.pieces.King;
 import elements.pieces.Knight;
 import elements.pieces.Pawn;
 import elements.pieces.Queen;
 import elements.pieces.Rook;
-import utils.IOS;
 import utils.Render;
+import utils.Resources;
+import utils.Text;
 
 import java.util.ArrayList;
 
 public class GameScreen extends AbstractScreen {
 	private Stage stage;
 	public static Board board;
+	private Text matchres;
 	
 	//Control selección de piezas
 	private boolean isPieceSelected = false;
@@ -32,7 +36,10 @@ public class GameScreen extends AbstractScreen {
 	private int current_x, current_y;
 	private Tile currentTile = null;
 	private Tile nextTile = null;
-
+	
+	//Timer para las partidas 
+	private Timer TimerW,TimerB;
+	
 	//----------------------------
 	//CONTROL JAQUE
 	//----------------------------
@@ -58,9 +65,11 @@ public class GameScreen extends AbstractScreen {
 	private boolean PLAYER = true;
 
 	//Cementerios
-	
 	public static Graveyard graveyardWhite;
 	public static Graveyard graveyardBlack;
+	
+	//Pantalla ganador
+	private boolean showPopup;
 
 	@Override
 	public void show() {
@@ -73,26 +82,72 @@ public class GameScreen extends AbstractScreen {
 		graveyardWhite = new Graveyard(21,21);
 		graveyardBlack = new Graveyard(Gdx.graphics.getWidth()-63,21);
 		Background fondo = new Background();
+		TimerB = new Timer(300,80,650,"NEGRO");
+		TimerW = new Timer(300,80,150,"BLANCO");
 		fondo.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		
 		placeWhites();
 		placeBlacks();
-
+		
+		// Crear mensaje emergente tras terminar partida
+		showPopup=false;
+		
+		matchres = new Text(Resources.FONT_MENU_PATH,50,Color.WHITE,3);
+        matchres.setName("winMessage"); // Set the name of the label
+        matchres.setPosition(350, 400);
+        
+        matchres.setVisible(false);
+        stage.addActor(matchres);
+        
 		stage.addActor(fondo);
 		stage.addActor(board);
 		stage.addActor(graveyardWhite);
 		stage.addActor(graveyardBlack);
+		stage.addActor(TimerB);
+		stage.addActor(TimerW);
 	}
 
 	@Override
 	public void render(float delta) {
 		Render.clearScreen();
-
+		
+		timersRender();
+		checkTimerEnd();
+		
 		update(delta);
+		
 		stage.draw();
 
+		 if (showPopup) {
+	            // Mostrar la pantalla emergente
+	            Text winMessage = (Text) stage.getRoot().findActor("winMessage");
+	            winMessage.toFront(); // Mover el label al frente
+	            winMessage.setVisible(true);
+		 	}
 	}
 
+
+	private void checkTimerEnd() {
+		if(TimerB.getTimeRemaining()==0) {
+			matchEnd("BLANCO");
+			showPopup=true;
+		}
+		else if(TimerW.getTimeRemaining()==0) {
+			matchEnd("NEGRO");
+			showPopup=true;
+		}
+	}
+	
+	public void matchEnd(String s) {
+		matchres.setText("HA GANADO EL " + s);
+	}
+
+	private void timersRender() {
+		if(PLAYER) 
+			TimerW.render();
+		else 
+			TimerB.render();
+	}
 
 	public void update(float delta) {
         // Escape para volver al menÃº principal (Prueba)
@@ -252,8 +307,12 @@ public class GameScreen extends AbstractScreen {
         	blackCheckMate = isCheckMate(blackMate, blackPieces);
         	if(whiteCheckMate) {
         		System.out.println("JAQUE MATE AL REY BLANCO");
+        		matchEnd("NEGRO");
+    			showPopup=true;
         	}else if(blackCheckMate) {
         		System.out.println("JAQUE MATE AL REY NEGRO");
+        		matchEnd("BLANCO");
+    			showPopup=true;
         	}
         }
 	}
@@ -309,8 +368,7 @@ public class GameScreen extends AbstractScreen {
 		if (isMate() && currentTile.getPiece() instanceof King){
 			//Si es jaque se le quita al rey su habilidad de enrocar por la fuerza
 			currentTile_validMovements.remove(new Vector2(current_x - 2, current_y));
-
-			currentTile_validMovements.remove(new Vector2(current_x - 2, current_y));
+			currentTile_validMovements.remove(new Vector2(current_x + 2, current_y));
 		}
 	}
 	

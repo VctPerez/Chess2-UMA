@@ -64,7 +64,6 @@ public class Chess2 extends Game {
 
 		manager = new AssetManager();
 		loadResources();
-		//this.setScreen(new LobbyScreen());
 
 		Render.GAMESCREEN = new GameScreen();
 		Render.MAINSCREEN = new MainScreen();
