@@ -105,6 +105,6 @@ public class MainScreen extends AbstractScreen {
 
     @Override
     public void dispose() {
-        // TODO: 21/03/2023  
+       super.dispose();
     }
 }

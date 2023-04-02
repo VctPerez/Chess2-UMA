@@ -14,22 +14,24 @@ import elements.Graveyard;
 import elements.Piece;
 import elements.Tile;
 import elements.Timer;
+import elements.matchResults;
 import elements.pieces.Bishop;
 import elements.pieces.King;
 import elements.pieces.Knight;
 import elements.pieces.Pawn;
 import elements.pieces.Queen;
 import elements.pieces.Rook;
+import utils.Image;
 import utils.Render;
 import utils.Resources;
 import utils.Text;
+import utils.TextButton;
 
 import java.util.ArrayList;
 
 public class GameScreen extends AbstractScreen {
 	private Stage stage;
 	public static Board board;
-	private Text matchres;
 	
 	//Control selección de piezas
 	private boolean isPieceSelected = false;
@@ -74,6 +76,7 @@ public class GameScreen extends AbstractScreen {
 	
 	//Pantalla ganador
 	private boolean showPopup;
+	private matchResults results;
 
 	@Override
 	public void show() {
@@ -95,14 +98,12 @@ public class GameScreen extends AbstractScreen {
 		
 		// Crear mensaje emergente tras terminar partida
 		showPopup=false;
-		
-		matchres = new Text(Resources.FONT_MENU_PATH,50,Color.WHITE,3);
-        matchres.setName("winMessage"); // Set the name of the label
-        matchres.setPosition(350, 400);
+		results = new matchResults();
+		results.Hide();
         
-        matchres.setVisible(false);
-        stage.addActor(matchres);
         
+        //-------------------------------
+        stage.addActor(results);
 		stage.addActor(fondo);
 		stage.addActor(board);
 		stage.addActor(graveyardWhite);
@@ -121,39 +122,16 @@ public class GameScreen extends AbstractScreen {
 		if(!promoting) {	
 		update(delta);
 		}
-
+		
+		
+		if (showPopup) {
+			results.Show();
+			results.toFront();
+			results.render();
+		}
 		
 		stage.draw();
-
-		 if (showPopup) {
-	            // Mostrar la pantalla emergente
-	            Text winMessage = (Text) stage.getRoot().findActor("winMessage");
-	            winMessage.toFront(); // Mover el label al frente
-	            winMessage.setVisible(true);
-		 	}
-	}
-
-
-	private void checkTimerEnd() {
-		if(TimerB.getTimeRemaining()==0) {
-			matchEnd("BLANCO");
-			showPopup=true;
-		}
-		else if(TimerW.getTimeRemaining()==0) {
-			matchEnd("NEGRO");
-			showPopup=true;
-		}
-	}
-	
-	public void matchEnd(String s) {
-		matchres.setText("HA GANADO EL " + s);
-	}
-
-	private void timersRender() {
-		if(PLAYER) 
-			TimerW.render();
-		else 
-			TimerB.render();
+		
 	}
 
 	public void update(float delta) {
@@ -197,6 +175,31 @@ public class GameScreen extends AbstractScreen {
             }
         }
 
+
+	/**
+	 * Comprueba si hay timers a 0
+	 */
+	private void checkTimerEnd() {
+		if(TimerB.getTimeRemaining()==0) {
+			results.setWinner("BLANCO");
+			showPopup=true;
+		}
+		else if(TimerW.getTimeRemaining()==0) {
+			results.setWinner("NEGRO");
+			showPopup=true;
+		}
+	}
+	
+	/**
+	 * Actualiza los Timers en función del jugador actual
+	 */
+	private void timersRender() {
+		if(PLAYER) 
+			TimerW.render();
+		else 
+			TimerB.render();
+	}
+	
 	/**
 	 * Resalta las casillas contenidas en el array de movimientos válidos.
 	 * @param b 
@@ -314,11 +317,11 @@ public class GameScreen extends AbstractScreen {
         	blackCheckMate = isCheckMate(blackMate, blackPieces);
         	if(whiteCheckMate) {
         		System.out.println("JAQUE MATE AL REY BLANCO");
-        		matchEnd("NEGRO");
+        		results.setWinner("NEGRO");
     			showPopup=true;
         	}else if(blackCheckMate) {
         		System.out.println("JAQUE MATE AL REY NEGRO");
-        		matchEnd("BLANCO");
+        		results.setWinner("BLANCO");
     			showPopup=true;
         	}
         }
