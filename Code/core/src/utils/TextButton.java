@@ -14,6 +14,7 @@ public class TextButton extends Actor implements Button {
     private boolean initalMouseOver = false;
     private Sound mouseOverSound;
     private Sound clickSound;
+    private Color remarked;
     
 
     /**
@@ -41,22 +42,24 @@ public class TextButton extends Actor implements Button {
         text.draw(Render.Batch, 0);
         checkPress();
     }
-
+    /*
+     * No vuelvas a tocar este codigo adri por favor
+     */
     @Override
     public void checkPress() {
-    	if(initalMouseOver) {
-    		if(!mouseOver(Render.inputs)){
-    			text.setColor(Color.WHITE);
-    			initalMouseOver = false;
-    		}else if(Render.inputs.isClicked()) {
-    			clickSound.play(0.4f);
-    			isSelected = true;
-    		}
+        if( Render.inputs.mouseX >= text.getX() && Render.inputs.mouseX <= text.getX() + text.getWidth()
+                && Render.inputs.mouseY <= text.getY()
+                && Render.inputs.mouseY >= text.getY() - text.getHeight()){
+            if(Render.inputs.isClicked()){
+                if(!isSelected) text.setColor(remarked);
+                else text.setColor(Color.WHITE);
+                isSelected = !isSelected;
+            }
+
         }else{
-            if(mouseOver(Render.inputs)) {
-            	initalMouseOver = true;
-            	mouseOverSound.play(0.4f);
-            	text.setColor(Color.WHITE);
+            if(Render.inputs.isClicked() && isSelected){
+                text.setColor(Color.WHITE);
+                isSelected = false;
             }
         }
     }
@@ -76,9 +79,13 @@ public class TextButton extends Actor implements Button {
         return isSelected;
     }
     
-    public boolean mouseOver(IOS input) {
+    /*public boolean mouseOver(IOS input) {
     	return  input.mouseX >= text.getX() && input.mouseX <= text.getX() + text.getWidth() && input.mouseY <= text.getY()
     			&& input.mouseY >= text.getY() - text.getHeight();
+    }*/
+
+    public void setRemarked(Color remarked) {
+        this.remarked = remarked;
     }
 
     @Override

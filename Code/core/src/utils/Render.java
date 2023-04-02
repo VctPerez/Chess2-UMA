@@ -40,6 +40,7 @@ public class Render {
 	public static AbstractScreen CLASSICMANSCREEN;
 	public static AbstractScreen LANGUAGESCREEN;
 	public static AbstractScreen CONFIGSCREEN;
+    public static AbstractScreen LOBBYSCREEN;
 
     /**
      * Este metodo se encarga de limpiar la pantalla al principio de cada Render.
