@@ -1,10 +1,8 @@
 package game.chess;
 
-import com.badlogic.gdx.graphics.Color;
 import utils.Image;
 import utils.Render;
 import utils.Resources;
-import utils.Text;
 
 public class LoadingScreen extends AbstractScreen{
     Image background;
@@ -20,7 +18,7 @@ public class LoadingScreen extends AbstractScreen{
         Render.clearScreen();
         update();
         Render.Batch.begin();
-        background.draw(Render.Batch);
+        background.draw(Render.Batch, 0);
         Render.Batch.end();
     }
 

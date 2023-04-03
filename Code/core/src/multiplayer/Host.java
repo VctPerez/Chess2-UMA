@@ -44,6 +44,17 @@ public class Host extends Thread {
         else return false;
     }
 
+    public void sendPlayer1() throws IOException {
+        PrintWriter pw = new PrintWriter(player2.getOutputStream());
+        pw.println(p1.getName());
+        pw.flush();
+    }
+    public void receivePlayer2() throws IOException {
+        InputStreamReader in = new InputStreamReader(player2.getInputStream());
+        BufferedReader buffer = new BufferedReader(in);
+        p2 = new Player(buffer.readLine());
+    }
+
     public Player getPlayer2(){
         return p2;
     }

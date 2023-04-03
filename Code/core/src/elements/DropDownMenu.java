@@ -109,7 +109,7 @@ public class DropDownMenu extends Actor{
 			Image piece = pieces.get(i);
 			piece.setPosition(getX(), (getY()+i*Tile_Size));
 			piece.setSize(Tile_Size, Tile_Size);
-			piece.draw(batch);
+			piece.draw(batch, 0);
 		}
 	}
 	

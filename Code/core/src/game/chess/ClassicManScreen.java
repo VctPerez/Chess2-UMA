@@ -99,7 +99,7 @@ public void render(float delta) {
 		Render.Batch.begin();
 		      
 		Titulo.draw(Render.Batch, 0);
-		Logo.draw(Render.Batch);
+		Logo.draw(Render.Batch, 0);
 		volver.draw(Render.Batch,0);
 		      
 	    // Actualiza y dibuja el Stage

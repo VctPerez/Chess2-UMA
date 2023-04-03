@@ -23,8 +23,15 @@ public class LobbyScreen extends AbstractScreen{
     private Player player1, player2;
     private TextButton findMatch;
     private Text statusP2;
-    private Host host;
     private boolean finding = false;
+
+    public void create(String namePlayer, boolean hosting){
+        if(hosting){
+            player1 = new Player(namePlayer);
+        }else{
+            player2 = new Player(namePlayer);
+        }
+    }
 
     @Override
     public void show() {
@@ -36,15 +43,14 @@ public class LobbyScreen extends AbstractScreen{
                     Resources.FONT_MENU_PATH, 20, Color.WHITE,2);
             invCode.setPosition(300,500);
             stage.addActor(invCode);
-            player1 = new Player("Victor");
-            host = new Host(player1);
+            Render.host = new Host(player1);
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage());
         }
 
         Text p1 = new Text("Jugador 1: " + player1.getName(), Resources.FONT_MENU_PATH, 30, Color.WHITE, 3);
         Text statusP1 = new Text("CONNECTED", Resources.FONT_MENU_PATH, 30, Color.GREEN, 3);
-        Text p2 = new Text("Jugador 2: (aqui iria el nombre)", Resources.FONT_MENU_PATH, 30, Color.WHITE, 3);
+        Text p2 = new Text("Jugador 2: " + player2.getName(), Resources.FONT_MENU_PATH, 30, Color.WHITE, 3);
         statusP2 = new Text("CONNECTED", Resources.FONT_MENU_PATH, 30, Color.RED, 3);
         findMatch = new TextButton(new Text("FIND", Resources.FONT_MENU_PATH, 30, Color.CYAN, 3));
         findMatch.setPosition(600,400);
@@ -54,7 +60,7 @@ public class LobbyScreen extends AbstractScreen{
         statusP1.setPosition(300,550);
         p2.setPosition(300,200);
         statusP2.setPosition(300, 150);
-        //stage.addActor(findMatch);
+        stage.addActor(findMatch);
         stage.addActor(p1);
         stage.addActor(statusP1);
         stage.addActor(p2);
@@ -69,33 +75,38 @@ public class LobbyScreen extends AbstractScreen{
         Render.Batch.begin();
         stage.act();
         stage.draw();
-        findMatch.draw(Render.Batch, 0);
-
-
-        matchFinder();
+        try {
+            matchFinder();
+        }catch(IOException e){
+            System.err.println(e.getMessage());
+        }
         Render.Batch.end();
     }
 
-    public void matchFinder(){
-        if(findMatch.isSelected() && !host.isP2connected()){
+    public void matchFinder() throws IOException {
+        if(findMatch.isSelected() && !Render.host.isP2connected()){
             //System.out.println("buscando...");
             if(!finding){
-                host.start();
+                Render.host.start();
                 System.out.println("La hebra 2 va por su cuenta");
                 finding = true;
             }
         }else if(finding && !findMatch.isSelected()){
             finding = false;
             try {
-                host.stopFind();
-                host = new Host(player1);
+                Render.host.stopFind();
+                Render.host = new Host(player1);
             } catch (IOException e) {
                 System.err.println("la hebra2 ha parado");
             }
         }
 
-        if(host.isP2connected()){
+        if(Render.host.isP2connected()){
             statusP2.setColor(Color.GREEN);
+            Render.guest.sendPlayer2();
+            Render.host.receivePlayer2();
+            Render.host.sendPlayer1();
+            Render.guest.receivePlayer1();
         }
     }
 

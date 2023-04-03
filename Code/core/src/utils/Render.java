@@ -8,10 +8,9 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-import game.chess.AbstractScreen;
-import game.chess.Chess2;
-import game.chess.GameScreen;
-import game.chess.MainScreen;
+import game.chess.*;
+import multiplayer.Guest;
+import multiplayer.Host;
 
 /**
  * Esta clase principalmente es usada para declarar aquellas variables relacionadas con la ejecución
@@ -41,6 +40,11 @@ public class Render {
 	public static AbstractScreen LANGUAGESCREEN;
 	public static AbstractScreen CONFIGSCREEN;
     public static AbstractScreen LOBBYSCREEN;
+    public static LoadingScreen LOADINGSCREEN;
+    public static CreateMatchScreen CREATEMATCHSCREEN;
+
+    public static Host host;
+    public static Guest guest;
 
     /**
      * Este metodo se encarga de limpiar la pantalla al principio de cada Render.

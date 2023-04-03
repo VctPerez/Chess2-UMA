@@ -2,7 +2,6 @@ package utils;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
@@ -46,7 +45,7 @@ public class Slider extends Actor implements Button{
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        bar.draw(batch);
+        bar.draw(batch, 0);
         checkPress();
         controller.draw(Render.Batch,0);
     }

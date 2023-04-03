@@ -52,7 +52,7 @@ public abstract class Piece extends Actor {
 		sprite.setSize(getWidth(), getHeight());
 		sprite.setScale(getScaleX());
 		sprite.sprt.setColor(getColor());
-		sprite.draw(batch);
+		sprite.draw(batch, 0);
 	}
 	
 	/**

@@ -53,7 +53,7 @@ public class ConfigScreen extends AbstractScreen {
         //---------------
         
         Titulo.draw(Render.Batch, 0);
-        Logo.draw(Render.Batch);
+        Logo.draw(Render.Batch, 0);
         //news.draw(Render.Batch);
         home.draw(Render.Batch,0);
         volumeText.draw(Render.Batch, 0);

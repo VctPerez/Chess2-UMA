@@ -5,7 +5,7 @@ import java.io.IOException;
 public class Player {
     boolean color;
     String name;
-    public Player(String name) throws IOException {
+    public Player(String name) {
         this.name = name;
     }
 

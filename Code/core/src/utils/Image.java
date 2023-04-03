@@ -4,8 +4,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 
-public class Image {
+public class Image extends Actor {
     public Texture img;
     public Sprite sprt;
     private float transparencyConst;
@@ -33,7 +34,8 @@ public class Image {
     /**
      * Dibuja la imagen
      */
-    public void draw(Batch batch){
+    @Override
+    public void draw(Batch batch, float parentAlpha){
         sprt.draw(batch);
     }
 

@@ -8,7 +8,7 @@ public class Resources {
     public static final String LOADINGSCREEN_PATH = "sprites/loadingScreen.jpg";
     public static final String MENU_BACKGROUND_PATH = "";
     public static final String FONT_MENU_PATH = "fonts/Arial.ttf";
-    public static final String LOGO_PATH="Logo.png";
+    public static final String LOGO_PATH="Logo_Blanco.png";
     public static final String TEXT_BOX_PATH = "";
     
     //SONIDOS

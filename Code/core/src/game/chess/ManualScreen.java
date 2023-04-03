@@ -60,7 +60,7 @@ public class ManualScreen extends AbstractScreen{
 	        //---------------
 	        
 	        Titulo.draw(Render.Batch, 0);
-	        Logo.draw(Render.Batch);
+	        Logo.draw(Render.Batch, 0);
 	        //news.draw(Render.Batch);
 	        volver.draw(Render.Batch,0);
 	        clasico.draw(Render.Batch,0);

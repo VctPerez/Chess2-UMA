@@ -7,8 +7,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 
 import game.chess.GameScreen;
 import utils.Image;
@@ -63,10 +61,10 @@ public class Tile extends Actor{
 		
 		if(highlight) {
 			frame.sprt.setColor(Color.YELLOW);
-			frame.draw(batch);
+			frame.draw(batch, 0);
 		}else if(attacked) {
 			frame.sprt.setColor(Color.RED);
-			frame.draw(batch);
+			frame.draw(batch, 0);
 		}
 		
 		if(piece != null) {

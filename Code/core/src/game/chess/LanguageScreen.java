@@ -68,7 +68,7 @@ public class LanguageScreen extends AbstractScreen {
         //---------------
         
         Language.draw(Render.Batch, 0);
-        Logo.draw(Render.Batch);
+        Logo.draw(Render.Batch, 0);
         //news.draw(Render.Batch);
         spanish.draw(Render.Batch,0);
         english.draw(Render.Batch,0);

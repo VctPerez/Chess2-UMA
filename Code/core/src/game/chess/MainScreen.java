@@ -41,7 +41,7 @@ public class MainScreen extends AbstractScreen {
         confg = new TextButton(confgText);
         reglas = new TextButton(reglasText);
         
-        Logo = new Image("Logo_Blanco.png");
+        Logo = new Image(Resources.LOGO_PATH);
         Logo.setPosition(800,-50);
         Logo.setSize(500, 500);
         Logo.setTransparency(0.25f);
@@ -66,7 +66,7 @@ public class MainScreen extends AbstractScreen {
         //---------------
 
         Titulo.draw(Render.Batch, 0);
-        Logo.draw(Render.Batch);
+        Logo.draw(Render.Batch, 0);
         //news.draw(Render.Batch);
         reglas.draw(Render.Batch,0);
         play.draw(Render.Batch,0);
@@ -75,7 +75,8 @@ public class MainScreen extends AbstractScreen {
         
         if(play.isSelected()){
             Render.bgMusic.stop();
-            Render.app.setScreen(Render.GAMESCREEN);
+            //Render.app.setScreen(Render.GAMESCREEN);
+            Render.app.setScreen(Render.CREATEMATCHSCREEN);
         }
         if(exit.isSelected()) {
         	Gdx.app.exit();
