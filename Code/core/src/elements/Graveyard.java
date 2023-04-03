@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.ParallelAction;
 
 import game.chess.GameScreen;
 
@@ -17,6 +19,7 @@ public class Graveyard extends Actor {
 	protected ShapeRenderer frame;
 	private final float Y_OFFSET = 24;
 	private final float X_OFFSET = 24;
+	private int index = 0;
 
 	public Graveyard(float x, float y) {
 		graveyard = new ArrayList<>();
@@ -33,7 +36,26 @@ public class Graveyard extends Actor {
 		}else {
 			GameScreen.blackPieces.remove(piece);
 		}
+		
+		ParallelAction par = new ParallelAction();
+		par.addAction(Actions.moveTo(getX(), getY()+(42*index), 0.6f));
+		par.addAction(Actions.sizeTo(42, 42, 0.6f));
+		piece.addAction(Actions.sequence(Actions.delay(0.2f), par));
+		
 		graveyard.add(piece);
+		index++;
+	}
+	
+	public void simulateAdd(Piece piece) {
+		piece.alive=false;
+		if(piece.color) {//implementar método que haga esto en gamescreen
+			GameScreen.whitePieces.remove(piece);
+		}else {
+			GameScreen.blackPieces.remove(piece);
+		}
+		
+		graveyard.add(piece);
+		index++;
 	}
 	
 	public Piece reviveLastPiece() {
@@ -49,6 +71,7 @@ public class Graveyard extends Actor {
 				GameScreen.blackPieces.add(piece);
 			}
 		}
+		index--;
 		return piece;
 	}
 	
@@ -62,9 +85,9 @@ public class Graveyard extends Actor {
 		batch.begin();
 		
 		for(int i = 0; i< graveyard.size(); i++) {
-			graveyard.get(i).setPosition(getX(), getY() + (42 * i));
-			graveyard.get(i).setSize(42,  42);
-			graveyard.get(i).draw(batch, parentAlpha);		
+			//graveyard.get(i).setPosition(getX(), getY() + (42 * i));
+			//graveyard.get(i).setSize(42,  42);
+			graveyard.get(i).draw(batch, parentAlpha);
 		}
 		
 	}

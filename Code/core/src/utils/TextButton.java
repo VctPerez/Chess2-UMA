@@ -47,7 +47,7 @@ public class TextButton extends Actor implements Button {
      */
     @Override
     public void checkPress() {
-        if( Render.inputs.mouseX >= text.getX() && Render.inputs.mouseX <= text.getX() + text.getWidth()
+        if(Render.inputs.mouseX >= text.getX() && Render.inputs.mouseX <= text.getX() + text.getWidth()
                 && Render.inputs.mouseY <= text.getY()
                 && Render.inputs.mouseY >= text.getY() - text.getHeight()){
             if(Render.inputs.isClicked()){

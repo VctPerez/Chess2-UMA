@@ -74,6 +74,15 @@ public class Tile extends Actor{
 		}
 	}
 	
+	public void simulateMoveTo(Tile nextTile) {
+		if(nextTile.getPiece()!=null) {
+			nextTile.simulateSendPieceToGraveyard();
+		}
+		
+		nextTile.setPiece(this.piece);
+		this.piece = null;
+	}
+	
 	public void moveTo(Tile nextTile) {
 		if(nextTile.getPiece()!=null) {
 			nextTile.sendPieceToGraveyard();
@@ -100,6 +109,17 @@ public class Tile extends Actor{
 		}else {
 			
 			GameScreen.graveyardBlack.add(piece);
+		}
+		this.piece=null;
+	}
+	
+	public void simulateSendPieceToGraveyard() {
+		if(piece.color) {
+
+			GameScreen.graveyardWhite.simulateAdd(piece);
+		}else {
+			
+			GameScreen.graveyardBlack.simulateAdd(piece);
 		}
 		this.piece=null;
 	}

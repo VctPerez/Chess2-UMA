@@ -15,6 +15,7 @@ public class Resources {
     public static final String MENU_THEME = "menuTheme.ogg";
     public static final String TEXTBUTTON_HOVERSOUND = "sound/buttonMouseOverSound.mp3";
     public static final String TEXTBUTTON_CLICKSOUND = "sound/buttonClickedSound.mp3";
+    public static final String PIECEMOVE_SOUND = "sound/pieceMove.mp3";
 
     public static final String CHECK_PATH = "sprites/Testing-Pieces/Testing-Pawn.png";
     public static final String SLIDER_PATH = "sprites/volumeBar/volumeBar_bar(x2size).png";

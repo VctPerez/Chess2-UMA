@@ -26,8 +26,9 @@ public class King extends Piece{
 	@Override
 	protected void updateXY(int x, int y) {
 		GameScreen.board.getTile(this.x, this.y).attacked = false;
-		this.x = x;
-		this.y = y;
+
+		super.updateXY(x, y);
+		
 		
 		if(color) {
 			GameScreen.whiteKing.set(x, y);
@@ -35,9 +36,6 @@ public class King extends Piece{
 			
 			GameScreen.blackKing.set(x, y);
 		}
-		
-		Tile tile = GameScreen.board.getTile(x, y);
-		addAction(Actions.moveTo(tile.getX(),tile.getY() , 1f));//hacer que la animación sea más consistente
 	}
 	
 	@Override
@@ -47,7 +45,7 @@ public class King extends Piece{
 		if(nextTile.getPiece()!=null) {
 			nextTilePiece = nextTile.getPiece();
 		}
-		currentTile.moveTo(nextTile);
+		currentTile.simulateMoveTo(nextTile);
 		
 			//check king
 			if(color && !isKingSafe(GameScreen.blackPieces, new Vector2(move.x, move.y))) {

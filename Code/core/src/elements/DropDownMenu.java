@@ -51,11 +51,7 @@ public class DropDownMenu extends Actor{
 		pieces.add(new Image(Render.app.getManager().get(Resources.ROOK_PATH, Texture.class)));
 		pieces.add(new Image(Render.app.getManager().get(Resources.KNIGHT_PATH, Texture.class)));
 		pieces.add(new Image(Render.app.getManager().get(Resources.QUEEN_PATH, Texture.class)));
-		
-		/*
-		menu = new ArrayList<>();
-		menu.add(new Tile());
-		*/
+
 	
 	}
 	

@@ -2,15 +2,20 @@ package elements;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.ParallelAction;
 
 import game.chess.GameScreen;
 import utils.Image;
+import utils.Resources;
 
 public abstract class Piece extends Actor {
 	protected Image sprite;
@@ -66,6 +71,7 @@ public abstract class Piece extends Actor {
 		hasBeenMoved=true;
 	}
 	
+	
 	/**
 	 * Actualiza la posiicón de la pieza
 	 * @param x
@@ -75,9 +81,19 @@ public abstract class Piece extends Actor {
 		this.x = x;
 		this.y = y;
 		Tile tile = GameScreen.board.getTile(x, y);
-		addAction(Actions.moveTo(tile.getX(),tile.getY() , 1f));//hacer que la animación sea más consistente
 		
+		
+		Action completeAction = new Action(){
+			Sound sound = Gdx.audio.newSound(Gdx.files.internal(Resources.PIECEMOVE_SOUND));
+			public boolean act( float delta ) {
+				sound.play();
+				return true;
+			}
+		};
+		addAction(Actions.moveTo(tile.getX(),tile.getY() , 0.5f));//hacer que la animación sea más consistente
+		addAction(Actions.after(completeAction));
 	}
+	
 	
 	public void setSprite(String path) {
 		this.sprite = new Image(path);
@@ -152,7 +168,7 @@ public abstract class Piece extends Actor {
 		if(nextTile.getPiece()!=null) {
 			nextTilePiece = nextTile.getPiece();
 		}
-		currentTile.moveTo(nextTile);
+		currentTile.simulateMoveTo(nextTile);
 		
 		//check king
 		if(color && !isKingSafe(GameScreen.blackPieces, GameScreen.whiteKing)) {
