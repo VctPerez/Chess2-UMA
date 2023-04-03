@@ -3,6 +3,7 @@ package elements;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 
 public class Board extends Actor{
 	public static Tile[][] board;
@@ -49,7 +50,13 @@ public class Board extends Actor{
 		}
 	}
 	
+	@Override
 	public void act(float delta) {
 		super.act(delta);
+		for(int i = 0; i<8; i++) {
+			for(int j = 0; j<8; j++) {
+				board[i][j].act(delta);
+			}
+		}
 	}
 }

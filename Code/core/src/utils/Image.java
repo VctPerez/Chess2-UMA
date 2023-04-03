@@ -49,7 +49,7 @@ public class Image {
      *  Fader de imagen.
      * @return True = imagen transparente, False = imagen opaca
      */
-    public boolean fader(){
+    public boolean fader(){ // esto se puede hacer con el act y actions 
         boolean end = false;
 
 

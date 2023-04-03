@@ -63,13 +63,13 @@ public class DropDownMenu extends Actor{
 		if(isClicked()) {
             int current_y = calculateY();
             ArrayList<Piece> pieces;
-            System.out.println(current_y);
             
             if(tile.getPiece().color()) {
             	pieces = GameScreen.whitePieces;
             }else {
             	pieces = GameScreen.blackPieces;
             }
+            tile.getPiece().remove();
             
             switch (current_y) {
 			case 4:
@@ -101,6 +101,7 @@ public class DropDownMenu extends Actor{
 	}
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
+		this.toFront();
 		update(parentAlpha);
 		batch.end();
 		menu.begin(ShapeType.Filled);

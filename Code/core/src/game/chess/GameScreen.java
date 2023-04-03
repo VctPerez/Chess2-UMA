@@ -5,6 +5,8 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.utils.viewport.*;
 
 import elements.Background;
@@ -30,7 +32,8 @@ import utils.TextButton;
 import java.util.ArrayList;
 
 public class GameScreen extends AbstractScreen {
-	private Stage stage;
+	public static Stage stage;
+	Background background;
 	public static Board board;
 	
 	//Control selección de piezas
@@ -88,10 +91,10 @@ public class GameScreen extends AbstractScreen {
 		blackPieces = new ArrayList<>();
 		graveyardWhite = new Graveyard(21,21);
 		graveyardBlack = new Graveyard(Gdx.graphics.getWidth()-63,21);
-		Background fondo = new Background();
+		background = new Background();
 		TimerB = new Timer(300,80,650,"NEGRO");
 		TimerW = new Timer(300,80,150,"BLANCO");
-		fondo.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		
 		placeWhites();
 		placeBlacks();
@@ -104,7 +107,7 @@ public class GameScreen extends AbstractScreen {
         
         //-------------------------------
         stage.addActor(results);
-		stage.addActor(fondo);
+		stage.addActor(background);
 		stage.addActor(board);
 		stage.addActor(graveyardWhite);
 		stage.addActor(graveyardBlack);
@@ -131,7 +134,7 @@ public class GameScreen extends AbstractScreen {
 		}
 		
 		stage.draw();
-		
+		stage.act();
 	}
 
 	public void update(float delta) {
@@ -336,7 +339,7 @@ public class GameScreen extends AbstractScreen {
         if (currentTile_validMovements.contains(new Vector2(next_x, next_y))) {
 
         	checkCastling(next_x);
-            
+        	
             currentTile.move(next_x, next_y);
             
             resetMate();
@@ -502,38 +505,38 @@ public class GameScreen extends AbstractScreen {
 		for (int i = 1; i < 9; i++) {
 			piece =  new Pawn(true, i, 2);
 			whitePieces.add(piece);
-			board.getTile(i, 2).piece = piece;
+			board.getTile(i, 2).setPiece(piece);
 		}
 		for (int i = 1; i < 9; i++) {
 			if (i == 1 || i == 8) {
 				
 				piece = new Rook(true, i, 1);
 				whitePieces.add(piece);
-				board.getTile(i, 1).piece = piece;
+				board.getTile(i, 1).setPiece(piece);
 			}
 			if (i == 2 || i == 7) {
 				
 				piece = new Knight(true, i, 1);
 				whitePieces.add(piece);
-				board.getTile(i, 1).piece = piece;
+				board.getTile(i, 1).setPiece(piece);
 			}
 			if (i == 3 || i == 6) {
 				
 				piece = new Bishop(true, i, 1);
 				whitePieces.add(piece);
-				board.getTile(i, 1).piece = piece;
+				board.getTile(i, 1).setPiece(piece);
 			}
 			if (i == 4) {
 				
 				piece = new Queen(true, i, 1);
 				whitePieces.add(piece);
-				board.getTile(i, 1).piece = piece;
+				board.getTile(i, 1).setPiece(piece);
 			}
 			if (i == 5) {
 				
 				piece = new King(true, i, 1);
 				whitePieces.add(piece);
-				board.getTile(i, 1).piece = piece;
+				board.getTile(i, 1).setPiece(piece);
 			}
 		}
 	}
@@ -543,38 +546,38 @@ public class GameScreen extends AbstractScreen {
 		for (int i = 1; i < 9; i++) {
 			piece =  new Pawn(false, i, 7);
 			blackPieces.add(piece);
-			board.getTile(i, 7).piece = piece;
+			board.getTile(i, 7).setPiece(piece);
 		}
 		for (int i = 1; i < 9; i++) {
 			if (i == 1 || i == 8) {
 				
 				piece = new Rook(false, i, 8);
 				blackPieces.add(piece);
-				board.getTile(i, 8).piece = piece;
+				board.getTile(i, 8).setPiece(piece);
 			}
 			if (i == 2 || i == 7) {
 				
 				piece = new Knight(false, i, 8);
 				blackPieces.add(piece);
-				board.getTile(i, 8).piece = piece;
+				board.getTile(i, 8).setPiece(piece);
 			}
 			if (i == 3 || i == 6) {
 				
 				piece = new Bishop(false, i, 8);
 				blackPieces.add(piece);
-				board.getTile(i, 8).piece = piece;
+				board.getTile(i, 8).setPiece(piece);
 			}
 			if (i == 4) {
 				
 				piece = new Queen(false, i, 8);
 				blackPieces.add(piece);
-				board.getTile(i, 8).piece = piece;
+				board.getTile(i, 8).setPiece(piece);
 			}
 			if (i == 5) {
 				
 				piece = new King(false, i, 8);
 				blackPieces.add(piece);
-				board.getTile(i, 8).piece = piece;
+				board.getTile(i, 8).setPiece(piece);
 			}
 		}		
 	}

@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 
 import game.chess.GameScreen;
 import utils.Image;
@@ -33,10 +34,16 @@ public abstract class Piece extends Actor {
 		}else {
 			setColor(0.25f, 0.25f, 0.25f, 1f);
 		}
+		
+		setPosition(GameScreen.board.getTile(x, y).getX(), GameScreen.board.getTile(x, y).getY());
+		setSize(GameScreen.board.getTile(x, y).getWidth(),  GameScreen.board.getTile(x, y).getHeight());
+		GameScreen.stage.addActor(this);
 	}
 
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
+		this.toFront();
+
 		sprite.setPosition(getX(), getY());
 		sprite.setSize(getWidth(), getHeight());
 		sprite.setScale(getScaleX());
@@ -67,6 +74,9 @@ public abstract class Piece extends Actor {
 	protected void updateXY(int x, int y) {
 		this.x = x;
 		this.y = y;
+		Tile tile = GameScreen.board.getTile(x, y);
+		addAction(Actions.moveTo(tile.getX(),tile.getY() , 1f));//hacer que la animación sea más consistente
+		
 	}
 	
 	public void setSprite(String path) {
@@ -187,5 +197,10 @@ public abstract class Piece extends Actor {
 				nextTile.setPiece(GameScreen.graveyardBlack.reviveLastPiece());
 			}
 		}		
+	}
+	
+	@Override
+	public void act(float delta) {
+		super.act(delta);
 	}
 }

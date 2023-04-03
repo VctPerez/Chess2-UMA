@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 
 import game.chess.GameScreen;
 import utils.Image;
@@ -68,8 +70,6 @@ public class Tile extends Actor{
 		}
 		
 		if(piece != null) {
-			piece.setPosition(getX(), getY());
-			piece.setSize(getWidth(),  getHeight());
 			piece.draw(batch, parentAlpha);
 		}
 	}
@@ -79,19 +79,19 @@ public class Tile extends Actor{
 			nextTile.sendPieceToGraveyard();
 		}
 		
-		
 		nextTile.setPiece(this.piece);
 		this.piece = null;
 	}
 	
 	public void move(int x, int y) {
 		Tile nextTile = GameScreen.board.getTile(x, y);
-		this.piece.hasBeenMoved();		
+		piece.hasBeenMoved();
+		
+		piece.updateXY(x, y);
 		
 		moveTo(nextTile);
-		
-		nextTile.getPiece().updateXY(x, y);
 	}
+	
 	
 	public void sendPieceToGraveyard() {
 		if(piece.color) {
@@ -124,8 +124,11 @@ public class Tile extends Actor{
 		tile.dispose();
 		//piece.dispose();
 	}
-	
+	@Override
 	public void act(float delta) {
+		if(piece!=null) {
+			piece.act(delta);
+		}
 		super.act(delta);
 	}
 }
