@@ -31,7 +31,8 @@ public class Text extends Actor {
      * @param borderWidth Anchura del borde de las letras.
      */
     public Text(String path, int size, Color color, int borderWidth){
-        font = setupFont(path, size, color, borderWidth);
+        font = setupFont(path, size, borderWidth);
+        setColor(color);
         layout = new GlyphLayout();
     }
 
@@ -44,7 +45,8 @@ public class Text extends Actor {
      * @param borderWidth Anchura del borde de las letras.
      */
     public Text(String text, String path, int size, Color color, int borderWidth){
-        font = setupFont(path, size, color, borderWidth);
+        font = setupFont(path, size, borderWidth);
+        setColor(color);
         this.text = text;
         layout = new GlyphLayout();
         layout.setText(font, text);
@@ -54,16 +56,15 @@ public class Text extends Actor {
      * Este metodo se encarga de crear una fuente
      * @param path Ruta de la fuente a utilizar.
      * @param size Tamaño de la letra.
-     * @param color Color de las letras.
      * @param borderWidth Anchura del borde de las letras.
      * @return Fuente creada
      */
-    public static BitmapFont setupFont(String path, int size, Color color, int borderWidth){
+    public static BitmapFont setupFont(String path, int size, int borderWidth){
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(path));
         FreeTypeFontParameter parameter = new FreeTypeFontParameter();
 
         parameter.size = size;
-        parameter.color = color;
+        parameter.color = Color.WHITE;
         parameter.borderColor = Color.BLACK;
         parameter.borderWidth = borderWidth;
 
@@ -76,12 +77,6 @@ public class Text extends Actor {
     @Override
     public void draw(Batch batch, float parentAlpha){
         font.draw(batch, text, getX(), getY());
-    }
-
-
-    @Override
-    public void act(float delta) {
-        super.act(delta);
     }
 
     public void enableAction(boolean enabled){
@@ -170,6 +165,9 @@ public class Text extends Actor {
      */
     public void setColor(Color color){
         font.setColor(color);
+    }
+    public Color getColor(){
+        return font.getColor();
     }
 
     /**
