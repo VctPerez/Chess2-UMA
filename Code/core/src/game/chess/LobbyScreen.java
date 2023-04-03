@@ -13,6 +13,8 @@ import utils.Text;
 import utils.TextButton;
 
 import java.io.IOException;
+import java.net.Inet4Address;
+import java.net.UnknownHostException;
 
 public class LobbyScreen extends AbstractScreen{
     private Stage stage;
@@ -27,10 +29,21 @@ public class LobbyScreen extends AbstractScreen{
         stage = new Stage(new FitViewport(1280, 720));
         Gdx.input.setInputProcessor(Render.inputs);
 
-        Text p1 = new Text("Jugador 1: (aqui iria el nombre)", Resources.FONT_MENU_PATH, 30, Color.WHITE, 3);
+        try {
+            Text invCode = new Text("Codigo: " + Inet4Address.getLocalHost().getHostAddress(),
+                    Resources.FONT_MENU_PATH, 20, Color.WHITE,2);
+            invCode.setPosition(300,500);
+            stage.addActor(invCode);
+            player1 = new Player("Victor");
+            host = new Host(player1);
+        } catch (IOException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+
+        Text p1 = new Text("Jugador 1: " + player1.getName(), Resources.FONT_MENU_PATH, 30, Color.WHITE, 3);
         Text statusP1 = new Text("CONNECTED", Resources.FONT_MENU_PATH, 30, Color.GREEN, 3);
         Text p2 = new Text("Jugador 2: (aqui iria el nombre)", Resources.FONT_MENU_PATH, 30, Color.WHITE, 3);
-        Text statusP2 = new Text("DISCONNECTED", Resources.FONT_MENU_PATH, 30, Color.RED, 3);
+        Text statusP2 = new Text("CONNECTED", Resources.FONT_MENU_PATH, 30, Color.RED, 3);
         findMatch = new TextButton(new Text("FIND", Resources.FONT_MENU_PATH, 30, Color.CYAN, 3));
         findMatch.setPosition(600,400);
         findMatch.setRemarked(Color.BLUE);
@@ -45,12 +58,7 @@ public class LobbyScreen extends AbstractScreen{
         stage.addActor(p2);
         stage.addActor(statusP2);
 
-        try {
-            player1 = new Player("Victor");
-            host = new Host(player1);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+
     }
 
     @Override
@@ -59,21 +67,30 @@ public class LobbyScreen extends AbstractScreen{
         Render.Batch.begin();
         stage.act();
         stage.draw();
+        matchFinder();
+        Render.Batch.end();
+    }
+
+    public void matchFinder(){
         if(findMatch.isSelected() && !host.isP2connected()){
             //System.out.println("buscando...");
             if(!finding){
-                //TODO -> implementar host con runnable y modificar interrupt
-                //host.start();
+                host.start();
                 System.out.println("La hebra 2 va por su cuenta");
                 finding = true;
             }
         }else if(finding && !findMatch.isSelected()){
-            //TODO
             finding = false;
-            System.out.println("la hebra2 ha parado");
+            try {
+                host.stopFind();
+                host = new Host(player1);
+            } catch (IOException e) {
+                System.err.println("la hebra2 ha parado");
+            }
         }
-        Render.Batch.end();
     }
+
+
 
     @Override
     public void pause() {

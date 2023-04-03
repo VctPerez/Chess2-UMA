@@ -9,6 +9,9 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.actions.ColorAction;
+
+import static java.awt.Color.RED;
 
 public class Text extends Actor {
 
@@ -17,6 +20,7 @@ public class Text extends Actor {
 
     String text;
     float x,y; // Entre 0 y 1.
+    private boolean action;
 
 
     /**
@@ -72,6 +76,16 @@ public class Text extends Actor {
     @Override
     public void draw(Batch batch, float parentAlpha){
         font.draw(batch, text, getX(), getY());
+    }
+
+
+    @Override
+    public void act(float delta) {
+        super.act(delta);
+    }
+
+    public void enableAction(boolean enabled){
+        action = enabled;
     }
 
     /**

@@ -9,6 +9,10 @@ public class Player {
         this.name = name;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public void setColor(boolean color) {
         this.color = color;
     }
