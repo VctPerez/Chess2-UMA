@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 
 import elements.Board;
 import elements.Piece;
@@ -34,6 +35,9 @@ public class King extends Piece{
 			
 			GameScreen.blackKing.set(x, y);
 		}
+		
+		Tile tile = GameScreen.board.getTile(x, y);
+		addAction(Actions.moveTo(tile.getX(),tile.getY() , 1f));//hacer que la animación sea más consistente
 	}
 	
 	@Override
