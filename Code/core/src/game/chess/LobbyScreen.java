@@ -1,6 +1,7 @@
 package game.chess;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.ColorAction;
@@ -21,6 +22,7 @@ public class LobbyScreen extends AbstractScreen{
 
     private Player player1, player2;
     private TextButton findMatch;
+    private Text statusP2;
     private Host host;
     private boolean finding = false;
 
@@ -43,7 +45,7 @@ public class LobbyScreen extends AbstractScreen{
         Text p1 = new Text("Jugador 1: " + player1.getName(), Resources.FONT_MENU_PATH, 30, Color.WHITE, 3);
         Text statusP1 = new Text("CONNECTED", Resources.FONT_MENU_PATH, 30, Color.GREEN, 3);
         Text p2 = new Text("Jugador 2: (aqui iria el nombre)", Resources.FONT_MENU_PATH, 30, Color.WHITE, 3);
-        Text statusP2 = new Text("CONNECTED", Resources.FONT_MENU_PATH, 30, Color.RED, 3);
+        statusP2 = new Text("CONNECTED", Resources.FONT_MENU_PATH, 30, Color.RED, 3);
         findMatch = new TextButton(new Text("FIND", Resources.FONT_MENU_PATH, 30, Color.CYAN, 3));
         findMatch.setPosition(600,400);
         findMatch.setRemarked(Color.BLUE);
@@ -52,7 +54,7 @@ public class LobbyScreen extends AbstractScreen{
         statusP1.setPosition(300,550);
         p2.setPosition(300,200);
         statusP2.setPosition(300, 150);
-        stage.addActor(findMatch);
+        //stage.addActor(findMatch);
         stage.addActor(p1);
         stage.addActor(statusP1);
         stage.addActor(p2);
@@ -67,6 +69,9 @@ public class LobbyScreen extends AbstractScreen{
         Render.Batch.begin();
         stage.act();
         stage.draw();
+        findMatch.draw(Render.Batch, 0);
+
+
         matchFinder();
         Render.Batch.end();
     }
@@ -87,6 +92,10 @@ public class LobbyScreen extends AbstractScreen{
             } catch (IOException e) {
                 System.err.println("la hebra2 ha parado");
             }
+        }
+
+        if(host.isP2connected()){
+            statusP2.setColor(Color.GREEN);
         }
     }
 

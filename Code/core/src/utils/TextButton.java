@@ -11,10 +11,10 @@ public class TextButton extends Actor implements Button {
 
     private Text text;
     private boolean isSelected = false;
-    private boolean initalMouseOver = false;
+    //private boolean initalMouseOver = false;
     private Sound mouseOverSound;
     private Sound clickSound;
-    private Color remarked;
+    private Color remarked = null, normalColor;
     
 
     /**
@@ -23,6 +23,7 @@ public class TextButton extends Actor implements Button {
      */
     public TextButton(Text txt){
         text = txt;
+        normalColor = new Color(txt.getColor());
         mouseOverSound = Gdx.audio.newSound(Gdx.files.internal(Resources.TEXTBUTTON_HOVERSOUND));
         clickSound = Gdx.audio.newSound(Gdx.files.internal(Resources.TEXTBUTTON_CLICKSOUND));
     }
@@ -51,14 +52,13 @@ public class TextButton extends Actor implements Button {
                 && Render.inputs.mouseY <= text.getY()
                 && Render.inputs.mouseY >= text.getY() - text.getHeight()){
             if(Render.inputs.isClicked()){
-                if(!isSelected) text.setColor(remarked);
-                else text.setColor(Color.WHITE);
+                if(!isSelected && remarked != null) text.setColor(remarked);
+                else if(isSelected) text.setColor(Color.CYAN);
                 isSelected = !isSelected;
             }
-
         }else{
-            if(Render.inputs.isClicked() && isSelected){
-                text.setColor(Color.WHITE);
+            if(Render.inputs.isClicked()) {
+                text.setColor(normalColor);
                 isSelected = false;
             }
         }
@@ -87,6 +87,7 @@ public class TextButton extends Actor implements Button {
     public void setRemarked(Color remarked) {
         this.remarked = remarked;
     }
+
 
     @Override
     public void dispose() {
