@@ -2,7 +2,6 @@ package elements;
 
 import java.util.ArrayList;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -11,10 +10,10 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.actions.ParallelAction;
 
 import game.chess.GameScreen;
 import utils.Image;
+import utils.Render;
 import utils.Resources;
 
 public abstract class Piece extends Actor {
@@ -84,7 +83,7 @@ public abstract class Piece extends Actor {
 		
 		
 		Action completeAction = new Action(){
-			Sound sound = Gdx.audio.newSound(Gdx.files.internal(Resources.PIECEMOVE_SOUND));
+			Sound sound = Render.app.getManager().get(Resources.PIECEMOVE_SOUND, Sound.class);
 			public boolean act( float delta ) {
 				sound.play();
 				return true;

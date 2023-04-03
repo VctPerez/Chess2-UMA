@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -44,6 +45,7 @@ public class Chess2 extends Game {
 
 		//MUSIC & SOUNDS
 		manager.load(Resources.MENU_THEME, Music.class);
+		manager.load(Resources.PIECEMOVE_SOUND, Sound.class);
 		//ETC
 		manager.load(Resources.LOGO_PATH, Texture.class);
 		/*
