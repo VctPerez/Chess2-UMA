@@ -28,12 +28,12 @@ public class Resources {
 
 
     // RECURSOS PARTIDA
-    public static final String PAWN_PATH = "sprites/Testing-Pieces/PawnW.png";
-    public static final String KNIGHT_PATH = "sprites/Testing-Pieces/KnightW.png";
-    public static final String BISHOP_PATH = "sprites/Testing-Pieces/BishopW.png";
-    public static final String ROOK_PATH = "sprites/Testing-Pieces/RookW.png";
-    public static final String QUEEN_PATH = "sprites/Testing-Pieces/QueenW.png";
-    public static final String KING_PATH = "sprites/Testing-Pieces/KingW.png";
+    public static final String PAWN_PATH = "sprites/Testing-Pieces/Pieces Base Form/White_Pawn.png";
+    public static final String KNIGHT_PATH = "sprites/Testing-Pieces/Pieces Base Form/White_Knight.png";
+    public static final String BISHOP_PATH = "sprites/Testing-Pieces/Pieces Base Form/White_Bishop.png";
+    public static final String ROOK_PATH = "sprites/Testing-Pieces/Pieces Base Form/White_Rook.png";
+    public static final String QUEEN_PATH = "sprites/Testing-Pieces/Pieces Base Form/White_Queen.png";
+    public static final String KING_PATH = "sprites/Testing-Pieces/Pieces Base Form/White_King.png";
     
     public static final String FRAME_PATH = "sprites/selectionFrame.png";
     
