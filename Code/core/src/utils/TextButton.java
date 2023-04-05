@@ -10,11 +10,11 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 public class TextButton extends Actor implements Button {
 
     private Text text;
-    private boolean isSelected = false;
+    private boolean isSelected = false, isPressed = false;
     //private boolean initalMouseOver = false;
-    private Sound mouseOverSound;
-    private Sound clickSound;
-    private Color remarked = null, normalColor;
+    private Sound mouseOverSound, clickSound;
+    private Color remarked = null;
+    private final Color normalColor;
     
 
     /**
@@ -24,8 +24,8 @@ public class TextButton extends Actor implements Button {
     public TextButton(Text txt){
         text = txt;
         normalColor = new Color(txt.getColor());
-        mouseOverSound = Gdx.audio.newSound(Gdx.files.internal(Resources.TEXTBUTTON_HOVERSOUND));
-        clickSound = Gdx.audio.newSound(Gdx.files.internal(Resources.TEXTBUTTON_CLICKSOUND));
+        mouseOverSound = Render.app.getManager().get(Resources.TEXTBUTTON_HOVERSOUND);
+        clickSound = Render.app.getManager().get(Resources.TEXTBUTTON_CLICKSOUND);
     }
 
     @Override
@@ -43,23 +43,31 @@ public class TextButton extends Actor implements Button {
         text.draw(Render.Batch, 0);
         checkPress();
     }
-    /*
-     * No vuelvas a tocar este codigo adri por favor
-     */
+
+    public boolean mouseOver() {
+        return  Render.inputs.mouseX >= text.getX() && Render.inputs.mouseX <= text.getX() + text.getWidth()
+                && Render.inputs.mouseY <= text.getY()
+                && Render.inputs.mouseY >= text.getY() - text.getHeight();
+    }
     @Override
     public void checkPress() {
-        if(Render.inputs.mouseX >= text.getX() && Render.inputs.mouseX <= text.getX() + text.getWidth()
-                && Render.inputs.mouseY <= text.getY()
-                && Render.inputs.mouseY >= text.getY() - text.getHeight()){
+        if(mouseOver()){
+            if(!isSelected){
+                mouseOverSound.play(0.2f);
+                isSelected = true;
+            }
             if(Render.inputs.isClicked()){
-                if(!isSelected && remarked != null) text.setColor(remarked);
-                else if(isSelected) text.setColor(Color.CYAN);
-                isSelected = !isSelected;
+                clickSound.play(0.2f);
+                if(!isPressed && remarked != null)text.setColor(remarked);
+                else text.setColor(normalColor);
+                isPressed = !isPressed;
             }
         }else{
+            isSelected = false;
             if(Render.inputs.isClicked()) {
                 text.setColor(normalColor);
                 isSelected = false;
+                isPressed = false;
             }
         }
     }
@@ -75,21 +83,27 @@ public class TextButton extends Actor implements Button {
     }
 
     @Override
+    public boolean isPressed(){
+        return isPressed;
+    }
+
     public boolean isSelected() {
         return isSelected;
     }
     
-    /*public boolean mouseOver(IOS input) {
-    	return  input.mouseX >= text.getX() && input.mouseX <= text.getX() + text.getWidth() && input.mouseY <= text.getY()
-    			&& input.mouseY >= text.getY() - text.getHeight();
-    }*/
+
 
     public void setRemarked(Color remarked) {
         this.remarked = remarked;
     }
 
+    public void setClickSound(Sound clickSound) {
+        this.clickSound = clickSound;
+    }
 
-    @Override
+    public void setMouseOverSound(Sound mouseOverSound) {
+        this.mouseOverSound = mouseOverSound;
+    }
     public void dispose() {
         text.dispose();
         mouseOverSound.dispose();

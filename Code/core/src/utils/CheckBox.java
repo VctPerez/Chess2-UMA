@@ -76,6 +76,10 @@ public class CheckBox extends Actor implements Button{
     }
 
     @Override
+    public boolean isPressed() {
+        return false;
+    }
+
     public boolean isSelected() {
     	return value;
     }

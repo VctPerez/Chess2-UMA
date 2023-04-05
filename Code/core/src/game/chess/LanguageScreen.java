@@ -76,20 +76,20 @@ public class LanguageScreen extends AbstractScreen {
         home.draw(Render.Batch,0);
         config.draw(Render.Batch,0);
         
-        if(spanish.isSelected()) {
+        if(spanish.isPressed()) {
         	languageSettingWriter.escribirLinea(1, "esp/"); //La linea 1 de la configuracion contiene el idioma
         	Render.app.setScreen(Render.LANGUAGESCREEN);
         }
-        if(english.isSelected()) {
+        if(english.isPressed()) {
         	languageSettingWriter.escribirLinea(1, "eng/"); //El nombre es el nombre del archivo txt de idioma
         	Render.app.setScreen(Render.LANGUAGESCREEN);
         }
         
         
-        if(home.isSelected()){
+        if(home.isPressed()){
             Render.app.setScreen(Render.MAINSCREEN);
         }
-        if(config.isSelected()) {
+        if(config.isPressed()) {
         	Render.app.setScreen(Render.CONFIGSCREEN);
         }
         

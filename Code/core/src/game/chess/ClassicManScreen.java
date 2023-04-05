@@ -106,7 +106,7 @@ public void render(float delta) {
 	    stage.act();
 	    stage.draw();
 	          
-	    if(volver.isSelected()){
+	    if(volver.isPressed()){
 	    	stage.dispose();
 	         Render.app.setScreen(Render.MANUALSCREEN);
 	    }

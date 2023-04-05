@@ -37,6 +37,7 @@ public class CreateMatchScreen extends AbstractScreen{
         logo.setSize(500, 500);
         logo.setTransparency(0.25f);
         stage.addActor(logo);
+
     }
 
     @Override
@@ -46,24 +47,26 @@ public class CreateMatchScreen extends AbstractScreen{
         stage.act();
         stage.draw();
         Render.Batch.end();
+        /*
         try{
             update();
-        }catch(IOException e){
+        }catch(IOException | InterruptedException e){
             System.err.println(e.getMessage());
         }
-
+        */
     }
-    public void update() throws IOException {
-        if(create.isSelected()){
-
+    public void update() throws IOException, InterruptedException {
+        if(create.isPressed()){
             Render.app.setScreen(Render.LOBBYSCREEN);
-        } else if (join.isSelected()) {
+        } else if (join.isPressed()) {
             //TODO con textField cosa que me da miedo
             System.out.println("Introduce tu nombre (espacio) la ip: ");
             Scanner code = new Scanner(System.in);
-            String[] info = code.nextLine().split(" ");
-            Render.guest = new Guest(info[0],info[1]);
-
+            System.out.println(code.next());
+            //System.out.println("yow");
+            //String[] info = code.next().split(" ");
+            //System.out.println(info[0] + " " + info[1]);
+            //Render.guest = new Guest(info[0],info[1]);
 
         }
     }

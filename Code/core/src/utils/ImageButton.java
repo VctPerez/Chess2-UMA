@@ -7,7 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 public class ImageButton extends Actor implements Button{
 
     private Image image;
-    private boolean selected;
+    private boolean selected, pressed;
     private boolean initialPress;
 
     /**
@@ -17,6 +17,7 @@ public class ImageButton extends Actor implements Button{
     public ImageButton(Image image){
         this.image = image;
         selected = false;
+        pressed = false;
     }
 
     public void setImage(Image img){
@@ -74,6 +75,10 @@ public class ImageButton extends Actor implements Button{
     }
 
     @Override
+    public boolean isPressed() {
+        return pressed;
+    }
+
     public boolean isSelected() {
         return selected;
     }

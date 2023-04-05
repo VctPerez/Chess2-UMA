@@ -1,5 +1,6 @@
 package game.chess;
 
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import utils.Image;
@@ -37,7 +38,7 @@ public class LoadingScreen extends AbstractScreen{
     }
 
     private void update(){
-        if(Render.app.getManager().update() && background.fader(wait,increase)){
+        if(Render.app.getManager().update() && (background.fader(wait,increase) || Render.inputs.keyDown(Input.Keys.BACKSPACE))){
             sounds.get(indexSound).stop();
             Render.app.setScreen(Render.MAINSCREEN);
         }

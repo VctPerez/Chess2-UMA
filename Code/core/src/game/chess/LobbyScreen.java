@@ -84,14 +84,14 @@ public class LobbyScreen extends AbstractScreen{
     }
 
     public void matchFinder() throws IOException {
-        if(findMatch.isSelected() && !Render.host.isP2connected()){
+        if(findMatch.isPressed() && !Render.host.isP2connected()){
             //System.out.println("buscando...");
             if(!finding){
                 Render.host.start();
                 System.out.println("La hebra 2 va por su cuenta");
                 finding = true;
             }
-        }else if(finding && !findMatch.isSelected()){
+        }else if(finding && !findMatch.isPressed()){
             finding = false;
             try {
                 Render.host.stopFind();

@@ -39,7 +39,7 @@ public interface Button{
      * Devuelve un booleano diciendo si esta seleccionado, o presionado.
      * @return True o False
      */
-    boolean isSelected();
+    boolean isPressed();
 
     /**
      * Se encarga de liberar la memoria que se ha utilizado para los recursos del boton

@@ -59,10 +59,10 @@ public class ConfigScreen extends AbstractScreen {
         volumeText.draw(Render.Batch, 0);
         language.draw(Render.Batch,0);
         
-        if(home.isSelected()){
+        if(home.isPressed()){
             Render.app.setScreen(Render.MAINSCREEN);
         }
-        if(language.isSelected()){
+        if(language.isPressed()){
             Render.app.setScreen(Render.LANGUAGESCREEN);
         }
         

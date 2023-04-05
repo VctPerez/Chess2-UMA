@@ -73,18 +73,18 @@ public class MainScreen extends AbstractScreen {
         exit.draw(Render.Batch,0);
         confg.draw(Render.Batch,0);
         
-        if(play.isSelected()){
+        if(play.isPressed()){
             Render.bgMusic.stop();
             //Render.app.setScreen(Render.GAMESCREEN);
             Render.app.setScreen(Render.CREATEMATCHSCREEN);
         }
-        if(exit.isSelected()) {
+        if(exit.isPressed()) {
         	Gdx.app.exit();
         }
-        if(confg.isSelected()) {
+        if(confg.isPressed()) {
         	Render.app.setScreen(Render.CONFIGSCREEN);
         }
-        if(reglas.isSelected()) {
+        if(reglas.isPressed()){
         	Render.app.setScreen(Render.MANUALSCREEN);
         }
         

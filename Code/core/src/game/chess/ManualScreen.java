@@ -66,13 +66,13 @@ public class ManualScreen extends AbstractScreen{
 	        clasico.draw(Render.Batch,0);
 	        modificado.draw(Render.Batch,0);
 	        
-	        if(volver.isSelected()){
+	        if(volver.isPressed()){
 	            Render.app.setScreen(Render.MAINSCREEN);
 	        }
-	        if(clasico.isSelected()) {
+	        if(clasico.isPressed()) {
 	        	Render.app.setScreen(new ClassicManScreen());
 	        }
-	        if(modificado.isSelected()) {
+	        if(modificado.isPressed()) {
 	        	//TODO
 	        }
 	        

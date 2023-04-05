@@ -47,6 +47,8 @@ public class Chess2 extends Game {
 		//MUSIC & SOUNDS
 		manager.load(Resources.MENU_THEME, Music.class);
 		manager.load(Resources.PIECEMOVE_SOUND, Sound.class);
+		manager.load(Resources.TEXTBUTTON_HOVERSOUND, Sound.class);
+		manager.load(Resources.TEXTBUTTON_CLICKSOUND, Sound.class);
 
 		//ETC
 		manager.load(Resources.LOGO_PATH, Texture.class);
@@ -76,7 +78,7 @@ public class Chess2 extends Game {
 		loadResources();
 		//while(!manager.isFinished());
 		Render.LOADINGSCREEN = new LoadingScreen();
-		this.setScreen(Render.LOADINGSCREEN);
+		//this.setScreen(Render.LOADINGSCREEN);
 
 		Render.GAMESCREEN = new GameScreen();
 		Render.MAINSCREEN = new MainScreen();
@@ -87,7 +89,7 @@ public class Chess2 extends Game {
 		Render.LOBBYSCREEN = new LobbyScreen();
 		Render.CREATEMATCHSCREEN = new CreateMatchScreen();
 
-		//this.setScreen(Render.MAINSCREEN);
+		this.setScreen(Render.CREATEMATCHSCREEN);
 		//this.setScreen(Render.GAMESCREEN);
 
 	}
