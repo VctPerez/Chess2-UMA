@@ -24,7 +24,7 @@ public class Chess2 extends Game {
 	 * Se encarga de cargar los (posibles) recursos que posteriormente utilizaremos en le juego
 	 */
 	private void loadResources(){
-
+		loadLoadingScreen();
 		//CHESS PIECES
 		manager.load(Resources.PAWN_PATH, Texture.class);
 		manager.load(Resources.BISHOP_PATH, Texture.class);
@@ -43,9 +43,11 @@ public class Chess2 extends Game {
 		manager.load(Resources.SELECTEDBAR_PATH, Texture.class);
 		manager.load(Resources.UNSELECTEDBAR_PATH, Texture.class);
 
+
 		//MUSIC & SOUNDS
 		manager.load(Resources.MENU_THEME, Music.class);
 		manager.load(Resources.PIECEMOVE_SOUND, Sound.class);
+
 		//ETC
 		manager.load(Resources.LOGO_PATH, Texture.class);
 		/*
@@ -55,6 +57,13 @@ public class Chess2 extends Game {
 
 		manager.finishLoading();
 	}
+	private void loadLoadingScreen(){
+		manager.load(Resources.LODINGSOUND1, Sound.class);
+		manager.load(Resources.LODINGSOUND2, Sound.class);
+		manager.load(Resources.LODINGSOUND3, Sound.class);
+		manager.load(Resources.LODINGSOUND4, Sound.class);
+		manager.load(Resources.LOADINGSCREEN_PATH, Texture.class);
+	}
 	@Override
 	public void create () {
 
@@ -63,9 +72,11 @@ public class Chess2 extends Game {
 		Render.app = this;
 		Render.inputs = new IOS();
 		Gdx.input.setInputProcessor(Render.inputs);
-
 		manager = new AssetManager();
 		loadResources();
+		//while(!manager.isFinished());
+		Render.LOADINGSCREEN = new LoadingScreen();
+		this.setScreen(Render.LOADINGSCREEN);
 
 		Render.GAMESCREEN = new GameScreen();
 		Render.MAINSCREEN = new MainScreen();
@@ -74,10 +85,9 @@ public class Chess2 extends Game {
 		Render.CLASSICMANSCREEN = new ClassicManScreen();
 		Render.MANUALSCREEN = new ManualScreen();
 		Render.LOBBYSCREEN = new LobbyScreen();
-		Render.LOADINGSCREEN = new LoadingScreen();
 		Render.CREATEMATCHSCREEN = new CreateMatchScreen();
 
-		this.setScreen(Render.MAINSCREEN);
+		//this.setScreen(Render.MAINSCREEN);
 		//this.setScreen(Render.GAMESCREEN);
 
 	}

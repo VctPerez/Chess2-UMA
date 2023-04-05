@@ -49,14 +49,16 @@ public class Image extends Actor {
 
     /**
      *  Fader de imagen.
-     * @return True = imagen transparente, False = imagen opaca
+     * @param wait tiempo de espera cuando es totalmente opaca.
+     * @param increase constante para incrementar la opacidad de la imagen, o disminuirla.
+     * @return True = imagen transparente, False = imagen opaca.
      */
-    public boolean fader(){ // esto se puede hacer con el act y actions 
+    public boolean fader(float wait, float increase){ // esto se puede hacer con el act y actions
         boolean end = false;
 
 
         if(!fade){
-            transparencyConst+=0.005f;
+            transparencyConst+=increase;
             if (transparencyConst > 1) {
                 transparencyConst = 1;
                 fade = true;
@@ -64,9 +66,8 @@ public class Image extends Actor {
         }
         else{
             contTime +=0.05f;
-            float tWait = 5;
-            if(contTime > tWait){
-                transparencyConst -= 0.005f;
+            if(contTime > wait){
+                transparencyConst -= increase;
                 if(transparencyConst < 0){
                     transparencyConst = 0;
                     end = true;

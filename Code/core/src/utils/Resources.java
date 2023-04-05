@@ -16,7 +16,12 @@ public class Resources {
     public static final String TEXTBUTTON_HOVERSOUND = "sound/buttonMouseOverSound.mp3";
     public static final String TEXTBUTTON_CLICKSOUND = "sound/buttonClickedSound.mp3";
     public static final String PIECEMOVE_SOUND = "sound/pieceMove.mp3";
+    public static final String LODINGSOUND1 = "sound/loadingScreen/loading1.mp3";
+    public static final String LODINGSOUND2 = "sound/loadingScreen/loading2.mp3";
+    public static final String LODINGSOUND3 = "sound/loadingScreen/loading3.mp3";
+    public static final String LODINGSOUND4 = "sound/loadingScreen/loading4.mp3";
 
+    //BOTONES
     public static final String CHECK_PATH = "sprites/Testing-Pieces/Testing-Pawn.png";
     public static final String SLIDER_PATH = "sprites/volumeBar/volumeBar_bar(x2size).png";
     public static final String SELECTEDBAR_PATH = "sprites/volumeBar/volumeBar_selected(x2size).png";
