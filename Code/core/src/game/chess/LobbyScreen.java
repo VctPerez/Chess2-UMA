@@ -22,8 +22,8 @@ public class LobbyScreen extends AbstractScreen{
 
     private Player player1, player2;
     private TextButton findMatch;
-    private Text statusP2;
-    private boolean finding = false;
+    private Text statusP2, p2;
+    private boolean finding = false, configured= false;
 
     public void create(String namePlayer, boolean hosting){
         if(hosting){
@@ -50,7 +50,7 @@ public class LobbyScreen extends AbstractScreen{
 
         Text p1 = new Text("Jugador 1: " + player1.getName(), Resources.FONT_MENU_PATH, 30, Color.WHITE, 3);
         Text statusP1 = new Text("CONNECTED", Resources.FONT_MENU_PATH, 30, Color.GREEN, 3);
-        Text p2 = new Text("Jugador 2: " + player2.getName(), Resources.FONT_MENU_PATH, 30, Color.WHITE, 3);
+        p2 = new Text("Jugador 2: ", Resources.FONT_MENU_PATH, 30, Color.WHITE, 3);
         statusP2 = new Text("CONNECTED", Resources.FONT_MENU_PATH, 30, Color.RED, 3);
         findMatch = new TextButton(new Text("FIND", Resources.FONT_MENU_PATH, 30, Color.CYAN, 3));
         findMatch.setPosition(600,400);
@@ -84,32 +84,42 @@ public class LobbyScreen extends AbstractScreen{
     }
 
     public void matchFinder() throws IOException {
-        if(findMatch.isPressed() && !Render.host.isP2connected()){
-            //System.out.println("buscando...");
-            if(!finding){
-                Render.host.start();
-                System.out.println("La hebra 2 va por su cuenta");
-                finding = true;
-            }
-        }else if(finding && !findMatch.isPressed()){
-            finding = false;
-            try {
-                Render.host.stopFind();
-                Render.host = new Host(player1);
-            } catch (IOException e) {
-                System.err.println("la hebra2 ha parado");
+        if(!Render.host.isP2connected()) {
+            configured = false;
+            statusP2.setColor(Color.RED);
+            if (findMatch.isPressed()) {
+                //System.out.println("buscando...");
+                if (!finding && !Render.host.isP2connected()) {
+                    Render.host.start();
+                    finding = true;
+                } else if (finding) {
+                    cancelSearch();
+                }
+            } else if (finding && !findMatch.isPressed()) { //Se ha producido un timeout
+                finding = false;
+                cancelSearch();
             }
         }
-
-        if(Render.host.isP2connected()){
+        else if(!configured){
             statusP2.setColor(Color.GREEN);
             Render.guest.sendPlayer2();
             Render.host.receivePlayer2();
             Render.host.sendPlayer1();
             Render.guest.receivePlayer1();
+            player2 = Render.host.getPlayer2();
+            p2.setText("Jugador 2: " + player2.getName());
+            configured = true;
         }
     }
 
+    private void cancelSearch(){
+        try {
+            Render.host.stopFind();
+            Render.host = new Host(player1);
+        } catch (IOException e) {
+            System.err.println("la hebra2 ha parado");
+        }
+    }
 
 
     @Override

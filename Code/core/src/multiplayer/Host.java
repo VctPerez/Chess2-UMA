@@ -21,7 +21,6 @@ public class Host extends Thread {
         try {
             System.out.println("inicio de la hebra2");
             waitConnection();
-            System.out.println("No se ha conectado.");
         } catch (Exception e) {
             System.err.println(e.getMessage());;
         }

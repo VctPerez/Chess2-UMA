@@ -5,14 +5,18 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import interaccionFichero.LectorLineas;
 import multiplayer.Guest;
+import multiplayer.Joiner;
 import utils.*;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Scanner;
 
 public class CreateMatchScreen extends AbstractScreen{
     private Stage stage;
     private TextButton create, join;
+    private boolean finding = false;
     @Override
     public void show() {
         stage = new Stage(new FillViewport(Render.SCREEN_WIDTH, Render.SCREEN_HEIGHT));
@@ -47,27 +51,27 @@ public class CreateMatchScreen extends AbstractScreen{
         stage.act();
         stage.draw();
         Render.Batch.end();
-        /*
+
         try{
             update();
         }catch(IOException | InterruptedException e){
             System.err.println(e.getMessage());
         }
-        */
+
     }
     public void update() throws IOException, InterruptedException {
         if(create.isPressed()){
+            Render.LOBBYSCREEN.create("Victor", true);
             Render.app.setScreen(Render.LOBBYSCREEN);
-        } else if (join.isPressed()) {
+        } else if (join.isPressed() && !finding) {
             //TODO con textField cosa que me da miedo
+            finding = true;
             System.out.println("Introduce tu nombre (espacio) la ip: ");
-            Scanner code = new Scanner(System.in);
-            System.out.println(code.next());
-            //System.out.println("yow");
-            //String[] info = code.next().split(" ");
-            //System.out.println(info[0] + " " + info[1]);
-            //Render.guest = new Guest(info[0],info[1]);
-
+            Joiner joiner = new Joiner();
+            joiner.start();
+            joiner.join();
+            System.out.println(joiner.getPName() + " " + joiner.getIp());
+            Render.guest = new Guest(joiner.getPName(), joiner.getIp());
         }
     }
 
@@ -81,3 +85,4 @@ public class CreateMatchScreen extends AbstractScreen{
         super.dispose();
     }
 }
+

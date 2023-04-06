@@ -39,7 +39,7 @@ public class Render {
 	public static AbstractScreen CLASSICMANSCREEN;
 	public static AbstractScreen LANGUAGESCREEN;
 	public static AbstractScreen CONFIGSCREEN;
-    public static AbstractScreen LOBBYSCREEN;
+    public static LobbyScreen LOBBYSCREEN;
     public static LoadingScreen LOADINGSCREEN;
     public static CreateMatchScreen CREATEMATCHSCREEN;
 

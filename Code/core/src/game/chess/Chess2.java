@@ -78,7 +78,7 @@ public class Chess2 extends Game {
 		loadResources();
 		//while(!manager.isFinished());
 		Render.LOADINGSCREEN = new LoadingScreen();
-		//this.setScreen(Render.LOADINGSCREEN);
+		this.setScreen(Render.LOADINGSCREEN);
 
 		Render.GAMESCREEN = new GameScreen();
 		Render.MAINSCREEN = new MainScreen();
@@ -89,7 +89,7 @@ public class Chess2 extends Game {
 		Render.LOBBYSCREEN = new LobbyScreen();
 		Render.CREATEMATCHSCREEN = new CreateMatchScreen();
 
-		this.setScreen(Render.CREATEMATCHSCREEN);
+		//this.setScreen(Render.CREATEMATCHSCREEN);
 		//this.setScreen(Render.GAMESCREEN);
 
 	}
