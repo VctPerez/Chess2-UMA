@@ -2,18 +2,28 @@ package game.chess;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+
+import elements.Background;
 import utils.*;
 import interaccionFichero.*;
 
 public class MainScreen extends AbstractScreen {
+	public static Stage stage;
+	Background background;	
+	
     TextButton play,exit,confg,reglas;
     Text playText,exitText,confgText,Titulo,reglasText;
-    Image background,Logo,news;
+    Image Logo,news;
     LectorLineas languageReader, configReader;
 
     
     @Override
     public void show() {
+    	stage = new Stage(new FitViewport(1280, 720));
+    	background = new Background();
+    	background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     	
     	//Abrir los ficheros de configuracion e idioma
     	configReader = new LectorLineas("files/config.txt"); //Lector del txt configuracion para sacar el idioma
@@ -45,10 +55,19 @@ public class MainScreen extends AbstractScreen {
         Logo.setPosition(800,-50);
         Logo.setSize(500, 500);
         Logo.setTransparency(0.25f);
-        //TODO scroll con imagenes estilo "noticias del juego"
+        
         //news = new Image("prueba.jpg");
         //news.setPosition(850,400);
         //news.setSize(300, 200);
+        
+        stage.addActor(background);
+        stage.addActor(Logo);
+        stage.addActor(play);
+        stage.addActor(exit);
+        stage.addActor(confg);
+        stage.addActor(reglas);
+        stage.addActor(Titulo);
+       
         Gdx.input.setInputProcessor(Render.inputs);
         Render.bgMusic = Render.app.getManager().get(Resources.MENU_THEME);
         Render.bgMusic.setLooping(true);
@@ -65,18 +84,12 @@ public class MainScreen extends AbstractScreen {
         Render.Batch.begin();
         //---------------
 
-        Titulo.draw(Render.Batch, 0);
-        Logo.draw(Render.Batch, 0);
-        //news.draw(Render.Batch);
-        reglas.draw(Render.Batch,0);
-        play.draw(Render.Batch,0);
-        exit.draw(Render.Batch,0);
-        confg.draw(Render.Batch,0);
+        stage.draw();
         
         if(play.isPressed()){
             Render.bgMusic.stop();
-            //Render.app.setScreen(Render.GAMESCREEN);
-            Render.app.setScreen(Render.CREATEMATCHSCREEN);
+            Render.app.setScreen(Render.GAMESCREEN);
+            //Render.app.setScreen(Render.CREATEMATCHSCREEN);
         }
         if(exit.isPressed()) {
         	Gdx.app.exit();

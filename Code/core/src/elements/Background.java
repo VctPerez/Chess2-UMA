@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public class Background extends Actor{
 	private ShapeRenderer fondo;
+	private Color c;
 	
 	public Background() {
 		fondo = new ShapeRenderer();
@@ -21,13 +22,19 @@ public class Background extends Actor{
 		
 		fondo.begin(ShapeType.Filled);
 	
-		fondo.rect(getX(), getY(), getOriginX(), getOriginY(), getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation(), Color.RED, Color.YELLOW, Color.BLUE, Color.GREEN);
-		//fondo.rect(0, 0, 100, 200);
-		//fondo.setColor(Color.RED);
+		if(c==null) {
+			fondo.rect(getX(), getY(), getOriginX(), getOriginY(), getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation(), Color.RED, Color.YELLOW, Color.BLUE, Color.GREEN);
+		}else {
+			fondo.rect(getX(), getY(), getWidth(), getHeight());
+			fondo.setColor(this.c);
+		}
+		
 		fondo.end();
 		batch.begin();
 	}
-	
-	
+
+	public void setColor(Color c) {
+		this.c=c;
+	}
 
 }
