@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
-import game.chess.GameScreen;
 import utils.Render;
 import utils.Resources;
 import utils.Text;
@@ -62,8 +61,8 @@ public class matchResults extends Actor{
 	}
 	
 	public void render() {
-		if(goMenu.isSelected()) {
-			Render.app.setScreen(new GameScreen());
+		if(goMenu.isPressed()) {
+			Render.app.setScreen(Render.MAINSCREEN);
 		}
 	}
 	

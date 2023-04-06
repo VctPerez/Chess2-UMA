@@ -1,7 +1,7 @@
 Jugar
 Volver
 Salir del Juego
-ConfiguraciÃ³n
+Configuración
 Volumen
 Idioma
 Manual

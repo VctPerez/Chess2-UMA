@@ -92,7 +92,7 @@ public class GameScreen extends AbstractScreen {
 		graveyardWhite = new Graveyard(21,21);
 		graveyardBlack = new Graveyard(Gdx.graphics.getWidth()-63,21);
 		background = new Background();
-		TimerB = new Timer(300,80,650,"NEGRO");
+		TimerB = new Timer(300,1100,650,"NEGRO");
 		TimerW = new Timer(300,80,150,"BLANCO");
 		background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		
