@@ -52,8 +52,8 @@ public class Chess2 extends Game {
 
 		//ETC
 		manager.load(Resources.LOGO_PATH, Texture.class);
-		/*
-		manager.load(Resources.MENU_BACKGROUND_PATH, Texture.class);
+		
+		/*manager.load(Resources.MENU_BACKGROUND_PATH, Texture.class);
 		manager.load(Resources.PANTALLACARGA_PATH, Texture.class);*/
 
 

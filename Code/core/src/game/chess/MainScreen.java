@@ -56,10 +56,6 @@ public class MainScreen extends AbstractScreen {
         Logo.setSize(500, 500);
         Logo.setTransparency(0.25f);
         
-        //news = new Image("prueba.jpg");
-        //news.setPosition(850,400);
-        //news.setSize(300, 200);
-        
         stage.addActor(background);
         stage.addActor(Logo);
         stage.addActor(play);
@@ -68,6 +64,12 @@ public class MainScreen extends AbstractScreen {
         stage.addActor(reglas);
         stage.addActor(Titulo);
        
+        //TODO scroll con imagenes estilo "noticias del juego"
+        //news = new Image(Resources.LOGO_PATH);
+        //news.setPosition(800,-30);
+        //news.setSize(500, 500);
+        //news.setTransparency(0.25f);
+        
         Gdx.input.setInputProcessor(Render.inputs);
         Render.bgMusic = Render.app.getManager().get(Resources.MENU_THEME);
         Render.bgMusic.setLooping(true);
@@ -83,6 +85,7 @@ public class MainScreen extends AbstractScreen {
 
         Render.Batch.begin();
         //---------------
+
 
         stage.draw();
         
