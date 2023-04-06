@@ -26,19 +26,19 @@ public class LanguageScreen extends AbstractScreen {
     	languageSettingWriter = new EscritorLineas("files/config.txt"); //Para actualizar la configuracion abrimos el escritor en el config.txt 
     	
     	//Fuente Arial para probar
-    	Language = new Text(Resources.FONT_MENU_PATH,100,Color.WHITE,5);
+    	Language = new Text(Resources.FONT_MENU_PATH,100,Color.WHITE,3);
     	Language.setText(languageReader.leerLinea(6)); //Idioma = Linea 6
     	
     	//Menu idiomas
-    	spanishText = new Text(Resources.FONT_MENU_PATH,50,Color.WHITE,5);
+    	spanishText = new Text(Resources.FONT_MENU_PATH,50,Color.WHITE,3);
     	spanishText.setText(languageConfigReader.leerLinea(1)); //Espa�ol = Linea 1 
-    	englishText = new Text(Resources.FONT_MENU_PATH,50,Color.WHITE,5);
+    	englishText = new Text(Resources.FONT_MENU_PATH,50,Color.WHITE,3);
     	englishText.setText(languageConfigReader.leerLinea(2)); //Ingles = Linea 2 
     	
     	//Menu inferior
-    	homeText = new Text(Resources.FONT_MENU_PATH,28,Color.WHITE,5);
+    	homeText = new Text(Resources.FONT_MENU_PATH,28,Color.WHITE,3);
     	homeText.setText(languageReader.leerLinea(2)); //Inicio = Linea 2
-    	configText = new Text(Resources.FONT_MENU_PATH,28,Color.WHITE,5);
+    	configText = new Text(Resources.FONT_MENU_PATH,28,Color.WHITE,3);
     	configText.setText(languageReader.leerLinea(4)); //Configuracion = Linea 4
     	Language.setPosition(100,600);
     	spanishText.setPosition(100, 400);
