@@ -15,10 +15,13 @@ public class Guest {
         InputStreamReader in = new InputStreamReader(gameConnection.getInputStream());
         BufferedReader buffer = new BufferedReader(in);
         player1 = new Player(buffer.readLine());
+        in.close();
+        buffer.close();
     }
     public void sendPlayer2() throws IOException {
         PrintWriter pw = new PrintWriter(gameConnection.getOutputStream());
         pw.println(player1.getName());
         pw.flush();
+        pw.close();
     }
 }

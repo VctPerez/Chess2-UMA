@@ -3,7 +3,6 @@ package multiplayer;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketTimeoutException;
 
 public class Host extends Thread {
     private Socket player2;
@@ -39,7 +38,7 @@ public class Host extends Thread {
     }
 
     public boolean isP2connected() {
-        if(player2 != null)return player2.isConnected();
+        if(player2 != null) return player2.isConnected();
         else return false;
     }
 
@@ -47,11 +46,14 @@ public class Host extends Thread {
         PrintWriter pw = new PrintWriter(player2.getOutputStream());
         pw.println(p1.getName());
         pw.flush();
+        pw.close();
     }
     public void receivePlayer2() throws IOException {
         InputStreamReader in = new InputStreamReader(player2.getInputStream());
         BufferedReader buffer = new BufferedReader(in);
         p2 = new Player(buffer.readLine());
+        in.close();
+        buffer.close();
     }
 
     public Player getPlayer2(){

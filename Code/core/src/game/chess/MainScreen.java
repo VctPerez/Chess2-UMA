@@ -17,8 +17,9 @@ public class MainScreen extends AbstractScreen {
     	
     	//Abrir los ficheros de configuracion e idioma
     	configReader = new LectorLineas("files/config.txt"); //Lector del txt configuracion para sacar el idioma
-    	languageReader = new LectorLineas("files/lang/"+ configReader.leerLinea(1) + "main.txt"); //Abrimos el idioma que toca del archivo configuracion
-    	
+    	//languageReader = new LectorLineas("files/lang/"+ configReader.leerLinea(1) + "main.txt"); //Abrimos el idioma que toca del archivo configuracion
+    	languageReader = new LectorLineas("files/lang/esp/main.txt"); //Abrimos el idioma que toca del archivo configuracion
+
     	//Fuente Arial para probar
     	Titulo = new Text(Resources.FONT_MENU_PATH,100,Color.WHITE,3);
     	Titulo.setText(languageReader.leerLinea(8));
