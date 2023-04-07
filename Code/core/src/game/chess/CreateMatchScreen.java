@@ -72,6 +72,8 @@ public class CreateMatchScreen extends AbstractScreen{
             joiner.join();
             System.out.println(joiner.getPName() + " " + joiner.getIp());
             Render.guest = new Guest(joiner.getPName(), joiner.getIp());
+            Render.LOBBYSCREEN.create("jugador2", false);
+            Render.app.setScreen(Render.LOBBYSCREEN);
         }
     }
 

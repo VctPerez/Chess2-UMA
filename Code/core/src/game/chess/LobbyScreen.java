@@ -1,10 +1,8 @@
 package game.chess;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.actions.ColorAction;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import multiplayer.Host;
 import multiplayer.Player;
@@ -15,7 +13,6 @@ import utils.TextButton;
 
 import java.io.IOException;
 import java.net.Inet4Address;
-import java.net.UnknownHostException;
 
 public class LobbyScreen extends AbstractScreen{
     private Stage stage;
@@ -84,12 +81,12 @@ public class LobbyScreen extends AbstractScreen{
     }
 
     public void matchFinder() throws IOException {
-        if(!Render.host.isP2connected()) {
+        if(Render.host.isP2connected()) {
             configured = false;
             statusP2.setColor(Color.RED);
             if (findMatch.isPressed()) {
                 //System.out.println("buscando...");
-                if (!finding && !Render.host.isP2connected()) {
+                if (!finding && Render.host.isP2connected()) {
                     Render.host.start();
                     finding = true;
                 } else if (finding) {

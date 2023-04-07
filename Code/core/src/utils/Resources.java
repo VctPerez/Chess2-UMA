@@ -8,7 +8,7 @@ public class Resources {
     public static final String LOADINGSCREEN_PATH = "sprites/loadingScreen.jpg";
     public static final String MENU_BACKGROUND_PATH = "";
     public static final String FONT_MENU_PATH = "fonts/Arial.ttf";
-    public static final String LOGO_PATH="Logo_Blanco.png";
+    public static final String LOGO_PATH="logo_blanco.png";
     public static final String TEXT_BOX_PATH = "";
     
     //SONIDOS
@@ -16,16 +16,16 @@ public class Resources {
     public static final String TEXTBUTTON_HOVERSOUND = "sound/buttonMouseOverSound.mp3";
     public static final String TEXTBUTTON_CLICKSOUND = "sound/buttonClickedSound.mp3";
     public static final String PIECEMOVE_SOUND = "sound/pieceMove.mp3";
-    public static final String LODINGSOUND1 = "sound/loadingScreen/loading1.mp3";
-    public static final String LODINGSOUND2 = "sound/loadingScreen/loading2.mp3";
-    public static final String LODINGSOUND3 = "sound/loadingScreen/loading3.mp3";
-    public static final String LODINGSOUND4 = "sound/loadingScreen/loading4.mp3";
+    public static final String LODINGSOUND1 = "sound/LoadingScreen/loading1.mp3";
+    public static final String LODINGSOUND2 = "sound/LoadingScreen/loading2.mp3";
+    public static final String LODINGSOUND3 = "sound/LoadingScreen/loading3.mp3";
+    public static final String LODINGSOUND4 = "sound/LoadingScreen/loading4.mp3";
 
     //BOTONES
     public static final String CHECK_PATH = "sprites/Testing-Pieces/Testing-Pawn.png";
-    public static final String SLIDER_PATH = "sprites/volumeBar/volumeBar_bar(x2size).png";
-    public static final String SELECTEDBAR_PATH = "sprites/volumeBar/volumeBar_selected(x2size).png";
-    public static final String UNSELECTEDBAR_PATH = "sprites/volumeBar/volumeBar_unselected(x2size).png";
+    public static final String SLIDER_PATH = "sprites/volumeBar/volumeBar_bar(x2Size).png";
+    public static final String SELECTEDBAR_PATH = "sprites/volumeBar/volumeBar_selected(x2Size).png";
+    public static final String UNSELECTEDBAR_PATH = "sprites/volumeBar/volumeBar_unselected(x2Size).png";
 
     public static final String CHECKBOX_SELECTED = "sprites/checkBox/checkBox_selected.png";
     public static final String CHECKBOX_UNSELECTED = "sprites/checkBox/checkBox_unselected.png";
