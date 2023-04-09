@@ -81,6 +81,9 @@ public class GameScreen extends AbstractScreen {
 	private boolean showPopup;
 	private matchResults results;
 
+	//Modo depuracion
+	boolean debugMode = false;
+
 	@Override
 	public void show() {
 		stage = new Stage(new FitViewport(1280, 720));
@@ -143,8 +146,13 @@ public class GameScreen extends AbstractScreen {
         	 Render.app.setScreen(Render.MAINSCREEN);
         // R para reiniciar la partida (Pruebas) -> no funciona
         }else if(Gdx.input.isKeyJustPressed(Keys.R)) {
-       	 Render.app.setScreen(new GameScreen());
-        }else if(isBoardClicked() && !whiteCheckMate && !blackCheckMate) {
+			Render.app.setScreen(new GameScreen());
+			debugMode = false;
+			//G para modo debug, permite hacer movimientos ilegales
+		} else if (Gdx.input.isKeyJustPressed(Keys.G)){
+			debugMode = !debugMode;
+			System.out.println("Debug mode toggled");
+		}else if(isBoardClicked() && !whiteCheckMate && !blackCheckMate) {
 
             if (!isPieceSelected) {
                 current_x = calculateX();
@@ -336,7 +344,7 @@ public class GameScreen extends AbstractScreen {
 	 * @param next_y
 	 */
 	private void moveCurrentPieceTo(int next_x, int next_y) {
-        if (currentTile_validMovements.contains(new Vector2(next_x, next_y))) {
+        if (currentTile_validMovements.contains(new Vector2(next_x, next_y)) || debugMode) {
 
         	checkCastling(next_x);
         	
