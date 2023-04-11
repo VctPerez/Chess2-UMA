@@ -16,7 +16,7 @@ import elements.Graveyard;
 import elements.Piece;
 import elements.Tile;
 import elements.Timer;
-import elements.matchResults;
+import elements.MatchResults;
 import elements.pieces.Bishop;
 import elements.pieces.King;
 import elements.pieces.Knight;
@@ -83,7 +83,7 @@ public class GameScreen extends AbstractScreen {
 	
 	//Pantalla ganador
 	private static boolean showPopup;
-	private static matchResults results;
+	private static MatchResults results;
 
 	//Modo depuracion
 	boolean debugMode = false;
@@ -116,7 +116,7 @@ public class GameScreen extends AbstractScreen {
 		
 		// Crear mensaje emergente tras terminar partida
 		showPopup=false;
-		results = new matchResults();
+		results = new MatchResults();
 		results.Hide();
         
         

@@ -42,6 +42,7 @@ public class DropDownMenu extends Actor{
 			setPosition(tile.getX(), tile.getY() + tile.getWidth());
 			setSize(tile.getWidth(), 4 * tile.getWidth());
 			setColor(new Color(0.3745f, 0.23f, 0.3f,1f));
+
 		}
 		
 		menu = new ShapeRenderer();
