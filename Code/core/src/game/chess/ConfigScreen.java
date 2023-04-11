@@ -2,18 +2,29 @@ package game.chess;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 
+import elements.Background;
 import interaccionFichero.LectorLineas;
 import utils.*;
 
 public class ConfigScreen extends AbstractScreen {
+	public static Stage stage;
+	Background background;	
+	
     TextButton home,language;
     Text homeText,Titulo,volumeText,languageText;
-    Image background,Logo,news;
+    Image Logo;
     LectorLineas languageReader, configReader;
+    
     
     @Override
     public void show() {
+    	stage = new Stage(new FitViewport(1280, 720));
+    	background = new Background();
+    	background.setColor(new Color(60/255f, 60/255f,60/255f,1f));
+    	background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     	
     	//Abrir los ficheros de configuracion e idioma
     	configReader = new LectorLineas("files/config.txt"); //Lector del txt configuracion para sacar el idioma
@@ -39,6 +50,13 @@ public class ConfigScreen extends AbstractScreen {
         Logo.setSize(500, 500);
         Logo.setTransparency(0.25f);
         
+        stage.addActor(background);
+        stage.addActor(Titulo);
+        stage.addActor(home);
+        stage.addActor(language);
+        stage.addActor(volumeText);
+        stage.addActor(Logo);
+        
         Gdx.input.setInputProcessor(Render.inputs);
     }
 
@@ -52,12 +70,7 @@ public class ConfigScreen extends AbstractScreen {
         Render.Batch.begin();
         //---------------
         
-        Titulo.draw(Render.Batch, 0);
-        Logo.draw(Render.Batch, 0);
-        //news.draw(Render.Batch);
-        home.draw(Render.Batch,0);
-        volumeText.draw(Render.Batch, 0);
-        language.draw(Render.Batch,0);
+        stage.draw();
         
         if(home.isPressed()){
             Render.app.setScreen(Render.MAINSCREEN);
