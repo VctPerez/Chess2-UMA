@@ -92,6 +92,7 @@ public class DropDownMenu extends Actor{
 				break;
 			}
             GameScreen.promoting = false;
+            GameScreen.mateControl(tile.getPos().x, tile.getPos().y);
             remove();
 		}
 	}
