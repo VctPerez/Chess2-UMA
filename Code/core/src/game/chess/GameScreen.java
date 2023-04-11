@@ -2,32 +2,13 @@ package game.chess;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.utils.viewport.*;
 
-import elements.Background;
-import elements.Board;
-import elements.DropDownMenu;
-import elements.Graveyard;
-import elements.Piece;
-import elements.Tile;
-import elements.Timer;
-import elements.matchResults;
-import elements.pieces.Bishop;
-import elements.pieces.King;
-import elements.pieces.Knight;
-import elements.pieces.Pawn;
-import elements.pieces.Queen;
-import elements.pieces.Rook;
-import utils.Image;
-import utils.Render;
-import utils.Resources;
-import utils.Text;
-import utils.TextButton;
+import elements.*;
+import elements.pieces.*;
+import utils.*;
 
 import java.util.ArrayList;
 
