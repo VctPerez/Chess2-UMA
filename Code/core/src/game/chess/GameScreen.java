@@ -41,7 +41,7 @@ public class GameScreen extends AbstractScreen {
 	private ArrayList<Vector2> currentTile_validMovements = new ArrayList<>();
 	private int current_x, current_y;
 	private Tile currentTile = null;
-	private Tile nextTile = null;
+	private static Tile nextTile = null;
 	
 	//Timer para las partidas 
 	private Timer TimerW,TimerB;
@@ -55,7 +55,10 @@ public class GameScreen extends AbstractScreen {
 	public static Vector2 whiteKing = new Vector2(5,1), blackKing = new Vector2(5,8);
 	
 	//Saber para cada rey si está en jaque o no
-	private boolean  whiteMate=false,blackMate=false, whiteCheckMate = false, blackCheckMate=false;
+	private static boolean  whiteMate=false;
+	private static boolean blackMate=false;
+	private static boolean whiteCheckMate = false;
+	private static boolean blackCheckMate=false;
 	public static ArrayList<Piece> whitePieces;
 	public static ArrayList<Piece> blackPieces;
 	
@@ -78,8 +81,8 @@ public class GameScreen extends AbstractScreen {
 	public static Graveyard graveyardBlack;
 	
 	//Pantalla ganador
-	private boolean showPopup;
-	private matchResults results;
+	private static boolean showPopup;
+	private static matchResults results;
 
 	//Modo depuracion
 	boolean debugMode = false;
@@ -265,7 +268,7 @@ public class GameScreen extends AbstractScreen {
 	 * 
 	 * @return true si alguno de los reyes está en mate.
 	 */
-	private boolean isMate() {
+	private static boolean isMate() {
 		return blackMate || whiteMate;
 	}
 	
@@ -274,7 +277,7 @@ public class GameScreen extends AbstractScreen {
 	 * @param next_x
 	 * @param next_y
 	 */
-	private void isMate(float next_x, float next_y) {
+	private static void isMate(float next_x, float next_y) {
 		ArrayList<Vector2> nextTile_validMovements = nextTile.getPiece().getValidMovements();
 		if(nextTile.getPiece().color() && nextTile_validMovements.contains(blackKing)) {
 			blackMate=true;
@@ -296,7 +299,7 @@ public class GameScreen extends AbstractScreen {
 	 * @param pieces
 	 * @return true si el color que está en mate no tiene movimientos disponibles que hagan que el rey esté a salvo.
 	 */
-	private boolean isCheckMate(boolean Mate, ArrayList<Piece> pieces) {
+	private static boolean isCheckMate(boolean Mate, ArrayList<Piece> pieces) {
 		boolean isCheckMate = false;
 		if(Mate) {
 			ArrayList<Vector2> validMovements = new ArrayList<>();
@@ -320,8 +323,9 @@ public class GameScreen extends AbstractScreen {
         board.getTile(whiteKing.x, whiteKing.y).attacked = false;
 	}
 	
-	private void mateControl(float next_x, float next_y) {
+	public static void mateControl(float next_x, float next_y) {
 		isMate(next_x, next_y);
+		System.out.println("CASILLA: " + next_x +", "+next_y + " | Pieza: "+board.getTile(next_x, next_y));
         
         if(isMate()) {
         	whiteCheckMate = isCheckMate(whiteMate, whitePieces);
@@ -404,6 +408,7 @@ public class GameScreen extends AbstractScreen {
 			promoting = true;
 			DropDownMenu menu = new DropDownMenu(nextTile);
 			stage.addActor(menu);
+			
 			
 			
 			/*
