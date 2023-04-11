@@ -125,18 +125,19 @@ public class GameScreen extends AbstractScreen {
 	public void render(float delta) {
 		Render.clearScreen();
 		
-		timersRender();
-		checkTimerEnd();
-		
-		if(!promoting) {	
-		update(delta);
-		}
-		
-		
 		if (showPopup) {
 			results.Show();
 			results.toFront();
 			results.render();
+		}else {
+			timersRender();
+			checkTimerEnd();
+		}
+		
+	
+		
+		if(!promoting) {	
+		update(delta);
 		}
 		
 		stage.draw();
@@ -144,6 +145,11 @@ public class GameScreen extends AbstractScreen {
 	}
 
 	public void update(float delta) {
+		
+		if(PLAYER) {
+			System.out.println("Turno Blanco");
+		}
+		
         // Escape para volver al menÃº principal (Prueba)
         if (Render.inputs.justPressed(Keys.ESCAPE)) {
         	 Render.app.setScreen(Render.MAINSCREEN);
