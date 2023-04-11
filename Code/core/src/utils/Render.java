@@ -40,6 +40,7 @@ public class Render {
     public static LobbyScreen LOBBYSCREEN;
     public static LoadingScreen LOADINGSCREEN;
     public static CreateMatchScreen CREATEMATCHSCREEN;
+    public static DraftScreen DRAFTSCREEN;
 
     public static Host host;
     public static Guest guest;
