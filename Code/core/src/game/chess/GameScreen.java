@@ -36,6 +36,7 @@ public class GameScreen extends AbstractScreen {
 	Background background;
 	public static Board board;
 	
+	
 	//Control selección de piezas
 	private boolean isPieceSelected = false;
 	private ArrayList<Vector2> currentTile_validMovements = new ArrayList<>();
@@ -55,10 +56,10 @@ public class GameScreen extends AbstractScreen {
 	public static Vector2 whiteKing = new Vector2(5,1), blackKing = new Vector2(5,8);
 	
 	//Saber para cada rey si está en jaque o no
-	private static boolean  whiteMate=false;
-	private static boolean blackMate=false;
-	private static boolean whiteCheckMate = false;
-	private static boolean blackCheckMate=false;
+	private static boolean  whiteMate;
+	private static boolean blackMate;
+	private static boolean whiteCheckMate;
+	private static boolean blackCheckMate;
 	public static ArrayList<Piece> whitePieces;
 	public static ArrayList<Piece> blackPieces;
 	
@@ -71,7 +72,7 @@ public class GameScreen extends AbstractScreen {
 	private Pawn lastPawn;
 	
 	//Control turno
-	private boolean PLAYER = true;
+	private boolean PLAYER;
 	
 	//Control promocion
 	public static boolean promoting = false;
@@ -90,7 +91,15 @@ public class GameScreen extends AbstractScreen {
 	@Override
 	public void show() {
 		stage = new Stage(new FitViewport(1280, 720));
+		stage.clear();
 		Gdx.input.setInputProcessor(Render.inputs);
+		
+		PLAYER = true;
+		
+		whiteMate=false;
+		blackMate=false;
+		whiteCheckMate = false;
+		blackCheckMate=false;
 
 		board = new Board();
 		whitePieces = new ArrayList<>();
@@ -162,7 +171,6 @@ public class GameScreen extends AbstractScreen {
 			debugMode = !debugMode;
 			System.out.println("Debug mode toggled");
 		}else if(isBoardClicked() && !whiteCheckMate && !blackCheckMate) {
-
             if (!isPieceSelected) {
                 current_x = calculateX();
                 current_y = calculateY();
