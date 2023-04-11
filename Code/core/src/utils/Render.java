@@ -34,9 +34,7 @@ public class Render {
     public static int SCREEN_HEIGHT = 720;
     
     public static AbstractScreen MAINSCREEN;
-	public static AbstractScreen GAMESCREEN;
 	public static AbstractScreen MANUALSCREEN;
-	public static AbstractScreen CLASSICMANSCREEN;
 	public static AbstractScreen LANGUAGESCREEN;
 	public static AbstractScreen CONFIGSCREEN;
     public static LobbyScreen LOBBYSCREEN;

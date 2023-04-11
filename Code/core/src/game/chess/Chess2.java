@@ -78,19 +78,19 @@ public class Chess2 extends Game {
 		loadResources();
 		//while(!manager.isFinished());
 		Render.LOADINGSCREEN = new LoadingScreen();
-		this.setScreen(Render.LOADINGSCREEN);
+		//this.setScreen(Render.LOADINGSCREEN);
 
-		Render.GAMESCREEN = new GameScreen();
+		//Cargamos en Render solo pantallas que sean necesarias crear una sola vez (Para ahorrarnos tener que crear nuevas innecesariamente), 
+		//otras como el GameScreen necesita ser creadas de nuevo al volverse a usar
 		Render.MAINSCREEN = new MainScreen();
 		Render.CONFIGSCREEN = new ConfigScreen();
 		Render.LANGUAGESCREEN = new LanguageScreen();
-		Render.CLASSICMANSCREEN = new ClassicManScreen();
 		Render.MANUALSCREEN = new ManualScreen();
 		Render.LOBBYSCREEN = new LobbyScreen();
 		Render.CREATEMATCHSCREEN = new CreateMatchScreen();
 
 		//this.setScreen(Render.CREATEMATCHSCREEN);
-		//this.setScreen(Render.MAINSCREEN);
+		this.setScreen(Render.MAINSCREEN);
 
 	}
 

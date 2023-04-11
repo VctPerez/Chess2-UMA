@@ -2,14 +2,20 @@ package game.chess;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 
+import elements.Background;
 import interaccionFichero.*;
 import utils.*;
 
 public class LanguageScreen extends AbstractScreen {
-    TextButton home,config;
-    Text homeText,Language,configText;
-    Image background,Logo,news;
+	public static Stage stage;
+	Background background;	
+	
+    TextButton back;
+    Text backText,Language;
+    Image Logo;
     LectorLineas languageReader, configReader, languageConfigReader;
     EscritorLineas languageSettingWriter;
     
@@ -18,6 +24,10 @@ public class LanguageScreen extends AbstractScreen {
     
     @Override
     public void show() {
+    	stage = new Stage(new FitViewport(1280, 720));
+    	background = new Background();
+    	background.setColor(new Color(60/255f, 60/255f,60/255f,1f));
+    	background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     	
     	//Abrir los ficheros de configuracion e idioma
     	configReader = new LectorLineas("files/config.txt"); //Lector del txt configuracion para sacar el idioma
@@ -36,23 +46,26 @@ public class LanguageScreen extends AbstractScreen {
     	englishText.setText(languageConfigReader.leerLinea(2)); //Ingles = Linea 2 
     	
     	//Menu inferior
-    	homeText = new Text(Resources.FONT_MENU_PATH,28,Color.WHITE,3);
-    	homeText.setText(languageReader.leerLinea(2)); //Inicio = Linea 2
-    	configText = new Text(Resources.FONT_MENU_PATH,28,Color.WHITE,3);
-    	configText.setText(languageReader.leerLinea(4)); //Configuracion = Linea 4
+    	backText = new Text(Resources.FONT_MENU_PATH,28,Color.WHITE,3);
+    	backText.setText(languageReader.leerLinea(2)); //Inicio = Linea 2
     	Language.setPosition(100,600);
     	spanishText.setPosition(100, 400);
     	englishText.setPosition(100, 300);
-        homeText.setPosition(100,100);
-        configText.setPosition(220,100);
-        home = new TextButton(homeText);
-        config = new TextButton(configText);
+        backText.setPosition(100,100);
+        back = new TextButton(backText);
         spanish = new TextButton(spanishText);
         english = new TextButton(englishText);
         Logo = new Image("Logo_Blanco.png");
         Logo.setPosition(800,-50);
         Logo.setSize(500, 500);
         Logo.setTransparency(0.25f);
+        
+        stage.addActor(background);
+        stage.addActor(Logo);
+        stage.addActor(Language);
+        stage.addActor(spanish);
+        stage.addActor(english);
+        stage.addActor(back);
         
         Gdx.input.setInputProcessor(Render.inputs);
     }
@@ -67,14 +80,7 @@ public class LanguageScreen extends AbstractScreen {
         Render.Batch.begin();
         //---------------
         
-        Language.draw(Render.Batch, 0);
-        Logo.draw(Render.Batch, 0);
-        //news.draw(Render.Batch);
-        spanish.draw(Render.Batch,0);
-        english.draw(Render.Batch,0);
-        
-        home.draw(Render.Batch,0);
-        config.draw(Render.Batch,0);
+        stage.draw();
         
         if(spanish.isPressed()) {
         	languageSettingWriter.escribirLinea(1, "esp/"); //La linea 1 de la configuracion contiene el idioma
@@ -86,11 +92,8 @@ public class LanguageScreen extends AbstractScreen {
         }
         
         
-        if(home.isPressed()){
-            Render.app.setScreen(Render.MAINSCREEN);
-        }
-        if(config.isPressed()) {
-        	Render.app.setScreen(Render.CONFIGSCREEN);
+        if(back.isPressed()){
+            Render.app.setScreen(Render.CONFIGSCREEN);
         }
         
         //-----------------

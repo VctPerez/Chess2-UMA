@@ -11,7 +11,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane.ScrollPaneStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 
+import elements.Background;
 import interaccionFichero.LectorLineas;
 import utils.Image;
 import utils.Render;
@@ -21,19 +23,21 @@ import utils.TextButton;
 	
 	
 public class ClassicManScreen extends AbstractScreen{
-	Stage stage;
+	public static Stage stage;
+	private static Background background;
+	
 	Image Logo;
 	Text volverText,Titulo;
 	TextButton volver;
 	LectorLineas languageReader, configReader;
-		
-	public ClassicManScreen() {
-		this.stage=new Stage();
-	}
-		
+	
 	@Override
 	public void show() {
-			
+    	stage = new Stage(new FitViewport(1280, 720));
+    	background = new Background();
+    	background.setColor(new Color(60/255f, 60/255f,60/255f,1f));
+    	background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		
 		//Abrir los ficheros de configuracion e idioma
 	    configReader = new LectorLineas("files/config.txt"); //Lector del txt configuracion para sacar el idioma
 	    languageReader = new LectorLineas("files/lang/"+ configReader.leerLinea(1) + "Manual.txt"); //Abrimos el idioma que toca del archivo configuracion
@@ -41,7 +45,7 @@ public class ClassicManScreen extends AbstractScreen{
 	    //Fuente Arial para probar
 	    Titulo = new Text(Resources.FONT_MENU_PATH,50,Color.WHITE,5);
 	    Titulo.setText(languageReader.leerLinea(5));
-	    volverText = new Text(Resources.FONT_MENU_PATH,28,Color.WHITE,5);
+	    volverText = new Text(Resources.FONT_MENU_PATH,28,Color.WHITE,3);
 	    volverText.setText(languageReader.leerLinea(1));
 	    	
 	    volverText.setPosition(100,100);
@@ -61,12 +65,7 @@ public class ClassicManScreen extends AbstractScreen{
 		ScrollPane scrollPane = new ScrollPane(label);
 		scrollPane.setSize(700f, 400f);
 		scrollPane.setPosition(100f, 140f);
-			
-		// Agrega el ScrollPane al Stage
-		stage.addActor(scrollPane);
-		
 		scrollPane.setScrollingDisabled(false, false);
-		
 		scrollPane.setScrollbarsOnTop(true);
 		scrollPane.setScrollbarsVisible(true);
 		
@@ -85,32 +84,34 @@ public class ClassicManScreen extends AbstractScreen{
 		InputMultiplexer inputMultiplexer = new InputMultiplexer();
 		inputMultiplexer.addProcessor(stage);
 		inputMultiplexer.addProcessor(Render.inputs);
+		
+		stage.addActor(background);
+		stage.addActor(scrollPane);
+		stage.addActor(Titulo);
+		stage.addActor(Logo);
+		stage.addActor(volver);
 		     
 		Gdx.input.setInputProcessor(inputMultiplexer);
 		}
 		
-@Override
-public void render(float delta) {
-		Render.clearScreen();
-	
-		Render.camera.update();
-		Render.Batch.setProjectionMatrix(Render.camera.combined);
+	@Override
+	public void render(float delta) {
+			Render.clearScreen();
 		
-		Render.Batch.begin();
-		      
-		Titulo.draw(Render.Batch, 0);
-		Logo.draw(Render.Batch, 0);
-		volver.draw(Render.Batch,0);
-		      
-	    // Actualiza y dibuja el Stage
-	    stage.act();
-	    stage.draw();
-	          
-	    if(volver.isPressed()){
-	    	stage.dispose();
-	         Render.app.setScreen(Render.MANUALSCREEN);
-	    }
-	        
-	    Render.Batch.end();
-	    }
-	}
+			Render.camera.update();
+			Render.Batch.setProjectionMatrix(Render.camera.combined);
+			
+			Render.Batch.begin();
+			      
+		    // Actualiza y dibuja el Stage
+		    stage.act();
+		    stage.draw();
+		          
+		    if(volver.isPressed()){
+		    	stage.dispose();
+		         Render.app.setScreen(Render.MANUALSCREEN);
+		    }
+		        
+		    Render.Batch.end();
+		    }
+		}

@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+
+import elements.Background;
 import multiplayer.Host;
 import multiplayer.Player;
 import utils.Render;
@@ -16,6 +18,7 @@ import java.net.Inet4Address;
 
 public class LobbyScreen extends AbstractScreen{
     private Stage stage;
+    Background background;	
 
     private Player player1, player2;
     private TextButton findMatch;
@@ -33,6 +36,9 @@ public class LobbyScreen extends AbstractScreen{
     @Override
     public void show() {
         stage = new Stage(new FitViewport(1280, 720));
+        background = new Background();
+    	background.setColor(new Color(60/255f, 60/255f,60/255f,1f));
+    	background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Gdx.input.setInputProcessor(Render.inputs);
 
         try {
@@ -57,6 +63,7 @@ public class LobbyScreen extends AbstractScreen{
         statusP1.setPosition(300,550);
         p2.setPosition(300,200);
         statusP2.setPosition(300, 150);
+        stage.addActor(background);
         stage.addActor(findMatch);
         stage.addActor(p1);
         stage.addActor(statusP1);

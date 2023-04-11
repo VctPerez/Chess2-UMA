@@ -2,7 +2,10 @@ package game.chess;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 
+import elements.Background;
 import interaccionFichero.LectorLineas;
 import utils.Image;
 import utils.Render;
@@ -11,6 +14,10 @@ import utils.Text;
 import utils.TextButton;
 
 public class ManualScreen extends AbstractScreen{
+
+		public static Stage stage;
+		Background background;	
+	
 	    TextButton volver,clasico,modificado;
 	    Text volverText,Titulo,clasicoText,modificadoText;
 	    Image Logo;
@@ -18,6 +25,10 @@ public class ManualScreen extends AbstractScreen{
 	    
 	    @Override
 	    public void show() {
+	    	stage = new Stage(new FitViewport(1280, 720));
+	    	background = new Background();
+	    	background.setColor(new Color(60/255f, 60/255f,60/255f,1f));
+	    	background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 	    	
 	    	//Abrir los ficheros de configuracion e idioma
 	    	configReader = new LectorLineas("files/config.txt"); //Lector del txt configuracion para sacar el idioma
@@ -46,6 +57,13 @@ public class ManualScreen extends AbstractScreen{
 	        Logo.setSize(500, 500);
 	        Logo.setTransparency(0.25f);
 	        
+	        stage.addActor(background);
+	        stage.addActor(Logo);
+	        stage.addActor(Titulo);
+	        stage.addActor(volver);
+	        stage.addActor(clasico);
+	        stage.addActor(modificado);
+	        
 	        Gdx.input.setInputProcessor(Render.inputs);
 	    }
 
@@ -59,12 +77,7 @@ public class ManualScreen extends AbstractScreen{
 	        Render.Batch.begin();
 	        //---------------
 	        
-	        Titulo.draw(Render.Batch, 0);
-	        Logo.draw(Render.Batch, 0);
-	        //news.draw(Render.Batch);
-	        volver.draw(Render.Batch,0);
-	        clasico.draw(Render.Batch,0);
-	        modificado.draw(Render.Batch,0);
+	        stage.draw();
 	        
 	        if(volver.isPressed()){
 	            Render.app.setScreen(Render.MAINSCREEN);

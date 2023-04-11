@@ -1,8 +1,11 @@
 package game.chess;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FillViewport;
+
+import elements.Background;
 import interaccionFichero.LectorLineas;
 import multiplayer.Guest;
 import multiplayer.Joiner;
@@ -15,11 +18,15 @@ import java.util.Scanner;
 
 public class CreateMatchScreen extends AbstractScreen{
     private Stage stage;
+    Background background;	
     private TextButton create, join;
     private boolean finding = false;
     @Override
     public void show() {
         stage = new Stage(new FillViewport(Render.SCREEN_WIDTH, Render.SCREEN_HEIGHT));
+        background = new Background();
+    	background.setColor(new Color(60/255f, 60/255f,60/255f,1f));
+    	background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         LectorLineas configReader = new LectorLineas("files/config.txt"); //Lector del txt configuracion para sacar el idioma
         LectorLineas languageReader = new LectorLineas("files/lang/"+ configReader.leerLinea(1) + "main.txt"); //Abrimos el idioma que toca del archivo configuracion
@@ -40,6 +47,7 @@ public class CreateMatchScreen extends AbstractScreen{
         logo.setPosition(800,-50);
         logo.setSize(500, 500);
         logo.setTransparency(0.25f);
+        stage.addActor(background);
         stage.addActor(logo);
 
     }

@@ -17,7 +17,7 @@ public class matchResults extends Actor{
 	
 	public matchResults() {
 		fondoRes = new Background();
-        fondoRes.setColor(new Color(78/255f, 74/255f,74/255f,1f));
+		fondoRes.setColor(new Color(60/255f, 60/255f,60/255f,1f));
         fondoRes.setPosition(400, 100);
         fondoRes.setSize(500, 500);
         
