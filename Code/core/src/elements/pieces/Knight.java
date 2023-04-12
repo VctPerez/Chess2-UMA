@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 import elements.Board;
 import elements.Piece;
 import game.chess.GameScreen;
+import interaccionFichero.LectorLineas;
 import utils.Render;
 import utils.Resources;
 
@@ -16,6 +17,10 @@ public class Knight extends Piece {
 
 	public Knight(Boolean color, int x, int y) {
 		super(color, Render.app.getManager().get(Resources.KNIGHT_PATH, Texture.class), x, y);
+	}
+	
+	public Knight() {
+		super(Render.app.getManager().get(Resources.KNIGHT_PATH, Texture.class));
 	}
 
 	@Override
@@ -58,6 +63,13 @@ public class Knight extends Piece {
 			same = color == piece.color();
 		}
 		return same;
+	}
+	
+	public String getInfo() {
+		 LectorLineas Reader, configReader;
+		 configReader = new LectorLineas("files/config.txt");
+	     Reader = new LectorLineas("files/lang/"+ configReader.leerLinea(1) + "Clasicas.txt");
+	     return Reader.leerTramo(12, 21);
 	}
 
 }

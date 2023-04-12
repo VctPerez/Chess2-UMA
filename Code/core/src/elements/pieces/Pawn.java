@@ -9,8 +9,11 @@ import com.badlogic.gdx.math.Vector2;
 import elements.Board;
 import elements.Piece;
 import game.chess.GameScreen;
+import interaccionFichero.LectorLineas;
+import utils.Image;
 import utils.Render;
 import utils.Resources;
+import utils.Text;
 
 public class Pawn extends Piece{
 	
@@ -19,6 +22,11 @@ public class Pawn extends Piece{
 	public Pawn(Boolean color, int x, int y) {
 		super(color, Render.app.getManager().get(Resources.PAWN_PATH, Texture.class), x ,y);
 	}
+	
+	public Pawn() {
+		super(Render.app.getManager().get(Resources.PAWN_PATH, Texture.class));
+	}
+	
 	
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
@@ -96,5 +104,26 @@ public class Pawn extends Piece{
 	public void dispose() {
 		sprite.dispose();
 	}
+	
+	@Override
+	public String getInfo() {
+		 LectorLineas Reader, configReader;
+		 configReader = new LectorLineas("files/config.txt");
+	     Reader = new LectorLineas("files/lang/"+ configReader.leerLinea(1) + "Clasicas.txt");
+	     return Reader.leerTramo(1, 5);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

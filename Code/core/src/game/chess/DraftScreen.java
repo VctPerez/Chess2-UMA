@@ -19,12 +19,14 @@ public class DraftScreen extends AbstractScreen {
 	
 	
 	Background background;
+	PieceInfo info;
 
 	@Override
 	public void show() {
 		stage = new Stage(new FitViewport(1280, 720));
 		stage.clear();
 		Gdx.input.setInputProcessor(Render.inputs);
+		info=new PieceInfo(new King());
 
 		initDraft();
 		
@@ -34,6 +36,7 @@ public class DraftScreen extends AbstractScreen {
 		// -------------------------------
 
 		stage.addActor(background);
+		stage.addActor(info);
 	}
 	
 	private void initDraft() {

@@ -11,12 +11,17 @@ import elements.Board;
 import elements.Piece;
 import elements.Tile;
 import game.chess.GameScreen;
+import interaccionFichero.LectorLineas;
 import utils.Render;
 import utils.Resources;
 
 public class King extends Piece{
 	public King(Boolean color, int x, int y) {
 		super(color, Render.app.getManager().get(Resources.KING_PATH, Texture.class), x, y);
+	}
+	
+	public King() {
+		super(Render.app.getManager().get(Resources.KING_PATH, Texture.class));
 	}
 	
 	public void draw(Batch batch, float parentAlpha) {
@@ -127,7 +132,12 @@ public class King extends Piece{
 		return same;
 	}
 
-	
+	public String getInfo() {
+		 LectorLineas Reader, configReader;
+		 configReader = new LectorLineas("files/config.txt");
+	     Reader = new LectorLineas("files/lang/"+ configReader.leerLinea(1) + "Clasicas.txt");
+	     return Reader.leerTramo(40, 48);
+	}
 	
 	
 	

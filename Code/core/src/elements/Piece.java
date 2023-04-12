@@ -12,9 +12,11 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 
 import game.chess.GameScreen;
+import interaccionFichero.LectorLineas;
 import utils.Image;
 import utils.Render;
 import utils.Resources;
+import utils.Text;
 
 public abstract class Piece extends Actor {
 	protected Image sprite;
@@ -40,6 +42,10 @@ public abstract class Piece extends Actor {
 		}
 		setPosition(GameScreen.board.getTile(x, y).getX(), GameScreen.board.getTile(x, y).getY());
 		setSize(GameScreen.board.getTile(x, y).getWidth(),  GameScreen.board.getTile(x, y).getHeight());
+	}
+	
+	public Piece(Texture texture) {
+		this.sprite = new Image(texture);
 	}
 
 	@Override
@@ -215,5 +221,9 @@ public abstract class Piece extends Actor {
 	@Override
 	public void act(float delta) {
 		super.act(delta);
+	}
+	
+	public String getInfo() {
+		 return "";
 	}
 }

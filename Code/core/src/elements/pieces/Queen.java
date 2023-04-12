@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 import elements.Board;
 import elements.Piece;
 import game.chess.GameScreen;
+import interaccionFichero.LectorLineas;
 import utils.Render;
 import utils.Resources;
 
@@ -17,6 +18,10 @@ public class Queen extends Piece{
 	
 	public Queen(Boolean color, int x, int y) {
 		super(color, Render.app.getManager().get(Resources.QUEEN_PATH, Texture.class), x, y);
+	}
+	
+	public Queen() {
+		super(Render.app.getManager().get(Resources.QUEEN_PATH, Texture.class));
 	}
 	
 	public void draw(Batch batch, float parentAlpha) {
@@ -77,6 +82,13 @@ public class Queen extends Piece{
 		checkDirection(x, y, -1, 1, movements);
 		
 		return movements;
+	}
+	
+	public String getInfo() {
+		 LectorLineas Reader, configReader;
+		 configReader = new LectorLineas("files/config.txt");
+	     Reader = new LectorLineas("files/lang/"+ configReader.leerLinea(1) + "Clasicas.txt");
+	     return Reader.leerTramo(34, 38);
 	}
 	
 	
