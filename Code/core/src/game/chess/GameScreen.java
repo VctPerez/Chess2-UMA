@@ -2,11 +2,16 @@ package game.chess;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Action;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.*;
 
 import elements.Background;
@@ -92,7 +97,10 @@ public class GameScreen extends AbstractScreen {
 	public void show() {
 		stage = new Stage(new FitViewport(1280, 720));
 		stage.clear();
-		Gdx.input.setInputProcessor(Render.inputs);
+		
+		//Gdx.input.setInputProcessor(Render.inputs);
+		
+		Gdx.input.setInputProcessor(stage);
 		
 		Render.hosting=false;
 		
@@ -113,10 +121,6 @@ public class GameScreen extends AbstractScreen {
 		TimerW = new Timer(300,80,150,"BLANCO");
 		background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		
-		placeWhites();
-		placeBlacks();
-		addPiecesToStage(whitePieces);
-		addPiecesToStage(blackPieces);
 		
 		// Crear mensaje emergente tras terminar partida
 		showPopup=false;
@@ -132,6 +136,12 @@ public class GameScreen extends AbstractScreen {
 		stage.addActor(graveyardBlack);
 		stage.addActor(TimerB);
 		stage.addActor(TimerW);
+		
+		placeWhites();
+		placeBlacks();
+		addPiecesToStage(whitePieces);
+		addPiecesToStage(blackPieces);
+		addTilesToStage();
 	}
 
 	@Override
@@ -149,15 +159,13 @@ public class GameScreen extends AbstractScreen {
 		
 	
 		
-		if(!promoting) {	
-		update(delta);
-		}
+		
 		
 		stage.draw();
 		stage.act();
 	}
 
-	public void update(float delta) {
+	public void update(Tile tile) {
 		
         // Escape para volver al menÃº principal (Prueba)
         if (Render.inputs.justPressed(Keys.ESCAPE)) {
@@ -170,20 +178,20 @@ public class GameScreen extends AbstractScreen {
 		} else if (Gdx.input.isKeyJustPressed(Keys.G)){
 			debugMode = !debugMode;
 			System.out.println("Debug mode toggled");
-		}else if(isBoardClicked() && !whiteCheckMate && !blackCheckMate) {
+		}else if(!whiteCheckMate && !blackCheckMate) {
 			
             if (!isPieceSelected) {
-                current_x = calculateX();
-                current_y = calculateY();
-                currentTile = board.getTile(current_x, current_y);
+                currentTile = tile;
+                current_x = (int)currentTile.getPos().x;
+                current_y = (int)currentTile .getPos().y;
                          
                 select(currentTile);
                    
             } else if (isPieceSelected) {
 
-                int next_x = calculateX();
-                int next_y = calculateY();
-                nextTile = board.getTile(next_x, next_y);
+                nextTile = tile;
+                int next_x = (int)nextTile.getPos().x;
+                int next_y = (int)nextTile.getPos().y;
                 
 
                 if (nextTile.getPiece() != null && currentTile.getPiece().sameColor(nextTile.getPiece())) {
@@ -196,7 +204,7 @@ public class GameScreen extends AbstractScreen {
             
                 } else {
                 	lowlight();
-					moveCurrentPieceTo(next_x,next_y);
+					moveCurrentPieceTo((int)nextTile.getPos().x,(int)nextTile.getPos().y);
 					
                     isPieceSelected = false;
                     }       
@@ -482,20 +490,6 @@ public class GameScreen extends AbstractScreen {
 	private void changeTurn() {
 		PLAYER = !PLAYER;
 	}
-	private int calculateX() {
-		return (int) Math.ceil((Render.inputs.mouseX - board.getX()) / 84);
-	}
-
-	private int calculateY() {
-		return (int) Math.ceil((Render.inputs.mouseY - board.getY()) / 84);
-	}
-
-	private boolean isBoardClicked() {
-		return Render.inputs.isClicked() && Render.inputs.mouseX >= board.getX()
-				&& Render.inputs.mouseX <= (board.getX() + board.getWidth())
-				&& Render.inputs.mouseY >= board.getY()
-				&& Render.inputs.mouseY <= (board.getY() + board.getHeight());
-	}
 
 	@Override
 	public void resize(int width, int height) {
@@ -614,6 +608,26 @@ public class GameScreen extends AbstractScreen {
 	public void addPiecesToStage(ArrayList<Piece> pieces) {
 		for(Piece piece:pieces) {
 			stage.addActor(piece);
+		}
+	}
+	
+	public void addTilesToStage() {
+		for(int i=1; i<=8; i++) {
+			for(int j=1; j<=8; j++) {
+				final Tile tile = board.getTile(i, j);
+				tile.addCaptureListener(new InputListener() { 
+					@Override
+					    public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+					
+						if(!promoting) {							
+							update(tile);
+						}
+						
+					    return true;
+					    }
+					} );
+				stage.addActor(tile);
+			}
 		}
 	}
 
