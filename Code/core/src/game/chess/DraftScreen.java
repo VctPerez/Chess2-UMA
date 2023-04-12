@@ -2,7 +2,9 @@ package game.chess;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -44,6 +46,7 @@ public class DraftScreen extends AbstractScreen {
 	}
 	
 	private void initDraft() {
+
 		draft = new HashMap<Image, Piece>();
 		draft.put(new Image(Render.app.getManager().get(Resources.PAWN_PATH, Texture.class)), null);
 		draft.put(new Image(Render.app.getManager().get(Resources.KNIGHT_PATH, Texture.class)), null);
@@ -51,6 +54,7 @@ public class DraftScreen extends AbstractScreen {
 		draft.put(new Image(Render.app.getManager().get(Resources.ROOK_PATH, Texture.class)), null);
 		draft.put(new Image(Render.app.getManager().get(Resources.QUEEN_PATH, Texture.class)), null);
 		draft.put(new Image(Render.app.getManager().get(Resources.KING_PATH, Texture.class)), null);
+
 		
 		int i = 0;
 		for(Image piece : draft.keySet()) {
