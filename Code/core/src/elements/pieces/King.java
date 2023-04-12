@@ -16,8 +16,8 @@ import utils.Render;
 import utils.Resources;
 
 public class King extends Piece{
-	public King(Boolean color, int x, int y) {
-		super(color, Render.app.getManager().get(Resources.KING_PATH, Texture.class), x, y);
+	public King(Boolean color, int x, int y,Board board) {
+		super(color, Render.app.getManager().get(Resources.KING_PATH, Texture.class), x, y,board);
 	}
 	
 	public King() {
@@ -72,7 +72,6 @@ public class King extends Piece{
 	@Override
 	public ArrayList<Vector2> posibleMovements() {
 		ArrayList<Vector2> movements = new ArrayList<>();
-		Board board = GameScreen.board;
 		addMovement(x+1,y+1, board, movements);
 		addMovement(x+1,y, board, movements);
 		addMovement(x+1,y-1, board, movements);
@@ -82,7 +81,7 @@ public class King extends Piece{
 		addMovement(x-1,y, board, movements);
 		addMovement(x-1,y-1, board, movements);	
 		
-		if (!hasBeenMoved) {
+		if (!hasBeenMoved && board.dim>5) {
 			castling(x, y, movements);
 		}
 		
@@ -97,10 +96,10 @@ public class King extends Piece{
 	
 	
 	public void castling(float x, float y, ArrayList<Vector2> movements) {//falta implementar q sea un movimiento seguro
-		if (GameScreen.board.getTile(1, y).getPiece() instanceof Rook && GameScreen.board.getTile(1, y).getPiece().hasBeenMoved == false && isFreeSpace(1, y, x)) {
+		if (board.getTile(1, y).getPiece() instanceof Rook && board.getTile(1, y).getPiece().hasBeenMoved == false && isFreeSpace(1, y, x)) {
 			movements.add(new Vector2(x - 2, y));
 		}
-		if (GameScreen.board.getTile(8, y).piece instanceof Rook && GameScreen.board.getTile(8, y).piece.hasBeenMoved == false && isFreeSpace(x, y, 8)) {
+		if (board.getTile(8, y).piece instanceof Rook && board.getTile(8, y).piece.hasBeenMoved == false && isFreeSpace(x, y, 8)) {
 				movements.add(new Vector2(x + 2, y));
 		}
 	}
@@ -115,7 +114,7 @@ public class King extends Piece{
 		boolean res=true;
 			for(int i=(int) start+1; i<dest;i++) {
 
-				if(GameScreen.board.getTile(i, y).piece!=null) {
+				if(board.getTile(i, y).piece!=null) {
 					res=false;
 				}
 			}

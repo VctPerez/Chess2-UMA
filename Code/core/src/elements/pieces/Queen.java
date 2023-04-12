@@ -16,8 +16,8 @@ import utils.Resources;
 public class Queen extends Piece{
 	private Boolean validDirection;
 	
-	public Queen(Boolean color, int x, int y) {
-		super(color, Render.app.getManager().get(Resources.QUEEN_PATH, Texture.class), x, y);
+	public Queen(Boolean color, int x, int y,Board board) {
+		super(color, Render.app.getManager().get(Resources.QUEEN_PATH, Texture.class), x, y,board);
 	}
 	
 	public Queen() {
@@ -53,7 +53,7 @@ public class Queen extends Piece{
 		
 		while(validDirection && k<8) {
 			mov = new Vector2(x + i*k, y + j*k);
-			if(checkBoard(GameScreen.board, mov.x, mov.y)) {
+			if(checkBoard(board, mov.x, mov.y)) {
 				movements.add(mov);
 			}
 			k++;

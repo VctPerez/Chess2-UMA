@@ -26,7 +26,7 @@ public class DraftScreen extends AbstractScreen {
 		stage = new Stage(new FitViewport(1280, 720));
 		stage.clear();
 		Gdx.input.setInputProcessor(Render.inputs);
-		info=new PieceInfo(new King());
+		info=new PieceInfo(new Bishop(true,3,3,new Board(70,615,-150)));
 
 		initDraft();
 		

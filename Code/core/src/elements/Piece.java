@@ -26,8 +26,10 @@ public abstract class Piece extends Actor {
 	public Boolean alive;
 	protected int x;
 	protected int y;
+	public Board board;
 
-	public Piece(Boolean color, Texture texture, int x, int y) {
+	public Piece(Boolean color, Texture texture, int x, int y,Board board) {
+		this.board=board;
 		this.sprite = new Image(texture);
 		this.hasBeenMoved=false;
 		this.color = color;
@@ -40,13 +42,14 @@ public abstract class Piece extends Actor {
 		}else {
 			setColor(0.25f, 0.25f, 0.25f, 1f);
 		}
-		setPosition(GameScreen.board.getTile(x, y).getX(), GameScreen.board.getTile(x, y).getY());
-		setSize(GameScreen.board.getTile(x, y).getWidth(),  GameScreen.board.getTile(x, y).getHeight());
+		setPosition(board.getTile(x, y).getX(),board.getTile(x, y).getY());
+		setSize(board.getTile(x, y).getWidth(),board.getTile(x, y).getHeight());
 	}
 	
 	public Piece(Texture texture) {
 		this.sprite = new Image(texture);
 	}
+	
 
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
@@ -148,7 +151,7 @@ public abstract class Piece extends Actor {
 	public ArrayList<Vector2> getValidMovements() {
 		ArrayList<Vector2> validMovements = posibleMovements();
 		ArrayList<Vector2> removeMovements = new ArrayList<>();
-		Tile currentTile = GameScreen.board.getTile(x, y);
+		Tile currentTile = board.getTile(x, y);
 		
 		for(Vector2 move: validMovements) {
 			//System.out.println("SIMULANDO MOVIMIENTO A [ "+move.x+", "+move.y+"]");
@@ -166,7 +169,7 @@ public abstract class Piece extends Actor {
 	 * @param removeMovements
 	 */
 	protected void simulateMovement(Tile currentTile, Vector2 move, ArrayList<Vector2> removeMovements) {
-		Tile nextTile = GameScreen.board.getTile((int)move.x,(int) move.y);
+		Tile nextTile = board.getTile((int)move.x,(int) move.y);
 		Piece nextTilePiece = null;
 		if(nextTile.getPiece()!=null) {
 			nextTilePiece = nextTile.getPiece();

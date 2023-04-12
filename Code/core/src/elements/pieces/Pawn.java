@@ -19,8 +19,8 @@ public class Pawn extends Piece{
 	
 	public Boolean isPassantable = false;
 
-	public Pawn(Boolean color, int x, int y) {
-		super(color, Render.app.getManager().get(Resources.PAWN_PATH, Texture.class), x ,y);
+	public Pawn(Boolean color, int x, int y,Board board) {
+		super(color, Render.app.getManager().get(Resources.PAWN_PATH, Texture.class), x ,y,board);
 	}
 	
 	public Pawn() {
@@ -68,29 +68,29 @@ public class Pawn extends Piece{
 		
 		for(int i = -1; i<=1; i++) {
 			mov = new Vector2(x + i, y + direction);
-			if(checkBoard(GameScreen.board, i, mov.x, mov.y)) {
+			if(checkBoard(board, i, mov.x, mov.y)) {
 				movements.add(mov);
 			}
 		}
 		
-		if(!hasBeenMoved) {
+		if(!hasBeenMoved && board.dim>5) {
 			mov = new Vector2(x , y + 2*direction);
-			if(checkBoard(GameScreen.board, 0, mov.x, mov.y) && GameScreen.board.getTile(x, y+direction).getPiece()==null) {
+			if(checkBoard(board, 0, mov.x, mov.y) && board.getTile(x, y+direction).getPiece()==null) {
 				movements.add(mov);
 			}
 		}
 
 		if (y == 5 - (color?0:1)){ //Si está en la fila donde puede hacer en passant(5 para blancas, 4 para negras)
 			Piece aux;
-			if (GameScreen.board.getTile(x-1,y) != null){
-				aux = GameScreen.board.getTile(x-1,y).getPiece(); //Mira a la izquierda
+			if (board.getTile(x-1,y) != null){
+				aux = board.getTile(x-1,y).getPiece(); //Mira a la izquierda
 				if (aux instanceof Pawn && ((Pawn) aux).isPassantable){ //Si la pieza puede tomarse al paso(habrá que cambiar el if si se incluyen más)
 					mov = new Vector2(x-1,y+direction);
 					movements.add(mov);
 				}
 			}
-			if (GameScreen.board.getTile(x+1,y) != null){
-				aux = GameScreen.board.getTile(x+1,y).getPiece(); //Mira a la derecha
+			if (board.getTile(x+1,y) != null){
+				aux = board.getTile(x+1,y).getPiece(); //Mira a la derecha
 				if (aux instanceof Pawn && ((Pawn) aux).isPassantable){
 					mov = new Vector2(x+1,y+direction);
 					movements.add(mov);

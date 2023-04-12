@@ -73,28 +73,28 @@ public class DropDownMenu extends Actor{
             switch (current_y) {
 			case 4:
 				pieces.remove(formerPiece);
-				newPiece = new Queen(formerPiece.color(), (int)tile.getPos().x, (int)tile.getPos().y);
+				newPiece = new Queen(formerPiece.color(), (int)tile.getPos().x, (int)tile.getPos().y,GameScreen.board);
 				tile.setPiece(newPiece);
 				pieces.add(formerPiece);            	
             	GameScreen.stage.addActor(newPiece);
 				break;
 			case 3:
 				pieces.remove(formerPiece);
-				newPiece = new Knight(formerPiece.color(), (int)tile.getPos().x, (int)tile.getPos().y);
+				newPiece = new Knight(formerPiece.color(), (int)tile.getPos().x, (int)tile.getPos().y,GameScreen.board);
 				tile.setPiece(newPiece);
 				pieces.add(formerPiece);            	
             	GameScreen.stage.addActor(newPiece);
 				break;
 			case 2:
 				pieces.remove(formerPiece);
-				newPiece = new Rook(formerPiece.color(), (int)tile.getPos().x, (int)tile.getPos().y);
+				newPiece = new Rook(formerPiece.color(), (int)tile.getPos().x, (int)tile.getPos().y,GameScreen.board);
 				tile.setPiece(newPiece);
 				pieces.add(formerPiece);            	
             	GameScreen.stage.addActor(newPiece);
 				break;
 			case 1:
 				pieces.remove(formerPiece);
-				newPiece = new Bishop(formerPiece.color(), (int)tile.getPos().x, (int)tile.getPos().y);
+				newPiece = new Bishop(formerPiece.color(), (int)tile.getPos().x, (int)tile.getPos().y,GameScreen.board);
 				tile.setPiece(newPiece);
 				pieces.add(formerPiece);            	
             	GameScreen.stage.addActor(newPiece);

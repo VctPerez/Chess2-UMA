@@ -531,38 +531,38 @@ public class GameScreen extends AbstractScreen {
 	public void placeWhites() {
 		Piece piece;
 		for (int i = 1; i < 9; i++) {
-			piece =  new Pawn(true, i, 2);
+			piece =  new Pawn(true, i, 2,board);
 			whitePieces.add(piece);
 			board.getTile(i, 2).setPiece(piece);
 		}
 		for (int i = 1; i < 9; i++) {
 			if (i == 1 || i == 8) {
 				
-				piece = new Rook(true, i, 1);
+				piece = new Rook(true, i, 1,board);
 				whitePieces.add(piece);
 				board.getTile(i, 1).setPiece(piece);
 			}
 			if (i == 2 || i == 7) {
 				
-				piece = new Knight(true, i, 1);
+				piece = new Knight(true, i, 1,board);
 				whitePieces.add(piece);
 				board.getTile(i, 1).setPiece(piece);
 			}
 			if (i == 3 || i == 6) {
 				
-				piece = new Bishop(true, i, 1);
+				piece = new Bishop(true, i, 1,board);
 				whitePieces.add(piece);
 				board.getTile(i, 1).setPiece(piece);
 			}
 			if (i == 4) {
 				
-				piece = new Queen(true, i, 1);
+				piece = new Queen(true, i, 1,board);
 				whitePieces.add(piece);
 				board.getTile(i, 1).setPiece(piece);
 			}
 			if (i == 5) {
 				
-				piece = new King(true, i, 1);
+				piece = new King(true, i, 1,board);
 				whitePieces.add(piece);
 				board.getTile(i, 1).setPiece(piece);
 			}
@@ -572,39 +572,39 @@ public class GameScreen extends AbstractScreen {
 	private void placeBlacks() {
 		Piece piece;
 		for (int i = 1; i < 9; i++) {
-			piece =  new Pawn(false, i, 7);
+			piece =  new Pawn(false, i, 7,board);
 			blackPieces.add(piece);
 			board.getTile(i, 7).setPiece(piece);
 		}
 		for (int i = 1; i < 9; i++) {
 			if (i == 1 || i == 8) {
 				
-				piece = new Rook(false, i, 8);
+				piece = new Rook(false, i, 8,board);
 				blackPieces.add(piece);
 				board.getTile(i, 8).setPiece(piece);
 			}
 			if (i == 2 || i == 7) {
 				
-				piece = new Knight(false, i, 8);
+				piece = new Knight(false, i, 8,board);
 				blackPieces.add(piece);
 				board.getTile(i, 8).setPiece(piece);
 			}
 			if (i == 3 || i == 6) {
 				
-				piece = new Bishop(false, i, 8);
+				piece = new Bishop(false, i, 8,board);
 				blackPieces.add(piece);
 				board.getTile(i, 8).setPiece(piece);
 			}
 			if (i == 4) {
 				
-				piece = new Queen(false, i, 8);
+				piece = new Queen(false, i, 8,board);
 				blackPieces.add(piece);
 				board.getTile(i, 8).setPiece(piece);
 				
 			}
 			if (i == 5) {
 				
-				piece = new King(false, i, 8);
+				piece = new King(false, i, 8,board);
 				blackPieces.add(piece);
 				board.getTile(i, 8).setPiece(piece);
 			}

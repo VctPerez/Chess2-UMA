@@ -16,8 +16,8 @@ import utils.Resources;
 public class Rook extends Piece{
 	private Boolean validDirection;
 	
-	public Rook(Boolean color, int x, int y) {
-		super(color, Render.app.getManager().get(Resources.ROOK_PATH, Texture.class), x, y);
+	public Rook(Boolean color, int x, int y,Board board) {
+		super(color, Render.app.getManager().get(Resources.ROOK_PATH, Texture.class), x, y,board);
 	}
 	
 	public Rook() {
@@ -53,7 +53,7 @@ public class Rook extends Piece{
 		
 		while(validDirection && k<8) {
 			mov = new Vector2(x + i*k, y + j*k);
-			if(checkBoard(GameScreen.board, mov.x, mov.y)) {
+			if(checkBoard(board, mov.x, mov.y)) {
 				movements.add(mov);
 			}
 			k++;

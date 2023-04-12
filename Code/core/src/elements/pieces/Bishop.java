@@ -16,8 +16,8 @@ import utils.Resources;
 public class Bishop extends Piece{
 	private Boolean validDirection;
 	
-	public Bishop(Boolean color, int x, int y) {
-		super(color, Render.app.getManager().get(Resources.BISHOP_PATH, Texture.class), x, y);
+	public Bishop(Boolean color, int x, int y,Board board) {
+		super(color, Render.app.getManager().get(Resources.BISHOP_PATH, Texture.class), x, y,board);
 	}
 	
 	public Bishop() {
@@ -53,7 +53,7 @@ public class Bishop extends Piece{
 		
 		while(validDirection && k<8) {
 			mov = new Vector2(x + i*k, y + j*k);
-			if(checkBoard(GameScreen.board, mov.x, mov.y)) {
+			if(checkBoard(board, mov.x, mov.y)) {
 				movements.add(mov);
 			}
 			k++;
