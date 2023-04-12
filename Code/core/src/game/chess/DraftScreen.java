@@ -25,13 +25,16 @@ public class DraftScreen extends AbstractScreen {
 	Background background;
 	PieceInfo info;
     TextButton end,next,back;
+    Piece piece;
 
 	@Override
 	public void show() {
 		stage = new Stage(new FitViewport(1280, 720));
 		stage.clear();
 		Gdx.input.setInputProcessor(stage);
-		info=new PieceInfo(new Knight(true,3,3,new Board(70,615,-150)));
+		info=new PieceInfo();
+		piece=new Pawn(true,3,3,info.board);	
+		info.infoFrom(piece);
 		background = new Background();
 		background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		
@@ -41,8 +44,9 @@ public class DraftScreen extends AbstractScreen {
 
 		stage.addActor(background);
 		stage.addActor(info);	
-		initDraft();
 		initButtons();
+		initDraft();
+		
 	}
 	
 	private void initDraft() {
@@ -68,13 +72,13 @@ public class DraftScreen extends AbstractScreen {
 	private void initButtons() {
 		Text endText,nextText,backText;
 		endText = new Text(Resources.FONT_MENU_PATH,20,Color.WHITE,3);
-    	endText.setText("End"); 
+    	endText.setText("Finalizar"); //Botones con nombre momentaneos, se cambiara y se añadira a los ficheros de idiomas
     	endText.setPosition(50, 50);
     	nextText = new Text(Resources.FONT_MENU_PATH,20,Color.WHITE,3);
-    	nextText.setText("Next"); 
+    	nextText.setText("Siguiente"); 
     	nextText.setPosition(600, 50);
     	backText = new Text(Resources.FONT_MENU_PATH,20,Color.WHITE,3);
-    	backText.setText("Back"); 
+    	backText.setText("Atras"); 
     	backText.setPosition(300, 50);
     	
     	end = new TextButton(endText);
@@ -84,6 +88,8 @@ public class DraftScreen extends AbstractScreen {
         stage.addActor(end);
 		stage.addActor(next);
 		stage.addActor(back);
+		
+		Gdx.input.setInputProcessor(Render.inputs);
 	}
 	
 
@@ -93,6 +99,19 @@ public class DraftScreen extends AbstractScreen {
 		Render.Batch.begin();
 		stage.draw();
 		stage.act();
+
+		
+		if(next.isPressed()) {
+			
+        }
+		
+		if(back.isPressed()) {
+			
+        }
+		
+		if(end.isPressed()) {
+			Render.app.setScreen(new GameScreen());
+		}
 		
 		Render.Batch.end();
 	}

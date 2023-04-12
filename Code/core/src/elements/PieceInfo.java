@@ -10,16 +10,19 @@ public class PieceInfo extends Actor{
 	
 	private Text info;
 	private Background background;
-	private Board board;
+	public Board board;
 	
-	public PieceInfo(Piece piece) {
+	public PieceInfo() {
 		background = new Background();
 		background.setColor(new Color(90/255f, 90/255f,90/255f,1f));
 		background.setPosition(750, 50);
 		background.setSize(500, 625);
-		
-		
-		board=piece.board;
+		board=new Board(70,615,-150);
+        
+        
+	}
+	
+	public void infoFrom(Piece piece) {
 		board.getTile(3, 3).setPiece(piece);
 		
 		for (Vector2 vector : piece.posibleMovements()) {
@@ -36,8 +39,6 @@ public class PieceInfo extends Actor{
         info = new Text(Resources.FONT_MENU_PATH,20,Color.WHITE,3);
         info.setPosition(760, 665);
         info.setText(piece.getInfo());
-        
-        
 	}
 
 	
