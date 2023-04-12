@@ -71,6 +71,10 @@ public class TextButton extends Actor implements Button {
             }
         }
     }
+    
+    public boolean isClicked(){
+        return mouseOver() && Render.inputs.isClicked();
+    }
 
     @Override
     public Vector2 getCoords() {

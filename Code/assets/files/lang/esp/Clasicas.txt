@@ -1,8 +1,8 @@
-Peon Clasico: 
-  El peón se mueve verticalmente por
- la columna en la que se 
- encuentra, sin poder retroceder, 
- comen en diagonal.
+ Peon Clasico: 
+   El peón se mueve verticalmente por
+  la columna en la que se 
+  encuentra, sin poder retroceder, 
+  comen en diagonal.
  
  Alfil Clasico:
    Camina diagonalmente de una en 

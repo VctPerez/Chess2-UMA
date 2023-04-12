@@ -41,5 +41,7 @@ public class Resources {
     public static final String KING_PATH = "sprites/Testing-Pieces/Pieces Base Form/White_King.png";
     
     public static final String FRAME_PATH = "sprites/selectionFrame.png";
+    public static final String ARROW_PATH = "sprites/Arrow.png";
+    
     
 }

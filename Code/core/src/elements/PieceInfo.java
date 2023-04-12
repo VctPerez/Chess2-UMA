@@ -17,7 +17,7 @@ public class PieceInfo extends Actor{
 		background.setColor(new Color(90/255f, 90/255f,90/255f,1f));
 		background.setPosition(750, 50);
 		background.setSize(500, 625);
-		board=new Board(70,615,-150);
+		board=new Board(70,825,75);
         
         
 	}
@@ -39,6 +39,17 @@ public class PieceInfo extends Actor{
         info = new Text(Resources.FONT_MENU_PATH,20,Color.WHITE,3);
         info.setPosition(760, 665);
         info.setText(piece.getInfo());
+	}
+	
+	public void cleanBoard(Piece piece) {
+		for (Vector2 vector : piece.posibleMovements()) {
+			Tile tile = board.getTile(vector.x, vector.y);
+			if(tile.piece!=null && tile.piece.color()!=piece.color) {
+				tile.attacked=false;
+			}else {
+				tile.highlight = false;
+			}
+		}
 	}
 
 	

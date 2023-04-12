@@ -93,7 +93,7 @@ public class MainScreen extends AbstractScreen {
         
         if(play.isPressed()){
             Render.bgMusic.stop();
-            Render.app.setScreen(new GameScreen());
+            Render.app.setScreen(new DraftScreen());
             //Render.app.setScreen(Render.CREATEMATCHSCREEN);
         }
         if(exit.isPressed()) {

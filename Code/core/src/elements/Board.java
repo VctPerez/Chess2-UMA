@@ -20,11 +20,12 @@ public class Board extends Actor {
 		int color = 1;
 		for (int i = 0; i < dim; i++) {
 			for (int j = 0; j < dim; j++) {
-				if (Render.hosting&&dim==8) {
+				if (Render.hosting || dim==5) {
 					board[i][j] = new Tile(i + 1, j + 1, x_offset + (i * size), y_offset + (j * size),
 							size, color);
 				} else {
 					board[i][j]= new Tile(i+1, j+1, x_offset+(7*size - i*size), y_offset+(7*size - j*size), size, color);
+					
 				}
 				color = -color;
 			}

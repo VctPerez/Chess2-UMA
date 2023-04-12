@@ -33,6 +33,7 @@ public class Chess2 extends Game {
 		manager.load(Resources.KING_PATH, Texture.class);
 		manager.load(Resources.ROOK_PATH, Texture.class);
 		manager.load(Resources.KNIGHT_PATH, Texture.class);
+		manager.load(Resources.ARROW_PATH, Texture.class);
 		
 		manager.load(Resources.FRAME_PATH, Texture.class);
 
@@ -92,8 +93,8 @@ public class Chess2 extends Game {
 		Render.DRAFTSCREEN = new DraftScreen();
 
 		//this.setScreen(Render.CREATEMATCHSCREEN);
-		//this.setScreen(Render.MAINSCREEN);
-		this.setScreen(Render.DRAFTSCREEN);
+		this.setScreen(Render.MAINSCREEN);
+		//this.setScreen(Render.DRAFTSCREEN);
 
 	}
 
