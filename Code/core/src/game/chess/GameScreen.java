@@ -98,7 +98,7 @@ public class GameScreen extends AbstractScreen {
 		stage = new Stage(new FitViewport(1280, 720));
 		stage.clear();
 		
-		//Gdx.input.setInputProcessor(Render.inputs);
+		
 		
 		Gdx.input.setInputProcessor(stage);
 		
@@ -149,6 +149,7 @@ public class GameScreen extends AbstractScreen {
 		Render.clearScreen();
 		
 		if (showPopup) {
+			Gdx.input.setInputProcessor(Render.inputs);
 			results.Show();
 			results.toFront();
 			results.render();
@@ -348,7 +349,6 @@ public class GameScreen extends AbstractScreen {
 	
 	public static void mateControl(float next_x, float next_y) {
 		isMate(next_x, next_y);
-		System.out.println("CASILLA: " + next_x +", "+next_y + " | Pieza: "+board.getTile(next_x, next_y));
         
         if(isMate()) {
         	whiteCheckMate = isCheckMate(whiteMate, whitePieces);
@@ -380,7 +380,7 @@ public class GameScreen extends AbstractScreen {
             resetMate();
         	 
             if(nextTile.getPiece() instanceof Pawn) {
-            	System.out.println("PASSANT");
+
             	checkPassant(next_x, next_y);
         		
         		updateLastPawn(next_x, next_y);      
