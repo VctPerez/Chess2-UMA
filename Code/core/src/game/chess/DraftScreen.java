@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
@@ -26,9 +27,10 @@ public class DraftScreen extends AbstractScreen {
 		stage = new Stage(new FitViewport(1280, 720));
 		stage.clear();
 		Gdx.input.setInputProcessor(Render.inputs);
-		info=new PieceInfo(new Bishop(true,3,3,new Board(70,615,-150)));
-
+		info=new PieceInfo(new Knight(true,3,3,new Board(70,615,-150)));
+		
 		initDraft();
+		
 		
 		background = new Background();
 		background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -48,6 +50,7 @@ public class DraftScreen extends AbstractScreen {
 		draft.put("Queen", null);
 		draft.put("King", null);
 	}
+	
 
 	@Override
 	public void render(float delta) {
