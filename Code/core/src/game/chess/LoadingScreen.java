@@ -40,7 +40,7 @@ public class LoadingScreen extends AbstractScreen{
     private void update(){
         if(Render.app.getManager().update() && (background.fader(wait,increase) || Render.inputs.keyDown(Input.Keys.BACKSPACE))){
             sounds.get(indexSound).stop();
-            Render.app.setScreen(Render.MAINSCREEN);
+            Render.app.setScreen(Render.CREATEMATCHSCREEN);
         }
     }
     private void selectParams(){

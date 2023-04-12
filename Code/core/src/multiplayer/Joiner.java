@@ -1,5 +1,8 @@
 package multiplayer;
 
+import com.badlogic.gdx.Gdx;
+import utils.MyTextListener;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -21,14 +24,10 @@ public class Joiner extends Thread{
 
     @Override
     public void run() {
-        BufferedReader buffer = new BufferedReader(new InputStreamReader(System.in));
-        try {
-            String[] info = buffer.readLine().split(" ");
-            pName = info[0];
-            ip = info[1];
-            buffer.close();
-        } catch (IOException e) {
-            throw new RuntimeException("No se ha leido nada");
-        }
+        MyTextListener listener = new MyTextListener();
+        Gdx.input.getTextInput(listener, "User + code", "User: ","user + code");
+        String[] info = listener.getWritten().split(" ");
+        pName = info[0];
+        ip = info[1];
     }
 }

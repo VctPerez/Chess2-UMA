@@ -1,10 +1,6 @@
 package interaccionFichero;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 
 public class LectorLineas 
 {	
@@ -53,12 +49,13 @@ public class LectorLineas
 		FileInputStream fs = null;
 		try
 		{
-			fs = new FileInputStream(ent);
+			fs = new FileInputStream(new File(ent)	);
 		}
 		catch(FileNotFoundException e)
 		{
 			System.err.print("No es posible abrir ese fichero");
 		}
+		//BufferedReader br = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream(ent)));
 		BufferedReader br = new BufferedReader(new InputStreamReader(fs));
 		String linea = null;
 		for(int i = 0; i < numeroDeLinea-1; ++i)

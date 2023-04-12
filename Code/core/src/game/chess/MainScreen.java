@@ -16,7 +16,8 @@ public class MainScreen extends AbstractScreen {
     TextButton play,exit,confg,reglas;
     Text playText,exitText,confgText,Titulo,reglasText;
     Image Logo,news;
-    LectorLineas languageReader, configReader;
+    //LectorLineas languageReader, configReader;
+    PruebaLectorLineas2 languageReader, configReader;
 
     
     @Override
@@ -26,22 +27,28 @@ public class MainScreen extends AbstractScreen {
     	background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     	
     	//Abrir los ficheros de configuracion e idioma
-    	configReader = new LectorLineas("files/config.txt"); //Lector del txt configuracion para sacar el idioma
+    	//configReader = new LectorLineas("files/config.txt"); //Lector del txt configuracion para sacar el idioma
     	//languageReader = new LectorLineas("files/lang/"+ configReader.leerLinea(1) + "main.txt"); //Abrimos el idioma que toca del archivo configuracion
-    	languageReader = new LectorLineas("files/lang/esp/main.txt"); //Abrimos el idioma que toca del archivo configuracion
+    	configReader = new PruebaLectorLineas2("files/config.txt");
+        languageReader = new PruebaLectorLineas2("files/lang/" + configReader.getLine(1) + "main.txt");
 
     	//Fuente Arial para probar
     	Titulo = new Text(Resources.FONT_MENU_PATH,100,Color.WHITE,3);
-    	Titulo.setText(languageReader.leerLinea(8));
+    	Titulo.setText(languageReader.getLine(8));
+    	//Titulo.setText(languageReader.leerLinea(8));
     	playText = new Text(Resources.FONT_MENU_PATH,50,Color.WHITE,3);
-    	playText.setText(languageReader.leerLinea(1)); //Jugar = Linea 1
+    	playText.setText(languageReader.getLine(1)); //Jugar = Linea 1
+    	//playText.setText(languageReader.leerLinea(1)); //Jugar = Linea 1
     	exitText = new Text(Resources.FONT_MENU_PATH,50,Color.WHITE,3);
-    	exitText.setText(languageReader.leerLinea(3)); //Salir = Linea 3
+    	exitText.setText(languageReader.getLine(3)); //Salir = Linea 3
+    	//exitText.setText(languageReader.leerLinea(3)); //Salir = Linea 3
     	confgText = new Text(Resources.FONT_MENU_PATH,50,Color.WHITE,3);
-    	confgText.setText(languageReader.leerLinea(4)); //Configuracion = Linea 4
+    	confgText.setText(languageReader.getLine(4)); //Configuracion = Linea 4
+    	//confgText.setText(languageReader.leerLinea(4)); //Configuracion = Linea 4
     	reglasText = new Text(Resources.FONT_MENU_PATH,50,Color.WHITE,3);
-    	reglasText.setText(languageReader.leerLinea(7)); //Configuracion = Linea 4
-    	
+    	reglasText.setText(languageReader.getLine(7)); //Configuracion = Linea 4
+    	//reglasText.setText(languageReader.leerLinea(7)); //Configuracion = Linea 4
+
     	Titulo.setPosition(100,600);
         playText.setPosition(100,400);
         exitText.setPosition(100,100);
