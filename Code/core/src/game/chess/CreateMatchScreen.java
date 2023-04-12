@@ -2,18 +2,12 @@ package game.chess;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import interaccionFichero.LectorLineas;
 import multiplayer.Guest;
-import multiplayer.Joiner;
 import utils.*;
 
-import javax.swing.*;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.Scanner;
 
 public class CreateMatchScreen extends AbstractScreen{
     private Stage stage;
@@ -69,13 +63,16 @@ public class CreateMatchScreen extends AbstractScreen{
             Render.LOBBYSCREEN.create("Victor", true);
             Render.app.setScreen(Render.LOBBYSCREEN);
         } else if (join.isPressed() && !finding) {
-            //TODO con textField cosa que me da miedo
             finding = true;
             System.out.println();
             Render.guest.start();
         }
+        if(join.isPressed()){
+            System.out.println(Render.guest.getStatus());
+        }
         if(Render.guest.getStatus()){
             Render.LOBBYSCREEN.create(Render.guest.getPlayer2().getName(), false);
+            Render.app.setScreen(Render.LOBBYSCREEN);
         }
     }
 

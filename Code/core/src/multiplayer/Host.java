@@ -23,7 +23,7 @@ public class Host extends Thread {
             System.out.println("Server abierto");
             waitConnection();
         } catch (Exception e) {
-            System.err.println("Server closed");
+            System.err.println("Server closed - " + e.getClass().getName());
             e.printStackTrace();
         }
     }
@@ -51,18 +51,17 @@ public class Host extends Thread {
     }
 
     public void sendPlayer1() throws IOException {
+        System.out.println("Enviando player 1");
         PrintWriter pw = new PrintWriter(player2.getOutputStream());
         pw.println(p1.getName());
         pw.flush();
-        pw.close();
         System.out.println("player1 enviado");
     }
     public void receivePlayer2() throws IOException {
+        System.out.println("Recibiendo player 2");
         InputStreamReader in = new InputStreamReader(player2.getInputStream());
         BufferedReader buffer = new BufferedReader(in);
         p2 = new Player(buffer.readLine());
-        in.close();
-        buffer.close();
         System.out.println("player2 recibido");
     }
 

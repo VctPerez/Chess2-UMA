@@ -36,26 +36,29 @@ public class LobbyScreen extends AbstractScreen{
         stage = new Stage(new FitViewport(1280, 720));
         Gdx.input.setInputProcessor(Render.inputs);
 
-        try {
-            Text invCode = new Text("Codigo: " + Inet4Address.getLocalHost().getHostAddress(),
-                    Resources.FONT_MENU_PATH, 20, Color.WHITE,2);
-            invCode.setPosition(300,500);
-            stage.addActor(invCode);
-            Render.host = new Host(player1);
-        } catch (IOException e) {
-            throw new RuntimeException(e.getMessage());
-        }
         Text p1;
         if(host) {
             p1 = new Text("Jugador 1: " + player1.getName(), Resources.FONT_MENU_PATH, 30, Color.WHITE, 3);
+            try {
+                Text invCode = new Text("Codigo: " + Inet4Address.getLocalHost().getHostAddress(),
+                        Resources.FONT_MENU_PATH, 20, Color.WHITE,2);
+                invCode.setPosition(300,500);
+                stage.addActor(invCode);
+                Render.host = new Host(player1);
+            } catch (IOException e) {
+                throw new RuntimeException(e.getMessage());
+            }
             p2 = new Text("Jugador 2: ", Resources.FONT_MENU_PATH, 30, Color.WHITE, 3);
+            statusP2 = new Text("CONNECTED", Resources.FONT_MENU_PATH, 30, Color.RED, 3);
         }else{
             p1 = new Text("Jugador 1: " + Render.guest.getPlayer1().getName(), Resources.FONT_MENU_PATH, 30, Color.WHITE, 3);
             p2 = new Text("Jugador 2: " + player2.getName(), Resources.FONT_MENU_PATH, 30, Color.WHITE, 3);
+            statusP2 = new Text("CONNECTED", Resources.FONT_MENU_PATH, 30, Color.GREEN, 3);
+
         }
         Text statusP1 = new Text("CONNECTED", Resources.FONT_MENU_PATH, 30, Color.GREEN, 3);
-        p2 = new Text("Jugador 2: ", Resources.FONT_MENU_PATH, 30, Color.WHITE, 3);
-        statusP2 = new Text("CONNECTED", Resources.FONT_MENU_PATH, 30, Color.RED, 3);
+        //p2 = new Text("Jugador 2: ", Resources.FONT_MENU_PATH, 30, Color.WHITE, 3);
+        //statusP2 = new Text("CONNECTED", Resources.FONT_MENU_PATH, 30, Color.RED, 3);
         findMatch = new TextButton(new Text("FIND", Resources.FONT_MENU_PATH, 30, Color.CYAN, 3));
         findMatch.setPosition(600,400);
         findMatch.setRemarked(Color.BLUE);
@@ -80,7 +83,7 @@ public class LobbyScreen extends AbstractScreen{
         stage.act();
         stage.draw();
         try {
-            matchFinder();
+            if(host)matchFinder();
         }catch(IOException e){
             System.err.println(e.getMessage());
         }
@@ -96,20 +99,20 @@ public class LobbyScreen extends AbstractScreen{
                 System.out.println("La hebra 2 va por su cuenta");
             }
         }
-        if (finding && !findMatch.isPressed()) {
-            cancelSearch();
-        }
         if(!Render.host.isP2connected()){
             configured = false;
             statusP2.setColor(Color.RED);
+            if (finding && !findMatch.isPressed()) {
+                cancelSearch();
+            }
         }
         if (Render.host.isP2connected() &&!configured) {
             statusP2.setColor(Color.GREEN);
-            //Render.host.sendPlayer1();
-            //Render.host.receivePlayer2();
-            //p2.setText("Jugador2: " + Render.host.getPlayer2().getName());
+            Render.host.receivePlayer2();
+            p2.setText("Jugador2: " + Render.host.getPlayer2().getName());
             configured =true;
             System.out.println("Jugador conectado");
+            Render.host.sendPlayer1();
         }
     }
     private void cancelSearch(){
