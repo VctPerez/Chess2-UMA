@@ -44,6 +44,7 @@ public class Render {
 
     public static Host host;
     public static Guest guest;
+    public static boolean hosting;
 
     /**
      * Este metodo se encarga de limpiar la pantalla al principio de cada Render.

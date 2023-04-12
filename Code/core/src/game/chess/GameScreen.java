@@ -94,6 +94,8 @@ public class GameScreen extends AbstractScreen {
 		stage.clear();
 		Gdx.input.setInputProcessor(Render.inputs);
 		
+		Render.hosting=false;
+		
 		PLAYER = true;
 		
 		whiteMate=false;
@@ -113,6 +115,8 @@ public class GameScreen extends AbstractScreen {
 		
 		placeWhites();
 		placeBlacks();
+		addPiecesToStage(whitePieces);
+		addPiecesToStage(blackPieces);
 		
 		// Crear mensaje emergente tras terminar partida
 		showPopup=false;
@@ -155,10 +159,6 @@ public class GameScreen extends AbstractScreen {
 
 	public void update(float delta) {
 		
-		if(PLAYER) {
-			System.out.println("Turno Blanco");
-		}
-		
         // Escape para volver al menÃº principal (Prueba)
         if (Render.inputs.justPressed(Keys.ESCAPE)) {
         	 Render.app.setScreen(Render.MAINSCREEN);
@@ -171,6 +171,7 @@ public class GameScreen extends AbstractScreen {
 			debugMode = !debugMode;
 			System.out.println("Debug mode toggled");
 		}else if(isBoardClicked() && !whiteCheckMate && !blackCheckMate) {
+			
             if (!isPieceSelected) {
                 current_x = calculateX();
                 current_y = calculateY();
@@ -482,18 +483,18 @@ public class GameScreen extends AbstractScreen {
 		PLAYER = !PLAYER;
 	}
 	private int calculateX() {
-		return (int) Math.ceil((Render.inputs.mouseX - board.getTile(1, 1).getX()) / 84);
+		return (int) Math.ceil((Render.inputs.mouseX - board.getX()) / 84);
 	}
 
 	private int calculateY() {
-		return (int) Math.ceil((Render.inputs.mouseY - board.getTile(1, 1).getY()) / 84);
+		return (int) Math.ceil((Render.inputs.mouseY - board.getY()) / 84);
 	}
 
 	private boolean isBoardClicked() {
-		return Render.inputs.isClicked() && Render.inputs.mouseX >= board.getTile(1, 1).getX()
-				&& Render.inputs.mouseX <= (board.getTile(8, 1).getWidth() + board.getTile(8, 1).getX())
-				&& Render.inputs.mouseY >= board.getTile(1, 1).getY()
-				&& Render.inputs.mouseY <= board.getTile(1, 8).getHeight() + board.getTile(1, 8).getY();
+		return Render.inputs.isClicked() && Render.inputs.mouseX >= board.getX()
+				&& Render.inputs.mouseX <= (board.getX() + board.getWidth())
+				&& Render.inputs.mouseY >= board.getY()
+				&& Render.inputs.mouseY <= (board.getY() + board.getHeight());
 	}
 
 	@Override
@@ -599,6 +600,7 @@ public class GameScreen extends AbstractScreen {
 				piece = new Queen(false, i, 8);
 				blackPieces.add(piece);
 				board.getTile(i, 8).setPiece(piece);
+				
 			}
 			if (i == 5) {
 				
@@ -606,7 +608,13 @@ public class GameScreen extends AbstractScreen {
 				blackPieces.add(piece);
 				board.getTile(i, 8).setPiece(piece);
 			}
-		}		
+		}
+	}
+	
+	public void addPiecesToStage(ArrayList<Piece> pieces) {
+		for(Piece piece:pieces) {
+			stage.addActor(piece);
+		}
 	}
 
 }

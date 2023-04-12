@@ -60,34 +60,44 @@ public class DropDownMenu extends Actor{
 		if(isClicked()) {
             int current_y = calculateY();
             ArrayList<Piece> pieces;
+            Piece formerPiece = tile.getPiece();
+            Piece newPiece = null;
             
-            if(tile.getPiece().color()) {
+            if(formerPiece.color()) {
             	pieces = GameScreen.whitePieces;
             }else {
             	pieces = GameScreen.blackPieces;
             }
-            tile.getPiece().remove();
+            formerPiece.remove();
             
             switch (current_y) {
 			case 4:
-				pieces.remove(tile.getPiece());
-				tile.setPiece(new Queen(tile.getPiece().color(), (int)tile.getPos().x, (int)tile.getPos().y));
-				pieces.add(tile.getPiece());
+				pieces.remove(formerPiece);
+				newPiece = new Queen(formerPiece.color(), (int)tile.getPos().x, (int)tile.getPos().y);
+				tile.setPiece(newPiece);
+				pieces.add(formerPiece);            	
+            	GameScreen.stage.addActor(newPiece);
 				break;
 			case 3:
-				pieces.remove(tile.getPiece());
-				tile.setPiece(new Knight(tile.getPiece().color(), (int)tile.getPos().x, (int)tile.getPos().y));
-				pieces.add(tile.getPiece());
+				pieces.remove(formerPiece);
+				newPiece = new Knight(formerPiece.color(), (int)tile.getPos().x, (int)tile.getPos().y);
+				tile.setPiece(newPiece);
+				pieces.add(formerPiece);            	
+            	GameScreen.stage.addActor(newPiece);
 				break;
 			case 2:
-				pieces.remove(tile.getPiece());
-				tile.setPiece(new Rook(tile.getPiece().color(), (int)tile.getPos().x, (int)tile.getPos().y));
-				pieces.add(tile.getPiece());
+				pieces.remove(formerPiece);
+				newPiece = new Rook(formerPiece.color(), (int)tile.getPos().x, (int)tile.getPos().y);
+				tile.setPiece(newPiece);
+				pieces.add(formerPiece);            	
+            	GameScreen.stage.addActor(newPiece);
 				break;
 			case 1:
-				pieces.remove(tile.getPiece());
-				tile.setPiece(new Bishop(tile.getPiece().color(), (int)tile.getPos().x, (int)tile.getPos().y));
-				pieces.add(tile.getPiece());
+				pieces.remove(formerPiece);
+				newPiece = new Bishop(formerPiece.color(), (int)tile.getPos().x, (int)tile.getPos().y);
+				tile.setPiece(newPiece);
+				pieces.add(formerPiece);            	
+            	GameScreen.stage.addActor(newPiece);
 				break;
 			default:
 				break;

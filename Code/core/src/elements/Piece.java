@@ -38,10 +38,8 @@ public abstract class Piece extends Actor {
 		}else {
 			setColor(0.25f, 0.25f, 0.25f, 1f);
 		}
-		
 		setPosition(GameScreen.board.getTile(x, y).getX(), GameScreen.board.getTile(x, y).getY());
 		setSize(GameScreen.board.getTile(x, y).getWidth(),  GameScreen.board.getTile(x, y).getHeight());
-		GameScreen.stage.addActor(this);
 	}
 
 	@Override

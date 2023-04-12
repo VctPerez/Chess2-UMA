@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
+import utils.Render;
+
 public class Board extends Actor{
 	public static Tile[][] board;
 	//private final float X_OFFSET = 128;
@@ -18,14 +20,20 @@ public class Board extends Actor{
 		board = new Tile[8][8];
 		int color = 1;
 		
+		setPosition(X_OFFSET, Y_OFFSET);
+		setSize(8*Tile_Size, 8*Tile_Size);
+		
 		for(int i = 0; i<8; i++) {
 			for(int j = 0; j<8; j++) {
-				board[i][j]= new Tile(i+1, j+1, X_OFFSET+(i*Tile_Size), Y_OFFSET+(j*Tile_Size), Tile_Size, color);
+				if(Render.hosting) {
+					board[i][j]= new Tile(i+1, j+1, X_OFFSET+(i*Tile_Size), Y_OFFSET+(j*Tile_Size), Tile_Size, color);
+				}else {					
+					board[i][j]= new Tile(i+1, j+1, X_OFFSET+(7*Tile_Size - i*Tile_Size), Y_OFFSET+(7*Tile_Size - j*Tile_Size), Tile_Size, color);
+				}
 				color = -color;
 			}
 			color = -color;
-		}
-		
+		}	
 	}
 	/**
 	 * Devuelve la casilla en las posicion [x][y] del tablero ([x-1][y-1] en la matriz de casillas)

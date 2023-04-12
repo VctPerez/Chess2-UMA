@@ -69,18 +69,20 @@ public class CreateMatchScreen extends AbstractScreen{
     }
     public void update() throws IOException, InterruptedException {
         if(create.isPressed()){
-            Render.LOBBYSCREEN.create("Victor", true);
+        	Render.hosting = true;
+            Render.LOBBYSCREEN.create("Victor");
             Render.app.setScreen(Render.LOBBYSCREEN);
         } else if (join.isPressed() && !finding) {
             //TODO con textField cosa que me da miedo
             finding = true;
+            Render.hosting = false;
             System.out.println("Introduce tu nombre (espacio) la ip: ");
             Joiner joiner = new Joiner();
             joiner.start();
             joiner.join();
             System.out.println(joiner.getPName() + " " + joiner.getIp());
             Render.guest = new Guest(joiner.getPName(), joiner.getIp());
-            Render.LOBBYSCREEN.create("jugador2", false);
+            Render.LOBBYSCREEN.create("jugador2");
             Render.app.setScreen(Render.LOBBYSCREEN);
         }
     }

@@ -25,8 +25,8 @@ public class LobbyScreen extends AbstractScreen{
     private Text statusP2, p2;
     private boolean finding = false, configured= false;
 
-    public void create(String namePlayer, boolean hosting){
-        if(hosting){
+    public void create(String namePlayer){
+        if(Render.hosting){
             player1 = new Player(namePlayer);
         }else{
             player2 = new Player(namePlayer);

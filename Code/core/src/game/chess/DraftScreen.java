@@ -1,6 +1,8 @@
 package game.chess;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -12,6 +14,10 @@ import utils.*;
 
 public class DraftScreen extends AbstractScreen {
 	public static Stage stage;
+	
+	private Map<String, Piece> draft;
+	
+	
 	Background background;
 
 	@Override
@@ -20,6 +26,7 @@ public class DraftScreen extends AbstractScreen {
 		stage.clear();
 		Gdx.input.setInputProcessor(Render.inputs);
 
+		initDraft();
 		
 		background = new Background();
 		background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -27,6 +34,16 @@ public class DraftScreen extends AbstractScreen {
 		// -------------------------------
 
 		stage.addActor(background);
+	}
+	
+	private void initDraft() {
+		draft = new HashMap<String, Piece>();
+		draft.put("Pawn", null);
+		draft.put("Knight", null);
+		draft.put("Rook", null);
+		draft.put("Bishop", null);
+		draft.put("Queen", null);
+		draft.put("King", null);
 	}
 
 	@Override
