@@ -2,16 +2,10 @@ package game.chess;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.*;
 
 import elements.Background;
@@ -28,11 +22,7 @@ import elements.pieces.Knight;
 import elements.pieces.Pawn;
 import elements.pieces.Queen;
 import elements.pieces.Rook;
-import utils.Image;
 import utils.Render;
-import utils.Resources;
-import utils.Text;
-import utils.TextButton;
 
 import java.util.ArrayList;
 
@@ -61,8 +51,8 @@ public class GameScreen extends AbstractScreen {
 	public static Vector2 whiteKing = new Vector2(5,1), blackKing = new Vector2(5,8);
 	
 	//Saber para cada rey si está en jaque o no
-	private static boolean  whiteMate;
-	private static boolean blackMate;
+	private static boolean whiteCheck;
+	private static boolean blackCheck;
 	private static boolean whiteCheckMate;
 	private static boolean blackCheckMate;
 	public static ArrayList<Piece> whitePieces;
@@ -106,8 +96,8 @@ public class GameScreen extends AbstractScreen {
 		
 		PLAYER = true;
 		
-		whiteMate=false;
-		blackMate=false;
+		whiteCheck =false;
+		blackCheck =false;
 		whiteCheckMate = false;
 		blackCheckMate=false;
 
@@ -292,8 +282,8 @@ public class GameScreen extends AbstractScreen {
 	 * 
 	 * @return true si alguno de los reyes está en mate.
 	 */
-	private static boolean isMate() {
-		return blackMate || whiteMate;
+	private static boolean isCheck() {
+		return blackCheck || whiteCheck;
 	}
 	
 	/**
@@ -301,31 +291,32 @@ public class GameScreen extends AbstractScreen {
 	 * @param next_x
 	 * @param next_y
 	 */
-	private static void isMate(float next_x, float next_y) {
+	private static boolean isCheck(float next_x, float next_y) {
 		ArrayList<Vector2> nextTile_validMovements = nextTile.getPiece().getValidMovements();
 		if(nextTile.getPiece().color() && nextTile_validMovements.contains(blackKing)) {
-			blackMate=true;
+			blackCheck =true;
 			board.getTile(blackKing.x,blackKing.y ).attacked = true;
 			
 			System.out.println("REY NEGRO EN JAQUE");
 			
 		}else if(!nextTile.getPiece().color() && nextTile_validMovements.contains(whiteKing)){
-			whiteMate=true;
+			whiteCheck =true;
 			board.getTile(whiteKing.x, whiteKing.y).attacked = true;
 			
 			System.out.println("REY BLANCO EN JAQUE");
 		}
+		return isCheck();
 	}
 	
 	/**
 	 * 
-	 * @param Mate
+	 * @param check
 	 * @param pieces
 	 * @return true si el color que está en mate no tiene movimientos disponibles que hagan que el rey esté a salvo.
 	 */
-	private static boolean isCheckMate(boolean Mate, ArrayList<Piece> pieces) {
+	private static boolean isCheckMate(boolean check, ArrayList<Piece> pieces) {
 		boolean isCheckMate = false;
-		if(Mate) {
+		if(check) {
 			ArrayList<Vector2> validMovements = new ArrayList<>();
 			for(Piece piece: pieces) {
 				validMovements.addAll(piece.getValidMovements());
@@ -341,18 +332,16 @@ public class GameScreen extends AbstractScreen {
 	 * Elimina los jaques a cualquier rey ya que si estaba en jaque ya que si has podido hacer un movimiento, lo has puesto a salvo, si no se pudiera seria jaque mate
 	 */
 	private void resetMate() {
-		blackMate=false;
-        whiteMate=false;
+		blackCheck =false;
+        whiteCheck =false;
         board.getTile(blackKing.x,blackKing.y ).attacked = false;
         board.getTile(whiteKing.x, whiteKing.y).attacked = false;
 	}
-	
+
 	public static void mateControl(float next_x, float next_y) {
-		isMate(next_x, next_y);
-        
-        if(isMate()) {
-        	whiteCheckMate = isCheckMate(whiteMate, whitePieces);
-        	blackCheckMate = isCheckMate(blackMate, blackPieces);
+        if(isCheck(next_x,next_y)) {
+        	whiteCheckMate = isCheckMate(whiteCheck, whitePieces);
+        	blackCheckMate = isCheckMate(blackCheck, blackPieces);
         	if(whiteCheckMate) {
         		System.out.println("JAQUE MATE AL REY BLANCO");
         		results.setWinner("NEGRO");
@@ -363,6 +352,58 @@ public class GameScreen extends AbstractScreen {
     			showPopup=true;
         	}
         }
+	}
+
+	/**
+	 * Comprueba el jaque y el jaque mate con las piezas bloqueadas por la pieza movida
+	 * @param x Posición antigua de la pieza
+	 * @param y
+	 * @param next_x Posición actual de la pieza
+	 * @param next_y
+	 */
+	public void mateControl(float x,float y,float next_x, float next_y) {
+		if (!isCheck(next_x, next_y)){
+			ArrayList<Tile> detras = piecesBlockedBy(x,y,PLAYER);
+			Vector2 aux;
+			for (Tile tile:
+				 detras) {
+				aux = tile.getPos();
+				//System.out.println(aux); //Para probar
+				System.out.println(tile.piece); //Para probar
+				if (isCheck(aux.x,aux.y)) break; //Comprueba si es jaque y sale
+			}
+		}
+		mateControl(next_x,next_y);
+	}
+
+
+	/**
+	 * Devuelve las casillas con piezas bloqueadas detrás de las piezas en las coordenadas {@code x}, {@code y} del color indicado
+	 * <p>Ignora peones y caballos porque si una pieza las bloquea no pueden ir más alla de esta</p>
+	 * <p>Se deberá cambiar para incluir piezas futuras</p>
+	 * <p>Puede incluir a la pieza indicada porque no lo he arreglado aún</p>
+	 * @param x posición de la pieza antes de moverse
+	 * @param y posición de la pieza antes de moverse
+	 * @return ArrayList de casillas con piezas detrás de la indicada
+	 */
+	private static ArrayList<Tile> piecesBlockedBy(float x, float y, boolean color){ //Son los Tiles porque las Pieces no tienen su posición
+		ArrayList<Tile> lista = new ArrayList<>();
+		Piece piss;
+		Tile tldr;
+		ArrayList<Vector2> mov;
+		for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 8; j++){
+				tldr = Board.board[i][j];
+				piss = tldr.piece; //Para que el if no ocupe mil páginas, no, piss no está mal escrito
+				if (piss != null && piss.color() == color && (piss instanceof Rook || piss instanceof Queen || piss instanceof Bishop)){
+					mov = piss.getValidMovements(); //Necesito que me de los movimientos de despues de haber movido la pieza
+					if (mov.contains(new Vector2(x,y))){
+						lista.add(tldr);
+					}
+				}
+			}
+		}
+		return lista;
 	}
 	
 	/**
@@ -388,7 +429,7 @@ public class GameScreen extends AbstractScreen {
         		checkPromotion(next_x, next_y);
             }
 			
-            mateControl(next_x, next_y);
+            mateControl(current_x,current_y,next_x, next_y);
 
             changeTurn();
 
@@ -413,7 +454,7 @@ public class GameScreen extends AbstractScreen {
 	 * Elimina el enroque si se ha seleccionado el rey y está en jaque
 	 */
 	private void castleCancel(){
-		if (isMate() && currentTile.getPiece() instanceof King){
+		if (isCheck() && currentTile.getPiece() instanceof King){
 			//Si es jaque se le quita al rey su habilidad de enrocar por la fuerza
 			currentTile_validMovements.remove(new Vector2(current_x - 2, current_y));
 			currentTile_validMovements.remove(new Vector2(current_x + 2, current_y));
@@ -427,7 +468,7 @@ public class GameScreen extends AbstractScreen {
 	 */
 	private void checkPromotion(float next_x, float next_y) {
 		if ((next_y == 8.0 || next_y == 1.0)) {//Implementar que se pueda escoger entre todas las piezas posibles
-			System.out.println("A");
+			System.out.println("Ascensión");
 			promoting = true;
 			DropDownMenu menu = new DropDownMenu(nextTile);
 			stage.addActor(menu);

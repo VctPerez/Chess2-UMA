@@ -71,4 +71,10 @@ public class Knight extends Piece {
 	     return Reader.leerTramo(12, 21);
 	}
 
+	@Override
+	public String toString() {
+		String str = super.toString();
+		return str.replace("X","Knight");
+	}
+
 }

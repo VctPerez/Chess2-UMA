@@ -112,8 +112,12 @@ public class Pawn extends Piece{
 	     Reader = new LectorLineas("files/lang/"+ configReader.leerLinea(1) + "Clasicas.txt");
 	     return Reader.leerTramo(1, 5);
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		String str = super.toString();
+		return str.replace("X","Pawn");
+	}
 	
 	
 	

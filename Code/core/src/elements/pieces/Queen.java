@@ -90,8 +90,12 @@ public class Queen extends Piece{
 	     Reader = new LectorLineas("files/lang/"+ configReader.leerLinea(1) + "Clasicas.txt");
 	     return Reader.leerTramo(34, 38);
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		String str = super.toString();
+		return str.replace("X","Queen");
+	}
 	
 	
 	

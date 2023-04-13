@@ -83,7 +83,10 @@ public class Bishop extends Piece{
 	     Reader = new LectorLineas("files/lang/"+ configReader.leerLinea(1) + "Clasicas.txt");
 	     return Reader.leerTramo(7, 10);
 	}
-	
-	
 
+	@Override
+	public String toString() {
+		String str = super.toString();
+		return str.replace("X","Bishop");
+	}
 }

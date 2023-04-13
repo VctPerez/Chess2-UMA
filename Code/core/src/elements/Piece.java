@@ -243,4 +243,20 @@ public abstract class Piece extends Actor {
 	public String getInfo() {
 		return "";
 	}
+
+	/**
+	 * Devuelve el nombre del tipo de la pieza y su posición si está viva en un String
+	 * <p>Se debe reemplazar la x por el nombre de verdad en sus subclases</p>
+	 */
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("{X");
+		if (alive) {
+			sb.append(",(").append(x).append(",").append(y).append(")}");
+		} else {
+			sb.append(",Dead}");
+		}
+		return sb.toString();
+	}
 }
