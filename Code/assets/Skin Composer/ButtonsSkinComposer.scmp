@@ -1785,9 +1785,17 @@ jsonData: {
 	customClasses: []
 }
 preferences: {
+	export-fonts: {
+		class: java.lang.Boolean
+		value: false
+	}
 	id: {
 		class: java.lang.Integer
 		value: 205366201
+	}
+	last-import-export-path: {
+		class: java.lang.String
+		value: C:/Users/adrid/Documents/GitHub/Chess2-UMA/Code/assets/Skin Composer/UIStyle.json
 	}
 	resources-relative: {
 		class: java.lang.Boolean
