@@ -25,17 +25,20 @@ public class DraftScreen extends AbstractScreen {
 	PieceInfo info;
 	TextButton end, next, back;
 	Piece piece;
-	Image Arrow;
-	int cont = 0;
+	Image arrow;
+	int cont = 5;
 
 	@Override
 	public void show() {
 		stage = new Stage(new FitViewport(1280, 720));
 		stage.clear();
+		
 		Gdx.input.setInputProcessor(stage);
-		info = new PieceInfo();
+		
 		background = new Background();
 		background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		
+		info = new PieceInfo();
 		piece = new Pawn(true, 3, 3, info.board);
 		info.infoFrom(piece);
 
@@ -51,12 +54,12 @@ public class DraftScreen extends AbstractScreen {
 	private void initDraft() {
 
 		draft = new LinkedHashMap<String, Image>();
-		draft.put("Peon", new Image(Render.app.getManager().get(Resources.KING_PATH, Texture.class)));
-		draft.put("Caballo", new Image(Render.app.getManager().get(Resources.QUEEN_PATH, Texture.class)));
-		draft.put("Alfil", new Image(Render.app.getManager().get(Resources.ROOK_PATH, Texture.class)));
-		draft.put("Torre", new Image(Render.app.getManager().get(Resources.BISHOP_PATH, Texture.class)));
-		draft.put("Reina", new Image(Render.app.getManager().get(Resources.KNIGHT_PATH, Texture.class)));
-		draft.put("Rey", new Image(Render.app.getManager().get(Resources.PAWN_PATH, Texture.class)));
+		draft.put("King", new Image(Render.app.getManager().get(Resources.KING_PATH, Texture.class)));
+		draft.put("Queen", new Image(Render.app.getManager().get(Resources.QUEEN_PATH, Texture.class)));
+		draft.put("Rook", new Image(Render.app.getManager().get(Resources.ROOK_PATH, Texture.class)));
+		draft.put("Bishop", new Image(Render.app.getManager().get(Resources.BISHOP_PATH, Texture.class)));
+		draft.put("Knight", new Image(Render.app.getManager().get(Resources.KNIGHT_PATH, Texture.class)));
+		draft.put("Pawn", new Image(Render.app.getManager().get(Resources.PAWN_PATH, Texture.class)));
 
 		int i = 0;
 		for (Image piece : draft.values()) {
@@ -65,29 +68,27 @@ public class DraftScreen extends AbstractScreen {
 			i++;
 			stage.addActor(piece);
 		}
-		Arrow=new Image(Render.app.getManager().get(Resources.ARROW_PATH, Texture.class));
-		Arrow.setPosition(80, 100+100*5);
-		stage.addActor(Arrow);
+		
+		arrow=new Image(Render.app.getManager().get(Resources.ARROW_PATH, Texture.class));
+		arrow.setPosition(80, 100+100*cont);
+		stage.addActor(arrow);
 	}
 
 	private void initButtons() {
-		Text endText, nextText, backText;
-		endText = new Text(Resources.FONT_MENU_PATH, 20, Color.WHITE, 3);
-		endText.setText("Finalizar"); // Botones con nombre momentaneos, se cambiara y se a�adira a los ficheros de
-										// idiomas
-		endText.setPosition(50, 50);
+		Text nextText, backText;// Botones con nombre momentaneos, se cambiara y se a�adira a los ficheros de idiomas
+
+		
 		nextText = new Text(Resources.FONT_MENU_PATH, 20, Color.WHITE, 3);
 		nextText.setText("Siguiente");
-		nextText.setPosition(600, 50);
+		nextText.setPosition(500, 50);
+		
 		backText = new Text(Resources.FONT_MENU_PATH, 20, Color.WHITE, 3);
 		backText.setText("Atras");
-		backText.setPosition(300, 50);
+		backText.setPosition(200, 50);
 
-		end = new TextButton(endText);
 		next = new TextButton(nextText);
 		back = new TextButton(backText);
 
-		stage.addActor(end);
 		stage.addActor(next);
 		stage.addActor(back);
 
@@ -95,66 +96,73 @@ public class DraftScreen extends AbstractScreen {
 	}
 
 	public void changePiece() {
+		info.clearBoard(piece);
 		switch (cont) {
-		case 0:
-			info.cleanBoard(piece);
+		case 5:
+			
+			//se crean dos casillas en medio de la pantalla (puede que las casillas sea mejor crearlas antes y solo cambiar las piezas con setPiece) la info se relaciona con la casilla en la que hagas click no con el change piece
+			//change piece cambia la clase de piezas que salen en las casillas, solo eso.
+			
+			//método que dependiendo de la clave añada unas piezas u otras
+			
 			piece = new Pawn(true, 3, 3, info.board);
-			Arrow.setPosition(80, 100+100*5);
-			info.infoFrom(piece);
-			break;
 
-		case 1:
-			info.cleanBoard(piece);
-			piece = new Knight(true, 3, 3, info.board);
-			Arrow.setPosition(80, 100+100*4);
-			info.infoFrom(piece);
-			break;
-
-		case 2:
-			info.cleanBoard(piece);
-			piece = new Bishop(true, 3, 3, info.board);
-			Arrow.setPosition(80, 100+100*3);
-			info.infoFrom(piece);
-			break;
-
-		case 3:
-			info.cleanBoard(piece);
-			piece = new Rook(true, 3, 3, info.board);
-			Arrow.setPosition(80, 100+100*2);
-			info.infoFrom(piece);
 			break;
 
 		case 4:
-			info.cleanBoard(piece);
-			piece = new Queen(true, 3, 3, info.board);
-			Arrow.setPosition(80, 100+100*1);
-			info.infoFrom(piece);
+			
+			piece = new Knight(true, 3, 3, info.board);
+
 			break;
 
-		case 5:
-			info.cleanBoard(piece);
+		case 3:
+			
+			piece = new Bishop(true, 3, 3, info.board);
+
+			break;
+
+		case 2:
+			
+			piece = new Rook(true, 3, 3, info.board);
+
+			break;
+
+		case 1:
+			
+			piece = new Queen(true, 3, 3, info.board);
+
+			break;
+
+		case 0:
+			
 			piece = new King(true, 3, 3, info.board);
-			Arrow.setPosition(80, 100+100*0);
-			info.infoFrom(piece);
+
 			break;
 		}
+		arrow.setPosition(80, 100+100*cont);
+		info.infoFrom(piece);
 	}
 
 	public void update() {
-		if (next.isClicked()) {
+		if (next.isClicked()) {// hacer que se cambie el valor de la clave actual del mapa
+			if (cont > 0) {
+				cont--;
+				changePiece();
+			}else {
+				Render.app.setScreen(new GameScreen());
+			}
+		}
+		if (back.isClicked()) {
 			if (cont < 5) {
 				cont++;
 				changePiece();
 			}
 		}
-		if (back.isClicked()) {
-			if (cont > 0) {
-				cont--;
-				changePiece();
-			}
-		}
-		if (end.isPressed()) {
-			Render.app.setScreen(new GameScreen());
+		
+		if(cont==0){
+			next.setText("Finalizar");
+		}else {
+			next.setText("Siguiente");
 		}
 	}
 
@@ -162,7 +170,9 @@ public class DraftScreen extends AbstractScreen {
 	public void render(float delta) {
 		Render.clearScreen();
 		Render.Batch.begin();
+		
 		update();
+		
 		stage.draw();
 		stage.act();
 

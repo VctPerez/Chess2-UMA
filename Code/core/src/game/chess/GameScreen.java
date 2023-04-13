@@ -102,7 +102,7 @@ public class GameScreen extends AbstractScreen {
 		
 		Gdx.input.setInputProcessor(stage);
 		
-		Render.hosting=false;
+		Render.hosting=true;
 		
 		PLAYER = true;
 		
@@ -246,7 +246,7 @@ public class GameScreen extends AbstractScreen {
 		for (Vector2 vector : currentTile_validMovements) {
 			Tile tile = board.getTile(vector.x, vector.y);
 			//En caso de que haya una pieza enemiga la resalta en rojo
-			if(tile.piece!=null && tile.piece.color()!=b) {
+			if(tile.getPiece()!=null && tile.getPiece().color()!=b) {
 				tile.attacked=true;
 			}else {
 				tile.highlight = true;
@@ -261,7 +261,7 @@ public class GameScreen extends AbstractScreen {
 		
 		for (Vector2 vector : currentTile_validMovements) {
 			Tile tile = board.getTile(vector.x, vector.y);
-			if(tile.piece!=null) {
+			if(tile.getPiece()!=null) {
 				tile.attacked=false;
 			}else {
 				tile.highlight = false;
@@ -281,7 +281,7 @@ public class GameScreen extends AbstractScreen {
 
 			castleCancel();
 
-			highlight(currentTile.piece.color());
+			highlight(currentTile.getPiece().color());
 			
 			System.out.println(currentTile_validMovements.toString());
 			isPieceSelected = true;

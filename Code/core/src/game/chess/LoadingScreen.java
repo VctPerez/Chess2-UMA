@@ -25,7 +25,7 @@ public class LoadingScreen extends AbstractScreen{
         sounds.add(Render.app.getManager().get(Resources.LODINGSOUND3, Sound.class));
         sounds.add(Render.app.getManager().get(Resources.LODINGSOUND4, Sound.class));
         selectParams();
-        sounds.get(indexSound).play();
+        //sounds.get(indexSound).play();
     }
 
     @Override

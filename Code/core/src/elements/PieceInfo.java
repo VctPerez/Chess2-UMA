@@ -25,29 +25,36 @@ public class PieceInfo extends Actor{
 	public void infoFrom(Piece piece) {
 		board.getTile(3, 3).setPiece(piece);
 		
-		for (Vector2 vector : piece.posibleMovements()) {
-			Tile tile = board.getTile(vector.x, vector.y);
-			if(tile.piece!=null && tile.piece.color()!=piece.color) {
-				tile.attacked=true;
-			}else {
-				tile.highlight = true;
-			}
-		}
-		
-
+		highlight(piece);
         
         info = new Text(Resources.FONT_MENU_PATH,20,Color.WHITE,3);
         info.setPosition(760, 665);
         info.setText(piece.getInfo());
 	}
 	
-	public void cleanBoard(Piece piece) {
+	public void clearBoard(Piece piece) {
 		for (Vector2 vector : piece.posibleMovements()) {
 			Tile tile = board.getTile(vector.x, vector.y);
 			if(tile.piece!=null && tile.piece.color()!=piece.color) {
 				tile.attacked=false;
 			}else {
 				tile.highlight = false;
+			}
+		}
+	}
+	
+	/**
+	 * Resalta las casillas contenidas en el array de movimientos válidos.
+	 * @param b 
+	 */
+	private void highlight(Piece piece) {
+		for (Vector2 vector : piece.posibleMovements()) {
+			Tile tile = board.getTile(vector.x, vector.y);
+			//En caso de que haya una pieza enemiga la resalta en rojo
+			if(tile.getPiece()!=null && tile.getPiece().color()!=piece.color()) {
+				tile.attacked=true;
+			}else {
+				tile.highlight = true;
 			}
 		}
 	}

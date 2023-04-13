@@ -27,6 +27,10 @@ public class TextButton extends Actor implements Button {
         mouseOverSound = Render.app.getManager().get(Resources.TEXTBUTTON_HOVERSOUND);
         clickSound = Render.app.getManager().get(Resources.TEXTBUTTON_CLICKSOUND);
     }
+    
+    public void setText(String txt) {
+    	text.setText(txt);;
+    }
 
     @Override
     public void resize(float width, float height) {
@@ -53,11 +57,11 @@ public class TextButton extends Actor implements Button {
     public void checkPress() {
         if(mouseOver()){
             if(!isSelected){
-                mouseOverSound.play(0.2f);
+                //mouseOverSound.play(0.2f);
                 isSelected = true;
             }
             if(Render.inputs.isClicked()){
-                clickSound.play(0.2f);
+                //clickSound.play(0.2f);
                 if(!isPressed && remarked != null)text.setColor(remarked);
                 else text.setColor(normalColor);
                 isPressed = !isPressed;
