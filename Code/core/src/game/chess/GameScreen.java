@@ -292,14 +292,15 @@ public class GameScreen extends AbstractScreen {
 	 * @param next_y
 	 */
 	private static boolean isCheck(float next_x, float next_y) {
-		ArrayList<Vector2> nextTile_validMovements = nextTile.getPiece().getValidMovements();
-		if(nextTile.getPiece().color() && nextTile_validMovements.contains(blackKing)) {
+		Tile tile = board.getTile(next_x,next_y);
+		ArrayList<Vector2> nextTile_validMovements = tile.getPiece().getValidMovements();
+		if(tile.getPiece().color() && nextTile_validMovements.contains(blackKing)) {
 			blackCheck =true;
 			board.getTile(blackKing.x,blackKing.y ).attacked = true;
 			
 			System.out.println("REY NEGRO EN JAQUE");
 			
-		}else if(!nextTile.getPiece().color() && nextTile_validMovements.contains(whiteKing)){
+		}else if(!tile.getPiece().color() && nextTile_validMovements.contains(whiteKing)){
 			whiteCheck =true;
 			board.getTile(whiteKing.x, whiteKing.y).attacked = true;
 			
@@ -376,7 +377,6 @@ public class GameScreen extends AbstractScreen {
 		mateControl(next_x,next_y);
 	}
 
-
 	/**
 	 * Devuelve las casillas con piezas bloqueadas detrás de las piezas en las coordenadas {@code x}, {@code y} del color indicado
 	 * <p>Ignora peones y caballos porque si una pieza las bloquea no pueden ir más alla de esta</p>
@@ -396,7 +396,7 @@ public class GameScreen extends AbstractScreen {
 				tldr = Board.board[i][j];
 				piss = tldr.piece; //Para que el if no ocupe mil páginas, no, piss no está mal escrito
 				if (piss != null && piss.color() == color && (piss instanceof Rook || piss instanceof Queen || piss instanceof Bishop)){
-					mov = piss.getValidMovements(); //Necesito que me de los movimientos de despues de haber movido la pieza
+					mov = piss.getValidMovements();
 					if (mov.contains(new Vector2(x,y))){
 						lista.add(tldr);
 					}
