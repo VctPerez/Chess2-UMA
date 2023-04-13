@@ -1,0 +1,12 @@
+{
+"characters": "",
+"size": 46,
+"hinting": "AutoMedium",
+"color": "TEXT_COLOR",
+"colorValue": -1,
+"gamma": 1.8,
+"renderCount": 2,
+"kerning": true,
+"minFilter": "Nearest",
+"magFilter": "Nearest"
+}

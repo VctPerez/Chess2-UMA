@@ -8,6 +8,8 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+
 import utils.IOS;
 import utils.Render;
 import utils.Resources;
@@ -45,7 +47,8 @@ public class Chess2 extends Game {
 		manager.load(Resources.SELECTEDBAR_PATH, Texture.class);
 		manager.load(Resources.UNSELECTEDBAR_PATH, Texture.class);
 
-
+		manager.load(Resources.SKIN_PATH,Skin.class);
+		
 		//MUSIC & SOUNDS
 		manager.load(Resources.MENU_THEME, Music.class);
 		manager.load(Resources.PIECEMOVE_SOUND, Sound.class);
@@ -80,7 +83,7 @@ public class Chess2 extends Game {
 		loadResources();
 		//while(!manager.isFinished());
 		Render.LOADINGSCREEN = new LoadingScreen();
-		this.setScreen(Render.LOADINGSCREEN);
+//		this.setScreen(Render.CONFIGSCREEN);
 
 		//Cargamos en Render solo pantallas que sean necesarias crear una sola vez (Para ahorrarnos tener que crear nuevas innecesariamente), 
 		//otras como el GameScreen necesita ser creadas de nuevo al volverse a usar
@@ -92,9 +95,7 @@ public class Chess2 extends Game {
 		Render.CREATEMATCHSCREEN = new CreateMatchScreen();
 		Render.DRAFTSCREEN = new DraftScreen();
 
-		//this.setScreen(Render.CREATEMATCHSCREEN);
-		//this.setScreen(Render.MAINSCREEN);
-		this.setScreen(Render.DRAFTSCREEN);
+		this.setScreen(Render.MAINSCREEN);
 
 	}
 
