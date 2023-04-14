@@ -291,8 +291,6 @@ public class GameScreen extends AbstractScreen {
 	
 	/**
 	 * Comprueba si la pieza en la posición [next_x, next_y] pone en peligro al rey con alguno de sus posibles movimientos.
-	 * @param next_x
-	 * @param next_y
 	 */
 	private static boolean updateCheck() {
 
@@ -308,7 +306,7 @@ public class GameScreen extends AbstractScreen {
 			
 		}else if(!nextTile.getPiece().color()){
 			for(Piece piece: blackPieces) {
-				if(piece.getValidMovements().contains(blackKing)) {
+				if(piece.getValidMovements().contains(whiteKing)) {
 					whiteCheck =true;
 					board.getTile(whiteKing.x, whiteKing.y).attacked = true;
 					
@@ -378,9 +376,9 @@ public class GameScreen extends AbstractScreen {
         if (currentTile_validMovements.contains(new Vector2(next_x, next_y)) || debugMode) {
 
         	checkCastling(next_x);
-        	
+
             currentTile.move(next_x, next_y);
-            
+
             resetMate();
         	 
             if(nextTile.getPiece() instanceof Pawn) {
