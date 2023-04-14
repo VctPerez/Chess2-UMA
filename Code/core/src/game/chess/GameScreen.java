@@ -282,11 +282,19 @@ public class GameScreen extends AbstractScreen {
 	}
 
 	/**
+	 * 
+	 * @return true si alguno de los reyes está en mate.
+	 */
+	private static boolean isCheck() {
+		return blackCheck || whiteCheck;
+	}
+	
+	/**
 	 * Comprueba si la pieza en la posición [next_x, next_y] pone en peligro al rey con alguno de sus posibles movimientos.
 	 * @param next_x
 	 * @param next_y
 	 */
-	private static boolean isCheck() {
+	private static boolean updateCheck() {
 
 		if(nextTile.getPiece().color()) {
 			for(Piece piece: whitePieces) {
@@ -308,7 +316,7 @@ public class GameScreen extends AbstractScreen {
 				}
 			}
 		}
-		return blackCheck || whiteCheck;
+		return isCheck();
 	}
 	
 	/**
@@ -342,7 +350,10 @@ public class GameScreen extends AbstractScreen {
 	}
 
 	public static void mateControl(float next_x, float next_y) {
-        if(isCheck()) {
+        
+		updateCheck();
+		
+		if(isCheck()) {
         	whiteCheckMate = isCheckMate(whiteCheck, whitePieces);
         	blackCheckMate = isCheckMate(blackCheck, blackPieces);
         	if(whiteCheckMate) {
@@ -374,8 +385,7 @@ public class GameScreen extends AbstractScreen {
         	 
             if(nextTile.getPiece() instanceof Pawn) {
 
-            	checkPassant(next_x, next_y);
-        	    
+            	checkPassant(next_x, next_y);    
         		
         		checkPromotion(next_x, next_y);
             }
@@ -393,7 +403,8 @@ public class GameScreen extends AbstractScreen {
 	 */
 	private void checkCastling(float next_x) {
 		if(currentTile.getPiece() instanceof King && next_x==current_x-2) {
-			board.getTile(1, current_y).move(current_x-1,current_y);			
+			board.getTile(1, current_y).move(current_x-1,current_y);
+			
 		}else if(currentTile.getPiece() instanceof King && next_x==current_x+2){
 			board.getTile(8, current_y).move(current_x+1,current_y);
 		}
@@ -404,8 +415,7 @@ public class GameScreen extends AbstractScreen {
 	 * Elimina el enroque si se ha seleccionado el rey y está en jaque
 	 */
 	private void castleCancel(){
-		if (isCheck() && currentTile.getPiece() instanceof King){//este metodo tiene que estar dentro del rey
-
+		if (isCheck() && currentTile.getPiece() instanceof King){
 			//Si es jaque se le quita al rey su habilidad de enrocar por la fuerza
 			currentTile_validMovements.remove(new Vector2(current_x - 2, current_y));
 			currentTile_validMovements.remove(new Vector2(current_x + 2, current_y));
