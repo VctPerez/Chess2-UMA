@@ -26,13 +26,14 @@ public class DraftScreen extends AbstractScreen {
 	private ArrayList<String> pawns, knights, rooks, bishops, queens, kings;
 	
 	public ArrayList<String> finalDraft;
+	private String currentPieceSelection;
 	
 	Background background;
 	PieceInfo info;
 	TextButton end, next, back;
 	Piece piece;
 	Image arrow;
-	int cont = 5;
+	int cont = 0;
 	
 	TileButton tile1, tile2;
 
@@ -42,6 +43,8 @@ public class DraftScreen extends AbstractScreen {
 		stage.clear();
 		
 		Gdx.input.setInputProcessor(stage);
+		
+		finalDraft = new ArrayList<>();
 		
 		background = new Background();
 		background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -78,6 +81,8 @@ public class DraftScreen extends AbstractScreen {
 				tile1.showFrame();
 				tile2.hideFrame();
 				
+				currentPieceSelection = tile1.getPiece();
+				
 			    return true;
 			    }
 			} );
@@ -87,6 +92,8 @@ public class DraftScreen extends AbstractScreen {
 			
 				tile2.showFrame();
 				tile1.hideFrame();
+				
+				currentPieceSelection = tile2.getPiece();
 				
 			    return true;
 			    }
@@ -187,7 +194,7 @@ public class DraftScreen extends AbstractScreen {
 	public void changePiece() {
 		info.clearBoard(piece);
 		switch (cont) {
-		case 5:
+		case 0:
 			
 			//se crean dos casillas en medio de la pantalla (puede que las casillas sea mejor crearlas antes y solo cambiar las piezas con setPiece) la info se relaciona con la casilla en la que hagas click no con el change piece
 			//change piece cambia la clase de piezas que salen en las casillas, solo eso.
@@ -200,62 +207,66 @@ public class DraftScreen extends AbstractScreen {
 
 			break;
 
-		case 4:
+		case 1:
 			
 			updateTileButtons(knights);
 			piece = new Knight(true, 3, 3, info.board);
 
 			break;
 
-		case 3:
+		case 2:
 			
 			updateTileButtons(bishops);
 			piece = new Bishop(true, 3, 3, info.board);
 
 			break;
 
-		case 2:
+		case 3:
 			
 			updateTileButtons(rooks);
 			piece = new Rook(true, 3, 3, info.board);
 
 			break;
 
-		case 1:
+		case 4:
 			
 			updateTileButtons(queens);
 			piece = new Queen(true, 3, 3, info.board);
 
 			break;
 
-		case 0:
+		case 5:
 
 			updateTileButtons(kings);
 			piece = new King(true, 3, 3, info.board);
 
 			break;
 		}
-		arrow.setPosition(80, 100+100*cont);
+		arrow.setPosition(80, 100+100*(5-cont));
 		info.infoFrom(piece);
 	}
 
 	public void update() {
 		if (next.isPressed()) {// hacer que se cambie el valor de la clave actual del mapa
-			if (cont > 0) {
-				cont--;
+			if (cont < 5) {
+				finalDraft.add(currentPieceSelection);
+				cont++;
 				changePiece();
 			}else {
 				Render.app.setScreen(new GameScreen());
 			}
 		}
 		if (back.isPressed()) {
-			if (cont < 5) {
-				cont++;
+			if (cont > 0) {
+				finalDraft.remove(finalDraft.size()-1);
+				cont--;
 				changePiece();
 			}
 		}
 		
-		if(cont==0){
+		System.out.println(finalDraft.toString());
+		
+		if(cont==5){
 			next.setText("Finalizar");
 		}else {
 			next.setText("Siguiente");

@@ -13,6 +13,7 @@ import utils.Resources;
 
 public class TileButton extends Actor{
 	private ShapeRenderer tile;
+	private String piecePath;
 	private Image piece, frame;
 	private boolean showFrame;
 	
@@ -31,10 +32,15 @@ public class TileButton extends Actor{
 		showFrame = false;
 	}
 	
-	public void setPiece(String piece) {
-		this.piece = new Image(Render.app.getManager().get(piece, Texture.class)); 
+	public void setPiece(String piecePath) {
+		this.piecePath=piecePath;
+		this.piece = new Image(Render.app.getManager().get(piecePath, Texture.class)); 
 		this.piece.setSize(getWidth(), getHeight());
 		this.piece.setPosition(getX(), getY());
+	}
+	
+	public String getPiece() {
+		return piecePath;
 	}
 	
 	public void showFrame() {
