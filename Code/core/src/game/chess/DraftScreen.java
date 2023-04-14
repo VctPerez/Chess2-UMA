@@ -27,6 +27,8 @@ public class DraftScreen extends AbstractScreen {
 	Piece piece;
 	Image arrow;
 	int cont = 5;
+	
+	Tile tile1, tile2;
 
 	@Override
 	public void show() {
@@ -41,11 +43,17 @@ public class DraftScreen extends AbstractScreen {
 		info = new PieceInfo();
 		piece = new Pawn(true, 3, 3, info.board);
 		info.infoFrom(piece);
+		
+		tile1= new Tile(1,1,325f, 450f, 168f, 0);
+		tile2= new Tile(1,1,325f, 150f, 168f, 0);
+		
 
 		// -------------------------------
 
 		stage.addActor(background);
 		stage.addActor(info);
+		stage.addActor(tile1);
+		stage.addActor(tile2);
 		initButtons();
 		initDraft();
 
@@ -80,11 +88,11 @@ public class DraftScreen extends AbstractScreen {
 		
 		nextText = new Text(Resources.FONT_MENU_PATH, 20, Color.WHITE, 3);
 		nextText.setText("Siguiente");
-		nextText.setPosition(500, 50);
+		nextText.setPosition(550, 50);
 		
 		backText = new Text(Resources.FONT_MENU_PATH, 20, Color.WHITE, 3);
 		backText.setText("Atras");
-		backText.setPosition(200, 50);
+		backText.setPosition(175, 50);
 
 		next = new TextButton(nextText);
 		back = new TextButton(backText);
