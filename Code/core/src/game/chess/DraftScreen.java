@@ -170,8 +170,8 @@ public class DraftScreen extends AbstractScreen {
 		backText.setText("Atras");
 		backText.setPosition(175, 50);
 
-		next = new TextButton(nextText);
-		back = new TextButton(backText);
+		next = new TextButton("Siguiente");
+		back = new TextButton("Atras");
 
 		stage.addActor(next);
 		stage.addActor(back);
@@ -240,7 +240,7 @@ public class DraftScreen extends AbstractScreen {
 	}
 
 	public void update() {
-		if (next.isClicked()) {// hacer que se cambie el valor de la clave actual del mapa
+		if (next.isPressed()) {// hacer que se cambie el valor de la clave actual del mapa
 			if (cont > 0) {
 				cont--;
 				changePiece();
@@ -248,7 +248,7 @@ public class DraftScreen extends AbstractScreen {
 				Render.app.setScreen(new GameScreen());
 			}
 		}
-		if (back.isClicked()) {
+		if (back.isPressed()) {
 			if (cont < 5) {
 				cont++;
 				changePiece();

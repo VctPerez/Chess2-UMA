@@ -1,13 +1,25 @@
 {
 com.badlogic.gdx.graphics.g2d.BitmapFont: {
-	TextButtons_FONT: {
+	Default_Label_FONT: {
+		file: ./fonts/Default_Label_FONT.fnt
+		scaledSize: -1
+		markupEnabled: false
+		flip: false
+	}
+	Default_TextButtons_FONT: {
 		file: ./fonts/TextButtons_FONT.fnt
 		scaledSize: -1
 		markupEnabled: false
 		flip: false
 	}
-	TextField_FONT: {
+	Default_TextField_FONT: {
 		file: ./fonts/TextField_FONT.fnt
+		scaledSize: -1
+		markupEnabled: false
+		flip: false
+	}
+	TitleStyle_Label_FONT: {
+		file: ./fonts/TitleStyle_Label_FONT.fnt
 		scaledSize: -1
 		markupEnabled: false
 		flip: false
@@ -51,9 +63,19 @@ com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
 		color: CURSOR_COLOR
 	}
 }
+com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
+	default: {
+		font: Default_Label_FONT
+		fontColor: TEXT_COLOR
+	}
+	TitleStyle: {
+		font: TitleStyle_Label_FONT
+		fontColor: TEXT_COLOR
+	}
+}
 com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 	default: {
-		font: TextButtons_FONT
+		font: Default_TextButtons_FONT
 		fontColor: TEXT_COLOR
 		downFontColor: DOWN_COLOR
 		overFontColor: OVER_FONT_COLOR
@@ -62,12 +84,17 @@ com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 }
 com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
 	default: {
-		font: TextField_FONT
+		font: Default_TextField_FONT
 		fontColor: TEXT_COLOR
 		background: TextField_UNSELECTED
 		focusedBackground: TextField_SELECTED
 		cursor: CURSOR_SELECTION_PIXEL
 		selection: CURSOR_SELECTION_PIXEL
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle: {
+	default: {
+		label: default
 	}
 }
 }

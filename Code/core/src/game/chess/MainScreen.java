@@ -3,6 +3,9 @@ package game.chess;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import elements.Background;
@@ -13,8 +16,9 @@ public class MainScreen extends AbstractScreen {
 	public static Stage stage;
 	Background background;	
 	
-    TextButton play,exit,confg,reglas;
-    Text playText,exitText,confgText,Titulo,reglasText;
+    TextButton[] textButton;
+    Table table;
+    Label title;
     Image Logo,news;
     LectorLineas languageReader, configReader;
 
@@ -22,49 +26,32 @@ public class MainScreen extends AbstractScreen {
     
     @Override
     public void show() {
+    	
     	stage = new Stage(new FitViewport(1280, 720));
+    	table = new Table();
+    	table.setFillParent(true);
+    	table.debug();
+    	
+    	textButton = new TextButton[4];
+    	
     	background = new Background();
     	background.setColor(new Color(60/255f, 60/255f,60/255f,1f));
     	background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     	
     	//Abrir los ficheros de configuracion e idioma
     	configReader = new LectorLineas("files/config.txt"); //Lector del txt configuracion para sacar el idioma
-    	languageReader = new LectorLineas("files/lang/"+ configReader.leerLinea(1) + "main.txt"); //Abrimos el idioma que toca del archivo configuracion
-    	//languageReader = new LectorLineas("files/lang/esp/main.txt"); //Abrimos el idioma que toca del archivo configuracion
-
-    	Titulo = new Text(Resources.FONT_MENU_PATH,100,Color.WHITE,3);
-    	Titulo.setText(languageReader.leerLinea(8));
-    	playText = new Text(Resources.FONT_MENU_PATH,50,Color.WHITE,3);
-    	playText.setText(languageReader.leerLinea(1)); //Jugar = Linea 1
-    	exitText = new Text(Resources.FONT_MENU_PATH,50,Color.WHITE,3);
-    	exitText.setText(languageReader.leerLinea(3)); //Salir = Linea 3
-    	confgText = new Text(Resources.FONT_MENU_PATH,50,Color.WHITE,3);
-    	confgText.setText(languageReader.leerLinea(4)); //Configuracion = Linea 4
-    	reglasText = new Text(Resources.FONT_MENU_PATH,50,Color.WHITE,3);
-    	reglasText.setText(languageReader.leerLinea(7)); //Configuracion = Linea 4
+    	//languageReader = new LectorLineas("files/lang/"+ configReader.leerLinea(1) + "main.txt"); //Abrimos el idioma que toca del archivo configuracion
+    	languageReader = new LectorLineas("files/lang/esp/main.txt"); //Abrimos el idioma que toca del archivo configuracion
+     
+    	createTableElements();
+        setupTable();
     	
-    	Titulo.setPosition(100,600);
-        playText.setPosition(100,400);
-        exitText.setPosition(100,100);
-        confgText.setPosition(100,300);
-        reglasText.setPosition(100, 200);
-        play = new TextButton(playText);
-        exit = new TextButton(exitText);
-        confg = new TextButton(confgText);
-        reglas = new TextButton(reglasText);
-        
         Logo = new Image(Resources.LOGO_PATH);
         Logo.setPosition(800,-50);
         Logo.setSize(500, 500);
         Logo.setTransparency(0.25f);
         
-        stage.addActor(background);
-        stage.addActor(Logo);
-        stage.addActor(play);
-        stage.addActor(exit);
-        stage.addActor(confg);
-        stage.addActor(reglas);
-        stage.addActor(Titulo);
+        addActors();
        
         //TODO scroll con imagenes estilo "noticias del juego"
         //news = new Image(Resources.LOGO_PATH);
@@ -72,9 +59,10 @@ public class MainScreen extends AbstractScreen {
         //news.setSize(500, 500);
         //news.setTransparency(0.25f);
         
-        Gdx.input.setInputProcessor(Render.inputs);
+        Gdx.input.setInputProcessor(stage);
         Render.bgMusic = Render.app.getManager().get(Resources.MENU_THEME);
         Render.bgMusic.setLooping(true);
+        Render.bgMusic.setVolume(0);
         Render.bgMusic.play();
     }
 
@@ -84,30 +72,53 @@ public class MainScreen extends AbstractScreen {
 
         Render.camera.update();
         Render.Batch.setProjectionMatrix(Render.camera.combined);
-
-        Render.Batch.begin();
+        
         //---------------
-
-
+        stage.act();
         stage.draw();
         
-        if(play.isPressed()){
+        if(textButton[0].isPressed()){
             Render.bgMusic.stop();
             Render.app.setScreen(new DraftScreen());
             //Render.app.setScreen(Render.CREATEMATCHSCREEN);
         }
-        if(exit.isPressed()) {
+        if(textButton[1].isPressed()) {
         	Gdx.app.exit();
         }
-        if(confg.isPressed()) {
+        if(textButton[2].isPressed()) {
         	Render.app.setScreen(Render.CONFIGSCREEN);
         }
-        if(reglas.isPressed()){
+        if(textButton[3].isPressed()){
         	Render.app.setScreen(Render.MANUALSCREEN);
         }
         
         //-----------------
-        Render.Batch.end();
+//        Render.Batch.end();
+    }
+    
+    private void createTableElements() {
+    	
+    	title = new Label("chess 2", Render.app.getManager().get(Resources.SKIN_PATH,Skin.class), "default");
+    	
+    	textButton[0] = new TextButton(languageReader.leerLinea(1));//Jugar = Linea 1
+    	textButton[1] = new TextButton(languageReader.leerLinea(4));//Configuracion = Linea 4
+    	textButton[2] = new TextButton(languageReader.leerLinea(7));//Reglas = Linea 7
+    	textButton[3] = new TextButton(languageReader.leerLinea(3));//Salir = Linea 3; 
+    }
+    
+    private void addActors() {
+        stage.addActor(background);
+        stage.addActor(table);
+    }
+    
+    private void setupTable() {
+    	table.left().pad(50);
+    	table.add(title).left().space(50);
+    	table.row();
+    	for (int i = 0 ; i < textButton.length ; i++) {
+    		table.add(textButton[i]).left().space(25);
+        	table.row();
+    	}
     }
 
     @Override
@@ -125,5 +136,7 @@ public class MainScreen extends AbstractScreen {
     @Override
     public void dispose() {
        super.dispose();
+       stage.dispose();
     }
+    
 }
