@@ -10,6 +10,8 @@ import java.util.TreeMap;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
@@ -23,6 +25,7 @@ public class DraftScreen extends AbstractScreen {
 	private Map<String, Image> draft;
 	private ArrayList<String> pawns, knights, rooks, bishops, queens, kings;
 	
+	public ArrayList<String> finalDraft;
 	
 	Background background;
 	PieceInfo info;
@@ -48,22 +51,49 @@ public class DraftScreen extends AbstractScreen {
 		info.infoFrom(piece);
 		
 		
-		tile1= new TileButton(325f, 450f, 168f);
-		tile2= new TileButton(325f, 150f, 168f);
+		
 		
 
 		// -------------------------------
 
 		stage.addActor(background);
 		stage.addActor(info);
-		stage.addActor(tile1);
-		stage.addActor(tile2);
-		initPieceClasses();
 		
+		initPieceClasses();
+		initTileButtons();
 		initButtons();
 		initDraft();
 		
 
+	}
+	
+	private void initTileButtons() {
+		tile1= new TileButton(325f, 450f, 168f);
+		tile2= new TileButton(325f, 150f, 168f);
+		
+		tile1.addCaptureListener(new InputListener() { 
+			@Override
+			    public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+			
+				tile1.showFrame();
+				tile2.hideFrame();
+				
+			    return true;
+			    }
+			} );
+		tile2.addCaptureListener(new InputListener() { 
+			@Override
+			    public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+			
+				tile2.showFrame();
+				tile1.hideFrame();
+				
+			    return true;
+			    }
+			} );
+		
+		stage.addActor(tile1);
+		stage.addActor(tile2);
 	}
 	
 	private void initPieceClasses() {
@@ -124,7 +154,6 @@ public class DraftScreen extends AbstractScreen {
 		}
 		
 		arrow=new Image(Render.app.getManager().get(Resources.ARROW_PATH, Texture.class));
-		arrow.setPosition(80, 100+100*cont);
 		stage.addActor(arrow);
 		changePiece();
 	}
@@ -147,7 +176,7 @@ public class DraftScreen extends AbstractScreen {
 		stage.addActor(next);
 		stage.addActor(back);
 
-		Gdx.input.setInputProcessor(Render.inputs);
+		//Gdx.input.setInputProcessor(Render.inputs);
 	}
 	
 	private void updateTileButtons(ArrayList<String> pieceClass) {
