@@ -61,7 +61,7 @@ public class Queen extends Piece{
 	}
 	
 	/**
-	 * Agrega a movements todos los movimientos posibles de la reina, en todas las direcciones, su maxima cantidad de movimientos, la union de el movimiento del alfin y de la torre
+	 * Agrega a movements todos los movimientos posibles de la reina, en todas las direcciones, su maxima cantidad de movimientos, la union de el movimiento del alfil y de la torre
 	 * @param x
 	 * @param y
 	 * @return
@@ -87,8 +87,16 @@ public class Queen extends Piece{
 	public String getInfo() {
 		 LectorLineas Reader, configReader;
 		 configReader = new LectorLineas("files/config.txt");
-	     Reader = new LectorLineas("files/lang/"+ configReader.leerLinea(1) + "Clasicas.txt");
-	     return Reader.leerTramo(34, 38);
+		String config = configReader.leerLinea(1);
+		Reader = new LectorLineas("files/lang/"+ config + "Clasicas.txt");
+		switch (config){
+			case "esp/":
+				return Reader.leerTramo(34, 38);
+			case "eng/":
+				return Reader.leerTramo(27,31);
+			default:
+				throw new IllegalArgumentException("Configuración errónea");
+		}
 	}
 
 	@Override

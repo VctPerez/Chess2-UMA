@@ -36,6 +36,10 @@ public class MatchResults extends Actor{
 	public void setWinner(String Winner) {
 		matchres.setText("HA GANADO EL " + Winner);
 	}
+
+	public void setDraw() {
+		matchres.setText("Empate");
+	}
 	
 	public void draw(Batch batch, float parentAlpha) {
 		fondoRes.draw(batch, parentAlpha);

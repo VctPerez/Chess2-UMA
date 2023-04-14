@@ -80,8 +80,16 @@ public class Bishop extends Piece{
 	public String getInfo() {
 		 LectorLineas Reader, configReader;
 		 configReader = new LectorLineas("files/config.txt");
-	     Reader = new LectorLineas("files/lang/"+ configReader.leerLinea(1) + "Clasicas.txt");
-	     return Reader.leerTramo(7, 10);
+		String config = configReader.leerLinea(1);
+		Reader = new LectorLineas("files/lang/"+ config + "Clasicas.txt");
+		switch (config){
+			case "esp/":
+				return Reader.leerTramo(7, 10);
+			case "eng/":
+				return Reader.leerTramo(6,8);
+			default:
+				throw new IllegalArgumentException("Configuración errónea");
+		}
 	}
 
 	@Override

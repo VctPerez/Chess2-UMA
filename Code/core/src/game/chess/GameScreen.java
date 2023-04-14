@@ -81,7 +81,7 @@ public class GameScreen extends AbstractScreen {
 	private static MatchResults results;
 
 	//Modo depuracion
-	boolean debugMode = false;
+	private boolean debugMode = false;
 
 	@Override
 	public void show() {
@@ -390,13 +390,47 @@ public class GameScreen extends AbstractScreen {
 			
             mateControl(next_x, next_y);
 
+			stalemateControl();
+			System.out.println(PLAYER && !hasMoves(blackPieces));
             changeTurn();
 
         }
     }
 
 	/**
-	 * Comprueba si el ultimo movimiento era un enroque para mover tambien la torre que corresponda
+	 * Lleva a cabo los cálculos necesarios para saber si se ha llegado a un empate sabiendo que no es jaque mate
+	 * <p>Se llega a empate si no hay movimientos legales pero no es jaque mate</p>
+	 */
+	private void stalemateControl() {
+		if (!isCheck()){
+			if (!PLAYER && !hasMoves(whitePieces)){
+				System.out.println("Las negras han empatado");
+				results.setDraw();
+				showPopup = true;
+
+			} else if (PLAYER && !hasMoves(blackPieces)){
+				System.out.println("Las blancas han empatado");
+				results.setDraw();
+				showPopup = true;
+
+			}
+		}
+	}
+
+	/**
+	 * Devuelve {@code true} si con el conjunto de piezas {@code pisses} no se pueden hacer movimientos, si tiene devuelve {@code false}
+	 * @param pisses las piezas que se usan para la comprobación
+	 */
+	private boolean hasMoves(ArrayList<Piece> pisses) {
+		boolean tieneMov = false;
+		for (int i = 0; i < pisses.size() && !tieneMov; i++) { //Si una pieza tiene movimientos se sale
+			tieneMov = !pisses.get(i).getValidMovements().isEmpty();
+		}
+		return tieneMov;
+	}
+
+	/**
+	 * Comprueba si el último movimiento era un enroque para mover también la torre que corresponda
 	 * @param next_x
 	 */
 	private void checkCastling(float next_x) {

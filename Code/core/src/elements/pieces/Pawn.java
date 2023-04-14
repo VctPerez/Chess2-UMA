@@ -109,8 +109,16 @@ public class Pawn extends Piece{
 	public String getInfo() {
 		 LectorLineas Reader, configReader;
 		 configReader = new LectorLineas("files/config.txt");
-	     Reader = new LectorLineas("files/lang/"+ configReader.leerLinea(1) + "Clasicas.txt");
-	     return Reader.leerTramo(1, 5);
+		 String config = configReader.leerLinea(1);
+	     Reader = new LectorLineas("files/lang/"+ config + "Clasicas.txt");
+		 switch (config){
+			 case "esp/":
+				 return Reader.leerTramo(1, 5);
+			 case "eng/":
+				 return Reader.leerTramo(1,4);
+			 default:
+				 throw new IllegalArgumentException("Configuración errónea");
+		 }
 	}
 
 	@Override

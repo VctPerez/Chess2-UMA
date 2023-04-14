@@ -1,5 +1,5 @@
  Peon Clasico: 
-   El peÛn se mueve verticalmente por
+   El pe√≥n se mueve verticalmente por
   la columna en la que se 
   encuentra, sin poder retroceder, 
   comen en diagonal.
@@ -10,18 +10,18 @@
   vez todas las que halla libres.
   
  Caballo Clasico:
-   El caballo es la ˙nica pieza del 
+   El caballo es la √∫nica pieza del
   tablero que puede saltar sobre otras 
   piezas. 
   
    El caballo se mueve dos casillas en 
-  direcciÛn horizontal o vertical y 
-  despuÈs una casilla m·s en ·ngulo 
+  direcci√≥n horizontal o vertical y
+  despu√©s una casilla m√°s en √°ngulo
   recto. El movimiento del caballo 
   tiene la forma de una "L".
   
- Torre Clasica:
-   Se mueve en lÌneas rectas en las
+ Torre Cl√°sica:
+   Se mueve en l√≠neas rectas en las
   columnas y filas del tablero no 
   pudiendo, sin embargo, saltar piezas
   adversarias o aliadas 
@@ -31,10 +31,10 @@
   realizar un movimiento especial llamado
   enroque con el rey.
    
- Reina Clasica:
+ Reina Cl√°sica:
    La reina mueve las casillas que quiera 
-  en lÌnea recta, vertical, diagonal y 
-  horizontal. Es decir, es una combinaciÛn 
+  en l√≠nea recta, vertical, diagonal y
+  horizontal. Es decir, es una combinaci√≥n
   entre la torre y el alfil juntos.
   
   Rey Clasico:
@@ -43,7 +43,7 @@
    
    No se puede mover a una casilla 
   amenazada por una pieza del rival 
-  y es la unica pieza que debe ser 
+  y es la √∫nica pieza que debe ser
   protegida, limitando los movimientos 
   de las otras piezas aliadas.
    
