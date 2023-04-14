@@ -12,9 +12,11 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 
 import game.chess.GameScreen;
+import interaccionFichero.LectorLineas;
 import utils.Image;
 import utils.Render;
 import utils.Resources;
+import utils.Text;
 
 public abstract class Piece extends Actor {
 	protected Image sprite;
@@ -24,24 +26,29 @@ public abstract class Piece extends Actor {
 	public Boolean alive;
 	protected int x;
 	protected int y;
+	public Board board;
 
-	public Piece(Boolean color, Texture texture, int x, int y) {
+	public Piece(Boolean color, Texture texture, int x, int y, Board board) {
+		this.board = board;
 		this.sprite = new Image(texture);
-		this.hasBeenMoved=false;
+		this.hasBeenMoved = false;
 		this.color = color;
 		this.alive = true;
 		this.x = x;
 		this.y = y;
-		
-		if(color) {
+
+		if (color) {
 			setColor(Color.WHITE);
-		}else {
+		} else {
 			setColor(0.25f, 0.25f, 0.25f, 1f);
 		}
 		
-		setPosition(GameScreen.board.getTile(x, y).getX(), GameScreen.board.getTile(x, y).getY());
-		setSize(GameScreen.board.getTile(x, y).getWidth(),  GameScreen.board.getTile(x, y).getHeight());
-		GameScreen.stage.addActor(this);
+		setPosition(board.getTile(x, y).getX(), board.getTile(x, y).getY());
+
+	}
+
+	public Piece(Texture texture) {
+		this.sprite = new Image(texture);
 	}
 
 	@Override
@@ -49,12 +56,16 @@ public abstract class Piece extends Actor {
 		this.toFront();
 
 		sprite.setPosition(getX(), getY());
-		sprite.setSize(getWidth(), getHeight());
+		if (alive) {
+			sprite.setSize(board.getTile(x, y).getWidth(), board.getTile(x, y).getHeight());
+		} else {
+			sprite.setSize(getWidth(), getHeight());
+		}
 		sprite.setScale(getScaleX());
 		sprite.sprt.setColor(getColor());
 		sprite.draw(batch, 0);
 	}
-	
+
 	/**
 	 * 
 	 * @return true si la pieza es blanca false si es negra
@@ -67,12 +78,12 @@ public abstract class Piece extends Actor {
 	 * Actualiza el booleano que determina si la pieza ha sido movida o no a true;
 	 */
 	public void hasBeenMoved() {
-		hasBeenMoved=true;
+		hasBeenMoved = true;
 	}
-	
-	
+
 	/**
 	 * Actualiza la posiicón de la pieza
+	 * 
 	 * @param x
 	 * @param y
 	 */
@@ -80,24 +91,23 @@ public abstract class Piece extends Actor {
 		this.x = x;
 		this.y = y;
 		Tile tile = GameScreen.board.getTile(x, y);
-		
-		
-		Action completeAction = new Action(){
+
+		Action completeAction = new Action() {
 			Sound sound = Render.app.getManager().get(Resources.PIECEMOVE_SOUND, Sound.class);
-			public boolean act( float delta ) {
+
+			public boolean act(float delta) {
 				sound.play();
 				return true;
 			}
 		};
-		addAction(Actions.moveTo(tile.getX(),tile.getY() , 0.5f));//hacer que la animación sea más consistente
+		addAction(Actions.moveTo(tile.getX(), tile.getY(), 0.5f));// hacer que la animación sea más consistente
 		addAction(Actions.after(completeAction));
 	}
-	
-	
+
 	public void setSprite(String path) {
 		this.sprite = new Image(path);
 	}
-	
+
 	/**
 	 * 
 	 * @return true si la ìeza está viva false si no lo está
@@ -105,20 +115,21 @@ public abstract class Piece extends Actor {
 	public boolean alive() {
 		return alive;
 	}
-	
+
 	/**
 	 * 
 	 * @param piece
-	 * @return true si la pieza pasada como parámetro es del mismo color, false si no lo es
+	 * @return true si la pieza pasada como parámetro es del mismo color, false si
+	 *         no lo es
 	 */
 	public Boolean sameColor(Piece piece) {
-		return color==piece.color();
+		return color == piece.color();
 	}
 
-	
 	public void dispose() {
 		sprite.dispose();
 	}
+
 	/**
 	 * 
 	 * @return todos los posibles movimientos de una pieza, ya sean válidos o no
@@ -126,58 +137,66 @@ public abstract class Piece extends Actor {
 	public ArrayList<Vector2> posibleMovements() {
 		return null;
 	}
-	
+
 	@SuppressWarnings("unused")
 	private void checkDirection(float x, float y, int i, int j, ArrayList<Vector2> movements) {
-		
+
 	}
-	
+
 	@SuppressWarnings("unused")
 	private Boolean checkBoard(Board board, float x, float y) {
 		return null;
 	}
 
 	/**
-	 * Filtra todos los posibles movimientos de una pieza y solo permite aquellos que sean legales. Se hace borrando los movimientos ilegales de la lista de posibles movimientos 
-	 * @return un arry de posibles movimientos legales (solo aquellos que dejen al rey a salvo)
+	 * Filtra todos los posibles movimientos de una pieza y solo permite aquellos
+	 * que sean legales. Se hace borrando los movimientos ilegales de la lista de
+	 * posibles movimientos
+	 * 
+	 * @return un arry de posibles movimientos legales (solo aquellos que dejen al
+	 *         rey a salvo)
 	 */
 	public ArrayList<Vector2> getValidMovements() {
 		ArrayList<Vector2> validMovements = posibleMovements();
 		ArrayList<Vector2> removeMovements = new ArrayList<>();
-		Tile currentTile = GameScreen.board.getTile(x, y);
-		
-		for(Vector2 move: validMovements) {
-			//System.out.println("SIMULANDO MOVIMIENTO A [ "+move.x+", "+move.y+"]");
-			
-			simulateMovement(currentTile, move, removeMovements);		
+		Tile currentTile = board.getTile(x, y);
+
+		for (Vector2 move : validMovements) {
+			// System.out.println("SIMULANDO MOVIMIENTO A [ "+move.x+", "+move.y+"]");
+
+			simulateMovement(currentTile, move, removeMovements);
 		}
 		validMovements.removeAll(removeMovements);
 		return validMovements;
 	}
-	
+
 	/**
-	 * Simula el movimiento de la casilla actual a la indicada por el move y si este movimiento no dejara al rey de su color a salvo se añade a la lista de movimientos a borrar
+	 * Simula el movimiento de la casilla actual a la indicada por el move y si este
+	 * movimiento no dejara al rey de su color a salvo se añade a la lista de
+	 * movimientos a borrar
+	 * 
 	 * @param currentTile
 	 * @param move
 	 * @param removeMovements
 	 */
 	protected void simulateMovement(Tile currentTile, Vector2 move, ArrayList<Vector2> removeMovements) {
-		Tile nextTile = GameScreen.board.getTile((int)move.x,(int) move.y);
+		Tile nextTile = board.getTile((int) move.x, (int) move.y);
 		Piece nextTilePiece = null;
-		if(nextTile.getPiece()!=null) {
+		if (nextTile.getPiece() != null) {
 			nextTilePiece = nextTile.getPiece();
 		}
 		currentTile.simulateMoveTo(nextTile);
-		
-		//check king
-		if(color && !isKingSafe(GameScreen.blackPieces, GameScreen.whiteKing)) {
+
+		// check king
+		if (color && !isKingSafe(GameScreen.blackPieces, GameScreen.whiteKing)) {
 			removeMovements.add(move);
-		}else if(!color && !isKingSafe(GameScreen.whitePieces, GameScreen.blackKing)) {
+		} else if (!color && !isKingSafe(GameScreen.whitePieces, GameScreen.blackKing)) {
 			removeMovements.add(move);
 		}
-		
-		undoLastMovement(currentTile,  nextTile, nextTilePiece);
+
+		undoLastMovement(currentTile, nextTile, nextTilePiece);
 	}
+
 	/**
 	 * 
 	 * @param pieces
@@ -186,36 +205,58 @@ public abstract class Piece extends Actor {
 	 */
 	protected boolean isKingSafe(ArrayList<Piece> pieces, Vector2 kingPos) {
 		boolean isSafe = true;
-		for(Piece piece: pieces) {
-			if(piece.posibleMovements().contains(kingPos)) {
-				
-				isSafe=false;
+		for (Piece piece : pieces) {
+			if (piece.posibleMovements().contains(kingPos)) {
+
+				isSafe = false;
 			}
 		}
 		return isSafe;
 	}
 
 	/**
-	 * Deshace el ultimo movimiento que se haya simulado, devolviendo la pieza a su casilla original y reviviendo si es que se había comido alguna pieza
+	 * Deshace el ultimo movimiento que se haya simulado, devolviendo la pieza a su
+	 * casilla original y reviviendo si es que se había comido alguna pieza
+	 * 
 	 * @param lastTile
 	 * @param nextTile
 	 * @param nextTilePiece
 	 */
 	protected void undoLastMovement(Tile lastTile, Tile nextTile, Piece nextTilePiece) {
-		
+
 		nextTile.moveTo(lastTile);
-		
-		if(nextTilePiece!=null && !nextTilePiece.alive()) {
-			if(nextTilePiece.color()) {
+
+		if (nextTilePiece != null && !nextTilePiece.alive()) {
+			if (nextTilePiece.color()) {
 				nextTile.setPiece(GameScreen.graveyardWhite.reviveLastPiece());
-			}else if(!nextTilePiece.color()) {
+			} else if (!nextTilePiece.color()) {
 				nextTile.setPiece(GameScreen.graveyardBlack.reviveLastPiece());
 			}
-		}		
+		}
 	}
-	
+
 	@Override
 	public void act(float delta) {
 		super.act(delta);
+	}
+
+	public String getInfo() {
+		return "";
+	}
+
+	/**
+	 * Devuelve el nombre del tipo de la pieza y su posición si está viva en un String
+	 * <p>Se debe reemplazar la x por el nombre de verdad en sus subclases</p>
+	 */
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("{X");
+		if (alive) {
+			sb.append(",(").append(x).append(",").append(y).append(")}");
+		} else {
+			sb.append(",Dead}");
+		}
+		return sb.toString();
 	}
 }

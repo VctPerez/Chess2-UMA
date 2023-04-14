@@ -27,7 +27,7 @@ public class Timer extends Actor{
 	}
 	
 	public void render() {
-		this.timeRemaining-=Gdx.graphics.getDeltaTime();
+			this.timeRemaining-=Gdx.graphics.getDeltaTime();
 		//NO tiempo negativo
 		if(this.timeRemaining<0) {
 			this.timeRemaining=0;

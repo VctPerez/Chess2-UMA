@@ -20,10 +20,12 @@ public class MainScreen extends AbstractScreen {
     PruebaLectorLineas2 languageReader, configReader;
 
     
+    
     @Override
     public void show() {
     	stage = new Stage(new FitViewport(1280, 720));
     	background = new Background();
+    	background.setColor(new Color(60/255f, 60/255f,60/255f,1f));
     	background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     	
     	//Abrir los ficheros de configuracion e idioma
@@ -32,7 +34,6 @@ public class MainScreen extends AbstractScreen {
     	configReader = new PruebaLectorLineas2("files/config.txt");
         languageReader = new PruebaLectorLineas2("files/lang/" + configReader.getLine(1) + "main.txt");
 
-    	//Fuente Arial para probar
     	Titulo = new Text(Resources.FONT_MENU_PATH,100,Color.WHITE,3);
     	Titulo.setText(languageReader.getLine(8));
     	//Titulo.setText(languageReader.leerLinea(8));
@@ -99,7 +100,7 @@ public class MainScreen extends AbstractScreen {
         
         if(play.isPressed()){
             Render.bgMusic.stop();
-            Render.app.setScreen(Render.GAMESCREEN);
+            Render.app.setScreen(new DraftScreen());
             //Render.app.setScreen(Render.CREATEMATCHSCREEN);
         }
         if(exit.isPressed()) {

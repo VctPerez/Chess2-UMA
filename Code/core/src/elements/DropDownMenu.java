@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 
 import elements.pieces.Bishop;
 import elements.pieces.Knight;
@@ -34,7 +36,7 @@ public class DropDownMenu extends Actor{
 	public DropDownMenu(Tile tile) {
 		this.tile = tile;
 		
-		if(tile.getPiece().color()) {
+		if(!(((tile.getPiece().color() || Render.hosting)) && !(tile.getPiece().color() && Render.hosting))) {
 			setPosition(tile.getX(), tile.getY() - 4 * tile.getWidth());
 			setSize(tile.getWidth(), 4 * tile.getWidth());
 			setColor(new Color(0.3745f, 0.23f, 0.3f,1f));			
@@ -42,6 +44,7 @@ public class DropDownMenu extends Actor{
 			setPosition(tile.getX(), tile.getY() + tile.getWidth());
 			setSize(tile.getWidth(), 4 * tile.getWidth());
 			setColor(new Color(0.3745f, 0.23f, 0.3f,1f));
+
 		}
 		
 		menu = new ShapeRenderer();
@@ -51,54 +54,74 @@ public class DropDownMenu extends Actor{
 		pieces.add(new Image(Render.app.getManager().get(Resources.ROOK_PATH, Texture.class)));
 		pieces.add(new Image(Render.app.getManager().get(Resources.KNIGHT_PATH, Texture.class)));
 		pieces.add(new Image(Render.app.getManager().get(Resources.QUEEN_PATH, Texture.class)));
+		
+		addCaptureListener(new InputListener() { 
+			@Override
+			    public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+						
+					update(y);
+				
+			    return true;
+			    }
+			} );
 
 	
 	}
 	
-	private void update(float parentAlpha) {
-		if(isClicked()) {
-            int current_y = calculateY();
+	private void update(float y) {
+            int current_y = (int) Math.ceil(y  / 84);
             ArrayList<Piece> pieces;
+            Piece formerPiece = tile.getPiece();
+            Piece newPiece = null;
             
-            if(tile.getPiece().color()) {
+            if(formerPiece.color()) {
             	pieces = GameScreen.whitePieces;
             }else {
             	pieces = GameScreen.blackPieces;
             }
-            tile.getPiece().remove();
+            formerPiece.remove();
             
             switch (current_y) {
 			case 4:
-				pieces.remove(tile.getPiece());
-				tile.setPiece(new Queen(tile.getPiece().color(), (int)tile.getPos().x, (int)tile.getPos().y));
-				pieces.add(tile.getPiece());
+				pieces.remove(formerPiece);
+				newPiece = new Queen(formerPiece.color(), (int)tile.getPos().x, (int)tile.getPos().y,GameScreen.board);
+				tile.setPiece(newPiece);
+				pieces.add(formerPiece);            	
+            	GameScreen.stage.addActor(newPiece);
 				break;
 			case 3:
-				pieces.remove(tile.getPiece());
-				tile.setPiece(new Knight(tile.getPiece().color(), (int)tile.getPos().x, (int)tile.getPos().y));
-				pieces.add(tile.getPiece());
+				pieces.remove(formerPiece);
+				newPiece = new Knight(formerPiece.color(), (int)tile.getPos().x, (int)tile.getPos().y,GameScreen.board);
+				tile.setPiece(newPiece);
+				pieces.add(formerPiece);            	
+            	GameScreen.stage.addActor(newPiece);
 				break;
 			case 2:
-				pieces.remove(tile.getPiece());
-				tile.setPiece(new Rook(tile.getPiece().color(), (int)tile.getPos().x, (int)tile.getPos().y));
-				pieces.add(tile.getPiece());
+				pieces.remove(formerPiece);
+				newPiece = new Rook(formerPiece.color(), (int)tile.getPos().x, (int)tile.getPos().y,GameScreen.board);
+				tile.setPiece(newPiece);
+				pieces.add(formerPiece);            	
+            	GameScreen.stage.addActor(newPiece);
 				break;
 			case 1:
-				pieces.remove(tile.getPiece());
-				tile.setPiece(new Bishop(tile.getPiece().color(), (int)tile.getPos().x, (int)tile.getPos().y));
-				pieces.add(tile.getPiece());
+				pieces.remove(formerPiece);
+				newPiece = new Bishop(formerPiece.color(), (int)tile.getPos().x, (int)tile.getPos().y,GameScreen.board);
+				tile.setPiece(newPiece);
+				pieces.add(formerPiece);            	
+            	GameScreen.stage.addActor(newPiece);
 				break;
 			default:
 				break;
 			}
             GameScreen.promoting = false;
+            GameScreen.mateControl(tile.getPos().x, tile.getPos().y);
             remove();
-		}
+		
 	}
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		this.toFront();
-		update(parentAlpha);
+
 		batch.end();
 		menu.begin(ShapeType.Filled);
 		menu.rect(getX(), getY(), getWidth(), getHeight());
@@ -113,14 +136,4 @@ public class DropDownMenu extends Actor{
 		}
 	}
 	
-	private boolean isClicked() {
-		return Render.inputs.isClicked() && Render.inputs.mouseX >= getX()
-				&& Render.inputs.mouseX <= getX() + getWidth()
-				&& Render.inputs.mouseY >= getY()
-				&& Render.inputs.mouseY <= getY() + getHeight();
-	}
-
-	private int calculateY() {
-		return (int) Math.ceil((Render.inputs.mouseY - getY()) / 84);
-	}
 }

@@ -9,14 +9,19 @@ import com.badlogic.gdx.math.Vector2;
 import elements.Board;
 import elements.Piece;
 import game.chess.GameScreen;
+import interaccionFichero.LectorLineas;
 import utils.Render;
 import utils.Resources;
 
 public class Rook extends Piece{
 	private Boolean validDirection;
 	
-	public Rook(Boolean color, int x, int y) {
-		super(color, Render.app.getManager().get(Resources.ROOK_PATH, Texture.class), x, y);
+	public Rook(Boolean color, int x, int y,Board board) {
+		super(color, Render.app.getManager().get(Resources.ROOK_PATH, Texture.class), x, y,board);
+	}
+	
+	public Rook() {
+		super(Render.app.getManager().get(Resources.ROOK_PATH, Texture.class));
 	}
 	
 	public void draw(Batch batch, float parentAlpha) {
@@ -48,7 +53,7 @@ public class Rook extends Piece{
 		
 		while(validDirection && k<8) {
 			mov = new Vector2(x + i*k, y + j*k);
-			if(checkBoard(GameScreen.board, mov.x, mov.y)) {
+			if(checkBoard(board, mov.x, mov.y)) {
 				movements.add(mov);
 			}
 			k++;
@@ -72,5 +77,18 @@ public class Rook extends Piece{
 		checkDirection(x, y, 0, -1, movements);
 		
 		return movements;
+	}
+	
+	public String getInfo() {
+		 LectorLineas Reader, configReader;
+		 configReader = new LectorLineas("files/config.txt");
+	     Reader = new LectorLineas("files/lang/"+ configReader.leerLinea(1) + "Clasicas.txt");
+	     return Reader.leerTramo(23, 32);
+	}
+
+	@Override
+	public String toString() {
+		String str = super.toString();
+		return str.replace("X","Rook");
 	}
 }

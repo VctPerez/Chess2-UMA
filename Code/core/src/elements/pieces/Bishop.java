@@ -9,14 +9,19 @@ import com.badlogic.gdx.math.Vector2;
 import elements.Board;
 import elements.Piece;
 import game.chess.GameScreen;
+import interaccionFichero.LectorLineas;
 import utils.Render;
 import utils.Resources;
 
 public class Bishop extends Piece{
 	private Boolean validDirection;
 	
-	public Bishop(Boolean color, int x, int y) {
-		super(color, Render.app.getManager().get(Resources.BISHOP_PATH, Texture.class), x, y);
+	public Bishop(Boolean color, int x, int y, Board board) {
+		super(color, Render.app.getManager().get(Resources.BISHOP_PATH, Texture.class), x, y, board);
+	}
+	
+	public Bishop() {
+		super(Render.app.getManager().get(Resources.BISHOP_PATH, Texture.class));
 	}
 	
 	public void draw(Batch batch, float parentAlpha) {
@@ -48,7 +53,7 @@ public class Bishop extends Piece{
 		
 		while(validDirection && k<8) {
 			mov = new Vector2(x + i*k, y + j*k);
-			if(checkBoard(GameScreen.board, mov.x, mov.y)) {
+			if(checkBoard(board, mov.x, mov.y)) {
 				movements.add(mov);
 			}
 			k++;
@@ -72,7 +77,16 @@ public class Bishop extends Piece{
 
 		return movements;
 	}
-	
-	
+	public String getInfo() {
+		 LectorLineas Reader, configReader;
+		 configReader = new LectorLineas("files/config.txt");
+	     Reader = new LectorLineas("files/lang/"+ configReader.leerLinea(1) + "Clasicas.txt");
+	     return Reader.leerTramo(7, 10);
+	}
 
+	@Override
+	public String toString() {
+		String str = super.toString();
+		return str.replace("X","Bishop");
+	}
 }

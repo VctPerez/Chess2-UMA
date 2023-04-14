@@ -9,16 +9,24 @@ import com.badlogic.gdx.math.Vector2;
 import elements.Board;
 import elements.Piece;
 import game.chess.GameScreen;
+import interaccionFichero.LectorLineas;
+import utils.Image;
 import utils.Render;
 import utils.Resources;
+import utils.Text;
 
 public class Pawn extends Piece{
 	
 	public Boolean isPassantable = false;
 
-	public Pawn(Boolean color, int x, int y) {
-		super(color, Render.app.getManager().get(Resources.PAWN_PATH, Texture.class), x ,y);
+	public Pawn(Boolean color, int x, int y,Board board) {
+		super(color, Render.app.getManager().get(Resources.PAWN_PATH, Texture.class), x ,y,board);
 	}
+	
+	public Pawn() {
+		super(Render.app.getManager().get(Resources.PAWN_PATH, Texture.class));
+	}
+	
 	
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
@@ -60,29 +68,29 @@ public class Pawn extends Piece{
 		
 		for(int i = -1; i<=1; i++) {
 			mov = new Vector2(x + i, y + direction);
-			if(checkBoard(GameScreen.board, i, mov.x, mov.y)) {
+			if(checkBoard(board, i, mov.x, mov.y)) {
 				movements.add(mov);
 			}
 		}
 		
-		if(!hasBeenMoved) {
+		if(!hasBeenMoved && board.dim>5) {
 			mov = new Vector2(x , y + 2*direction);
-			if(checkBoard(GameScreen.board, 0, mov.x, mov.y) && GameScreen.board.getTile(x, y+direction).getPiece()==null) {
+			if(checkBoard(board, 0, mov.x, mov.y) && board.getTile(x, y+direction).getPiece()==null) {
 				movements.add(mov);
 			}
 		}
 
 		if (y == 5 - (color?0:1)){ //Si está en la fila donde puede hacer en passant(5 para blancas, 4 para negras)
 			Piece aux;
-			if (GameScreen.board.getTile(x-1,y) != null){
-				aux = GameScreen.board.getTile(x-1,y).getPiece(); //Mira a la izquierda
+			if (board.getTile(x-1,y) != null){
+				aux = board.getTile(x-1,y).getPiece(); //Mira a la izquierda
 				if (aux instanceof Pawn && ((Pawn) aux).isPassantable){ //Si la pieza puede tomarse al paso(habrá que cambiar el if si se incluyen más)
 					mov = new Vector2(x-1,y+direction);
 					movements.add(mov);
 				}
 			}
-			if (GameScreen.board.getTile(x+1,y) != null){
-				aux = GameScreen.board.getTile(x+1,y).getPiece(); //Mira a la derecha
+			if (board.getTile(x+1,y) != null){
+				aux = board.getTile(x+1,y).getPiece(); //Mira a la derecha
 				if (aux instanceof Pawn && ((Pawn) aux).isPassantable){
 					mov = new Vector2(x+1,y+direction);
 					movements.add(mov);
@@ -96,5 +104,30 @@ public class Pawn extends Piece{
 	public void dispose() {
 		sprite.dispose();
 	}
+	
+	@Override
+	public String getInfo() {
+		 LectorLineas Reader, configReader;
+		 configReader = new LectorLineas("files/config.txt");
+	     Reader = new LectorLineas("files/lang/"+ configReader.leerLinea(1) + "Clasicas.txt");
+	     return Reader.leerTramo(1, 5);
+	}
+
+	@Override
+	public String toString() {
+		String str = super.toString();
+		return str.replace("X","Pawn");
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

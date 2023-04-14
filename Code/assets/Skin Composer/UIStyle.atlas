@@ -1,0 +1,50 @@
+
+UIStyle.png
+size: 2048, 2048
+format: RGBA8888
+filter: Linear, Linear
+repeat: none
+white-pixel
+  rotate: false
+  xy: 1023, 1044
+  size: 1, 1
+  orig: 1, 1
+  offset: 0, 0
+  index: -1
+TextButtons_FONT_0
+  rotate: false
+  xy: 1, 533
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+TextButtons_FONT_1
+  rotate: false
+  xy: 1, 19
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+TextField_FONT
+  rotate: false
+  xy: 515, 741
+  size: 506, 304
+  orig: 506, 304
+  offset: 0, 0
+  index: -1
+TextField_SELECTED
+  rotate: false
+  xy: 1, 1
+  size: 32, 16
+  split: 6, 6, 6, 6
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+TextField_UNSELECTED
+  rotate: false
+  xy: 515, 723
+  size: 32, 16
+  split: 6, 6, 6, 6
+  orig: 32, 16
+  offset: 0, 0
+  index: -1

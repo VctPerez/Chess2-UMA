@@ -23,7 +23,8 @@ public class Background extends Actor{
 		fondo.begin(ShapeType.Filled);
 	
 		if(c==null) {
-			fondo.rect(getX(), getY(), getOriginX(), getOriginY(), getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation(), Color.RED, Color.YELLOW, Color.BLUE, Color.GREEN);
+			fondo.rect(getX(), getY(), getOriginX(), getOriginY(), getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
+			fondo.setColor(new Color(60/255f, 60/255f,60/255f,1f));
 		}else {
 			fondo.rect(getX(), getY(), getWidth(), getHeight());
 			fondo.setColor(this.c);

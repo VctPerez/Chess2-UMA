@@ -149,4 +149,9 @@ public class Tile extends Actor{
 		}
 		super.act(delta);
 	}
+
+	@Override
+	public String toString() {
+		return "Tile " + pos.toString();
+	}
 }

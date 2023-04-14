@@ -31,6 +31,7 @@ public class Resources {
     public static final String CHECKBOX_UNSELECTED = "sprites/checkBox/checkBox_unselected.png";
     //public static final String CHECK_PATH = "sprites/Testing-Pieces/Testing-Pawn.png";
 
+    public static final String SKIN_PATH = "Skin Composer/UIStyle.json";
 
     // RECURSOS PARTIDA
     public static final String PAWN_PATH = "sprites/Testing-Pieces/Pieces Base Form/White_Pawn.png";
@@ -41,5 +42,7 @@ public class Resources {
     public static final String KING_PATH = "sprites/Testing-Pieces/Pieces Base Form/White_King.png";
     
     public static final String FRAME_PATH = "sprites/selectionFrame.png";
+    public static final String ARROW_PATH = "sprites/Arrow.png";
+    
     
 }

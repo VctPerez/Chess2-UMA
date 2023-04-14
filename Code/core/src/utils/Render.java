@@ -6,6 +6,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import game.chess.*;
@@ -34,17 +35,17 @@ public class Render {
     public static int SCREEN_HEIGHT = 720;
     
     public static AbstractScreen MAINSCREEN;
-	public static AbstractScreen GAMESCREEN;
 	public static AbstractScreen MANUALSCREEN;
-	public static AbstractScreen CLASSICMANSCREEN;
 	public static AbstractScreen LANGUAGESCREEN;
 	public static AbstractScreen CONFIGSCREEN;
     public static LobbyScreen LOBBYSCREEN;
     public static LoadingScreen LOADINGSCREEN;
     public static CreateMatchScreen CREATEMATCHSCREEN;
+    public static DraftScreen DRAFTSCREEN;
 
     public static Host host;
     public static Guest guest;
+    public static boolean hosting;
 
     /**
      * Este metodo se encarga de limpiar la pantalla al principio de cada Render.

@@ -40,7 +40,8 @@ public class Graveyard extends Actor {
 		ParallelAction par = new ParallelAction();
 		par.addAction(Actions.moveTo(getX(), getY()+(42*index), 0.6f));
 		par.addAction(Actions.sizeTo(42, 42, 0.6f));
-		piece.addAction(Actions.sequence(Actions.delay(0.2f), par));
+		
+		piece.addAction(Actions.sequence(Actions.sizeTo(84, 84), Actions.delay(0.2f) , par));
 		
 		graveyard.add(piece);
 		index++;
