@@ -17,7 +17,7 @@ public class PieceInfo extends Actor{
 		background.setColor(new Color(90/255f, 90/255f,90/255f,1f));
 		background.setPosition(750, 50);
 		background.setSize(500, 625);
-		board=new Board(70,825,75);
+		board=new Board(70,825,75, 5);
         
         
 	}

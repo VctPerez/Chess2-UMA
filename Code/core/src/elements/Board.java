@@ -20,7 +20,7 @@ public class Board extends Actor {
 		int color = 1;
 		for (int i = 0; i < dim; i++) {
 			for (int j = 0; j < dim; j++) {
-				if (Render.hosting || dim==5) {
+				if (Render.hosting || dim!=8) {
 					board[i][j] = new Tile(i + 1, j + 1, x_offset + (i * size), y_offset + (j * size),
 							size, color);
 				} else {
@@ -45,8 +45,8 @@ public class Board extends Actor {
 		createFromDim(dim, Tile_Size, X_OFFSET, Y_OFFSET);
 	}
 
-	public Board(float size, float x_offset, float y_offset) {
-		dim = 5;
+	public Board(float size, float x_offset, float y_offset, int tam) {
+		dim = tam;
 		board = new Tile[dim][dim];
 		setPosition(x_offset, y_offset);
 		setSize(dim * size, dim * size);
@@ -81,8 +81,8 @@ public class Board extends Actor {
 	@Override
 	public void act(float delta) {
 		super.act(delta);
-		for (int i = 0; i < 8; i++) {
-			for (int j = 0; j < 8; j++) {
+		for (int i = 0; i < dim; i++) {
+			for (int j = 0; j < dim; j++) {
 				board[i][j].act(delta);
 			}
 		}

@@ -1,6 +1,7 @@
 package game.chess;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -20,7 +21,9 @@ public class DraftScreen extends AbstractScreen {
 	public static Stage stage;
 
 	private Map<String, Image> draft;
-
+	private ArrayList<String> pawns, knights, rooks, bishops, queens, kings;
+	
+	
 	Background background;
 	PieceInfo info;
 	TextButton end, next, back;
@@ -28,7 +31,7 @@ public class DraftScreen extends AbstractScreen {
 	Image arrow;
 	int cont = 5;
 	
-	Tile tile1, tile2;
+	TileButton tile1, tile2;
 
 	@Override
 	public void show() {
@@ -44,8 +47,9 @@ public class DraftScreen extends AbstractScreen {
 		piece = new Pawn(true, 3, 3, info.board);
 		info.infoFrom(piece);
 		
-		tile1= new Tile(1,1,325f, 450f, 168f, 0);
-		tile2= new Tile(1,1,325f, 150f, 168f, 0);
+		
+		tile1= new TileButton(325f, 450f, 168f);
+		tile2= new TileButton(325f, 150f, 168f);
 		
 
 		// -------------------------------
@@ -54,9 +58,51 @@ public class DraftScreen extends AbstractScreen {
 		stage.addActor(info);
 		stage.addActor(tile1);
 		stage.addActor(tile2);
+		initPieceClasses();
+		
 		initButtons();
 		initDraft();
+		
 
+	}
+	
+	private void initPieceClasses() {
+		pawns = new ArrayList<>();
+		knights = new ArrayList<>();
+		rooks = new ArrayList<>();
+		bishops = new ArrayList<>();
+		queens = new ArrayList<>();
+		kings = new ArrayList<>();
+		
+		pawns.add(Resources.PAWN_PATH);
+		pawns.add(Resources.PAWN_PATH);
+		pawns.add(Resources.PAWN_PATH);
+		Collections.shuffle(pawns);
+		
+		knights.add(Resources.KNIGHT_PATH);
+		knights.add(Resources.KNIGHT_PATH);
+		knights.add(Resources.KNIGHT_PATH);
+		Collections.shuffle(knights);
+		
+		rooks.add(Resources.ROOK_PATH);
+		rooks.add(Resources.ROOK_PATH);
+		rooks.add(Resources.ROOK_PATH);
+		Collections.shuffle(rooks);
+		
+		bishops.add(Resources.BISHOP_PATH);
+		bishops.add(Resources.BISHOP_PATH);
+		bishops.add(Resources.BISHOP_PATH);
+		Collections.shuffle(bishops);
+		
+		queens.add(Resources.QUEEN_PATH);
+		queens.add(Resources.QUEEN_PATH);
+		queens.add(Resources.QUEEN_PATH);
+		Collections.shuffle(queens);
+		
+		kings.add(Resources.KING_PATH);
+		kings.add(Resources.KING_PATH);
+		kings.add(Resources.KING_PATH);
+		Collections.shuffle(kings);
 	}
 
 	private void initDraft() {
@@ -80,6 +126,7 @@ public class DraftScreen extends AbstractScreen {
 		arrow=new Image(Render.app.getManager().get(Resources.ARROW_PATH, Texture.class));
 		arrow.setPosition(80, 100+100*cont);
 		stage.addActor(arrow);
+		changePiece();
 	}
 
 	private void initButtons() {
@@ -102,6 +149,11 @@ public class DraftScreen extends AbstractScreen {
 
 		Gdx.input.setInputProcessor(Render.inputs);
 	}
+	
+	private void updateTileButtons(ArrayList<String> pieceClass) {
+		tile1.setPiece(pieceClass.get(0));
+		tile2.setPiece(pieceClass.get(1));
+	}
 
 	public void changePiece() {
 		info.clearBoard(piece);
@@ -113,36 +165,43 @@ public class DraftScreen extends AbstractScreen {
 			
 			//método que dependiendo de la clave añada unas piezas u otras
 			
+			updateTileButtons(pawns);
+			
 			piece = new Pawn(true, 3, 3, info.board);
 
 			break;
 
 		case 4:
 			
+			updateTileButtons(knights);
 			piece = new Knight(true, 3, 3, info.board);
 
 			break;
 
 		case 3:
 			
+			updateTileButtons(bishops);
 			piece = new Bishop(true, 3, 3, info.board);
 
 			break;
 
 		case 2:
 			
+			updateTileButtons(rooks);
 			piece = new Rook(true, 3, 3, info.board);
 
 			break;
 
 		case 1:
 			
+			updateTileButtons(queens);
 			piece = new Queen(true, 3, 3, info.board);
 
 			break;
 
 		case 0:
-			
+
+			updateTileButtons(kings);
 			piece = new King(true, 3, 3, info.board);
 
 			break;
