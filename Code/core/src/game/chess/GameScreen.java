@@ -391,7 +391,7 @@ public class GameScreen extends AbstractScreen {
             mateControl(next_x, next_y);
 
 			stalemateControl();
-			System.out.println(PLAYER && !hasMoves(blackPieces));
+			
             changeTurn();
 
         }
