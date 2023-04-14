@@ -66,13 +66,8 @@ public class TextButton extends Actor implements Button {
                 else text.setColor(normalColor);
                 isPressed = !isPressed;
             }
-        }else{
+        }else {
             isSelected = false;
-            if(Render.inputs.isClicked()) {
-                text.setColor(normalColor);
-                isSelected = false;
-                isPressed = false;
-            }
         }
     }
     
