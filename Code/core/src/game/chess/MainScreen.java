@@ -83,13 +83,13 @@ public class MainScreen extends AbstractScreen {
             //Render.app.setScreen(Render.CREATEMATCHSCREEN);
         }
         if(textButton[1].isPressed()) {
-        	Gdx.app.exit();
-        }
-        if(textButton[2].isPressed()) {
         	Render.app.setScreen(Render.CONFIGSCREEN);
         }
-        if(textButton[3].isPressed()){
+        if(textButton[2].isPressed()){
         	Render.app.setScreen(Render.MANUALSCREEN);
+        }
+        if(textButton[3].isPressed()) {
+        	Gdx.app.exit();
         }
         
         //-----------------
@@ -98,7 +98,7 @@ public class MainScreen extends AbstractScreen {
     
     private void createTableElements() {
     	
-    	title = new Label("chess 2", Render.app.getManager().get(Resources.SKIN_PATH,Skin.class), "default");
+    	title = new Label("chess 2", Render.app.getManager().get(Resources.SKIN_PATH,Skin.class), "TitleStyle");
     	
     	textButton[0] = new TextButton(languageReader.leerLinea(1));//Jugar = Linea 1
     	textButton[1] = new TextButton(languageReader.leerLinea(4));//Configuracion = Linea 4
