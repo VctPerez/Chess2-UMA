@@ -16,12 +16,8 @@ import elements.Piece;
 import elements.Tile;
 import elements.Timer;
 import elements.MatchResults;
-import elements.pieces.Bishop;
-import elements.pieces.King;
-import elements.pieces.Knight;
-import elements.pieces.Pawn;
-import elements.pieces.Queen;
-import elements.pieces.Rook;
+import elements.pieces.*;
+import utils.Parser;
 import utils.Render;
 import utils.Resources;
 
@@ -551,89 +547,7 @@ public class LocalGameScreen extends AbstractScreen {
 		stage.dispose();
 
 	}
-
-	public void placeWhites() {
-		Piece piece;
-		for (int i = 1; i < 9; i++) {
-			piece =  new Pawn(true, i, 2,board);
-			whitePieces.add(piece);
-			board.getTile(i, 2).setPiece(piece);
-		}
-		for (int i = 1; i < 9; i++) {
-			if (i == 1 || i == 8) {
-				
-				piece = new Rook(true, i, 1,board);
-				whitePieces.add(piece);
-				board.getTile(i, 1).setPiece(piece);
-			}
-			if (i == 2 || i == 7) {
-				
-				piece = new Knight(true, i, 1,board);
-				whitePieces.add(piece);
-				board.getTile(i, 1).setPiece(piece);
-			}
-			if (i == 3 || i == 6) {
-				
-				piece = new Bishop(true, i, 1,board);
-				whitePieces.add(piece);
-				board.getTile(i, 1).setPiece(piece);
-			}
-			if (i == 4) {
-				
-				piece = new Queen(true, i, 1,board);
-				whitePieces.add(piece);
-				board.getTile(i, 1).setPiece(piece);
-			}
-			if (i == 5) {
-				
-				piece = new King(true, i, 1,board);
-				whitePieces.add(piece);
-				board.getTile(i, 1).setPiece(piece);
-			}
-		}
-	}
 	
-	private void placeBlacks() {
-		Piece piece;
-		for (int i = 1; i < 9; i++) {
-			piece =  new Pawn(false, i, 7,board);
-			blackPieces.add(piece);
-			board.getTile(i, 7).setPiece(piece);
-		}
-		for (int i = 1; i < 9; i++) {
-			if (i == 1 || i == 8) {
-				
-				piece = new Rook(false, i, 8,board);
-				blackPieces.add(piece);
-				board.getTile(i, 8).setPiece(piece);
-			}
-			if (i == 2 || i == 7) {
-				
-				piece = new Knight(false, i, 8,board);
-				blackPieces.add(piece);
-				board.getTile(i, 8).setPiece(piece);
-			}
-			if (i == 3 || i == 6) {
-				
-				piece = new Bishop(false, i, 8,board);
-				blackPieces.add(piece);
-				board.getTile(i, 8).setPiece(piece);
-			}
-			if (i == 4) {
-				
-				piece = new Queen(false, i, 8,board);
-				blackPieces.add(piece);
-				board.getTile(i, 8).setPiece(piece);
-				
-			}
-			if (i == 5) {
-				
-				piece = new King(false, i, 8,board);
-				blackPieces.add(piece);
-				board.getTile(i, 8).setPiece(piece);
-			}
-		}
-	}
 	
 	//-------------- METODO TEMPORAL PARA PROBAR LOS CONSTRUCTORES (el draft se rellena en DraftScreen) -------------------
 	public void testDrafts() {
@@ -655,38 +569,38 @@ public class LocalGameScreen extends AbstractScreen {
 	public void placeWhites(ArrayList<String> player1Draft) {
 		Piece piece;
 		for (int i = 1; i < 9; i++) {
-			piece =  Render.parser.getPieceFromPath(player1Draft.get(0), true, i, 2,board);
+			piece =  Parser.getPieceFromPath(player1Draft.get(0), true, i, 2,board);
 			whitePieces.add(piece);
 			board.getTile(i, 2).setPiece(piece);
 		}
 		for (int i = 1; i < 9; i++) {
 			if (i == 1 || i == 8) {
 				
-				piece = Render.parser.getPieceFromPath(player1Draft.get(2), true, i, 1,board);
+				piece = Parser.getPieceFromPath(player1Draft.get(2), true, i, 1,board);
 				whitePieces.add(piece);
 				board.getTile(i, 1).setPiece(piece);
 			}
 			if (i == 2 || i == 7) {
 				
-				piece = Render.parser.getPieceFromPath(player1Draft.get(1), true, i, 1,board);
+				piece = Parser.getPieceFromPath(player1Draft.get(1), true, i, 1,board);
 				whitePieces.add(piece);
 				board.getTile(i, 1).setPiece(piece);
 			}
 			if (i == 3 || i == 6) {
 				
-				piece = Render.parser.getPieceFromPath(player1Draft.get(3), true, i, 1,board);
+				piece = Parser.getPieceFromPath(player1Draft.get(3), true, i, 1,board);
 				whitePieces.add(piece);
 				board.getTile(i, 1).setPiece(piece);
 			}
 			if (i == 4) {
 				
-				piece = Render.parser.getPieceFromPath(player1Draft.get(4), true, i, 1,board);
+				piece = Parser.getPieceFromPath(player1Draft.get(4), true, i, 1,board);
 				whitePieces.add(piece);
 				board.getTile(i, 1).setPiece(piece);
 			}
 			if (i == 5) {
 				
-				piece = Render.parser.getPieceFromPath(player1Draft.get(5), true, i, 1,board);
+				piece = Parser.getPieceFromPath(player1Draft.get(5), true, i, 1,board);
 				whitePieces.add(piece);
 				board.getTile(i, 1).setPiece(piece);
 			}
@@ -697,37 +611,37 @@ public class LocalGameScreen extends AbstractScreen {
 	private void placeBlacks(ArrayList<String> player2Draft) {
 		Piece piece;
 		for (int i = 1; i < 9; i++) {
-			piece =  Render.parser.getPieceFromPath(player2Draft.get(0), false, i, 7,board);
+			piece =  Parser.getPieceFromPath(player2Draft.get(0), false, i, 7,board);
 			blackPieces.add(piece);
 			board.getTile(i, 7).setPiece(piece);
 		}
 		for (int i = 1; i < 9; i++) {
 			if (i == 1 || i == 8) {
 				
-				piece = Render.parser.getPieceFromPath(player2Draft.get(2), false, i, 8,board);
+				piece = Parser.getPieceFromPath(player2Draft.get(2), false, i, 8,board);
 				blackPieces.add(piece);
 				board.getTile(i, 8).setPiece(piece);
 			}
 			if (i == 2 || i == 7) {
 				
-				piece = Render.parser.getPieceFromPath(player2Draft.get(1), false, i, 8,board);
+				piece = Parser.getPieceFromPath(player2Draft.get(1), false, i, 8,board);
 				blackPieces.add(piece);
 				board.getTile(i, 8).setPiece(piece);
 			}
 			if (i == 3 || i == 6) {
 				
-				piece = Render.parser.getPieceFromPath(player2Draft.get(3), false, i, 8,board);
+				piece = Parser.getPieceFromPath(player2Draft.get(3), false, i, 8,board);
 				blackPieces.add(piece);
 				board.getTile(i, 8).setPiece(piece);
 			}
 			if (i == 4) {
 				
-				piece = Render.parser.getPieceFromPath(player2Draft.get(4), false, i, 8,board);
+				piece = Parser.getPieceFromPath(player2Draft.get(4), false, i, 8,board);
 				blackPieces.add(piece);
 				board.getTile(i, 8).setPiece(piece);
 			}
 			if (i == 5) {
-				piece = Render.parser.getPieceFromPath(player2Draft.get(5), false, i, 8,board);
+				piece = Parser.getPieceFromPath(player2Draft.get(5), false, i, 8,board);
 				blackPieces.add(piece);
 				board.getTile(i, 8).setPiece(piece);
 			}

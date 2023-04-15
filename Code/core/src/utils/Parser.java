@@ -15,7 +15,7 @@ public class Parser {
 		
 	}
 	
-	public Piece getPieceFromPath(String piecePath, boolean color, int x, int y, Board board) {
+	public static Piece getPieceFromPath(String piecePath, boolean color, int x, int y, Board board) {
 		Piece piece = null;
 			
 		switch (piecePath) {
