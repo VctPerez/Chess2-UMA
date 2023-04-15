@@ -20,10 +20,10 @@ public class TextButton extends com.badlogic.gdx.scenes.scene2d.ui.TextButton{
 				System.out.println("salgo");
 			}
 			
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				System.out.println("clique");
-			}
+//			@Override
+//			public void clicked(InputEvent event, float x, float y) {
+//				System.out.println("clique");
+//			}
 		});
 	}
 	

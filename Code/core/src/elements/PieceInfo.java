@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
+import elements.pieces.*;
 import utils.*;
 
 public class PieceInfo extends Actor{
@@ -22,7 +23,38 @@ public class PieceInfo extends Actor{
         
 	}
 	
+	public void getInfoFrom(String piecePath) {
+		
+		System.out.println(piecePath);
+		
+		switch (piecePath) {
+		case Resources.PAWN_PATH:
+			infoFrom(new Pawn(true, 3, 3, board));
+			break;
+		case Resources.KNIGHT_PATH:
+			infoFrom(new Knight(true, 3, 3, board));
+			break;
+		case Resources.ROOK_PATH:
+			infoFrom(new Rook(true, 3, 3, board));
+			break;
+		case Resources.BISHOP_PATH:
+			infoFrom(new Bishop(true, 3, 3, board));
+			break;
+		case Resources.QUEEN_PATH:
+			infoFrom(new Queen(true, 3, 3, board));
+			break;
+		case Resources.KING_PATH:
+			infoFrom(new King(true, 3, 3, board));
+			break;
+		default:
+			break;
+		}
+	}
+	
 	public void infoFrom(Piece piece) {
+		clearBoard(board.getTile(3, 3).getPiece());
+		
+		
 		board.getTile(3, 3).setPiece(piece);
 		
 		highlight(piece);
@@ -32,13 +64,15 @@ public class PieceInfo extends Actor{
         info.setText(piece.getInfo());
 	}
 	
-	public void clearBoard(Piece piece) {
-		for (Vector2 vector : piece.posibleMovements()) {
-			Tile tile = board.getTile(vector.x, vector.y);
-			if(tile.piece!=null && tile.piece.color()!=piece.color) {
-				tile.attacked=false;
-			}else {
-				tile.highlight = false;
+	public void clearBoard(Piece piece) {// usamos este método o sera más eficiente simplemente recorrer todo el tablero 5x5 y poner el highliht y eso a false?
+		if(piece!=null) {
+			for (Vector2 vector : piece.posibleMovements()) {
+				Tile tile = board.getTile(vector.x, vector.y);
+				if(tile.piece!=null && tile.piece.color()!=piece.color) {
+					tile.attacked=false;
+				}else {
+					tile.highlight = false;
+				}
 			}
 		}
 	}

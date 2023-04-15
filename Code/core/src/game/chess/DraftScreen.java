@@ -1,5 +1,6 @@
 package game.chess;
 
+import java.beans.EventSetDescriptor;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -82,6 +83,7 @@ public class DraftScreen extends AbstractScreen {
 				tile2.hideFrame();
 				
 				currentPieceSelection = tile1.getPiece();
+				info.getInfoFrom(currentPieceSelection);
 				
 			    return true;
 			    }
@@ -94,10 +96,14 @@ public class DraftScreen extends AbstractScreen {
 				tile1.hideFrame();
 				
 				currentPieceSelection = tile2.getPiece();
+				info.getInfoFrom(currentPieceSelection);
 				
 			    return true;
 			    }
 			} );
+		
+		tile1.showFrame();
+		tile2.hideFrame();
 		
 		stage.addActor(tile1);
 		stage.addActor(tile2);
@@ -112,8 +118,8 @@ public class DraftScreen extends AbstractScreen {
 		kings = new ArrayList<>();
 		
 		pawns.add(Resources.PAWN_PATH);
-		pawns.add(Resources.PAWN_PATH);
-		pawns.add(Resources.PAWN_PATH);
+		pawns.add(Resources.ROOK_PATH);
+		pawns.add(Resources.BISHOP_PATH);
 		Collections.shuffle(pawns);
 		
 		knights.add(Resources.KNIGHT_PATH);
@@ -189,10 +195,14 @@ public class DraftScreen extends AbstractScreen {
 	private void updateTileButtons(ArrayList<String> pieceClass) {
 		tile1.setPiece(pieceClass.get(0));
 		tile2.setPiece(pieceClass.get(1));
+		
+		currentPieceSelection = tile1.getPiece();
+		System.out.println(currentPieceSelection);
+		info.getInfoFrom(currentPieceSelection);
 	}
 
 	public void changePiece() {
-		info.clearBoard(piece);
+		
 		switch (cont) {
 		case 0:
 			
@@ -202,52 +212,46 @@ public class DraftScreen extends AbstractScreen {
 			//método que dependiendo de la clave añada unas piezas u otras
 			
 			updateTileButtons(pawns);
-			
-			piece = new Pawn(true, 3, 3, info.board);
 
 			break;
 
 		case 1:
 			
 			updateTileButtons(knights);
-			piece = new Knight(true, 3, 3, info.board);
 
 			break;
 
 		case 2:
 			
 			updateTileButtons(bishops);
-			piece = new Bishop(true, 3, 3, info.board);
 
 			break;
 
 		case 3:
 			
 			updateTileButtons(rooks);
-			piece = new Rook(true, 3, 3, info.board);
 
 			break;
 
 		case 4:
 			
 			updateTileButtons(queens);
-			piece = new Queen(true, 3, 3, info.board);
 
 			break;
 
 		case 5:
 
 			updateTileButtons(kings);
-			piece = new King(true, 3, 3, info.board);
 
 			break;
 		}
 		arrow.setPosition(80, 100+100*(5-cont));
-		info.infoFrom(piece);
+		
 	}
 
 	public void update() {
 		if (next.isPressed()) {// hacer que se cambie el valor de la clave actual del mapa
+			System.out.println("A");
 			if (cont < 5) {
 				finalDraft.add(currentPieceSelection);
 				cont++;
@@ -264,7 +268,7 @@ public class DraftScreen extends AbstractScreen {
 			}
 		}
 		
-		System.out.println(finalDraft.toString());
+		//System.out.println(finalDraft.toString());
 		
 		if(cont==5){
 			next.setText("Finalizar");
