@@ -10,7 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import elements.Board;
 import elements.Piece;
 import elements.Tile;
-import game.chess.GameScreen;
+import game.chess.LocalGameScreen;
 import interaccionFichero.LectorLineas;
 import utils.Render;
 import utils.Resources;
@@ -30,22 +30,22 @@ public class King extends Piece{
 	
 	@Override
 	protected void updateXY(int x, int y) {
-		GameScreen.board.getTile(this.x, this.y).attacked = false;
+		LocalGameScreen.board.getTile(this.x, this.y).attacked = false;
 
 		super.updateXY(x, y);
 		
 		
 		if(color) {
-			GameScreen.whiteKing.set(x, y);
+			LocalGameScreen.whiteKing.set(x, y);
 		}else {
 			
-			GameScreen.blackKing.set(x, y);
+			LocalGameScreen.blackKing.set(x, y);
 		}
 	}
 	
 	@Override
 	protected void simulateMovement(Tile currentTile, Vector2 move, ArrayList<Vector2> removeMovements) {
-		Tile nextTile = GameScreen.board.getTile((int)move.x,(int) move.y);
+		Tile nextTile = LocalGameScreen.board.getTile((int)move.x,(int) move.y);
 		Piece nextTilePiece = null;
 		if(nextTile.getPiece()!=null) {
 			nextTilePiece = nextTile.getPiece();
@@ -53,9 +53,9 @@ public class King extends Piece{
 		currentTile.simulateMoveTo(nextTile);
 		
 			//check king
-			if(color && !isKingSafe(GameScreen.blackPieces, new Vector2(move.x, move.y))) {
+			if(color && !isKingSafe(LocalGameScreen.blackPieces, new Vector2(move.x, move.y))) {
 				removeMovements.add(move);
-			}else if(!color && !isKingSafe(GameScreen.whitePieces, new Vector2(move.x, move.y))) {
+			}else if(!color && !isKingSafe(LocalGameScreen.whitePieces, new Vector2(move.x, move.y))) {
 				removeMovements.add(move);
 			}
 			

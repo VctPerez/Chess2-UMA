@@ -28,7 +28,7 @@ public class MatchResults extends Actor{
         goMenuText= new Text(Resources.FONT_MENU_PATH,20,Color.WHITE,3);
         goMenuText.setPosition(500, 250);
         goMenuText.setText("Volver al Menú Principal");
-        goMenu = new TextButton(goMenuText);
+        goMenu = new TextButton("Volver al Menú Principal");
         goMenu.setName("goMenu");
         
 	}

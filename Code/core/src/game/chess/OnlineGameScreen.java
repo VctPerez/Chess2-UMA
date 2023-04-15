@@ -26,7 +26,7 @@ import utils.Render;
 
 import java.util.ArrayList;
 
-public class GameScreen extends AbstractScreen {
+public class OnlineGameScreen extends AbstractScreen {
 	public static Stage stage;
 	Background background;
 	public static Board board;
@@ -156,14 +156,14 @@ public class GameScreen extends AbstractScreen {
 		stage.act();
 	}
 
-	public void update(Tile tile) {
+	public void update(Tile tile) {// aqui si no es tu turno debes recibir el movimiento del otro jugador y realizarlo en el tablero y cuando sea tu turno enviarlo
 		
         // Escape para volver al menÃº principal (Prueba)
         if (Render.inputs.justPressed(Keys.ESCAPE)) {
         	 Render.app.setScreen(Render.MAINSCREEN);
         // R para reiniciar la partida (Pruebas) -> no funciona
         }else if(Gdx.input.isKeyJustPressed(Keys.R)) {
-			Render.app.setScreen(new GameScreen());
+			Render.app.setScreen(new OnlineGameScreen());
 			debugMode = false;
 			//G para modo debug, permite hacer movimientos ilegales
 		} else if (Gdx.input.isKeyJustPressed(Keys.G)){

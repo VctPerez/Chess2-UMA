@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 import utils.IOS;
+import utils.Parser;
 import utils.Render;
 import utils.Resources;
 
@@ -78,6 +79,7 @@ public class Chess2 extends Game {
 		Render.camera = new OrthographicCamera(Render.SCREEN_WIDTH, Render.SCREEN_HEIGHT);
 		Render.app = this;
 		Render.inputs = new IOS();
+		Render.parser = new Parser();
 		Gdx.input.setInputProcessor(Render.inputs);
 		manager = new AssetManager();
 		loadResources();
@@ -95,8 +97,8 @@ public class Chess2 extends Game {
 		Render.CREATEMATCHSCREEN = new CreateMatchScreen();
 		Render.DRAFTSCREEN = new DraftScreen();
 
-		//this.setScreen(new GameScreen());
-		this.setScreen(Render.MAINSCREEN);
+		this.setScreen(new LocalGameScreen());
+		//this.setScreen(Render.MAINSCREEN);
 //		this.setScreen(Render.DRAFTSCREEN);
 
 	}

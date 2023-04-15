@@ -102,8 +102,7 @@ public class DraftScreen extends AbstractScreen {
 			    }
 			} );
 		
-		tile1.showFrame();
-		tile2.hideFrame();
+		
 		
 		stage.addActor(tile1);
 		stage.addActor(tile2);
@@ -172,20 +171,14 @@ public class DraftScreen extends AbstractScreen {
 	}
 
 	private void initButtons() {
-		Text nextText, backText;// Botones con nombre momentaneos, se cambiara y se a�adira a los ficheros de idiomas
-
-		
-		nextText = new Text(Resources.FONT_MENU_PATH, 20, Color.WHITE, 3);
-		nextText.setText("Siguiente");
-		nextText.setPosition(550, 50);
-		
-		backText = new Text(Resources.FONT_MENU_PATH, 20, Color.WHITE, 3);
-		backText.setText("Atras");
-		backText.setPosition(175, 50);
+		// Botones con nombre momentaneos, se cambiara y se a�adira a los ficheros de idiomas
 
 		next = new TextButton("Siguiente");
+		next.setPosition(550,  50);
+		
 		back = new TextButton("Atras");
-
+		back.setPosition(175,  50);
+		
 		stage.addActor(next);
 		stage.addActor(back);
 
@@ -196,6 +189,8 @@ public class DraftScreen extends AbstractScreen {
 		tile1.setPiece(pieceClass.get(0));
 		tile2.setPiece(pieceClass.get(1));
 		
+		tile1.showFrame();
+		tile2.hideFrame();
 		currentPieceSelection = tile1.getPiece();
 		System.out.println(currentPieceSelection);
 		info.getInfoFrom(currentPieceSelection);
@@ -205,44 +200,27 @@ public class DraftScreen extends AbstractScreen {
 		
 		switch (cont) {
 		case 0:
-			
-			//se crean dos casillas en medio de la pantalla (puede que las casillas sea mejor crearlas antes y solo cambiar las piezas con setPiece) la info se relaciona con la casilla en la que hagas click no con el change piece
-			//change piece cambia la clase de piezas que salen en las casillas, solo eso.
-			
-			//método que dependiendo de la clave añada unas piezas u otras
-			
 			updateTileButtons(pawns);
-
 			break;
 
 		case 1:
-			
 			updateTileButtons(knights);
-
 			break;
 
 		case 2:
-			
 			updateTileButtons(bishops);
-
 			break;
 
 		case 3:
-			
 			updateTileButtons(rooks);
-
 			break;
 
 		case 4:
-			
 			updateTileButtons(queens);
-
 			break;
 
 		case 5:
-
 			updateTileButtons(kings);
-
 			break;
 		}
 		arrow.setPosition(80, 100+100*(5-cont));
@@ -256,8 +234,8 @@ public class DraftScreen extends AbstractScreen {
 				finalDraft.add(currentPieceSelection);
 				cont++;
 				changePiece();
-			}else {
-				Render.app.setScreen(new GameScreen());
+			}else {// aqui o bien se manda el draft el otro o se crea otro draf(en modo local) -> tal vez haya q pasar el array del finalDraft como parámetro?
+				Render.app.setScreen(new LocalGameScreen());
 			}
 		}
 		if (back.isPressed()) {

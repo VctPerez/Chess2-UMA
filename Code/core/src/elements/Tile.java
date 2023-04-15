@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
-import game.chess.GameScreen;
+import game.chess.LocalGameScreen;
 import utils.Image;
 import utils.Render;
 import utils.Resources;
@@ -91,7 +91,7 @@ public class Tile extends Actor{
 	}
 	
 	public void move(int x, int y) {
-		Tile nextTile = GameScreen.board.getTile(x, y);
+		Tile nextTile = LocalGameScreen.board.getTile(x, y);
 		piece.hasBeenMoved();
 		
 		piece.updateXY(x, y);
@@ -103,10 +103,10 @@ public class Tile extends Actor{
 	public void sendPieceToGraveyard() {
 		if(piece.color) {
 
-			GameScreen.graveyardWhite.add(piece);
+			LocalGameScreen.graveyardWhite.add(piece);
 		}else {
 			
-			GameScreen.graveyardBlack.add(piece);
+			LocalGameScreen.graveyardBlack.add(piece);
 		}
 		this.piece=null;
 	}
@@ -114,10 +114,10 @@ public class Tile extends Actor{
 	public void simulateSendPieceToGraveyard() {
 		if(piece.color) {
 
-			GameScreen.graveyardWhite.simulateAdd(piece);
+			LocalGameScreen.graveyardWhite.simulateAdd(piece);
 		}else {
 			
-			GameScreen.graveyardBlack.simulateAdd(piece);
+			LocalGameScreen.graveyardBlack.simulateAdd(piece);
 		}
 		this.piece=null;
 	}

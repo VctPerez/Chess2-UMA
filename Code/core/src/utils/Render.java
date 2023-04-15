@@ -1,5 +1,7 @@
 package utils;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Audio;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
@@ -46,6 +48,12 @@ public class Render {
     public static Host host;
     public static Guest guest;
     public static boolean hosting;
+    
+    public static Parser parser;
+    
+    //DRAFTS DE LOS DOS JUGADORES (puede que esten mejor en otra clase, es temporal)
+    public static ArrayList<String> player1Draft = new ArrayList<>();
+    public static ArrayList<String> player2Draft = new ArrayList<>();
 
     /**
      * Este metodo se encarga de limpiar la pantalla al principio de cada Render.

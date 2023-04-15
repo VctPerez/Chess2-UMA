@@ -23,32 +23,8 @@ public class PieceInfo extends Actor{
         
 	}
 	
-	public void getInfoFrom(String piecePath) {
-		
-		System.out.println(piecePath);
-		
-		switch (piecePath) {
-		case Resources.PAWN_PATH:
-			infoFrom(new Pawn(true, 3, 3, board));
-			break;
-		case Resources.KNIGHT_PATH:
-			infoFrom(new Knight(true, 3, 3, board));
-			break;
-		case Resources.ROOK_PATH:
-			infoFrom(new Rook(true, 3, 3, board));
-			break;
-		case Resources.BISHOP_PATH:
-			infoFrom(new Bishop(true, 3, 3, board));
-			break;
-		case Resources.QUEEN_PATH:
-			infoFrom(new Queen(true, 3, 3, board));
-			break;
-		case Resources.KING_PATH:
-			infoFrom(new King(true, 3, 3, board));
-			break;
-		default:
-			break;
-		}
+	public void getInfoFrom(String piecePath) { 
+		infoFrom(Render.parser.getPieceFromPath(piecePath, board, 3, 3));
 	}
 	
 	public void infoFrom(Piece piece) {

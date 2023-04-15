@@ -11,7 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 
-import game.chess.GameScreen;
+import game.chess.LocalGameScreen;
 import interaccionFichero.LectorLineas;
 import utils.Image;
 import utils.Render;
@@ -90,7 +90,7 @@ public abstract class Piece extends Actor {
 	protected void updateXY(int x, int y) {
 		this.x = x;
 		this.y = y;
-		Tile tile = GameScreen.board.getTile(x, y);
+		Tile tile = LocalGameScreen.board.getTile(x, y);
 
 		Action completeAction = new Action() {
 			Sound sound = Render.app.getManager().get(Resources.PIECEMOVE_SOUND, Sound.class);
@@ -188,9 +188,9 @@ public abstract class Piece extends Actor {
 		currentTile.simulateMoveTo(nextTile);
 
 		// check king
-		if (color && !isKingSafe(GameScreen.blackPieces, GameScreen.whiteKing)) {
+		if (color && !isKingSafe(LocalGameScreen.blackPieces, LocalGameScreen.whiteKing)) {
 			removeMovements.add(move);
-		} else if (!color && !isKingSafe(GameScreen.whitePieces, GameScreen.blackKing)) {
+		} else if (!color && !isKingSafe(LocalGameScreen.whitePieces, LocalGameScreen.blackKing)) {
 			removeMovements.add(move);
 		}
 
@@ -228,9 +228,9 @@ public abstract class Piece extends Actor {
 
 		if (nextTilePiece != null && !nextTilePiece.alive()) {
 			if (nextTilePiece.color()) {
-				nextTile.setPiece(GameScreen.graveyardWhite.reviveLastPiece());
+				nextTile.setPiece(LocalGameScreen.graveyardWhite.reviveLastPiece());
 			} else if (!nextTilePiece.color()) {
-				nextTile.setPiece(GameScreen.graveyardBlack.reviveLastPiece());
+				nextTile.setPiece(LocalGameScreen.graveyardBlack.reviveLastPiece());
 			}
 		}
 	}
