@@ -1,5 +1,7 @@
 package utils;
 
+import com.badlogic.gdx.graphics.Texture;
+
 import elements.Board;
 import elements.Piece;
 import elements.pieces.Bishop;
@@ -39,5 +41,9 @@ public class Parser {
 			break;
 		}
 		return piece;
+	}
+	
+	public static Image getImageFromPath(String piecePath) {
+		return new Image(Render.app.getManager().get(piecePath, Texture.class));
 	}
 }

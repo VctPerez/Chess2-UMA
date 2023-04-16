@@ -1,15 +1,11 @@
 package game.chess;
 
-import java.beans.EventSetDescriptor;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.TreeMap;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -17,46 +13,33 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import elements.*;
-import elements.pieces.*;
 import utils.*;
 
 public class DraftScreen extends AbstractScreen {
 	public static Stage stage;
 
-	private Map<String, Image> draft;
+	private Map<String, String> draft;
 	private ArrayList<String> pawns, knights, rooks, bishops, queens, kings;
-	
-	public ArrayList<String> finalDraft;
 	private String currentPieceSelection;
 	
-	Background background;
-	PieceInfo info;
-	TextButton end, next, back;
-	Piece piece;
-	Image arrow;
-	int cont = 0;
+	private Background background;
+	private PieceInfo info;
+	private TextButton next, back;
+	private Image arrow;
+	private int cont = 0;
 	
 	TileButton tile1, tile2;
 
 	@Override
 	public void show() {
 		stage = new Stage(new FitViewport(1280, 720));
-		stage.clear();
-		
 		Gdx.input.setInputProcessor(stage);
-		
-		finalDraft = new ArrayList<>();
+		stage.clear();
 		
 		background = new Background();
 		background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		
 		info = new PieceInfo();
-		piece = new Pawn(true, 3, 3, info.board);
-		info.infoFrom(piece);
-		
-		
-		
-		
 
 		// -------------------------------
 
@@ -67,8 +50,6 @@ public class DraftScreen extends AbstractScreen {
 		initTileButtons();
 		initButtons();
 		initDraft();
-		
-
 	}
 	
 	private void initTileButtons() {
@@ -84,6 +65,7 @@ public class DraftScreen extends AbstractScreen {
 				
 				currentPieceSelection = tile1.getPiece();
 				info.getInfoFrom(currentPieceSelection);
+				updateDraft();
 				
 			    return true;
 			    }
@@ -95,15 +77,14 @@ public class DraftScreen extends AbstractScreen {
 				tile2.showFrame();
 				tile1.hideFrame();
 				
+				
 				currentPieceSelection = tile2.getPiece();
 				info.getInfoFrom(currentPieceSelection);
+				updateDraft();
 				
 			    return true;
 			    }
 			} );
-		
-		
-		
 		stage.addActor(tile1);
 		stage.addActor(tile2);
 	}
@@ -149,25 +130,44 @@ public class DraftScreen extends AbstractScreen {
 
 	private void initDraft() {
 
-		draft = new LinkedHashMap<String, Image>();
-		draft.put("King", new Image(Render.app.getManager().get(Resources.KING_PATH, Texture.class)));
-		draft.put("Queen", new Image(Render.app.getManager().get(Resources.QUEEN_PATH, Texture.class)));
-		draft.put("Rook", new Image(Render.app.getManager().get(Resources.ROOK_PATH, Texture.class)));
-		draft.put("Bishop", new Image(Render.app.getManager().get(Resources.BISHOP_PATH, Texture.class)));
-		draft.put("Knight", new Image(Render.app.getManager().get(Resources.KNIGHT_PATH, Texture.class)));
-		draft.put("Pawn", new Image(Render.app.getManager().get(Resources.PAWN_PATH, Texture.class)));
+		//Podemos hacer que al principio tengan la imagen de la primera pieza de cada tipo, de las piezas básicas o una nueva que sea una silueta o con una interrogacion o algo
+		
+		draft = new LinkedHashMap<String, String>(); 
+		draft.put("Pawn", Resources.PAWN_PATH);
+		draft.put("Knight", Resources.KNIGHT_PATH);
+		draft.put("Rook", Resources.ROOK_PATH);
+		draft.put("Bishop", Resources.BISHOP_PATH);
+		draft.put("Queen", Resources.QUEEN_PATH);
+		draft.put("King", Resources.KING_PATH);
 
 		int i = 0;
-		for (Image piece : draft.values()) {
-			piece.setSize(84, 84);
-			piece.setPosition(20, 85 + (i * 100));
+		for (String key : draft.keySet()) {
+			addDraftPieceToStage(key, i);
 			i++;
-			stage.addActor(piece);
 		}
 		
 		arrow=new Image(Render.app.getManager().get(Resources.ARROW_PATH, Texture.class));
 		stage.addActor(arrow);
 		changePiece();
+	}
+	
+	private void addDraftPieceToStage(String key, int pos) {
+		Image piece = Parser.getImageFromPath(draft.get(key));
+		piece.setName(key);
+		piece.setSize(84, 84);
+		piece.setPosition(20, 85 + ((5-pos) * 100));
+		stage.addActor(piece);
+	}
+	
+	private void updateDraft() {
+		System.out.println(cont);
+		String key = (String)draft.keySet().toArray()[cont];
+		stage.getRoot().findActor(key).remove();
+		
+		//-------¿CAMBIAR? Ahora mismo la pieza del draft no cambia hasta q pulses una casilla pero entonces hay que controlar que hayas pulsado
+		// al menos una vez todas las casillas para que no te quedes con una pieza en el draft que no te ha salido para seeleccionar?
+		draft.put(key, currentPieceSelection);
+		addDraftPieceToStage(key, cont);
 	}
 
 	private void initButtons() {
@@ -175,14 +175,42 @@ public class DraftScreen extends AbstractScreen {
 
 		next = new TextButton("Siguiente");
 		next.setPosition(550,  50);
+		next.addCaptureListener(new InputListener() { 
+			@Override
+			    public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				if (cont < 5) {
+					cont++;
+					changePiece();
+				}else {// aqui o bien se manda el draft el otro o se crea otro draf(en modo local) -> tal vez haya q pasar el array del finalDraft como parámetro?
+					Render.app.setScreen(new LocalGameScreen());
+				}
+				
+				if(cont==5){
+					next.setText("Finalizar");
+				}
+			    return true;
+			    }
+			} );
 		
 		back = new TextButton("Atras");
 		back.setPosition(175,  50);
+		back.addCaptureListener(new InputListener() { 
+			@Override
+			    public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				if (cont > 0) {
+					cont--;
+					changePiece();
+				}
+				
+				if(cont==4){
+					next.setText("Siguiente");
+				}
+			    return true;
+			    }
+			} );
 		
 		stage.addActor(next);
 		stage.addActor(back);
-
-		//Gdx.input.setInputProcessor(Render.inputs);
 	}
 	
 	private void updateTileButtons(ArrayList<String> pieceClass) {
@@ -192,66 +220,31 @@ public class DraftScreen extends AbstractScreen {
 		tile1.showFrame();
 		tile2.hideFrame();
 		currentPieceSelection = tile1.getPiece();
-		System.out.println(currentPieceSelection);
 		info.getInfoFrom(currentPieceSelection);
+		
+		arrow.setPosition(80, 100+100*(5-cont));
 	}
 
 	public void changePiece() {
-		
 		switch (cont) {
 		case 0:
 			updateTileButtons(pawns);
 			break;
-
 		case 1:
 			updateTileButtons(knights);
 			break;
-
 		case 2:
-			updateTileButtons(bishops);
-			break;
-
-		case 3:
 			updateTileButtons(rooks);
 			break;
-
+		case 3:
+			updateTileButtons(bishops);
+			break;
 		case 4:
 			updateTileButtons(queens);
 			break;
-
 		case 5:
 			updateTileButtons(kings);
 			break;
-		}
-		arrow.setPosition(80, 100+100*(5-cont));
-		
-	}
-
-	public void update() {
-		if (next.isPressed()) {// hacer que se cambie el valor de la clave actual del mapa
-			System.out.println("A");
-			if (cont < 5) {
-				finalDraft.add(currentPieceSelection);
-				cont++;
-				changePiece();
-			}else {// aqui o bien se manda el draft el otro o se crea otro draf(en modo local) -> tal vez haya q pasar el array del finalDraft como parámetro?
-				Render.app.setScreen(new LocalGameScreen());
-			}
-		}
-		if (back.isPressed()) {
-			if (cont > 0) {
-				finalDraft.remove(finalDraft.size()-1);
-				cont--;
-				changePiece();
-			}
-		}
-		
-		//System.out.println(finalDraft.toString());
-		
-		if(cont==5){
-			next.setText("Finalizar");
-		}else {
-			next.setText("Siguiente");
 		}
 	}
 
@@ -259,9 +252,7 @@ public class DraftScreen extends AbstractScreen {
 	public void render(float delta) {
 		Render.clearScreen();
 		Render.Batch.begin();
-		
-		update();
-		
+
 		stage.draw();
 		stage.act();
 

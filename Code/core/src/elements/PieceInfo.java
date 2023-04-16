@@ -24,7 +24,7 @@ public class PieceInfo extends Actor{
 	}
 	
 	public void getInfoFrom(String piecePath) { 
-		infoFrom(Render.parser.getPieceFromPath(piecePath, board, 3, 3));
+		infoFrom(Render.parser.getPieceFromPath(piecePath, true, 3, 3, board));
 	}
 	
 	public void infoFrom(Piece piece) {

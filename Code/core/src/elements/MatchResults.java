@@ -48,7 +48,7 @@ public class MatchResults extends Actor{
 		
 		//Por algun motivo solo puedo dibujar el boton así, de cualquier otra forma me da errores (Revisable)
 		Render.Batch.begin();
-		goMenu.draw(Render.Batch, 0); 
+		goMenu.draw(Render.Batch, parentAlpha); 
 		Render.Batch.end();
 	}
 	
