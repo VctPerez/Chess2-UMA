@@ -81,7 +81,7 @@ public class King extends Piece{
 		addMovement(x-1,y, board, movements);
 		addMovement(x-1,y-1, board, movements);	
 		
-		if (!hasBeenMoved && board.dim>5) {
+		if (!hasBeenMoved && board.dim==8) {
 			castling(x, y, movements);
 		}
 		
@@ -96,10 +96,10 @@ public class King extends Piece{
 	
 	
 	public void castling(float x, float y, ArrayList<Vector2> movements) {//falta implementar q sea un movimiento seguro
-		if (board.getTile(1, y).getPiece() instanceof Rook && board.getTile(1, y).getPiece().hasBeenMoved == false && isFreeSpace(1, y, x)) {
+		if (board.getTile(1, y).getPiece() instanceof Rook && board.getTile(1, y).getPiece().hasBeenMoved == false && isSafe(1, y, x)) {
 			movements.add(new Vector2(x - 2, y));
 		}
-		if (board.getTile(8, y).piece instanceof Rook && board.getTile(8, y).piece.hasBeenMoved == false && isFreeSpace(x, y, 8)) {
+		if (board.getTile(8, y).piece instanceof Rook && board.getTile(8, y).piece.hasBeenMoved == false && isSafe(x, y, 8)) {
 				movements.add(new Vector2(x + 2, y));
 		}
 	}
@@ -110,15 +110,30 @@ public class King extends Piece{
 	 * @param dest
 	 * @return
 	 */
-	private boolean isFreeSpace(float start, float y, float dest) {
+	private boolean isSafe(float start, float y, float dest) {
 		boolean res=true;
 			for(int i=(int) start+1; i<dest;i++) {
-
 				if(board.getTile(i, y).piece!=null) {
 					res=false;
+				}else if (color && !isTileSafe(LocalGameScreen.blackPieces, new Vector2(i, y))) {
+					res = false;
+				} else if (!color && !isTileSafe(LocalGameScreen.whitePieces, new Vector2(i, y))) {
+					res = false;
 				}
 			}
 		return res;
+	}
+	
+	protected boolean isTileSafe(ArrayList<Piece> pieces, Vector2 pos) {
+		boolean isSafe = true;
+		for (Piece piece : pieces) {
+			if(piece.hasBeenMoved || !(piece instanceof King)) {
+				if (piece.posibleMovements().contains(pos)) {
+					isSafe = false;
+				}
+			}
+		}
+		return isSafe;
 	}
 	
 	
