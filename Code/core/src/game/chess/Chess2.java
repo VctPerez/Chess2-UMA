@@ -39,6 +39,13 @@ public class Chess2 extends Game {
 		manager.load(Resources.KNIGHT_PATH, Texture.class);
 		manager.load(Resources.ARROW_PATH, Texture.class);
 		
+		//Pieza random
+		manager.load(Resources.RND_PATH,Texture.class);
+		manager.load(Resources.RND_BISHOP_PATH,Texture.class);
+		manager.load(Resources.RND_ROOK_PATH,Texture.class);
+		manager.load(Resources.RND_QUEEN_PATH,Texture.class);
+		manager.load(Resources.RND_KNIGHT_PATH,Texture.class);
+		
 		manager.load(Resources.FRAME_PATH, Texture.class);
 
 		//CUSTOMS BUTTONS
@@ -85,7 +92,7 @@ public class Chess2 extends Game {
 		loadResources();
 		//while(!manager.isFinished());
 		Render.LOADINGSCREEN = new LoadingScreen();
-//		this.setScreen(Render.CONFIGSCREEN);
+		//this.setScreen(Render.CONFIGSCREEN);
 
 		//Cargamos en Render solo pantallas que sean necesarias crear una sola vez (Para ahorrarnos tener que crear nuevas innecesariamente), 
 		//otras como el GameScreen necesita ser creadas de nuevo al volverse a usar
@@ -97,9 +104,9 @@ public class Chess2 extends Game {
 		Render.CREATEMATCHSCREEN = new CreateMatchScreen();
 		Render.DRAFTSCREEN = new DraftScreen();
 
-		//this.setScreen(new LocalGameScreen());
+		this.setScreen(new LocalGameScreen());
 		//this.setScreen(Render.MAINSCREEN);
-		this.setScreen(Render.DRAFTSCREEN);
+		//this.setScreen(Render.DRAFTSCREEN);
 
 	}
 

@@ -559,13 +559,17 @@ public class LocalGameScreen extends AbstractScreen {
 	
 	//-------------- METODO TEMPORAL PARA PROBAR LOS CONSTRUCTORES (el draft se rellena en DraftScreen) -------------------
 	public void testDrafts() {
-		Render.player1Draft.add(Resources.LANCER_PATH);
+		
+		//Para probar la pieza random
+		//Render.player1Draft.add(Resources.RND_PATH);
+		Render.player1Draft.add(Resources.PAWN_PATH);
 		Render.player1Draft.add(Resources.KNIGHT_PATH);
 		Render.player1Draft.add(Resources.ROOK_PATH);
 		Render.player1Draft.add(Resources.BISHOP_PATH);
 		Render.player1Draft.add(Resources.QUEEN_PATH);
 		Render.player1Draft.add(Resources.KING_PATH);
 		
+		//Render.player2Draft.add(Resources.RND_PATH);
 		Render.player2Draft.add(Resources.PAWN_PATH);
 		Render.player2Draft.add(Resources.KNIGHT_PATH);
 		Render.player2Draft.add(Resources.ROOK_PATH);

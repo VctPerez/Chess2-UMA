@@ -22,6 +22,7 @@ public class Knight extends Piece {
 	public Knight() {
 		super(Render.app.getManager().get(Resources.KNIGHT_PATH, Texture.class));
 	}
+	
 
 	@Override
 	public void draw(Batch batch, float parentAlpha) {

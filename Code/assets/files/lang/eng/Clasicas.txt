@@ -37,6 +37,12 @@
   an enemy piece, and is the only piece that
   must be protected, limiting other pieces
   movement.
+
+Random Piece
+Inicially behaves like a pawn,
+but, every time it moves it changes
+to other random piece from the 
+classic pieces except the king.
    
   
   

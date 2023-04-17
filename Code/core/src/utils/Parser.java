@@ -22,6 +22,9 @@ public class Parser {
 		case Resources.LANCER_PATH:
 			piece = new Lancer(color, x, y, board);
 			break;
+		case Resources.RND_PATH:
+			piece = new RandomPiece(color,x,y,board);
+			break;
 		case Resources.KNIGHT_PATH:
 			piece = new Knight(color, x, y, board);
 			break;

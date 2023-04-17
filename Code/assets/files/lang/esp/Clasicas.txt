@@ -3,6 +3,12 @@
   la columna en la que se 
   encuentra, sin poder retroceder, 
   comen en diagonal.
+
+Pieza Aleatoria:
+Inicialmente se comporta como un 
+Peón, pero cada vez que se mueve
+se convierte en otra pieza aleatoria
+de las clásicas a excepción del rey.
  
  Alfil Clasico:
    Camina diagonalmente de una en 
@@ -46,6 +52,12 @@
   y es la única pieza que debe ser
   protegida, limitando los movimientos 
   de las otras piezas aliadas.
+
+Pieza Aleatoria:
+Inicialmente se comporta como un 
+Peón, pero cada vez que se mueve
+se convierte en otra pieza aleatoria
+de las clásicas a excepción del rey.
    
   
   
