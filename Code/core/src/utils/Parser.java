@@ -25,6 +25,9 @@ public class Parser {
 		case Resources.KNIGHT_PATH:
 			piece = new Knight(color, x, y, board);
 			break;
+		case Resources.RIDER_PATH:
+			piece = new Rider(color, x, y, board);
+			break;
 		case Resources.ROOK_PATH:
 			piece = new Rook(color, x, y, board);
 			break;

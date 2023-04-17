@@ -16,11 +16,9 @@ import utils.Resources;
 import utils.Text;
 
 public class Rider extends Piece{
-	
-	
 
 	public Rider(Boolean color, int x, int y,Board board) {
-		super(color, Render.app.getManager().get(Resources.KNIGHT_PATH, Texture.class), x ,y,board);
+		super(color, Render.app.getManager().get(Resources.RIDER_PATH, Texture.class), x ,y,board);
 	}
 	
 	@Override
@@ -54,6 +52,10 @@ public class Rider extends Piece{
 		if (board.getTile(x, y) != null && !sameColor(board.getTile(x, y).getPiece())) {
 			movements.add(new Vector2(x, y));
 		}
+	}
+	
+	public void dispose() {
+		sprite.dispose();
 	}
 	
 	@Override
