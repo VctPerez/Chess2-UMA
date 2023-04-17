@@ -1,2 +1,7 @@
 eng/
+esp/
 0
+//SETTINGS
+0.0
+67.0
+2

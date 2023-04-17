@@ -19,7 +19,6 @@ public class MainScreen extends AbstractScreen {
     TextButton[] textButton;
     Table table;
     Label title;
-    Image Logo,news;
     LectorLineas languageReader, configReader;
 
     
@@ -30,27 +29,19 @@ public class MainScreen extends AbstractScreen {
     	stage = new Stage(new FitViewport(1280, 720));
     	table = new Table();
     	table.setFillParent(true);
-    	table.debug();
-    	
-    	textButton = new TextButton[4];
+//    	table.debug();
     	
     	background = new Background();
     	background.setColor(new Color(60/255f, 60/255f,60/255f,1f));
-    	background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+    	background.setSize(Render.SCREEN_WIDTH, Render.SCREEN_HEIGHT);
     	
     	//Abrir los ficheros de configuracion e idioma
     	configReader = new LectorLineas("files/config.txt"); //Lector del txt configuracion para sacar el idioma
-    	//languageReader = new LectorLineas("files/lang/"+ configReader.leerLinea(1) + "main.txt"); //Abrimos el idioma que toca del archivo configuracion
-    	languageReader = new LectorLineas("files/lang/esp/main.txt"); //Abrimos el idioma que toca del archivo configuracion
+    	languageReader = new LectorLineas("files/lang/"+ configReader.leerLinea(1) + "main.txt"); //Abrimos el idioma que toca del archivo configuracion
+//    	languageReader = new LectorLineas("files/lang/esp/main.txt"); //Abrimos el idioma que toca del archivo configuracion
      
     	createTableElements();
         setupTable();
-    	
-        Logo = new Image(Resources.LOGO_PATH);
-        Logo.setPosition(800,-50);
-        Logo.setSize(500, 500);
-        Logo.setTransparency(0.25f);
-        
         addActors();
        
         //TODO scroll con imagenes estilo "noticias del juego"
@@ -79,7 +70,7 @@ public class MainScreen extends AbstractScreen {
         
         if(textButton[0].isPressed()){
             Render.bgMusic.stop();
-            Render.app.setScreen(new DraftScreen());
+            Render.app.setScreen(new PruebaScreen());
             //Render.app.setScreen(Render.CREATEMATCHSCREEN);
         }
         if(textButton[1].isPressed()) {
@@ -97,6 +88,8 @@ public class MainScreen extends AbstractScreen {
     }
     
     private void createTableElements() {
+    	
+    	textButton = new TextButton[4];
     	
     	title = new Label("chess 2", Render.app.getManager().get(Resources.SKIN_PATH,Skin.class), "TitleStyle");
     	

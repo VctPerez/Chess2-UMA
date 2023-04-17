@@ -1,0 +1,7 @@
+music volume
+sfx volume
+language
+ english
+ spanish
+apply
+back

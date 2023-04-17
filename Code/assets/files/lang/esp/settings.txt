@@ -1,0 +1,7 @@
+volumen musica
+volumen sfx
+idioma
+ ingles
+ español
+aplicar
+volver

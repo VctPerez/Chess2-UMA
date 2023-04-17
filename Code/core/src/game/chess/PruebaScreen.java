@@ -4,13 +4,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import utils.Render;
 import utils.Resources;
+import utils.TextButton;
 import utils.TextField;
 
 /**
@@ -28,7 +28,7 @@ public class PruebaScreen extends AbstractScreen{
         cuadroTexto = new TextField("prueba");
         cuadroTexto.setPosition(200, 200);
         
-        texto = new TextButton("hola victor",Render.app.getManager().get(Resources.SKIN_PATH,Skin.class));
+        texto = new TextButton("hola victor");
         texto.setPosition(100, 100);
 //        texto.getStyle().font.getData().setScale(1.5f);
         
@@ -49,10 +49,12 @@ public class PruebaScreen extends AbstractScreen{
         scene.act();
         scene.draw();
         
-        if(texto.isChecked()) {
-        	System.out.println("estoy buscando");
-        }else {
-        	System.out.println("idle");
+//        if(texto.isChecked()) {
+//        	System.out.println("hola");
+//        }
+        
+        if(texto.isPressed()) {
+        	Render.app.setScreen(Render.MAINSCREEN);
         }
       
 	}

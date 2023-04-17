@@ -1,63 +1,104 @@
 package game.chess;
 
+
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Slider;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import elements.Background;
+import interaccionFichero.EscritorLineas;
 import interaccionFichero.LectorLineas;
-import utils.*;
+import utils.Render;
+import utils.Resources;
+import utils.TextButton;
+import utils.TextField;
 
 public class ConfigScreen extends AbstractScreen {
 	public static Stage stage;
 	Background background;	
 	
-    TextButton home,language;
-    Text homeText,Titulo,volumeText,languageText;
-    Image Logo;
+    Label[] label;
+    Slider[] slider;
+    TextField[] textField;
+    TextButton[] textButton;
+    SelectBox<String> selectBox;
+    
+    Table rootTable;
+    Table optionsTable;
+    
     LectorLineas languageReader, configReader;
+    EscritorLineas languageWriter, configWriter;
     
     
     @Override
     public void show() {
+    	
     	stage = new Stage(new FitViewport(1280, 720));
+    	
+    	rootTable = new Table();
+    	optionsTable = new Table();
+    	
+    	rootTable.setFillParent(true);
+    	optionsTable.setFillParent(true);
+    	
+//    	rootTable.debug();
+//    	optionsTable.debug();
+    	
+    	//Abrir los ficheros de configuracion e idioma
+    	configReader = new LectorLineas("files/config.txt"); //Lector del txt configuracion para sacar el idioma
+    	configWriter = new EscritorLineas("files/config.txt");
+    	languageReader = new LectorLineas("files/lang/"+ configReader.leerLinea(1) + "settings.txt"); //Abrimos el idioma que toca del archivo configuracion
+    	
+    	
+    	
     	background = new Background();
     	background.setColor(new Color(60/255f, 60/255f,60/255f,1f));
     	background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     	
-    	//Abrir los ficheros de configuracion e idioma
-    	configReader = new LectorLineas("files/config.txt"); //Lector del txt configuracion para sacar el idioma
-    	languageReader = new LectorLineas("files/lang/"+ configReader.leerLinea(1) + "main.txt"); //Abrimos el idioma que toca del archivo configuracion
+    	//Inicializar los elementos de la escena
+    	createTableElements();
     	
-    	//Fuente Arial para probar
-    	Titulo = new Text(Resources.FONT_MENU_PATH,100,Color.WHITE,3);
-    	Titulo.setText(languageReader.leerLinea(4)); //Configuracion = Linea 4
-    	homeText = new Text(Resources.FONT_MENU_PATH,28,Color.WHITE,3);
-    	homeText.setText(languageReader.leerLinea(2)); //Inicio = Linea 2
-    	volumeText = new Text(Resources.FONT_MENU_PATH,50,Color.WHITE,3);
-    	volumeText.setText(languageReader.leerLinea(5)); //Volumen = Linea 5
-    	languageText = new Text(Resources.FONT_MENU_PATH,50,Color.WHITE,3);
-    	languageText.setText(languageReader.leerLinea(6)); //Idioma = Linea 6
-    	Titulo.setPosition(100,600);
-        volumeText.setPosition(100,400);
-        languageText.setPosition(100,300);
-        homeText.setPosition(100,100);
-        home = new TextButton(homeText);
-        language = new TextButton(languageText);
-        Logo = new Image("Logo_Blanco.png");
-        Logo.setPosition(800,-50);
-        Logo.setSize(500, 500);
-        Logo.setTransparency(0.25f);
-        
-        stage.addActor(background);
-        stage.addActor(Titulo);
-        stage.addActor(home);
-        stage.addActor(language);
-        stage.addActor(volumeText);
-        stage.addActor(Logo);
-        
-        Gdx.input.setInputProcessor(Render.inputs);
+    	//Añadir las acciones a los botones
+    	textButton[0].addListener(new ClickListener() {
+    		@Override
+    		public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+    			//Aplicar cambios
+    			writeSettings();
+    			readSettings();
+    			return true;
+    		}
+    	});
+    	
+    	textButton[1].addListener(new ClickListener() {
+    		@Override
+    		public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+    			//Volver al menu
+    			Render.app.setScreen(Render.MAINSCREEN);
+    			return true;
+    		}
+    	});
+    	
+    	
+    	
+    	//Introducir los elementos en la table
+    	setupTable();
+    	//Añadir todos los actores a la escena;
+    	addActors();
+    	//Leer y aplicar configuración inicial
+    	readSettings();
+    	
+        Gdx.input.setInputProcessor(stage);
     }
 
     @Override
@@ -67,20 +108,140 @@ public class ConfigScreen extends AbstractScreen {
         Render.camera.update();
         Render.Batch.setProjectionMatrix(Render.camera.combined);
 
-        Render.Batch.begin();
         //---------------
         
+        stage.act();
         stage.draw();
         
-        if(home.isPressed()){
-            Render.app.setScreen(Render.MAINSCREEN);
-        }
-        if(language.isPressed()){
-            Render.app.setScreen(Render.LANGUAGESCREEN);
+        //Manage Inputs
+        for(int i = 0; i < slider.length ; i++) {
+        	if(slider[i].isDragging() || stage.keyDown(Keys.ANY_KEY)) {
+        		setVolume(slider[i].getValue(), i);
+        	}
         }
         
-        //-----------------
-        Render.Batch.end();
+        //---------------
+
+    }
+    
+    /**
+     * Método para inicializar todos los elementos de la escena.
+     */
+    private void createTableElements() {
+	
+    	label = new Label[3];
+    	slider = new Slider[2];
+    	textField = new TextField[2];
+    	textButton = new TextButton[2]; 
+    	
+    	//LABELS
+    	for(int i = 0; i < label.length ; i++) {
+    		label[i] = new Label("", Render.app.getManager().get(Resources.SKIN_PATH,Skin.class), "ConfigStyle");
+    	}
+    	
+    	//SLIDERS - TEXTFIELDS - TEXTBUTTONS
+    	for(int i = 0; i < slider.length ; i++) {
+    		slider[i] = new Slider(0, 100, 1, false, Render.app.getManager().get(Resources.SKIN_PATH,Skin.class));
+    		
+    		textField[i] = new TextField("0");
+    		textField[i].setAlignment(Align.center);
+    		textField[i].setDisabled(true);
+    		
+    		textButton[i] = new TextButton("");
+    	}
+    	
+    	//SELECTBOX
+    	selectBox = new SelectBox<String>(Render.app.getManager().get(Resources.SKIN_PATH,Skin.class));
+    	selectBox.setItems("","");
+    	
+    }
+    /**
+     * Método que añade los actores a la escena
+     */
+    private void addActors() {
+        stage.addActor(background);
+        stage.addActor(rootTable);
+        stage.addActor(optionsTable);
+    }
+    /**
+     * Método que crea la estructura de las tablas. Cada "párrafo" hace referencia a
+     * una fila de la tabla.
+     */
+    private void setupTable() {
+    	//SETUP ROOT TABLE
+    	rootTable.add(label[0]).left().spaceBottom(50);
+    	rootTable.add(slider[0]).space(25).width(250).padBottom(15).fillX();
+    	rootTable.add(textField[0]).space(25).width(125);
+    	rootTable.row();
+    	
+    	rootTable.add(label[1]).left().spaceBottom(50);
+    	rootTable.add(slider[1]).space(25).width(250).padBottom(15).fillX();
+    	rootTable.add(textField[1]).space(25).width(125);
+    	rootTable.row();
+    	
+    	rootTable.add(label[2]).left().spaceBottom(50);
+    	rootTable.add(selectBox).space(25).fillX().colspan(2);
+    	rootTable.row();
+    	
+    	//SETUP OPTIONS TABLE
+    	optionsTable.right().bottom().padBottom(50).padRight(150);
+    	optionsTable.add(textButton[0]).space(25);
+    	optionsTable.add(textButton[1]).space(25);
+    }
+    
+    /**
+     * Establece los valores y el idioma de los textos en función de
+     * los parámetros establecidos en el archivo de configuración "config.txt"
+     */
+    private void readSettings() {
+    	for(int i = 0; i < slider.length ; i++) {
+    		setVolume(Float.parseFloat(configReader.leerLinea(5 + i)), i);
+    	}
+    	
+    	setLanguage(Integer.parseInt(configReader.leerLinea(7)));
+    	
+    }
+    /**
+     * Escribe los valores obtenidos de los elementos de la UI
+     * en el archivo de configuración "config.txt"
+     */
+    private void writeSettings() {
+    	configWriter.escribirLinea(5, Float.toString(slider[0].getValue()));
+    	configWriter.escribirLinea(6, Float.toString(slider[1].getValue()));
+    	// + 1 porque en el archivo de configuracion los idiomas se representan desde la fila 1
+    	// En el archivo config.txt cada valor representa un idioma(1_ENG 2_ESP)
+    	configWriter.escribirLinea(7, Integer.toString(selectBox.getSelectedIndex() + 1));
+    	
+    }
+    /**
+     * Metodo para actualizar el valor de la Slider y la TextField
+     * de alguna fila de la rootTable
+     * @param value Valor a actualizar
+     * @param index Indice de fila
+     */
+    private void setVolume(float value,int index) {
+    	slider[index].setValue(value);
+    	textField[index].setText(String.format("%.0f", value));
+    }
+    
+    /**
+     * Metodo para actualizar el Idioma de los textos. El valor de entrada es
+     * el número de fila del lenguaje en el archivo "config.txt".
+     * @param value Idioma a establecer (1_ENG 2_ESP)
+     */
+	private void setLanguage(int value) {
+    	languageReader.setNombreFichero("files/lang/"+ configReader.leerLinea(value) + "settings.txt");
+
+    	for(int i = 0; i < label.length ; i++) {
+    		label[i].setText(languageReader.leerLinea(i+1));
+    	}
+    	
+    	for(int i = 0; i < textButton.length; i++) {
+    		textButton[i].setText(languageReader.leerLinea(i+6));
+    	}
+    	
+    	selectBox.setItems(languageReader.leerLinea(4),languageReader.leerLinea(5));
+    	selectBox.setSelectedIndex(value-1);
     }
 
     @Override
@@ -92,6 +253,6 @@ public class ConfigScreen extends AbstractScreen {
 
     @Override
     public void dispose() {
-        // TODO: 21/03/2023  
+        stage.dispose();
     }
 }

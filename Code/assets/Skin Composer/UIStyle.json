@@ -72,6 +72,46 @@ com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 		font: TitleStyle_Label_FONT
 		fontColor: TEXT_COLOR
 	}
+	ConfigStyle: {
+		font: Default_TextButtons_FONT
+		fontColor: TEXT_COLOR
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.List$ListStyle: {
+	default: {
+		font: Default_TextField_FONT
+		fontColorSelected: TEXT_COLOR
+		fontColorUnselected: TEXT_COLOR
+		selection: Knob_Before
+		background: Slider_Background
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.ScrollPane$ScrollPaneStyle: {
+	default: {
+		background: Slider_Background
+		vScrollKnob: Knob_Over
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.SelectBox$SelectBoxStyle: {
+	default: {
+		font: Default_TextField_FONT
+		fontColor: TEXT_COLOR
+		background: Slider_Background
+		scrollStyle: default
+		listStyle: default
+		backgroundOver: Slider_BackgroundOver
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Slider$SliderStyle: {
+	default-horizontal: {
+		backgroundOver: Slider_BackgroundOver
+		backgroundDown: Slider_BackgroundOver
+		knobOver: Knob_Over
+		knobDown: Knob_Over
+		background: Slider_Background
+		knob: Knob
+		knobBefore: Knob_Before
+	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 	default: {
@@ -86,8 +126,8 @@ com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
 	default: {
 		font: Default_TextField_FONT
 		fontColor: TEXT_COLOR
-		background: TextField_UNSELECTED
-		focusedBackground: TextField_SELECTED
+		background: Button_BACKGROUND
+		focusedBackground: Button_OVER
 		cursor: CURSOR_SELECTION_PIXEL
 		selection: CURSOR_SELECTION_PIXEL
 	}
