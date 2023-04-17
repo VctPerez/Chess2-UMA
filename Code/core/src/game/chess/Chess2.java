@@ -31,6 +31,7 @@ public class Chess2 extends Game {
 		loadLoadingScreen();
 		//CHESS PIECES
 		manager.load(Resources.PAWN_PATH, Texture.class);
+		manager.load(Resources.LANCER_PATH, Texture.class);
 		manager.load(Resources.BISHOP_PATH, Texture.class);
 		manager.load(Resources.QUEEN_PATH, Texture.class);
 		manager.load(Resources.KING_PATH, Texture.class);

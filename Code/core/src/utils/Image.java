@@ -107,6 +107,10 @@ public class Image extends Actor {
     public void setScale(float x) {
     	sprt.setScale(x);
     }
+    
+    public void setColor(float r, float g, float b, float alpha) {
+    	sprt.setColor(r, g, b, alpha);
+    }
 
     public void dispose(){
         img.dispose();

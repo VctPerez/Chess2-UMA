@@ -4,12 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 
 import elements.Board;
 import elements.Piece;
-import elements.pieces.Bishop;
-import elements.pieces.King;
-import elements.pieces.Knight;
-import elements.pieces.Pawn;
-import elements.pieces.Queen;
-import elements.pieces.Rook;
+import elements.pieces.*;
 
 public class Parser {
 
@@ -23,6 +18,9 @@ public class Parser {
 		switch (piecePath) {
 		case Resources.PAWN_PATH:
 			piece = new Pawn(color, x, y, board);
+			break;
+		case Resources.LANCER_PATH:
+			piece = new Lancer(color, x, y, board);
 			break;
 		case Resources.KNIGHT_PATH:
 			piece = new Knight(color, x, y, board);

@@ -61,7 +61,7 @@ public class LocalGameScreen extends AbstractScreen {
 	
 	
 	//Control captura al paso
-	private Pawn lastPawn;
+	private Piece lastPawn;
 	
 	//Control turno
 	private boolean PLAYER;
@@ -380,12 +380,14 @@ public class LocalGameScreen extends AbstractScreen {
 
             resetMate();
         	 
-            if(nextTile.getPiece() instanceof Pawn) {
+            if(nextTile.getPiece() instanceof Pawn || nextTile.getPiece() instanceof Lancer) {
 
             	checkPassant(next_x, next_y);    
         		
         		checkPromotion(next_x, next_y);
-            }
+            }else if (lastPawn != null){ 
+    			lastPawn.isPassantable = false; 
+    		}
 			
             mateControl(next_x, next_y);
 
@@ -472,8 +474,8 @@ public class LocalGameScreen extends AbstractScreen {
 	 * @param next_y
 	 */
 	private void checkPassant(float next_x, float next_y) {
-		if (isEnPassant(next_x, next_y, (Pawn)nextTile.getPiece())){
-			board.getTile(next_x,next_y + (nextTile.getPiece().color()?-1:1)).sendPieceToGraveyard();
+		if (isEnPassant(next_x, next_y, nextTile.getPiece())){
+			board.getTile(lastPawn.getPos().x,lastPawn.getPos().y).sendPieceToGraveyard();
 		}
 		updateLastPawn(next_x, next_y);  
 	}
@@ -485,11 +487,17 @@ public class LocalGameScreen extends AbstractScreen {
 	 * @param pawn
 	 * @return true si se ha realizado una captura al paso, false si no se ha hecho
 	 */
-	private boolean isEnPassant(float next_x, float next_y, Pawn pawn) {
+	private boolean isEnPassant(float next_x, float next_y, Piece piece) {
 		boolean res = false;
-		if (next_y == current_y + (pawn.color()?1:-1) && (next_x == current_x + 1 || next_x == current_x -1)){ //Si avanza a una casilla diagonal sin pieza, está tomando al paso
-			if (board.getTile(next_x,current_y).getPiece() instanceof Pawn){
-				res = ((Pawn)board.getTile(next_x,current_y).getPiece()).isPassantable; //Es en passant si se le puede hacer al peón objetivo
+		if (piece instanceof Pawn &&next_y == current_y + (piece.color()?1:-1) && (next_x == current_x + 1 || next_x == current_x -1)){ //Si avanza a una casilla diagonal sin pieza, está tomando al paso
+			if (lastPawn instanceof Pawn){
+				res = lastPawn.isPassantable; //Es en passant si se le puede hacer al peón objetivo
+			}
+		}
+		
+		if (piece instanceof Lancer && next_y == current_y + (piece.color()?1:-1) && (next_x == current_x)){ //Si avanza a una casilla en linea recta sin pieza, está tomando al paso
+			if (lastPawn instanceof Lancer){
+				res = lastPawn.isPassantable; //Es en passant si se le puede hacer al peón objetivo
 			}
 		}
 		return res;
@@ -504,8 +512,8 @@ public class LocalGameScreen extends AbstractScreen {
 		if (lastPawn != null){ 
 			lastPawn.isPassantable = false; 
 		}
-		if (next_y == current_y + 2 || next_y == current_y - 2){
-			lastPawn = ((Pawn) nextTile.getPiece());
+		if (next_y == current_y + 2 || next_y == current_y - 2){	
+			lastPawn = nextTile.getPiece();				
 			lastPawn.isPassantable = true;
 		}
 	}
@@ -551,7 +559,7 @@ public class LocalGameScreen extends AbstractScreen {
 	
 	//-------------- METODO TEMPORAL PARA PROBAR LOS CONSTRUCTORES (el draft se rellena en DraftScreen) -------------------
 	public void testDrafts() {
-		Render.player1Draft.add(Resources.PAWN_PATH);
+		Render.player1Draft.add(Resources.LANCER_PATH);
 		Render.player1Draft.add(Resources.KNIGHT_PATH);
 		Render.player1Draft.add(Resources.ROOK_PATH);
 		Render.player1Draft.add(Resources.BISHOP_PATH);

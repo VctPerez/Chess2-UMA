@@ -98,7 +98,7 @@ public class DraftScreen extends AbstractScreen {
 		kings = new ArrayList<>();
 		
 		pawns.add(Resources.PAWN_PATH);
-		pawns.add(Resources.ROOK_PATH);
+		pawns.add(Resources.LANCER_PATH);
 		pawns.add(Resources.BISHOP_PATH);
 		Collections.shuffle(pawns);
 		
@@ -160,7 +160,6 @@ public class DraftScreen extends AbstractScreen {
 	}
 	
 	private void updateDraft() {
-		System.out.println(cont);
 		String key = (String)draft.keySet().toArray()[cont];
 		stage.getRoot().findActor(key).remove();
 		

@@ -55,14 +55,7 @@ public class Knight extends Piece {
 			movements.add(new Vector2(x, y));
 		}
 	}
-	@Override
-	public Boolean sameColor(Piece piece) {
-		boolean same = false;
-		if (piece != null) {
-			same = color == piece.color();
-		}
-		return same;
-	}
+	
 	
 	public String getInfo() {
 		 LectorLineas Reader, configReader;

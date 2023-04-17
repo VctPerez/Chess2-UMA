@@ -1,6 +1,7 @@
 package elements;
 
 import java.util.ArrayList;
+import java.util.Vector;
 
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
@@ -27,6 +28,7 @@ public abstract class Piece extends Actor {
 	protected int x;
 	protected int y;
 	public Board board;
+	public Boolean isPassantable = false;
 
 	public Piece(Boolean color, Texture texture, int x, int y, Board board) {
 		this.board = board;
@@ -80,6 +82,10 @@ public abstract class Piece extends Actor {
 	public void hasBeenMoved() {
 		hasBeenMoved = true;
 	}
+	
+	public Vector2 getPos() {
+		return new Vector2(x, y);
+	}
 
 	/**
 	 * Actualiza la posiicón de la pieza
@@ -123,9 +129,12 @@ public abstract class Piece extends Actor {
 	 *         no lo es
 	 */
 	public Boolean sameColor(Piece piece) {
-		return color == piece.color();
+		boolean same = false;
+		if (piece != null) {
+			same = color == piece.color();
+		}
+		return same;
 	}
-
 	public void dispose() {
 		sprite.dispose();
 	}

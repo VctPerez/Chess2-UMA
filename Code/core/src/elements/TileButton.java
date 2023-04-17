@@ -29,6 +29,7 @@ public class TileButton extends Actor{
 		frame = new Image(Render.app.getManager().get(Resources.FRAME_PATH, Texture.class));
 		frame.setSize(getWidth(), getWidth());
 		frame.setPosition(getX(), getY());
+		frame.setColor(1f, 0.87f, 0.09f, 1f);
 		showFrame = false;
 	}
 	

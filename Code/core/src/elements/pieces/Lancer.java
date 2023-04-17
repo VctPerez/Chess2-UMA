@@ -15,17 +15,14 @@ import utils.Render;
 import utils.Resources;
 import utils.Text;
 
-public class Pawn extends Piece{
+public class Lancer extends Piece{
 	
 	public Boolean isPassantable = false;
 
-	public Pawn(Boolean color, int x, int y,Board board) {
-		super(color, Render.app.getManager().get(Resources.PAWN_PATH, Texture.class), x ,y,board);
+	public Lancer(Boolean color, int x, int y,Board board) {
+		super(color, Render.app.getManager().get(Resources.LANCER_PATH, Texture.class), x ,y,board);
 	}
 	
-	public Pawn() {
-		super(Render.app.getManager().get(Resources.PAWN_PATH, Texture.class));
-	}
 	
 	
 	@Override
@@ -42,12 +39,18 @@ public class Pawn extends Piece{
 	 */
 	private Boolean checkBoard(Board board, int i, float x, float y) {
 		Boolean res = false;
-		if(i!=0 && board.getTile(x, y)!=null && board.getTile(x, y).getPiece()!=null && !sameColor(board.getTile(x, y).getPiece())) {
+		if(i==0 && board.getTile(x, y)!=null && board.getTile(x, y).getPiece()!=null && !sameColor(board.getTile(x, y).getPiece())) {
 			res = true;
-		}else if(i==0 && board.getTile(x, y)!=null && board.getTile(x, y).getPiece()==null) {
+		}else if(i!=0 && board.getTile(x, y)!=null && board.getTile(x, y).getPiece()==null) {
 			res = true;
 		}
 		return res;
+	}
+	
+	public void addMovement(float x, float y, Board board, ArrayList<Vector2> movements) {
+		if (board.getTile(x, y) != null && !sameColor(board.getTile(x, y).getPiece())) {
+			movements.add(new Vector2(x, y));
+		}
 	}
 	
 	/**
@@ -65,7 +68,6 @@ public class Pawn extends Piece{
 			direction = -1;
 		}
 		
-		
 		for(int i = -1; i<=1; i++) {
 			mov = new Vector2(x + i, y + direction);
 			if(checkBoard(board, i, mov.x, mov.y)) {
@@ -74,8 +76,12 @@ public class Pawn extends Piece{
 		}
 		
 		if(!hasBeenMoved && board.dim==8) {
-			mov = new Vector2(x , y + 2*direction);
-			if(checkBoard(board, 0, mov.x, mov.y) && board.getTile(x, y+direction).getPiece()==null) {
+			mov = new Vector2(x + 2 , y + 2*direction);
+			if(checkBoard(board, -1, mov.x, mov.y) && board.getTile(x, y+direction).getPiece()==null) {
+				movements.add(mov);
+			}
+			mov = new Vector2(x - 2 , y + 2*direction);
+			if(checkBoard(board, 1, mov.x, mov.y) && board.getTile(x, y+direction).getPiece()==null) {
 				movements.add(mov);
 			}
 		}
@@ -84,15 +90,17 @@ public class Pawn extends Piece{
 			Piece aux;
 			if (board.getTile(x-1,y) != null){
 				aux = board.getTile(x-1,y).getPiece(); //Mira a la izquierda
-				if (aux != null && aux instanceof Pawn && aux.isPassantable) { //Si la pieza puede tomarse al paso(habrá que cambiar el if si se incluyen más)
-					mov = new Vector2(x-1,y+direction);
+
+				if (aux != null && aux instanceof Lancer && aux.isPassantable) { //Si la pieza puede tomarse al paso(habrá que cambiar el if si se incluyen más)
+					mov = new Vector2(x,y+direction);
 					movements.add(mov);
 				}
 			}
 			if (board.getTile(x+1,y) != null){
 				aux = board.getTile(x+1,y).getPiece(); //Mira a la derecha
-				if (aux != null && aux instanceof Pawn && aux.isPassantable) { //Si la pieza puede tomarse al paso(habrá que cambiar el if si se incluyen más)
-					mov = new Vector2(x+1,y+direction);
+
+				if (aux != null && aux instanceof Lancer && aux.isPassantable){
+					mov = new Vector2(x,y+direction);
 					movements.add(mov);
 				}
 			}
@@ -124,6 +132,6 @@ public class Pawn extends Piece{
 	@Override
 	public String toString() {
 		String str = super.toString();
-		return str.replace("X","Pawn");
+		return str.replace("X","Lancer");
 	}
 }
