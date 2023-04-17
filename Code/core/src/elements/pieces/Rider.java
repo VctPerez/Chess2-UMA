@@ -10,43 +10,40 @@ import elements.Board;
 import elements.Piece;
 import game.chess.LocalGameScreen;
 import interaccionFichero.LectorLineas;
+import utils.Image;
 import utils.Render;
 import utils.Resources;
+import utils.Text;
 
-public class Knight extends Piece {
+public class Rider extends Piece{
 
-	public Knight(Boolean color, int x, int y,Board board) {
-		super(color, Render.app.getManager().get(Resources.KNIGHT_PATH, Texture.class), x, y,board);
+	public Rider(Boolean color, int x, int y,Board board) {
+		super(color, Render.app.getManager().get(Resources.RIDER_PATH, Texture.class), x ,y,board);
 	}
 	
-	public Knight() {
-		super(Render.app.getManager().get(Resources.KNIGHT_PATH, Texture.class));
-	}
-	
-
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		super.draw(batch, parentAlpha);
 	}
 
 	/**
-	 * A�ade a movements todos los movimientos posibles del caballo
+	 * A�ade a movements todos los movimientos posibles del jinete
 	 * 
 	 * @param x
 	 * @param y
 	 * @return
 	 */
-
+	
 	@Override
 	public ArrayList<Vector2> posibleMovements() {
 		ArrayList<Vector2> movements = new ArrayList<>();
 		addMovement(x + 2, y + 1, board, movements);
+		addMovement(x + 2, y + 2, board, movements);
 		addMovement(x + 1, y + 2, board, movements);
-		addMovement(x + 2, y - 1, board, movements);
-		addMovement(x + 1, y - 2, board, movements);
-		addMovement(x - 1, y - 2, board, movements);
+		addMovement(x + 1, y - 1, board, movements);
 		addMovement(x - 2, y + 1, board, movements);
-		addMovement(x - 2, y - 1, board, movements);
+		addMovement(x - 2, y + 2, board, movements);
+		addMovement(x - 1, y - 1, board, movements);
 		addMovement(x - 1, y + 2, board, movements);
 		return movements;
 	}
@@ -57,6 +54,11 @@ public class Knight extends Piece {
 		}
 	}
 	
+	public void dispose() {
+		sprite.dispose();
+	}
+	
+	@Override
 	public String getInfo() {
 		 LectorLineas Reader, configReader;
 		 configReader = new LectorLineas("files/config.txt");
@@ -64,9 +66,9 @@ public class Knight extends Piece {
 		Reader = new LectorLineas("files/lang/"+ config + "Clasicas.txt");
 		switch (config){
 			case "esp/":
-				return Reader.leerTramo(12, 21);
+				return Reader.leerTramo(50, 51);
 			case "eng/":
-				return Reader.leerTramo(10,17);
+				return Reader.leerTramo(42,43);
 			default:
 				throw new IllegalArgumentException("Configuración errónea");
 		}
@@ -75,7 +77,6 @@ public class Knight extends Piece {
 	@Override
 	public String toString() {
 		String str = super.toString();
-		return str.replace("X","Knight");
+		return str.replace("X","Rider");
 	}
-
 }
