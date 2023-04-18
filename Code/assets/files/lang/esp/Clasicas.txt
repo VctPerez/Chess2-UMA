@@ -54,10 +54,11 @@ de las clásicas a excepción del rey.
   de las otras piezas aliadas.
 
 Pieza Aleatoria:
-Inicialmente se comporta como un 
-Peón, pero cada vez que se mueve
-se convierte en otra pieza aleatoria
-de las clásicas a excepción del rey.
+Inicialmente tiene los movimientos
+de un peón y cada vez que se mueve
+copias úncamente los movimientos de una 
+pieza aleatoria de entre las piezas clásicas
+a excepción del rey.
    
   
   

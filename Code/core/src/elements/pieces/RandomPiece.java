@@ -15,51 +15,61 @@ import utils.Resources;
 
 public class RandomPiece extends Piece{
 	
-	private int prev;
-	
-	public Piece actual;
+	private Vector2 prev;
+	public Piece current;
 	public Random rnd = new Random();
 
 	public RandomPiece(Boolean color, int x, int y,Board board) {
 		super(color, Render.app.getManager().get(Resources.RND_PATH, Texture.class), x, y,board);
-		actual = new Pawn(color,x,y,board);
+		current = new Bishop(color,x,y,board);
 		this.setSprite(Resources.RND_PATH);
-		prev=0;
+		prev = new Vector2 (0,0);
 	}
 	
 	public Piece Swap() {
 		
-		//Asegurarme que no se repitan piezas 
-		int i;
-		do {
-			i = rnd.nextInt(5);
-		} while (i == prev);
+		//Probabilidades:
+		//Dama:15
+		//Peón:15
+		//Alfil:30
+		//Caballo:20
+		//Torre:20
 		
-		prev=i;
+		//Asegurarme que no se repitan piezas 
+		int i=0;
+		do {
+			i = rnd.nextInt(100) + 1 ;
+		} while (i>=prev.x && i<= prev.y);
+		
 		Piece nueva=null;
 		
-		switch(i) {
-		case 0 : 
-		nueva = new Pawn(this.color,this.x,this.y,this.board);
-		this.setSprite(Resources.RND_PATH);
-		break;
-		case 1 : 
-		nueva = new Bishop(this.color,this.x,this.y,this.board);
-		this.setSprite(Resources.RND_BISHOP_PATH);
-		break;
-		case 2 : 
-		nueva = new Knight(this.color,this.x,this.y,this.board);
-		this.setSprite(Resources.RND_KNIGHT_PATH);
-		break;
-		case 3 : 
-		nueva = new Queen(this.color,this.x,this.y,this.board);
-		this.setSprite(Resources.RND_QUEEN_PATH);
-		break;
-		case 4 : 
-		nueva = new Rook(this.color,this.x,this.y,this.board);
-		this.setSprite(Resources.RND_QUEEN_PATH);
-		break;
+		if(i>=1 && i<=30) {
+			nueva = new Bishop(this.color,this.x,this.y,this.board);
+			this.setSprite(Resources.RND_PATH);
+			prev.x=1;
+			prev.y=30;
+		}else if(i>=31 && i<=45){
+			nueva = new Pawn(this.color,this.x,this.y,this.board);
+			this.setSprite(Resources.RND_PAWN_PATH);
+			prev.x=31;
+			prev.y=45;
+		}else if(i>=46 && i<=65){
+			nueva = new Knight(this.color,this.x,this.y,this.board);
+			this.setSprite(Resources.RND_KNIGHT_PATH);
+			prev.x=46;
+			prev.y=65;
+		}else if(i>=66 && i<=80){
+			nueva = new Queen(this.color,this.x,this.y,this.board);
+			this.setSprite(Resources.RND_QUEEN_PATH);
+			prev.x=66;
+			prev.y=80;
+		}else {
+			nueva = new Rook(this.color,this.x,this.y,this.board);
+			this.setSprite(Resources.RND_ROOK_PATH);
+			prev.x=81;
+			prev.y=100;
 		}
+		
 		
 		return nueva;
 	}
@@ -84,10 +94,20 @@ public class RandomPiece extends Piece{
 	@Override
 	public ArrayList<Vector2> posibleMovements() {
 		if(this.hasBeenMoved) {
-			actual = Swap();
+			current = Swap();
 		}
+		Vector2 pos = this.getPos();
+		ArrayList<Vector2> movements = new ArrayList<>();
+		System.out.println();pos.toString();
 		this.hasBeenMoved=false;
-		return actual.posibleMovements();
+		if(current.posibleMovements().isEmpty() && (this.color() && (int)pos.y==8)) {
+			movements.add(new Vector2(pos.x,pos.y-1));
+		}else if(current.posibleMovements().isEmpty() && (!this.color() && (int)pos.y==1)) {
+			movements.add(new Vector2(pos.x,pos.y+1));
+		}else {
+			movements = current.posibleMovements();
+		}
+		return movements;
 	}
 	
 	public void addMovement(float x, float y, Board board, ArrayList<Vector2> movements) {
@@ -104,7 +124,7 @@ public class RandomPiece extends Piece{
 		Reader = new LectorLineas("files/lang/"+ config + "Clasicas.txt");
 		switch (config){
 			case "esp/":
-				return Reader.leerTramo(56, 60);
+				return Reader.leerTramo(56, 61);
 			case "eng/":
 				return Reader.leerTramo(41,45);
 			default:

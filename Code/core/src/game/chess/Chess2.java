@@ -40,9 +40,9 @@ public class Chess2 extends Game {
 		manager.load(Resources.RIDER_PATH, Texture.class);
 		manager.load(Resources.ARROW_PATH, Texture.class);
 		
-		//Pieza random
+		//RANDOM PIECES
 		manager.load(Resources.RND_PATH,Texture.class);
-		manager.load(Resources.RND_BISHOP_PATH,Texture.class);
+		manager.load(Resources.RND_PAWN_PATH,Texture.class);
 		manager.load(Resources.RND_ROOK_PATH,Texture.class);
 		manager.load(Resources.RND_QUEEN_PATH,Texture.class);
 		manager.load(Resources.RND_KNIGHT_PATH,Texture.class);

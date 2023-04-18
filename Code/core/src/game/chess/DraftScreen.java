@@ -100,7 +100,6 @@ public class DraftScreen extends AbstractScreen {
 		pawns.add(Resources.PAWN_PATH);
 		pawns.add(Resources.LANCER_PATH);
 		pawns.add(Resources.BISHOP_PATH);
-		pawns.add(Resources.RND_PATH);
 		Collections.shuffle(pawns);
 		
 		knights.add(Resources.KNIGHT_PATH);
@@ -116,6 +115,7 @@ public class DraftScreen extends AbstractScreen {
 		bishops.add(Resources.BISHOP_PATH);
 		bishops.add(Resources.BISHOP_PATH);
 		bishops.add(Resources.BISHOP_PATH);
+		bishops.add(Resources.RND_PATH);
 		Collections.shuffle(bishops);
 		
 		queens.add(Resources.QUEEN_PATH);
