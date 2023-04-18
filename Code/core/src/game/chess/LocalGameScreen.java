@@ -570,7 +570,7 @@ public class LocalGameScreen extends AbstractScreen {
 		Render.player1Draft.add(Resources.KING_PATH);
 		
 		//Render.player2Draft.add(Resources.RND_PATH);
-		Render.player2Draft.add(Resources.PAWN_PATH);
+		Render.player2Draft.add(Resources.LANCER_PATH);
 		Render.player2Draft.add(Resources.KNIGHT_PATH);
 		Render.player2Draft.add(Resources.ROOK_PATH);
 		Render.player2Draft.add(Resources.BISHOP_PATH);
