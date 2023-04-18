@@ -79,40 +79,28 @@ public class DropDownMenu extends Actor{
             }else {
             	pieces = LocalGameScreen.blackPieces;
             }
+            pieces.remove(formerPiece);
             formerPiece.remove();
             
             switch (current_y) {
 			case 4:
-				pieces.remove(formerPiece);
 				newPiece = new Queen(formerPiece.color(), (int)tile.getPos().x, (int)tile.getPos().y,LocalGameScreen.board);
-				tile.setPiece(newPiece);
-				pieces.add(formerPiece);            	
-            	LocalGameScreen.stage.addActor(newPiece);
 				break;
 			case 3:
-				pieces.remove(formerPiece);
 				newPiece = new Knight(formerPiece.color(), (int)tile.getPos().x, (int)tile.getPos().y,LocalGameScreen.board);
-				tile.setPiece(newPiece);
-				pieces.add(formerPiece);            	
-            	LocalGameScreen.stage.addActor(newPiece);
 				break;
 			case 2:
-				pieces.remove(formerPiece);
 				newPiece = new Rook(formerPiece.color(), (int)tile.getPos().x, (int)tile.getPos().y,LocalGameScreen.board);
-				tile.setPiece(newPiece);
-				pieces.add(formerPiece);            	
-            	LocalGameScreen.stage.addActor(newPiece);
 				break;
 			case 1:
-				pieces.remove(formerPiece);
 				newPiece = new Bishop(formerPiece.color(), (int)tile.getPos().x, (int)tile.getPos().y,LocalGameScreen.board);
-				tile.setPiece(newPiece);
-				pieces.add(formerPiece);            	
-            	LocalGameScreen.stage.addActor(newPiece);
 				break;
 			default:
 				break;
 			}
+            tile.setPiece(newPiece);
+            pieces.add(newPiece);            	
+            LocalGameScreen.stage.addActor(newPiece);
             LocalGameScreen.promoting = false;
             LocalGameScreen.mateControl(tile.getPos().x, tile.getPos().y);
             remove();

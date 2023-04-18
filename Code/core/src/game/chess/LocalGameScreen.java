@@ -379,15 +379,16 @@ public class LocalGameScreen extends AbstractScreen {
             currentTile.move(next_x, next_y);
 
             resetMate();
-        	 
+        	
+            
             if(nextTile.getPiece() instanceof Pawn || nextTile.getPiece() instanceof Lancer) {
-
             	checkPassant(next_x, next_y);    
         		
         		checkPromotion(next_x, next_y);
             }else if (lastPawn != null){ 
     			lastPawn.isPassantable = false; 
     		}
+    		
 			
             mateControl(next_x, next_y);
 
@@ -490,13 +491,14 @@ public class LocalGameScreen extends AbstractScreen {
 	private boolean isEnPassant(float next_x, float next_y, Piece piece) {
 		boolean res = false;
 		if (piece instanceof Pawn &&next_y == current_y + (piece.color()?1:-1) && (next_x == current_x + 1 || next_x == current_x -1)){ //Si avanza a una casilla diagonal sin pieza, está tomando al paso
-			if (lastPawn instanceof Pawn){
+			if (board.getTile(next_x, current_y).getPiece() instanceof Pawn){
 				res = lastPawn.isPassantable; //Es en passant si se le puede hacer al peón objetivo
 			}
-		}
-		
-		if (piece instanceof Lancer && next_y == current_y + (piece.color()?1:-1) && (next_x == current_x)){ //Si avanza a una casilla en linea recta sin pieza, está tomando al paso
-			if (lastPawn instanceof Lancer){
+		}else if (piece instanceof Lancer && next_y == current_y + (piece.color()?1:-1) && (next_x == current_x)){ //Si avanza a una casilla en linea recta sin pieza, está tomando al paso
+			if (!res && board.getTile(next_x +1 , current_y).getPiece() instanceof Lancer){
+				res = lastPawn.isPassantable; //Es en passant si se le puede hacer al peón objetivo
+			}
+			if(!res && board.getTile(next_x - 1, current_y).getPiece() instanceof Lancer){
 				res = lastPawn.isPassantable; //Es en passant si se le puede hacer al peón objetivo
 			}
 		}
@@ -562,7 +564,7 @@ public class LocalGameScreen extends AbstractScreen {
 		
 		//Para probar la pieza random
 		//Render.player1Draft.add(Resources.RND_PATH);
-		Render.player1Draft.add(Resources.PAWN_PATH);
+		Render.player1Draft.add(Resources.LANCER_PATH);
 		Render.player1Draft.add(Resources.KNIGHT_PATH);
 		Render.player1Draft.add(Resources.ROOK_PATH);
 		Render.player1Draft.add(Resources.BISHOP_PATH);
@@ -570,7 +572,7 @@ public class LocalGameScreen extends AbstractScreen {
 		Render.player1Draft.add(Resources.KING_PATH);
 		
 		//Render.player2Draft.add(Resources.RND_PATH);
-		Render.player2Draft.add(Resources.PAWN_PATH);
+		Render.player2Draft.add(Resources.LANCER_PATH);
 		Render.player2Draft.add(Resources.KNIGHT_PATH);
 		Render.player2Draft.add(Resources.ROOK_PATH);
 		Render.player2Draft.add(Resources.BISHOP_PATH);
