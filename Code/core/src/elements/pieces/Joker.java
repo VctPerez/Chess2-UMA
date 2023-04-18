@@ -13,13 +13,13 @@ import interaccionFichero.LectorLineas;
 import utils.Render;
 import utils.Resources;
 
-public class RandomPiece extends Piece{
+public class Joker extends Piece{
 	
 	private Vector2 prev;
 	public Piece current;
 	public Random rnd = new Random();
 
-	public RandomPiece(Boolean color, int x, int y,Board board) {
+	public Joker(Boolean color, int x, int y,Board board) {
 		super(color, Render.app.getManager().get(Resources.RND_PATH, Texture.class), x, y,board);
 		current = new Bishop(color,x,y,board);
 		this.setSprite(Resources.RND_PATH);
@@ -45,27 +45,27 @@ public class RandomPiece extends Piece{
 		
 		if(i>=1 && i<=30) {
 			nueva = new Bishop(this.color,this.x,this.y,this.board);
-			this.setSprite(Resources.RND_PATH);
+			//this.setSprite(Resources.RND_PATH);
 			prev.x=1;
 			prev.y=30;
 		}else if(i>=31 && i<=45){
 			nueva = new Pawn(this.color,this.x,this.y,this.board);
-			this.setSprite(Resources.RND_PAWN_PATH);
+			//this.setSprite(Resources.RND_PAWN_PATH);
 			prev.x=31;
 			prev.y=45;
 		}else if(i>=46 && i<=65){
 			nueva = new Knight(this.color,this.x,this.y,this.board);
-			this.setSprite(Resources.RND_KNIGHT_PATH);
+			//this.setSprite(Resources.RND_KNIGHT_PATH);
 			prev.x=46;
 			prev.y=65;
 		}else if(i>=66 && i<=80){
 			nueva = new Queen(this.color,this.x,this.y,this.board);
-			this.setSprite(Resources.RND_QUEEN_PATH);
+			//this.setSprite(Resources.RND_QUEEN_PATH);
 			prev.x=66;
 			prev.y=80;
 		}else {
 			nueva = new Rook(this.color,this.x,this.y,this.board);
-			this.setSprite(Resources.RND_ROOK_PATH);
+			//this.setSprite(Resources.RND_ROOK_PATH);
 			prev.x=81;
 			prev.y=100;
 		}
@@ -73,7 +73,7 @@ public class RandomPiece extends Piece{
 		return nueva;
 	}
 	
-	public RandomPiece() {
+	public Joker() {
 		super(Render.app.getManager().get(Resources.PAWN_PATH, Texture.class));
 	}
 	
@@ -134,7 +134,7 @@ public class RandomPiece extends Piece{
 	@Override
 	public String toString() {
 		String str = super.toString();
-		return str.replace("X","RandomPiece");
+		return str.replace("X","Joker");
 	}
 	
 	

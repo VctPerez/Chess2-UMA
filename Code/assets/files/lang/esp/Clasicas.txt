@@ -53,10 +53,10 @@ de las cl√°sicas a excepci√≥n del rey.
   protegida, limitando los movimientos 
   de las otras piezas aliadas.
 
-Pieza Aleatoria:
+Joker:
 Inicialmente tiene los movimientos
-de un pe√≥n y cada vez que se mueve
-copias √∫ncamente los movimientos de una 
+de un Alfil y cada vez que se mueve
+copias ˙nicamente los movimientos de una 
 pieza aleatoria de entre las piezas cl√°sicas
 a excepci√≥n del rey.
 
@@ -66,6 +66,10 @@ pero con un aspecto m·s ofensivo, en cambio,
 pierdes capacidad defensiva con unos movimientos
 m·s acotados.
    
+Bombardero:
+Se mueve solo a casillas adyacentes sin movimiento
+diagonal, si captura otra pieza explotar· 
+eliminandose a si mismo y a las piezas de alrededor.
   
   
   

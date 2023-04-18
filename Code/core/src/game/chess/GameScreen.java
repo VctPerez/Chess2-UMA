@@ -588,7 +588,6 @@ public class GameScreen extends AbstractScreen {
 		
 		//Para probar la pieza random
 		Render.player1Draft.add(Resources.PAWN_PATH);
-		//Render.player1Draft.add(Resources.PAWN_PATH);
 		Render.player1Draft.add(Resources.KNIGHT_PATH);
 		Render.player1Draft.add(Resources.ROOK_PATH);
 		Render.player1Draft.add(Resources.RND_PATH);
@@ -596,7 +595,6 @@ public class GameScreen extends AbstractScreen {
 		Render.player1Draft.add(Resources.KING_PATH);
 		
 		Render.player2Draft.add(Resources.PAWN_PATH);
-		//Render.player2Draft.add(Resources.LANCER_PATH);
 		Render.player2Draft.add(Resources.KNIGHT_PATH);
 		Render.player2Draft.add(Resources.ROOK_PATH);
 		Render.player2Draft.add(Resources.RND_PATH);

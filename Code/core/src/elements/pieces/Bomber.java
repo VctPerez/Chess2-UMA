@@ -18,7 +18,7 @@ import utils.Text;
 public class Bomber extends Piece{
 
 	public Bomber(Boolean color, int x, int y,Board board) {
-		super(color, Render.app.getManager().get(Resources.RIDER_PATH, Texture.class), x ,y,board);
+		super(color, Render.app.getManager().get(Resources.BOMBER_PATH, Texture.class), x ,y,board);
 	}
 	
 	@Override
@@ -43,8 +43,6 @@ public class Bomber extends Piece{
 		}else {
 			direction = -1;
 		}
-		
-		
 			addMovement(x, y + direction, board, movements);
 			addMovement(x, y - direction, board, movements);
 			addMovement(x + direction, y, board, movements);
@@ -71,9 +69,9 @@ public class Bomber extends Piece{
 		Reader = new LectorLineas("files/lang/"+ config + "Clasicas.txt");
 		switch (config){
 			case "esp/":
-				return Reader.leerTramo(63, 67);
+				return Reader.leerTramo(69, 72);
 			case "eng/":
-				return Reader.leerTramo(47,52);
+				return Reader.leerTramo(53,58);
 			default:
 				throw new IllegalArgumentException("Configuración errónea");
 		}

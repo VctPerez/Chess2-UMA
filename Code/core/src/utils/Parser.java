@@ -17,13 +17,13 @@ public class Parser {
 			
 		switch (piecePath) {
 		case Resources.PAWN_PATH:
-			piece = new Bomber(color, x, y, board);
+			piece = new Pawn(color, x, y, board);
 			break;
 		case Resources.LANCER_PATH:
 			piece = new Lancer(color, x, y, board);
 			break;
 		case Resources.RND_PATH:
-			piece = new RandomPiece(color,x,y,board);
+			piece = new Joker(color,x,y,board);
 			break;
 		case Resources.KNIGHT_PATH:
 			piece = new Knight(color, x, y, board);
@@ -42,6 +42,9 @@ public class Parser {
 			break;
 		case Resources.KING_PATH:
 			piece = new King(color, x, y, board);
+			break;
+		case Resources.BOMBER_PATH:
+			piece = new Bomber(color,x,y,board);
 			break;
 		}
 		return piece;

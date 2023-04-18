@@ -105,6 +105,7 @@ public class DraftScreen extends AbstractScreen {
 		knights.add(Resources.KNIGHT_PATH);
 		knights.add(Resources.RIDER_PATH);
 		knights.add(Resources.KNIGHT_PATH);
+		knights.add(Resources.BOMBER_PATH);
 		Collections.shuffle(knights);
 		
 		rooks.add(Resources.ROOK_PATH);
