@@ -5,12 +5,11 @@ import java.util.ArrayList;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 
 import elements.Board;
 import elements.Piece;
 import elements.Tile;
-import game.chess.LocalGameScreen;
+import game.chess.GameScreen;
 import interaccionFichero.LectorLineas;
 import utils.Render;
 import utils.Resources;
@@ -30,22 +29,22 @@ public class King extends Piece{
 	
 	@Override
 	protected void updateXY(int x, int y) {
-		LocalGameScreen.board.getTile(this.x, this.y).attacked = false;
+		Render.GameScreen.board.getTile(this.x, this.y).attacked = false;
 
 		super.updateXY(x, y);
 		
 		
 		if(color) {
-			LocalGameScreen.whiteKing.set(x, y);
+			GameScreen.whiteKing.set(x, y);
 		}else {
 			
-			LocalGameScreen.blackKing.set(x, y);
+			Render.GameScreen.blackKing.set(x, y);
 		}
 	}
 	
 	@Override
 	protected void simulateMovement(Tile currentTile, Vector2 move, ArrayList<Vector2> removeMovements) {
-		Tile nextTile = LocalGameScreen.board.getTile((int)move.x,(int) move.y);
+		Tile nextTile = Render.GameScreen.board.getTile((int)move.x,(int) move.y);
 		Piece nextTilePiece = null;
 		if(nextTile.getPiece()!=null) {
 			nextTilePiece = nextTile.getPiece();
@@ -53,9 +52,9 @@ public class King extends Piece{
 		currentTile.simulateMoveTo(nextTile);
 		
 			//check king
-			if(color && !isKingSafe(LocalGameScreen.blackPieces, new Vector2(move.x, move.y))) {
+			if(color && !isKingSafe(Render.GameScreen.blackPieces, new Vector2(move.x, move.y))) {
 				removeMovements.add(move);
-			}else if(!color && !isKingSafe(LocalGameScreen.whitePieces, new Vector2(move.x, move.y))) {
+			}else if(!color && !isKingSafe(Render.GameScreen.whitePieces, new Vector2(move.x, move.y))) {
 				removeMovements.add(move);
 			}
 			
@@ -115,9 +114,9 @@ public class King extends Piece{
 			for(int i=(int) start+1; i<dest;i++) {
 				if(board.getTile(i, y).piece!=null) {
 					res=false;
-				}else if (color && !isTileSafe(LocalGameScreen.blackPieces, new Vector2(i, y))) {
+				}else if (color && !isTileSafe(Render.GameScreen.blackPieces, new Vector2(i, y))) {
 					res = false;
-				} else if (!color && !isTileSafe(LocalGameScreen.whitePieces, new Vector2(i, y))) {
+				} else if (!color && !isTileSafe(Render.GameScreen.whitePieces, new Vector2(i, y))) {
 					res = false;
 				}
 			}

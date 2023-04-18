@@ -22,8 +22,9 @@ import utils.Render;
 import utils.Resources;
 
 import java.util.ArrayList;
+import java.util.Set;
 
-public class LocalGameScreen extends AbstractScreen {
+public class GameScreen extends AbstractScreen {
 	public static Stage stage;
 	Background background;
 	public static Board board;
@@ -162,7 +163,7 @@ public class LocalGameScreen extends AbstractScreen {
         	 Render.app.setScreen(Render.MAINSCREEN);
         // R para reiniciar la partida (Pruebas) -> no funciona
         }else if(Gdx.input.isKeyJustPressed(Keys.R)) {
-			Render.app.setScreen(new LocalGameScreen());
+			Render.app.setScreen(new GameScreen());
 			debugMode = false;
 			//G para modo debug, permite hacer movimientos ilegales
 		} else if (Gdx.input.isKeyJustPressed(Keys.G)){
@@ -379,15 +380,16 @@ public class LocalGameScreen extends AbstractScreen {
             currentTile.move(next_x, next_y);
 
             resetMate();
-        	 
+        	
+            
             if(nextTile.getPiece() instanceof Pawn || nextTile.getPiece() instanceof Lancer) {
-
             	checkPassant(next_x, next_y);    
         		
         		checkPromotion(next_x, next_y);
             }else if (lastPawn != null){ 
     			lastPawn.isPassantable = false; 
     		}
+    		
 			
             mateControl(next_x, next_y);
 
@@ -490,13 +492,14 @@ public class LocalGameScreen extends AbstractScreen {
 	private boolean isEnPassant(float next_x, float next_y, Piece piece) {
 		boolean res = false;
 		if (piece instanceof Pawn &&next_y == current_y + (piece.color()?1:-1) && (next_x == current_x + 1 || next_x == current_x -1)){ //Si avanza a una casilla diagonal sin pieza, está tomando al paso
-			if (lastPawn instanceof Pawn){
+			if (board.getTile(next_x, current_y).getPiece() instanceof Pawn){
 				res = lastPawn.isPassantable; //Es en passant si se le puede hacer al peón objetivo
 			}
-		}
-		
-		if (piece instanceof Lancer && next_y == current_y + (piece.color()?1:-1) && (next_x == current_x)){ //Si avanza a una casilla en linea recta sin pieza, está tomando al paso
-			if (lastPawn instanceof Lancer){
+		}else if (piece instanceof Lancer && next_y == current_y + (piece.color()?1:-1) && (next_x == current_x)){ //Si avanza a una casilla en linea recta sin pieza, está tomando al paso
+			if (!res && board.getTile(next_x +1 , current_y).getPiece() instanceof Lancer){
+				res = lastPawn.isPassantable; //Es en passant si se le puede hacer al peón objetivo
+			}
+			if(!res && board.getTile(next_x - 1, current_y).getPiece() instanceof Lancer){
 				res = lastPawn.isPassantable; //Es en passant si se le puede hacer al peón objetivo
 			}
 		}

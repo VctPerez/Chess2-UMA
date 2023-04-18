@@ -16,17 +16,14 @@ import elements.Piece;
 import elements.Tile;
 import elements.Timer;
 import elements.MatchResults;
-import elements.pieces.Bishop;
-import elements.pieces.King;
-import elements.pieces.Knight;
-import elements.pieces.Pawn;
-import elements.pieces.Queen;
-import elements.pieces.Rook;
+import elements.pieces.*;
+import utils.Parser;
 import utils.Render;
+import utils.Resources;
 
 import java.util.ArrayList;
 
-public class OnlineGameScreen extends AbstractScreen {
+public class OnlineGameScreen extends GameScreen {
 	public static Stage stage;
 	Background background;
 	public static Board board;
@@ -64,7 +61,7 @@ public class OnlineGameScreen extends AbstractScreen {
 	
 	
 	//Control captura al paso
-	private Pawn lastPawn;
+	private Piece lastPawn;
 	
 	//Control turno
 	private boolean PLAYER;
@@ -92,7 +89,7 @@ public class OnlineGameScreen extends AbstractScreen {
 		
 		Gdx.input.setInputProcessor(stage);
 		
-		Render.hosting=false;
+		Render.hosting=true;
 		
 		PLAYER = true;
 		
@@ -127,8 +124,10 @@ public class OnlineGameScreen extends AbstractScreen {
 		stage.addActor(TimerB);
 		stage.addActor(TimerW);
 		
-		placeWhites();
-		placeBlacks();
+		testDrafts();
+		
+		placeWhites(Render.player1Draft);
+		placeBlacks(Render.player2Draft);
 		addPiecesToStage(whitePieces);
 		addPiecesToStage(blackPieces);
 		addTilesToStage();
@@ -156,14 +155,14 @@ public class OnlineGameScreen extends AbstractScreen {
 		stage.act();
 	}
 
-	public void update(Tile tile) {// aqui si no es tu turno debes recibir el movimiento del otro jugador y realizarlo en el tablero y cuando sea tu turno enviarlo
+	public void update(Tile tile) {
 		
         // Escape para volver al menÃº principal (Prueba)
         if (Render.inputs.justPressed(Keys.ESCAPE)) {
         	 Render.app.setScreen(Render.MAINSCREEN);
         // R para reiniciar la partida (Pruebas) -> no funciona
         }else if(Gdx.input.isKeyJustPressed(Keys.R)) {
-			Render.app.setScreen(new OnlineGameScreen());
+			Render.app.setScreen(new GameScreen());
 			debugMode = false;
 			//G para modo debug, permite hacer movimientos ilegales
 		} else if (Gdx.input.isKeyJustPressed(Keys.G)){
@@ -381,12 +380,14 @@ public class OnlineGameScreen extends AbstractScreen {
 
             resetMate();
         	 
-            if(nextTile.getPiece() instanceof Pawn) {
+            if(nextTile.getPiece() instanceof Pawn || nextTile.getPiece() instanceof Lancer) {
 
             	checkPassant(next_x, next_y);    
         		
         		checkPromotion(next_x, next_y);
-            }
+            }else if (lastPawn != null){ 
+    			lastPawn.isPassantable = false; 
+    		}
 			
             mateControl(next_x, next_y);
 
@@ -473,8 +474,8 @@ public class OnlineGameScreen extends AbstractScreen {
 	 * @param next_y
 	 */
 	private void checkPassant(float next_x, float next_y) {
-		if (isEnPassant(next_x, next_y, (Pawn)nextTile.getPiece())){
-			board.getTile(next_x,next_y + (nextTile.getPiece().color()?-1:1)).sendPieceToGraveyard();
+		if (isEnPassant(next_x, next_y, nextTile.getPiece())){
+			board.getTile(lastPawn.getPos().x,lastPawn.getPos().y).sendPieceToGraveyard();
 		}
 		updateLastPawn(next_x, next_y);  
 	}
@@ -486,11 +487,17 @@ public class OnlineGameScreen extends AbstractScreen {
 	 * @param pawn
 	 * @return true si se ha realizado una captura al paso, false si no se ha hecho
 	 */
-	private boolean isEnPassant(float next_x, float next_y, Pawn pawn) {
+	private boolean isEnPassant(float next_x, float next_y, Piece piece) {
 		boolean res = false;
-		if (next_y == current_y + (pawn.color()?1:-1) && (next_x == current_x + 1 || next_x == current_x -1)){ //Si avanza a una casilla diagonal sin pieza, está tomando al paso
-			if (board.getTile(next_x,current_y).getPiece() instanceof Pawn){
-				res = ((Pawn)board.getTile(next_x,current_y).getPiece()).isPassantable; //Es en passant si se le puede hacer al peón objetivo
+		if (piece instanceof Pawn &&next_y == current_y + (piece.color()?1:-1) && (next_x == current_x + 1 || next_x == current_x -1)){ //Si avanza a una casilla diagonal sin pieza, está tomando al paso
+			if (lastPawn instanceof Pawn){
+				res = lastPawn.isPassantable; //Es en passant si se le puede hacer al peón objetivo
+			}
+		}
+		
+		if (piece instanceof Lancer && next_y == current_y + (piece.color()?1:-1) && (next_x == current_x)){ //Si avanza a una casilla en linea recta sin pieza, está tomando al paso
+			if (lastPawn instanceof Lancer){
+				res = lastPawn.isPassantable; //Es en passant si se le puede hacer al peón objetivo
 			}
 		}
 		return res;
@@ -505,8 +512,8 @@ public class OnlineGameScreen extends AbstractScreen {
 		if (lastPawn != null){ 
 			lastPawn.isPassantable = false; 
 		}
-		if (next_y == current_y + 2 || next_y == current_y - 2){
-			lastPawn = ((Pawn) nextTile.getPiece());
+		if (next_y == current_y + 2 || next_y == current_y - 2){	
+			lastPawn = nextTile.getPiece();				
 			lastPawn.isPassantable = true;
 		}
 	}
@@ -548,84 +555,105 @@ public class OnlineGameScreen extends AbstractScreen {
 		stage.dispose();
 
 	}
-
-	public void placeWhites() {
+	
+	
+	//-------------- METODO TEMPORAL PARA PROBAR LOS CONSTRUCTORES (el draft se rellena en DraftScreen) -------------------
+	public void testDrafts() {
+		
+		//Para probar la pieza random
+		//Render.player1Draft.add(Resources.RND_PATH);
+		Render.player1Draft.add(Resources.PAWN_PATH);
+		Render.player1Draft.add(Resources.KNIGHT_PATH);
+		Render.player1Draft.add(Resources.ROOK_PATH);
+		Render.player1Draft.add(Resources.BISHOP_PATH);
+		Render.player1Draft.add(Resources.QUEEN_PATH);
+		Render.player1Draft.add(Resources.KING_PATH);
+		
+		//Render.player2Draft.add(Resources.RND_PATH);
+		Render.player2Draft.add(Resources.LANCER_PATH);
+		Render.player2Draft.add(Resources.KNIGHT_PATH);
+		Render.player2Draft.add(Resources.ROOK_PATH);
+		Render.player2Draft.add(Resources.BISHOP_PATH);
+		Render.player2Draft.add(Resources.QUEEN_PATH);
+		Render.player2Draft.add(Resources.KING_PATH);
+	}
+	
+	public void placeWhites(ArrayList<String> player1Draft) {
 		Piece piece;
 		for (int i = 1; i < 9; i++) {
-			piece =  new Pawn(true, i, 2,board);
+			piece =  Parser.getPieceFromPath(player1Draft.get(0), true, i, 2,board);
 			whitePieces.add(piece);
 			board.getTile(i, 2).setPiece(piece);
 		}
 		for (int i = 1; i < 9; i++) {
 			if (i == 1 || i == 8) {
 				
-				piece = new Rook(true, i, 1,board);
+				piece = Parser.getPieceFromPath(player1Draft.get(2), true, i, 1,board);
 				whitePieces.add(piece);
 				board.getTile(i, 1).setPiece(piece);
 			}
 			if (i == 2 || i == 7) {
 				
-				piece = new Knight(true, i, 1,board);
+				piece = Parser.getPieceFromPath(player1Draft.get(1), true, i, 1,board);
 				whitePieces.add(piece);
 				board.getTile(i, 1).setPiece(piece);
 			}
 			if (i == 3 || i == 6) {
 				
-				piece = new Bishop(true, i, 1,board);
+				piece = Parser.getPieceFromPath(player1Draft.get(3), true, i, 1,board);
 				whitePieces.add(piece);
 				board.getTile(i, 1).setPiece(piece);
 			}
 			if (i == 4) {
 				
-				piece = new Queen(true, i, 1,board);
+				piece = Parser.getPieceFromPath(player1Draft.get(4), true, i, 1,board);
 				whitePieces.add(piece);
 				board.getTile(i, 1).setPiece(piece);
 			}
 			if (i == 5) {
 				
-				piece = new King(true, i, 1,board);
+				piece = Parser.getPieceFromPath(player1Draft.get(5), true, i, 1,board);
 				whitePieces.add(piece);
 				board.getTile(i, 1).setPiece(piece);
 			}
 		}
 	}
 	
-	private void placeBlacks() {
+	
+	private void placeBlacks(ArrayList<String> player2Draft) {
 		Piece piece;
 		for (int i = 1; i < 9; i++) {
-			piece =  new Pawn(false, i, 7,board);
+			piece =  Parser.getPieceFromPath(player2Draft.get(0), false, i, 7,board);
 			blackPieces.add(piece);
 			board.getTile(i, 7).setPiece(piece);
 		}
 		for (int i = 1; i < 9; i++) {
 			if (i == 1 || i == 8) {
 				
-				piece = new Rook(false, i, 8,board);
+				piece = Parser.getPieceFromPath(player2Draft.get(2), false, i, 8,board);
 				blackPieces.add(piece);
 				board.getTile(i, 8).setPiece(piece);
 			}
 			if (i == 2 || i == 7) {
 				
-				piece = new Knight(false, i, 8,board);
+				piece = Parser.getPieceFromPath(player2Draft.get(1), false, i, 8,board);
 				blackPieces.add(piece);
 				board.getTile(i, 8).setPiece(piece);
 			}
 			if (i == 3 || i == 6) {
 				
-				piece = new Bishop(false, i, 8,board);
+				piece = Parser.getPieceFromPath(player2Draft.get(3), false, i, 8,board);
 				blackPieces.add(piece);
 				board.getTile(i, 8).setPiece(piece);
 			}
 			if (i == 4) {
 				
-				piece = new Queen(false, i, 8,board);
+				piece = Parser.getPieceFromPath(player2Draft.get(4), false, i, 8,board);
 				blackPieces.add(piece);
 				board.getTile(i, 8).setPiece(piece);
-				
 			}
 			if (i == 5) {
-				
-				piece = new King(false, i, 8,board);
+				piece = Parser.getPieceFromPath(player2Draft.get(5), false, i, 8,board);
 				blackPieces.add(piece);
 				board.getTile(i, 8).setPiece(piece);
 			}

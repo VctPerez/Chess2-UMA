@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 
 import elements.Board;
 import elements.Piece;
-import game.chess.LocalGameScreen;
+import game.chess.GameScreen;
 import interaccionFichero.LectorLineas;
 import utils.Render;
 import utils.Resources;
