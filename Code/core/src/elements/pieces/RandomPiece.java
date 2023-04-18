@@ -70,7 +70,6 @@ public class RandomPiece extends Piece{
 			prev.y=100;
 		}
 		
-		
 		return nueva;
 	}
 	

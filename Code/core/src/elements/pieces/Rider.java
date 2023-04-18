@@ -37,21 +37,21 @@ public class Rider extends Piece{
 	@Override
 	public ArrayList<Vector2> posibleMovements() {
 		ArrayList<Vector2> movements = new ArrayList<>();
-		int suma;
+		int direction;
 		if(color) {
-			suma = 1;
+			direction = 1;
 		}else {
-			suma = -1;
+			direction = -1;
 		}
 		
-			addMovement(x + 2, y + suma, board, movements);
-			addMovement(x + 2, y + 2*suma, board, movements);
-			addMovement(x + 1, y + 2*suma, board, movements);
-			addMovement(x + 1, y - suma, board, movements);
-			addMovement(x - 2, y + suma, board, movements);
-			addMovement(x - 2, y + 2*suma, board, movements);
-			addMovement(x - 1, y + 2*suma, board, movements);
-			addMovement(x - 1, y - suma, board, movements);
+			addMovement(x + 2, y + direction, board, movements);
+			addMovement(x + 2, y + 2*direction, board, movements);
+			addMovement(x + 1, y + 2*direction, board, movements);
+			addMovement(x + 1, y - direction, board, movements);
+			addMovement(x - 2, y + direction, board, movements);
+			addMovement(x - 2, y + 2*direction, board, movements);
+			addMovement(x - 1, y + 2*direction, board, movements);
+			addMovement(x - 1, y - direction, board, movements);
 
 		return movements;
 	}
