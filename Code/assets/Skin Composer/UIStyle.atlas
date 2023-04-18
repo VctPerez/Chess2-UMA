@@ -18,6 +18,13 @@ Default_Label_FONT
   orig: 505, 71
   offset: 0, 0
   index: -1
+SingleClickStyle_TextButtons_FONT
+  rotate: false
+  xy: 1029, 397
+  size: 505, 411
+  orig: 505, 411
+  offset: 0, 0
+  index: -1
 TextButtons_FONT_0
   rotate: false
   xy: 1, 1397
@@ -146,7 +153,7 @@ TextField_SELECTED
   index: -1
 TextField_UNSELECTED
   rotate: false
-  xy: 1029, 792
+  xy: 1029, 379
   size: 32, 16
   split: 6, 6, 6, 6
   orig: 32, 16

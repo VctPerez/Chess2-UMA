@@ -173,7 +173,7 @@ public class DraftScreen extends AbstractScreen {
 	private void initButtons() {
 		// Botones con nombre momentaneos, se cambiara y se a�adira a los ficheros de idiomas
 
-		next = new TextButton("Siguiente");
+		next = new TextButton("Siguiente","SingleClickStyle");
 		next.setPosition(550,  50);
 		next.addCaptureListener(new InputListener() { 
 			@Override
@@ -201,7 +201,7 @@ public class DraftScreen extends AbstractScreen {
 			    }
 			} );
 		
-		back = new TextButton("Atras");
+		back = new TextButton("Atras","SingleClickStyle");
 		back.setPosition(175,  50);
 		back.addCaptureListener(new InputListener() { 
 			@Override

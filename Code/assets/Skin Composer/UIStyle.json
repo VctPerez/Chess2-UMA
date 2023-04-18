@@ -1,25 +1,31 @@
 {
 com.badlogic.gdx.graphics.g2d.BitmapFont: {
 	Default_Label_FONT: {
-		file: ./fonts/Default_Label_FONT.fnt
+		file: Default_Label_FONT.fnt
 		scaledSize: -1
 		markupEnabled: false
 		flip: false
 	}
 	Default_TextButtons_FONT: {
-		file: ./fonts/TextButtons_FONT.fnt
+		file: TextButtons_FONT.fnt
 		scaledSize: -1
 		markupEnabled: false
 		flip: false
 	}
 	Default_TextField_FONT: {
-		file: ./fonts/TextField_FONT.fnt
+		file: TextField_FONT.fnt
+		scaledSize: -1
+		markupEnabled: false
+		flip: false
+	}
+	SingleClickStyle_TextButtons_FONT: {
+		file: SingleClickStyle_TextButtons_FONT.fnt
 		scaledSize: -1
 		markupEnabled: false
 		flip: false
 	}
 	TitleStyle_Label_FONT: {
-		file: ./fonts/TitleStyle_Label_FONT.fnt
+		file: TitleStyle_Label_FONT.fnt
 		scaledSize: -1
 		markupEnabled: false
 		flip: false
@@ -33,9 +39,15 @@ com.badlogic.gdx.graphics.Color: {
 		a: 1
 	}
 	DOWN_COLOR: {
-		r: 0.007843138
-		g: 0.078431375
-		b: 0.8627451
+		r: 0.4392157
+		g: 0.45490196
+		b: 0.63529414
+		a: 1
+	}
+	DOWN_COLOR2: {
+		r: 0.4745098
+		g: 0.5019608
+		b: 0.7647059
 		a: 1
 	}
 	OVER_FONT_COLOR: {
@@ -120,6 +132,12 @@ com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 		downFontColor: DOWN_COLOR
 		overFontColor: OVER_FONT_COLOR
 		checkedFontColor: DOWN_COLOR
+	}
+	SingleClickStyle: {
+		font: SingleClickStyle_TextButtons_FONT
+		fontColor: TEXT_COLOR
+		downFontColor: DOWN_COLOR
+		overFontColor: DOWN_COLOR2
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
