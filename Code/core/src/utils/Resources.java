@@ -42,6 +42,7 @@ public class Resources {
     public static final String ROOK_PATH = "sprites/Testing-Pieces/Pieces Base Form/White_Rook.png";
     public static final String QUEEN_PATH = "sprites/Testing-Pieces/Pieces Base Form/White_Queen.png";
     public static final String KING_PATH = "sprites/Testing-Pieces/Pieces Base Form/White_King.png";
+    public static final String BOMBER_PATH = "sprites/Testing-Pieces/Pieces Base Form/White_King.png";
     
     public static final String RND_PATH = "sprites/Testing-Pieces/Pieces Rnd Form/RndWhite_Bishop.png";
     public static final String RND_KNIGHT_PATH = "sprites/Testing-Pieces/Pieces Rnd Form/RndWhite_Knight.png";

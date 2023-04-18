@@ -17,7 +17,7 @@ public class Parser {
 			
 		switch (piecePath) {
 		case Resources.PAWN_PATH:
-			piece = new Pawn(color, x, y, board);
+			piece = new Bomber(color, x, y, board);
 			break;
 		case Resources.LANCER_PATH:
 			piece = new Lancer(color, x, y, board);

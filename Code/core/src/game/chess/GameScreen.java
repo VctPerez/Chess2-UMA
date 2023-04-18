@@ -374,31 +374,53 @@ public class GameScreen extends AbstractScreen {
 	 */
 	private void moveCurrentPieceTo(int next_x, int next_y) {
         if (currentTile_validMovements.contains(new Vector2(next_x, next_y)) || debugMode) {
-
-        	checkCastling(next_x);
-
-            currentTile.move(next_x, next_y);
-
-            resetMate();
         	
-            
-            if(nextTile.getPiece() instanceof Pawn || nextTile.getPiece() instanceof Lancer) {
-            	checkPassant(next_x, next_y);    
-        		
-        		checkPromotion(next_x, next_y);
-            }else if (lastPawn != null){ 
-    			lastPawn.isPassantable = false; 
-    		}
-    		
-			
-            mateControl(next_x, next_y);
+        	//Si se da el caso bomba no se mueve ninguna pieza por lo que no se comprueba nada simplemente explota
+        	if(checkBomber()) {
+            	explosion(current_x,current_y);
+            }else {
+            	checkCastling(next_x);
 
-			stalemateControl();
+                currentTile.move(next_x, next_y);
+
+                resetMate();
+            	
+                
+                if(nextTile.getPiece() instanceof Pawn || nextTile.getPiece() instanceof Lancer) {
+                	checkPassant(next_x, next_y);    
+            		
+            		checkPromotion(next_x, next_y);
+                }else if (lastPawn != null){ 
+        			lastPawn.isPassantable = false; 
+        		}
+        		
+                mateControl(next_x, next_y);
+     			stalemateControl();
+            }
 			
             changeTurn();
 
         }
     }
+
+	private void explosion(int x, int y) {
+		for(int i=x-1;i<=x+1;i++) {
+			for(int j=y-1;j<=y+1;j++) {
+				if(correctTile(i,j) && board.getTile(i, j).piece!=null) {
+					board.getTile(i, j).sendPieceToGraveyard();
+				}
+			}
+		}
+	}
+
+	private boolean correctTile(int i, int j) {
+		return i>=1 && i<=8 && j>=1 && j<=8;
+	}
+
+	private boolean checkBomber() {
+		//Comprobar redundancias
+		return currentTile.piece instanceof Bomber && nextTile.piece!= null;
+	}
 
 	/**
 	 * Lleva a cabo los cálculos necesarios para saber si se ha llegado a un empate sabiendo que no es jaque mate
