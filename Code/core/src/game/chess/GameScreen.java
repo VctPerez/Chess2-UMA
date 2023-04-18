@@ -489,6 +489,7 @@ public class GameScreen extends AbstractScreen {
 	 * @param pawn
 	 * @return true si se ha realizado una captura al paso, false si no se ha hecho
 	 */
+	
 	private boolean isEnPassant(float next_x, float next_y, Piece piece) {
 		boolean res = false;
 		if (piece instanceof Pawn &&next_y == current_y + (piece.color()?1:-1) && (next_x == current_x + 1 || next_x == current_x -1)){ //Si avanza a una casilla diagonal sin pieza, está tomando al paso

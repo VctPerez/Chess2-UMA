@@ -37,14 +37,25 @@ public class Rider extends Piece{
 	@Override
 	public ArrayList<Vector2> posibleMovements() {
 		ArrayList<Vector2> movements = new ArrayList<>();
-		addMovement(x + 2, y + 1, board, movements);
-		addMovement(x + 2, y + 2, board, movements);
-		addMovement(x + 1, y + 2, board, movements);
-		addMovement(x + 1, y - 1, board, movements);
-		addMovement(x - 2, y + 1, board, movements);
-		addMovement(x - 2, y + 2, board, movements);
-		addMovement(x - 1, y - 1, board, movements);
-		addMovement(x - 1, y + 2, board, movements);
+		if(color) {
+			addMovement(x + 2, y + 1, board, movements);
+			addMovement(x + 2, y + 2, board, movements);
+			addMovement(x + 1, y + 2, board, movements);
+			addMovement(x + 1, y - 1, board, movements);
+			addMovement(x - 2, y + 1, board, movements);
+			addMovement(x - 2, y + 2, board, movements);
+			addMovement(x - 1, y + 2, board, movements);
+			addMovement(x - 1, y - 1, board, movements);
+		}else{
+			addMovement(x + 2, y - 1, board, movements);
+			addMovement(x + 2, y - 2, board, movements);
+			addMovement(x + 1, y - 2, board, movements);
+			addMovement(x + 1, y + 1, board, movements);
+			addMovement(x - 2, y - 1, board, movements);
+			addMovement(x - 2, y - 2, board, movements);
+			addMovement(x - 1, y - 2, board, movements);
+			addMovement(x - 1, y + 1, board, movements);
+		}	
 		return movements;
 	}
 
@@ -66,9 +77,9 @@ public class Rider extends Piece{
 		Reader = new LectorLineas("files/lang/"+ config + "Clasicas.txt");
 		switch (config){
 			case "esp/":
-				return Reader.leerTramo(50, 51);
+				return Reader.leerTramo(63, 67);
 			case "eng/":
-				return Reader.leerTramo(42,43);
+				return Reader.leerTramo(47,52);
 			default:
 				throw new IllegalArgumentException("Configuración errónea");
 		}
@@ -79,4 +90,5 @@ public class Rider extends Piece{
 		String str = super.toString();
 		return str.replace("X","Rider");
 	}
+	
 }

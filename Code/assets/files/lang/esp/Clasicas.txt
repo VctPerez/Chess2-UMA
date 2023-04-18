@@ -59,6 +59,12 @@ de un peón y cada vez que se mueve
 copias úncamente los movimientos de una 
 pieza aleatoria de entre las piezas clásicas
 a excepción del rey.
+
+Jinete:
+El jinete tiene los movimientos del caballo
+pero con un aspecto m�s ofensivo, en cambio, 
+pierdes capacidad defensiva con unos movimientos
+m�s acotados.
    
   
   

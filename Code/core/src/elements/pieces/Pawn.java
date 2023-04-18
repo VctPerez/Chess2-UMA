@@ -65,7 +65,6 @@ public class Pawn extends Piece{
 			direction = -1;
 		}
 		
-		
 		for(int i = -1; i<=1; i++) {
 			mov = new Vector2(x + i, y + direction);
 			if(checkBoard(board, i, mov.x, mov.y)) {
