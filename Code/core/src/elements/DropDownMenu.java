@@ -16,7 +16,6 @@ import elements.pieces.Bishop;
 import elements.pieces.Knight;
 import elements.pieces.Queen;
 import elements.pieces.Rook;
-import game.chess.LocalGameScreen;
 import utils.Image;
 import utils.Render;
 import utils.Resources;
@@ -75,34 +74,34 @@ public class DropDownMenu extends Actor{
             Piece newPiece = null;
             
             if(formerPiece.color()) {
-            	pieces = LocalGameScreen.whitePieces;
+            	pieces = Render.GameScreen.whitePieces;
             }else {
-            	pieces = LocalGameScreen.blackPieces;
+            	pieces = Render.GameScreen.blackPieces;
             }
             pieces.remove(formerPiece);
             formerPiece.remove();
             
             switch (current_y) {
 			case 4:
-				newPiece = new Queen(formerPiece.color(), (int)tile.getPos().x, (int)tile.getPos().y,LocalGameScreen.board);
+				newPiece = new Queen(formerPiece.color(), (int)tile.getPos().x, (int)tile.getPos().y,Render.GameScreen.board);
 				break;
 			case 3:
-				newPiece = new Knight(formerPiece.color(), (int)tile.getPos().x, (int)tile.getPos().y,LocalGameScreen.board);
+				newPiece = new Knight(formerPiece.color(), (int)tile.getPos().x, (int)tile.getPos().y,Render.GameScreen.board);
 				break;
 			case 2:
-				newPiece = new Rook(formerPiece.color(), (int)tile.getPos().x, (int)tile.getPos().y,LocalGameScreen.board);
+				newPiece = new Rook(formerPiece.color(), (int)tile.getPos().x, (int)tile.getPos().y,Render.GameScreen.board);
 				break;
 			case 1:
-				newPiece = new Bishop(formerPiece.color(), (int)tile.getPos().x, (int)tile.getPos().y,LocalGameScreen.board);
+				newPiece = new Bishop(formerPiece.color(), (int)tile.getPos().x, (int)tile.getPos().y,Render.GameScreen.board);
 				break;
 			default:
 				break;
 			}
             tile.setPiece(newPiece);
             pieces.add(newPiece);            	
-            LocalGameScreen.stage.addActor(newPiece);
-            LocalGameScreen.promoting = false;
-            LocalGameScreen.mateControl(tile.getPos().x, tile.getPos().y);
+            Render.GameScreen.stage.addActor(newPiece);
+            Render.GameScreen.promoting = false;
+            Render.GameScreen.mateControl(tile.getPos().x, tile.getPos().y);
             remove();
 		
 	}

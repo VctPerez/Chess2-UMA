@@ -57,7 +57,7 @@ public class RandomPiece extends Piece{
 		break;
 		case 4 : 
 		nueva = new Rook(this.color,this.x,this.y,this.board);
-		this.setSprite(Resources.RND_QUEEN_PATH);
+		this.setSprite(Resources.RND_ROOK_PATH);
 		break;
 		}
 		

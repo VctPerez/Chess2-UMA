@@ -99,7 +99,6 @@ public class DraftScreen extends AbstractScreen {
 		
 		pawns.add(Resources.PAWN_PATH);
 		pawns.add(Resources.LANCER_PATH);
-		pawns.add(Resources.BISHOP_PATH);
 		pawns.add(Resources.RND_PATH);
 		Collections.shuffle(pawns);
 		
@@ -114,7 +113,7 @@ public class DraftScreen extends AbstractScreen {
 		Collections.shuffle(rooks);
 		
 		bishops.add(Resources.BISHOP_PATH);
-		bishops.add(Resources.BISHOP_PATH);
+		bishops.add(Resources.RND_PATH);
 		bishops.add(Resources.BISHOP_PATH);
 		Collections.shuffle(bishops);
 		
@@ -182,7 +181,16 @@ public class DraftScreen extends AbstractScreen {
 					cont++;
 					changePiece();
 				}else {// aqui o bien se manda el draft el otro o se crea otro draf(en modo local) -> tal vez haya q pasar el array del finalDraft como parámetro?
-					Render.app.setScreen(new LocalGameScreen());
+					if(Render.DraftController==1) {
+						Render.player1Draft.addAll(draft.values());
+						Render.DraftController++;
+						Render.app.setScreen(new DraftScreen());
+					}else if(Render.DraftController==2) {
+						Render.player2Draft.addAll(draft.values());
+						Render.GameScreen=new GameScreen();
+						Render.app.setScreen(Render.GameScreen);
+					}
+					
 				}
 				
 				if(cont==5){

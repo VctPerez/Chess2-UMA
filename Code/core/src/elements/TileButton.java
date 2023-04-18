@@ -22,7 +22,7 @@ public class TileButton extends Actor{
 		tile = new ShapeRenderer();
 		setPosition(x, y);
 		setSize(tileSize, tileSize);
-		setColor(Color.WHITE);
+		tile.setColor(new Color(1f, 0.9921f, 0.90196f,1f));
 	
 		
 		

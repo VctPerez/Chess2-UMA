@@ -12,7 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.ParallelAction;
 
-import game.chess.LocalGameScreen;
+import game.chess.GameScreen;
 
 public class Graveyard extends Actor {
 	private ArrayList<Piece> graveyard;
@@ -32,9 +32,9 @@ public class Graveyard extends Actor {
 	public void add(Piece piece) {
 		piece.alive=false;
 		if(piece.color) {//implementar método que haga esto en gamescreen
-			LocalGameScreen.whitePieces.remove(piece);
+			GameScreen.whitePieces.remove(piece);
 		}else {
-			LocalGameScreen.blackPieces.remove(piece);
+			GameScreen.blackPieces.remove(piece);
 		}
 		
 		ParallelAction par = new ParallelAction();
@@ -50,9 +50,9 @@ public class Graveyard extends Actor {
 	public void simulateAdd(Piece piece) {
 		piece.alive=false;
 		if(piece.color) {//implementar método que haga esto en gamescreen
-			LocalGameScreen.whitePieces.remove(piece);
+			GameScreen.whitePieces.remove(piece);
 		}else {
-			LocalGameScreen.blackPieces.remove(piece);
+			GameScreen.blackPieces.remove(piece);
 		}
 		
 		graveyard.add(piece);
@@ -67,9 +67,9 @@ public class Graveyard extends Actor {
 			graveyard.remove(graveyard.size()-1);
 			
 			if(piece.color) {//implementar método que haga esto en gamescreen
-				LocalGameScreen.whitePieces.add(piece);
+				GameScreen.whitePieces.add(piece);
 			}else {
-				LocalGameScreen.blackPieces.add(piece);
+				GameScreen.blackPieces.add(piece);
 			}
 		}
 		index--;

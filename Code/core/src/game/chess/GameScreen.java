@@ -22,8 +22,9 @@ import utils.Render;
 import utils.Resources;
 
 import java.util.ArrayList;
+import java.util.Set;
 
-public class LocalGameScreen extends AbstractScreen {
+public class GameScreen extends AbstractScreen {
 	public static Stage stage;
 	Background background;
 	public static Board board;
@@ -162,7 +163,7 @@ public class LocalGameScreen extends AbstractScreen {
         	 Render.app.setScreen(Render.MAINSCREEN);
         // R para reiniciar la partida (Pruebas) -> no funciona
         }else if(Gdx.input.isKeyJustPressed(Keys.R)) {
-			Render.app.setScreen(new LocalGameScreen());
+			Render.app.setScreen(new GameScreen());
 			debugMode = false;
 			//G para modo debug, permite hacer movimientos ilegales
 		} else if (Gdx.input.isKeyJustPressed(Keys.G)){
