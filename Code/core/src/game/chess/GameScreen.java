@@ -22,7 +22,6 @@ import utils.Render;
 import utils.Resources;
 
 import java.util.ArrayList;
-import java.util.Set;
 
 public class GameScreen extends AbstractScreen {
 	public static Stage stage;
@@ -80,6 +79,9 @@ public class GameScreen extends AbstractScreen {
 
 	//Modo depuracion
 	private boolean debugMode = false;
+
+	//Control bombarderos
+	private boolean WHasBomb = true, BHasBomb = false; //Guardan si tienen bombarderos, se actualiza en select
 
 	@Override
 	public void show() {
@@ -261,21 +263,91 @@ public class GameScreen extends AbstractScreen {
 	
 	/**
 	 * Selecciona la casilla pasada como parámetro, es decir, si tiene una pieza calcula los posibles movimientos y los resalta.
+	 * <p>No se usa el parámetro, se usa currentTile</p>
 	 * @param tile
 	 */
-	private void select(Tile tile) {
+	private void select(Tile tile) { //Me gustaría cambiar currentTile, pero se usan sus movimientos válidos
 		if (currentTile.getPiece() != null && currentTile.getPiece().color()==PLAYER) {
-			
+
 			currentTile_validMovements = (currentTile.getPiece().getValidMovements());
 
-			castleCancel();
+			removeRareCasesIDidntFixProperlySoNowWeDoItAtTheLastSecond();
 
 			highlight(currentTile.getPiece().color());
-			
+
 			System.out.println(currentTile_validMovements.toString());
 			isPieceSelected = true;
 		}
 	}
+
+	/**
+	 * Hace lo que dice el nombre
+	 * <p>Se llama así porque es demasiado cierto</p>
+	 * <p>Ignorad que ambos métodos son míos</p>
+	 */
+	private void removeRareCasesIDidntFixProperlySoNowWeDoItAtTheLastSecond() {
+		castleCancel();
+
+		dontWalkIntoBomberCheck();
+		
+		dontIgnoreBomberCheck();
+	}
+
+	private void dontIgnoreBomberCheck() {
+	}
+
+	/**
+	 * Elimina los movimientos que permitan a un bombardero enemigo explotar al rey
+	 */
+	private void dontWalkIntoBomberCheck() {
+		Bomber[] enemigos = new Bomber[2]; //enemigos guarda los bombarderos enemigos
+		if (PLAYER && BHasBomb || !PLAYER && WHasBomb){ //Si el enemigo tiene bombarderos
+			enemigos = getBombers();
+		}
+		for (int i = 0; i < enemigos.length && enemigos[i] != null && bomberInRangeOfKing(enemigos[i]); i++) {
+			float x = enemigos[i].getPos().x,y = enemigos[i].getPos().y;
+			if (currentTile.piece instanceof King && bomberCanExplode(enemigos[i])){ //Si puede explotar el rey no puede ir al radio de explosión
+				for (int j = -1; j <= 1; j += 2) {
+					for (int k = 1; k >= -1; k -= 2) {
+						currentTile_validMovements.remove(new Vector2(x +j,y + k));
+					}
+				}
+			}
+			ArrayList<Vector2> movimientos = enemigos[i].getValidMovements();
+			for (Vector2 v :
+					movimientos) {
+				currentTile_validMovements.remove(v); //Elimina los movimientos donde puede ser capturado por el bombardero
+			}
+		}
+	}
+
+	/**
+	 * Devuelve los bombarderos del tablero en un array
+	 */
+	private Bomber[] getBombers() {
+		Bomber[] enemigos = new Bomber[2];
+		int num = 0;
+		for (int i = 0; i < Board.board.length; i++) { //Busca los bombarderos enemigos
+			for (int j = 0; j < Board.board.length; j++) {
+				if (Board.board[i][j].piece instanceof Bomber){
+					Bomber au = (Bomber) Board.board[i][j].piece;
+					if (au.color() != PLAYER){
+						enemigos[num] = au;
+						num++;
+					}
+				}
+			}
+		}
+		if (num == 0){ //Si el enemigo no tiene bombarderos se guarda para no comprobar sabiendo que no hay
+			if (PLAYER){
+				BHasBomb = false;
+			} else {
+				WHasBomb = false;
+			}
+		}
+		return enemigos;
+	}
+
 
 	/**
 	 * 
@@ -286,23 +358,23 @@ public class GameScreen extends AbstractScreen {
 	}
 	
 	/**
-	 * Comprueba si la pieza en la posición [next_x, next_y] pone en peligro al rey con alguno de sus posibles movimientos.
+	 * Actualiza los valores de jaque en el tablero
 	 */
 	private static boolean updateCheck() {
 
 		if(nextTile.getPiece().color()) {
 			for(Piece piece: whitePieces) {
-				if(piece.getValidMovements().contains(blackKing)) {
-					blackCheck =true;
-					board.getTile(blackKing.x,blackKing.y ).attacked = true;
-					
+				if (piece.getValidMovements().contains(blackKing) || piece instanceof Bomber && bomberAttacksKing((Bomber) piece)) {
+					blackCheck = true;
+					board.getTile(blackKing.x, blackKing.y).attacked = true;
+
 					System.out.println("REY NEGRO EN JAQUE");
 				}
 			}
 			
 		}else if(!nextTile.getPiece().color()){
 			for(Piece piece: blackPieces) {
-				if(piece.getValidMovements().contains(whiteKing)) {
+				if(piece.getValidMovements().contains(whiteKing) || piece instanceof Bomber && bomberAttacksKing((Bomber) piece)) {
 					whiteCheck =true;
 					board.getTile(whiteKing.x, whiteKing.y).attacked = true;
 					
@@ -312,7 +384,9 @@ public class GameScreen extends AbstractScreen {
 		}
 		return isCheck();
 	}
-	
+
+
+
 	/**
 	 * 
 	 * @param check
@@ -344,10 +418,8 @@ public class GameScreen extends AbstractScreen {
 	}
 
 	public static void mateControl(float next_x, float next_y) {
-        
-		updateCheck();
-		
-		if(isCheck()) {
+		//updateCheck devuelve isCheck al final para no tener que llamarlo
+		if(updateCheck()) {
         	whiteCheckMate = isCheckMate(whiteCheck, whitePieces);
         	blackCheckMate = isCheckMate(blackCheck, blackPieces);
         	if(whiteCheckMate) {
@@ -405,7 +477,80 @@ public class GameScreen extends AbstractScreen {
 
         }
     }
-	
+
+	/**
+	 * Comprueba si el bombardero piece ataca al rey opuesto
+	 * <p>Ataca si está adyacente o cuando hay una pieza enemiga adyacente y el rey está en su radio de explosión
+	 */
+	private static boolean bomberAttacksKing(Bomber bomb) {
+		boolean res = false,puedeAtacar = false;
+
+		ArrayList<Vector2> movimientos = bomb.getValidMovements();
+		if (!movimientos.isEmpty()) { //Si no se puede mover no puede atacar
+			if (bomb.color()) {
+				res = movimientos.contains(blackKing);
+			} else {
+				res = movimientos.contains(whiteKing);
+			}
+			if (!res){ //Si no está adyacente
+				Piece pp;
+				for (Vector2 v :
+						movimientos) {
+					pp = board.getTile(v.x,v.y).piece;
+					if (pp != null && pp.color() != bomb.color()){
+						puedeAtacar = true;
+					}
+				}
+				if (puedeAtacar){ //Tengo que mirar si estos statics hacen falta porque no ayudan en nada, tengo que copiar el código
+					float x =  bomb.getPos().x,y = bomb.getPos().y;
+					for(float i = x-1; i <= x+1 &&!res; i++) { //Mira si el rey está en su rango de explosión
+						for(float j = y-1; j <= y+1 && !res; j++) {
+							if(i>=1 && i<=8 && j>=1 && j<=8) {
+								if (bomb.color()){
+									res = board.getTile(i,j).equals(board.getTile(blackKing.x,blackKing.y));
+								} else {
+									res = board.getTile(i,j).equals(board.getTile(whiteKing.x,whiteKing.y));
+								}
+
+							}
+						}
+					}
+				}
+			}
+		}
+		return res;
+	}
+
+	private boolean bomberInRangeOfKing(Bomber bomb){
+		boolean res = false;
+		float x =  bomb.getPos().x,y = bomb.getPos().y;
+		for(float i = x-1; i <= x+1 &&!res; i++) { //Mira si el rey está en su rango de explosión
+			for(float j = y-1; j <= y+1 && !res; j++) {
+				if(i>=1 && i<=8 && j>=1 && j<=8) {
+					if (bomb.color()){
+						res = board.getTile(i,j).equals(board.getTile(blackKing.x,blackKing.y));
+					} else {
+						res = board.getTile(i,j).equals(board.getTile(whiteKing.x,whiteKing.y));
+					}
+
+				}
+			}
+		}
+		return res;
+	}
+
+	private boolean bomberCanExplode(Bomber bomb){
+		boolean res = false;
+		for (Vector2 v:
+			 bomb.getValidMovements()) {
+			Piece au = board.getTile(v.x,v.y).piece;
+			if (au != null && au.color() != bomb.color()){
+				res = true;
+			}
+		}
+		return res;
+	}
+
 	private void checkGuardian(int next_y) {
 		if(current_y - 1 == next_y && nextTile.getPiece().color()){
 			nextTile.getPiece().backed=true;
@@ -521,7 +666,6 @@ public class GameScreen extends AbstractScreen {
 	 * 
 	 * @param next_x
 	 * @param next_y
-	 * @param pawn
 	 * @return true si se ha realizado una captura al paso, false si no se ha hecho
 	 */
 	

@@ -1,6 +1,7 @@
 package elements;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Vector;
 
 import com.badlogic.gdx.audio.Sound;
@@ -268,5 +269,27 @@ public abstract class Piece extends Actor {
 			sb.append(",Dead}");
 		}
 		return sb.toString();
+	}
+
+	/**
+	 * Devuelve true si ambas están muertas o ambas están en la misma posición
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		boolean res = false;
+		if (obj instanceof Piece){
+			Piece aux = (Piece) obj;
+			if (alive && aux.alive){
+				res = x == aux.x && y == aux.y;
+			} else {
+				res = !(alive || aux.alive);
+			}
+		}
+		return res;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(alive,x,y);
 	}
 }

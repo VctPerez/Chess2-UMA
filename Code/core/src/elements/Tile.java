@@ -13,6 +13,8 @@ import utils.Image;
 import utils.Render;
 import utils.Resources;
 
+import java.util.Objects;
+
 public class Tile extends Actor{
 	protected ShapeRenderer tile;
 	protected Vector2 pos;	
@@ -154,5 +156,23 @@ public class Tile extends Actor{
 	@Override
 	public String toString() {
 		return "Tile " + pos.toString();
+	}
+
+	/**
+	 * Mira si los Tiles están en el mismo sitio
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		boolean res = false;
+		if (obj instanceof Tile){
+			Tile aux = (Tile) obj;
+			res = aux.pos.equals(pos);
+		}
+		return res;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(pos);
 	}
 }

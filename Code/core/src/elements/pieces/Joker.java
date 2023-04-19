@@ -97,7 +97,7 @@ public class Joker extends Piece{
 		}
 		Vector2 pos = this.getPos();
 		ArrayList<Vector2> movements = new ArrayList<>();
-		System.out.println();pos.toString();
+		//System.out.println();pos.toString(); // Esto que hace aqui?
 		this.hasBeenMoved=false;
 		if(current.posibleMovements().isEmpty() && (this.color() && (int)pos.y==8)) {
 			movements.add(new Vector2(pos.x,pos.y-1));
