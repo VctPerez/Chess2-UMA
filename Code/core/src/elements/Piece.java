@@ -36,6 +36,7 @@ public abstract class Piece extends Actor {
 		this.hasBeenMoved = false;
 		this.color = color;
 		this.alive = true;
+		this.backed = false;
 		this.x = x;
 		this.y = y;
 

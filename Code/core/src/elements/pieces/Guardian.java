@@ -97,8 +97,13 @@ public class Guardian extends Piece {
 		}
 		
 		if(backed) {
+			movements.clear();
 			for(int i = -1; i<=1; i++) {
-				mov = new Vector2(x + i, y + 2*direction);
+				if(i==0) {
+					mov = new Vector2(x + i, y + 3*direction);
+				}else {
+					mov = new Vector2(x + i, y + direction);
+				}
 				if(checkBoard(board, i, mov.x, mov.y)) {
 					movements.add(mov);
 				}
