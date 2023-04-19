@@ -16,8 +16,8 @@ public class Guardian extends Piece {
 	
 	public boolean backed=false;
 
-	public Guardian(Boolean color, Texture texture, int x, int y, Board board) {
-		super(color, Render.app.getManager().get(Resources.LANCER_PATH, Texture.class), x ,y,board);
+	public Guardian(Boolean color, int x, int y, Board board) {
+		super(color, Render.app.getManager().get(Resources.WARDEN_PAWN_PATH, Texture.class), x ,y,board);
 		
 	}
 	
@@ -71,31 +71,7 @@ public class Guardian extends Piece {
 		}
 		mov = new Vector2(x , y - direction); 
 		
-		if(!hasBeenMoved && board.dim==8) {
-			mov = new Vector2(x , y + 2*direction);
-			if(checkBoard(board, 0, mov.x, mov.y) && board.getTile(x, y+direction).getPiece()==null) {
-				movements.add(mov);
-			}
-		}
 
-		if (y == 5 - (color?0:1)){ //Si está en la fila donde puede hacer en passant(5 para blancas, 4 para negras)
-			Piece aux;
-			if (board.getTile(x-1,y) != null){
-				aux = board.getTile(x-1,y).getPiece(); //Mira a la izquierda
-				if (aux != null && aux instanceof Pawn && aux.isPassantable) { //Si la pieza puede tomarse al paso(habrá que cambiar el if si se incluyen más)
-					mov = new Vector2(x-1,y+direction);
-					movements.add(mov);
-				}
-			}
-			if (board.getTile(x+1,y) != null){
-				aux = board.getTile(x+1,y).getPiece(); //Mira a la derecha
-				if (aux != null && aux instanceof Pawn && aux.isPassantable) { //Si la pieza puede tomarse al paso(habrá que cambiar el if si se incluyen más)
-					mov = new Vector2(x+1,y+direction);
-					movements.add(mov);
-				}
-			}
-		}
-		
 		if(backed) {
 			movements.clear();
 			for(int i = -1; i<=1; i++) {

@@ -97,9 +97,9 @@ public class DraftScreen extends AbstractScreen {
 		queens = new ArrayList<>();
 		kings = new ArrayList<>();
 		
-		pawns.add(Resources.PAWN_PATH);
+		pawns.add(Resources.WARDEN_PAWN_PATH);
 		pawns.add(Resources.LANCER_PATH);
-		pawns.add(Resources.BISHOP_PATH);
+		pawns.add(Resources.WARDEN_PAWN_PATH);
 		Collections.shuffle(pawns);
 		
 		knights.add(Resources.KNIGHT_PATH);

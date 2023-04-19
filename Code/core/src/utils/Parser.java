@@ -46,6 +46,9 @@ public class Parser {
 		case Resources.BOMBER_PATH:
 			piece = new Bomber(color,x,y,board);
 			break;
+		case Resources.WARDEN_PAWN_PATH:
+			piece = new Guardian(color,x,y,board);
+			break;
 		}
 		return piece;
 	}

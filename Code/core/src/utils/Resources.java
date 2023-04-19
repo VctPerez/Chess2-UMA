@@ -43,12 +43,15 @@ public class Resources {
     public static final String QUEEN_PATH = "sprites/Testing-Pieces/Pieces Base Form/White_Queen.png";
     public static final String KING_PATH = "sprites/Testing-Pieces/Pieces Base Form/White_King.png";
     public static final String BOMBER_PATH = "sprites/Testing-Pieces/Pieces Modified/Butanero.png";
+    public static final String WARDEN_PAWN_PATH = "sprites/Testing-Pieces/Pieces Modified/White_Warden.png";
     
     public static final String RND_PATH = "sprites/Testing-Pieces/Pieces Base Form/White_Joker.png";
     public static final String RND_KNIGHT_PATH = "sprites/Testing-Pieces/Pieces Rnd Form/RndWhite_Knight.png";
     public static final String RND_ROOK_PATH = "sprites/Testing-Pieces/Pieces Rnd Form/RndWhite_Rook.png";
     public static final String RND_QUEEN_PATH = "sprites/Testing-Pieces/Pieces Rnd Form/RndWhite_Queen.png";
     public static final String RND_PAWN_PATH = "sprites/Testing-Pieces/Pieces Rnd Form/RndWhite_Pawn.png";
+    
+    
     
     
     public static final String FRAME_PATH = "sprites/selectionFrame.png";
