@@ -15,7 +15,7 @@ import utils.Resources;
 public class Guardian extends Piece {
 
 	public Guardian(Boolean color, int x, int y, Board board) {
-		super(color, Render.app.getManager().get(Resources.WARDEN_PAWN_PATH, Texture.class), x ,y,board);
+		super(color, Render.app.getManager().get(Resources.WARDEN_PATH, Texture.class), x ,y,board);
 		
 	}
 	
@@ -69,16 +69,19 @@ public class Guardian extends Piece {
 
 		
 
-		if(super.backed) {
+		if(backed) {
 			movements.clear();
 			for(int i = -1; i<=1; i++) {
-				if(i==0 && board.getTile(x, y+direction).getPiece()==null) {
+				if(i==0) {
 					mov = new Vector2(x + i, y + 2*direction);
+					if(checkBoard(board, i, mov.x, mov.y) && board.getTile(x, y+direction).getPiece()==null) {
+						movements.add(mov);
+					}
 				}else {
 					mov = new Vector2(x + i, y + direction);
-				}
-				if(checkBoard(board, i, mov.x, mov.y)) {
-					movements.add(mov);
+					if(checkBoard(board, i, mov.x, mov.y)) {
+						movements.add(mov);
+					}
 				}
 			}
 		}

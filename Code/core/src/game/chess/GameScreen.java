@@ -147,11 +147,7 @@ public class GameScreen extends AbstractScreen {
 			timersRender();
 			checkTimerEnd();
 		}
-		
-	
-		
-		
-		
+
 		stage.draw();
 		stage.act();
 	}
@@ -386,7 +382,9 @@ public class GameScreen extends AbstractScreen {
 
                 resetMate();
                 
-                checkGuardian(next_y);
+                if(nextTile.getPiece() instanceof Guardian) {                	
+                	checkGuardian(next_y);
+                }
                 	
                 
             	
@@ -408,17 +406,14 @@ public class GameScreen extends AbstractScreen {
         }
     }
 	
-	private void checkGuardian(int next_y) {		
-		if(nextTile.piece.backed) {
-			nextTile.piece.backed=false;
-		}else {
-			if(nextTile.piece instanceof Guardian && current_y > next_y && nextTile.piece.color()){
-				nextTile.piece.backed=true;
-	         }else if(nextTile.piece instanceof Guardian && current_y < next_y && !nextTile.piece.color()) {
-	        	 nextTile.piece.backed=true;
-	         }
-			
-		}		
+	private void checkGuardian(int next_y) {
+		if(current_y - 1 == next_y && nextTile.getPiece().color()){
+			nextTile.getPiece().backed=true;
+		}else if(current_y + 1 == next_y && !nextTile.getPiece().color()) {
+			nextTile.getPiece().backed=true;
+	    }else {
+	    	nextTile.getPiece().backed=false;
+	    }
 	}
 
 	private void explosion(int x, int y) {
@@ -503,7 +498,7 @@ public class GameScreen extends AbstractScreen {
 	 * @param next_y
 	 */
 	private void checkPromotion(float next_x, float next_y) {
-		if ((next_y == 8.0 || next_y == 1.0)) {//Implementar que se pueda escoger entre todas las piezas posibles
+		if ((next_y == 8.0 && nextTile.getPiece().color()) || (next_y == 1.0 && !nextTile.getPiece().color())) {//Implementar que se pueda escoger entre todas las piezas posibles
 			System.out.println("Ascensión");
 			promoting = true;
 			DropDownMenu menu = new DropDownMenu(nextTile);
