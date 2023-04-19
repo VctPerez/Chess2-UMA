@@ -107,6 +107,7 @@ public class EscritorLineas {
 	 */
 	public void escribirLinea(int numeroDeLinea,String texto)
 	{
+		System.out.println(l.getFile().readString());
 		escribirLineaDummy(numeroDeLinea,texto);
 		File fichero = new File(ent);
 		BufferedWriter bwCOPY = null;
@@ -138,11 +139,13 @@ public class EscritorLineas {
 			{
 				eliminar.delete();
 			}
+			System.out.println(l.getFile().readString());
 		}
 		catch(IOException e)
 		{
 			System.err.println(e.getLocalizedMessage());
 		}
+
 	}
 	
 	/**

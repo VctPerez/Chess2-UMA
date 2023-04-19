@@ -59,9 +59,8 @@ public class LobbyScreen extends AbstractScreen{
         Text statusP1 = new Text("CONNECTED", Resources.FONT_MENU_PATH, 30, Color.GREEN, 3);
         //p2 = new Text("Jugador 2: ", Resources.FONT_MENU_PATH, 30, Color.WHITE, 3);
         //statusP2 = new Text("CONNECTED", Resources.FONT_MENU_PATH, 30, Color.RED, 3);
-        findMatch = new TextButton(new Text("FIND", Resources.FONT_MENU_PATH, 30, Color.CYAN, 3));
+        findMatch = new TextButton("FIND");
         findMatch.setPosition(600,400);
-        findMatch.setRemarked(Color.BLUE);
 
         p1.setPosition(300,600);
         statusP1.setPosition(300,550);

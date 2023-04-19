@@ -49,7 +49,7 @@ public class ClassicManScreen extends AbstractScreen{
 	    volverText.setText(languageReader.leerLinea(1));
 	    	
 	    volverText.setPosition(100,100);
-	    volver = new TextButton(volverText);
+	    volver = new TextButton(languageReader.leerLinea(1));
 	    Titulo.setPosition(100,600);
 	    
 	    String text="";

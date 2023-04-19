@@ -52,9 +52,9 @@ public class LanguageScreen extends AbstractScreen {
     	spanishText.setPosition(100, 400);
     	englishText.setPosition(100, 300);
         backText.setPosition(100,100);
-        back = new TextButton(backText);
-        spanish = new TextButton(spanishText);
-        english = new TextButton(englishText);
+        back = new TextButton(languageReader.leerLinea(2));
+        spanish = new TextButton(languageConfigReader.leerLinea(1));
+        english = new TextButton(languageConfigReader.leerLinea(2));
         Logo = new Image("Logo_Blanco.png");
         Logo.setPosition(800,-50);
         Logo.setSize(500, 500);

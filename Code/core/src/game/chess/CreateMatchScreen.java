@@ -24,11 +24,11 @@ public class CreateMatchScreen extends AbstractScreen{
         Titulo.setPosition(100,600);
         stage.addActor(Titulo);
 
-        create = new TextButton(new Text("Create lobby", Resources.FONT_MENU_PATH, 50, Color.WHITE, 3));
+        create = new TextButton("Create lobby");
         create.setPosition(100, 400);
         stage.addActor(create);
 
-        join = new TextButton(new Text("Join lobby", Resources.FONT_MENU_PATH, 50, Color.WHITE, 3));
+        join = new TextButton("Join lobby");
         join.setPosition(100, 200);
         stage.addActor(join);
 

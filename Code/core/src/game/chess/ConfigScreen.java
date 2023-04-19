@@ -68,14 +68,29 @@ public class ConfigScreen extends AbstractScreen {
     	
     	//Inicializar los elementos de la escena
     	createTableElements();
-    	
+
     	//Añadir las acciones a los botones
+		slider[0].addListener(new ClickListener(){
+			@Override
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				writeSettings(0);
+			}
+		});
+		slider[1].addListener(new ClickListener(){
+			@Override
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				writeSettings(1);
+			}
+		});
+
     	textButton[0].addListener(new ClickListener() {
     		@Override
     		public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
     			//Aplicar cambios
-    			writeSettings();
-    			readSettings();
+    			writeSettings(2);
+				//configReader = new LectorLineas("files/config.txt");
+				readSettings();
+				//setLanguage(configReader.leerINTLinea(7));
     			return true;
     		}
     	});
@@ -205,12 +220,23 @@ public class ConfigScreen extends AbstractScreen {
      * Escribe los valores obtenidos de los elementos de la UI
      * en el archivo de configuración "config.txt"
      */
-    private void writeSettings() {
-    	configWriter.escribirLinea(5, Float.toString(slider[0].getValue()));
-    	configWriter.escribirLinea(6, Float.toString(slider[1].getValue()));
+    private void writeSettings(int index) {
+		switch (index){
+			case 0:
+				configWriter.escribirLinea(5, Float.toString(slider[0].getValue()));
+				break;
+			case 1:
+				configWriter.escribirLinea(6, Float.toString(slider[1].getValue()));
+				break;
+			case 2:
+				configWriter.escribirLinea(7, Integer.toString(selectBox.getSelectedIndex() + 1));
+				break;
+		}
+
+
     	// + 1 porque en el archivo de configuracion los idiomas se representan desde la fila 1
     	// En el archivo config.txt cada valor representa un idioma(1_ENG 2_ESP)
-    	configWriter.escribirLinea(7, Integer.toString(selectBox.getSelectedIndex() + 1));
+
     	
     }
     /**
@@ -230,6 +256,7 @@ public class ConfigScreen extends AbstractScreen {
      * @param value Idioma a establecer (1_ENG 2_ESP)
      */
 	private void setLanguage(int value) {
+		System.out.println("idioma: " + configReader.leerLinea(value) + "\tlinea: " + value);
     	languageReader.setNombreFichero("files/lang/"+ configReader.leerLinea(value) + "settings.txt");
 
     	for(int i = 0; i < label.length ; i++) {
@@ -239,7 +266,7 @@ public class ConfigScreen extends AbstractScreen {
     	for(int i = 0; i < textButton.length; i++) {
     		textButton[i].setText(languageReader.leerLinea(i+6));
     	}
-    	
+		System.out.println("se deberia haber cambiado el idioma");
     	selectBox.setItems(languageReader.leerLinea(4),languageReader.leerLinea(5));
     	selectBox.setSelectedIndex(value-1);
     }

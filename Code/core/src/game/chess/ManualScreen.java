@@ -48,9 +48,9 @@ public class ManualScreen extends AbstractScreen{
 	        volverText.setPosition(100,100);
 	        clasicoText.setPosition(100,400);
 	        modificadoText.setPosition(100,300);
-	        volver = new TextButton(volverText);
-	        clasico = new TextButton(clasicoText);
-	        modificado = new TextButton(modificadoText);
+	        volver = new TextButton(languageReader.leerLinea(1));
+	        clasico = new TextButton(languageReader.leerLinea(2));
+	        modificado = new TextButton(languageReader.leerLinea(3));
 	        
 	        Logo = new Image("Logo_Blanco.png");
 	        Logo.setPosition(800,-50);

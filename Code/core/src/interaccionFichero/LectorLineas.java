@@ -1,14 +1,13 @@
 package interaccionFichero;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 
 public class LectorLineas 
 {	
 	private String ent;
+	private FileHandle file;
+	private String[] lines;
 	
 	/**
 	 * Crea el lector de lineas para el fichero con el nombre que especificamos
@@ -18,9 +17,13 @@ public class LectorLineas
 	 */
 	public LectorLineas(String nombreFichero)
 	{
-		ent = nombreFichero;
+		setNombreFichero(nombreFichero);
 	}
-	
+
+	public FileHandle getFile() {
+		return file;
+	}
+
 	/**
 	 * Devuelve el nombre del fichero sobre el que estamos trabajando
 	 * @return
@@ -39,54 +42,60 @@ public class LectorLineas
 	public void setNombreFichero(String nombreFichero)
 	{
 		ent = nombreFichero;
+		file = Gdx.files.internal(ent);
+		//lines = file.readString().split("\n");
+		lines = file.readString().split(System.lineSeparator());
 	}
 	
 	/**
 	 * Lee una linea completa en concreto del fichero txt, la linea 1 es la primera
 	 * linea del fichero completo, se considera nueva linea por cada uso de un "enter"
-	 * @param numeroDeLinea
-	 * : Es el numero de la linea que vamos a leer del fichero
+	 *
+	 * @param numeroDeLinea : Es el numero de la linea que vamos a leer del fichero
 	 * @return Devuelve la linea leida en forma de String
 	 */
 	public String leerLinea(int numeroDeLinea)
 	{
-		FileInputStream fs = null;
-		try
-		{
-			fs = new FileInputStream(ent);
-		}
-		catch(FileNotFoundException e)
-		{
-			System.err.print("No es posible abrir ese fichero");
-		}
-		BufferedReader br = new BufferedReader(new InputStreamReader(fs));
-		String linea = null;
-		for(int i = 0; i < numeroDeLinea-1; ++i)
-		{
-			try 
-			{
-				br.readLine();
-			} 
-			catch (IOException e) 
-			{
-				System.err.print("Linea ilegible");
-			}
-		}
-		try 
-		{
-			linea = br.readLine();
-		} 
-		catch (IOException e) 
-		{
-			System.err.print("Linea ilegible");
-		}
-		try {
-			fs.close();
-			br.close();
-		} catch (IOException e) {
-			System.err.print("No es posible cerrar ese fichero");
-		}
-		return linea;
+		setNombreFichero(ent);
+		if(numeroDeLinea <= lines.length) return lines[numeroDeLinea - 1];
+		else return null;
+//		FileInputStream fs = null;
+//		try
+//		{
+//			fs = new FileInputStream(ent);
+//		}
+//		catch(FileNotFoundException e)
+//		{
+//			System.err.print("No es posible abrir ese fichero");
+//		}
+//		BufferedReader br = new BufferedReader(new InputStreamReader(fs));
+//		String linea = null;
+//		for(int i = 0; i < numeroDeLinea-1; ++i)
+//		{
+//			try
+//			{
+//				br.readLine();
+//			}
+//			catch (IOException e)
+//			{
+//				System.err.print("Linea ilegible");
+//			}
+//		}
+//		try
+//		{
+//			linea = br.readLine();
+//		}
+//		catch (IOException e)
+//		{
+//			System.err.print("Linea ilegible");
+//		}
+//		try {
+//			fs.close();
+//			br.close();
+//		} catch (IOException e) {
+//			System.err.print("No es posible cerrar ese fichero");
+//		}
+//		return linea;
 	}
 	
 	/**
