@@ -13,8 +13,6 @@ import utils.Render;
 import utils.Resources;
 
 public class Guardian extends Piece {
-	
-	public boolean backed=false;
 
 	public Guardian(Boolean color, int x, int y, Board board) {
 		super(color, Render.app.getManager().get(Resources.WARDEN_PAWN_PATH, Texture.class), x ,y,board);
@@ -34,19 +32,14 @@ public class Guardian extends Piece {
 	 */
 	private Boolean checkBoard(Board board, int i, float x, float y) {
 		Boolean res = false;
-		if(i==0 && board.getTile(x, y)!=null && board.getTile(x, y).getPiece()!=null && !sameColor(board.getTile(x, y).getPiece())) {
+		if(i!=0 && board.getTile(x, y)!=null && board.getTile(x, y).getPiece()!=null && !sameColor(board.getTile(x, y).getPiece())) {
 			res = true;
-		}else if(i!=0 && board.getTile(x, y)!=null && board.getTile(x, y).getPiece()==null) {
+		}else if(i==0 && board.getTile(x, y)!=null && board.getTile(x, y).getPiece()==null) {
 			res = true;
 		}
 		return res;
 	}
 	
-	public void addMovement(float x, float y, Board board, ArrayList<Vector2> movements) {
-		if (board.getTile(x, y) != null && !sameColor(board.getTile(x, y).getPiece())) {
-			movements.add(new Vector2(x, y));
-		}
-	}
 	
 	/**
 	 * Devuelve un ArrayList de Vector2 con las posibles casillas a las que puede moverse el peon con posición (x,y)
@@ -70,13 +63,17 @@ public class Guardian extends Piece {
 			}
 		}
 		mov = new Vector2(x , y - direction); 
+		if(checkBoard(board, 0, mov.x, mov.y)) {
+			movements.add(mov);
+		}
+
 		
 
-		if(backed) {
+		if(super.backed) {
 			movements.clear();
 			for(int i = -1; i<=1; i++) {
-				if(i==0) {
-					mov = new Vector2(x + i, y + 3*direction);
+				if(i==0 && board.getTile(x, y+direction).getPiece()==null) {
+					mov = new Vector2(x + i, y + 2*direction);
 				}else {
 					mov = new Vector2(x + i, y + direction);
 				}

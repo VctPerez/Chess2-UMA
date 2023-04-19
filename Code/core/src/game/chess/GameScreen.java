@@ -391,7 +391,7 @@ public class GameScreen extends AbstractScreen {
                 
             	
                 
-                if(nextTile.getPiece() instanceof Pawn || nextTile.getPiece() instanceof Lancer) {
+                if(nextTile.getPiece() instanceof Pawn || nextTile.getPiece() instanceof Lancer || nextTile.getPiece() instanceof Guardian) {
                 	checkPassant(next_x, next_y);    
             		
             		checkPromotion(next_x, next_y);
@@ -408,15 +408,16 @@ public class GameScreen extends AbstractScreen {
         }
     }
 	
-	private void checkGuardian(int next_y) {
-		if(currentTile.piece.backed) {
-			currentTile.piece.backed=false;
+	private void checkGuardian(int next_y) {		
+		if(nextTile.piece.backed) {
+			nextTile.piece.backed=false;
 		}else {
-			if(currentTile.piece instanceof Guardian && currentTile.getY() < next_y && currentTile.piece.color()){
-	         	currentTile.piece.backed=true;
-	         }else if(currentTile.piece instanceof Guardian && currentTile.getY() > next_y && !currentTile.piece.color()) {
-	        	 currentTile.piece.backed=true;
+			if(nextTile.piece instanceof Guardian && current_y > next_y && nextTile.piece.color()){
+				nextTile.piece.backed=true;
+	         }else if(nextTile.piece instanceof Guardian && current_y < next_y && !nextTile.piece.color()) {
+	        	 nextTile.piece.backed=true;
 	         }
+			
 		}		
 	}
 
