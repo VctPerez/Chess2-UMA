@@ -28,6 +28,7 @@ public abstract class Piece extends Actor {
 	protected int y;
 	public Board board;
 	public Boolean isPassantable = false;
+	public Boolean backed;
 
 	public Piece(Boolean color, Texture texture, int x, int y, Board board) {
 		this.board = board;

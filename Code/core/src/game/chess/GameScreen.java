@@ -379,11 +379,16 @@ public class GameScreen extends AbstractScreen {
         	if(checkBomber()) {
             	explosion(current_x,current_y);
             }else {
+            	
             	checkCastling(next_x);
 
                 currentTile.move(next_x, next_y);
 
                 resetMate();
+                
+                if(checkGuardian(next_y)) {
+                	currentTile.piece.backed=true;
+                }
             	
                 
                 if(nextTile.getPiece() instanceof Pawn || nextTile.getPiece() instanceof Lancer) {
@@ -402,6 +407,16 @@ public class GameScreen extends AbstractScreen {
 
         }
     }
+	
+	private boolean checkGuardian(int next_y) {
+		boolean backed=false;;
+		 if(currentTile.piece instanceof Guardian && currentTile.getY() < next_y && currentTile.piece.color()){
+         	backed=true;
+         }else if(currentTile.piece instanceof Guardian && currentTile.getY() > next_y && !currentTile.piece.color()) {
+         	backed=true;
+         }
+		return backed;
+	}
 
 	private void explosion(int x, int y) {
 		for(int i=x-1;i<=x+1;i++) {

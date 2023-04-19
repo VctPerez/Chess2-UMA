@@ -71,12 +71,12 @@ public class Rider extends Piece{
 		 LectorLineas Reader, configReader;
 		 configReader = new LectorLineas("files/config.txt");
 		String config = configReader.leerLinea(1);
-		Reader = new LectorLineas("files/lang/"+ config + "Clasicas.txt");
+		Reader = new LectorLineas("files/lang/"+ config + "Modified.txt");
 		switch (config){
 			case "esp/":
-				return Reader.leerTramo(63, 67);
+				return Reader.leerTramo(8, 12);
 			case "eng/":
-				return Reader.leerTramo(47,52);
+				return Reader.leerTramo(7,11);
 			default:
 				throw new IllegalArgumentException("Configuración errónea");
 		}

@@ -1,0 +1,18 @@
+Joker:
+Inicially has the Bishop movements
+and each time it moves, it copies
+only the movements of a random piece
+of the classic ones except for the king.
+   
+Rider:
+The rider has the movements of the horse 
+but more offensive, on the other hand, 
+he loses the defensive ability with 
+more limited movements.
+
+Bomber:
+Moves only to adyacent tiles without
+diagonal moves, if it captures an 
+enemy piece it will explode removing
+itself and the adyacents pieces from the
+table.
