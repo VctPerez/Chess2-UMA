@@ -15,7 +15,6 @@ import utils.Resources;
 public class Paladin extends Piece{
 	private Boolean validDirection;
 	public Boolean canSwingUp, canSwingDown, canSwingRight, canSwingLeft;
-	int direction;
 	
 	public Paladin(Boolean color, int x, int y, Board board) {
 		super(color, Render.app.getManager().get(Resources.PALADIN_PATH, Texture.class), x, y, board);
@@ -48,7 +47,7 @@ public class Paladin extends Piece{
 		Vector2 mov;
 		int k = 1;
 		
-		while(validDirection && k<3) {
+		while(validDirection && k<4) {
 			mov = new Vector2(x + i*k, y + j*k);
 			if(checkBoard(board, mov.x, mov.y)) {
 				movements.add(mov);
@@ -69,11 +68,6 @@ public class Paladin extends Piece{
 	public ArrayList<Vector2> posibleMovements() {
 		ArrayList<Vector2> movements = new ArrayList<>();
 		
-		if(color) {
-			direction = 1;
-		}else {
-			direction = -1;
-		}
 		
 		checkDirection(x, y, 1, 1, movements);
 		checkDirection(x, y, -1, -1, movements);
@@ -85,37 +79,26 @@ public class Paladin extends Piece{
 		canSwingRight = false;
 		canSwingLeft = false;
 		
-		addMovement(x, y + direction, movements);
-		addMovement(x, y - direction, movements);
-		addMovement(x + direction, y, movements);
-		addMovement(x - direction, y, movements);
+		addMovement(x, y + 1, movements);
+		addMovement(x, y - 1, movements);
+		addMovement(x + 1, y, movements);
+		addMovement(x - 1, y, movements);
 
-		
-		
-		
 		return movements;
 	}
 	
 	private void addSwings(float x, float y, ArrayList<Vector2> movements) {
-		if(x == this.x && y == this.y+direction) {
+		if(x == this.x && y == this.y+1) {
 			canSwingUp = true;
-			addMovement(x - 1, y + direction, movements);
-			addMovement(x + 1, y + direction, movements);
 		}
-		if(x == this.x && y == this.y-direction) {
+		if(x == this.x && y == this.y-1) {
 			canSwingDown = true;
-			addMovement(x - 1, y - direction, movements);
-			addMovement(x + 1, y - direction, movements);
 		}
-		if(x == this.x + direction && y == this.y) {
+		if(x == this.x + 1 && y == this.y) {
 			canSwingRight = true;
-			addMovement(x + direction, y - 1, movements);
-			addMovement(x + direction, y + 1, movements);
 		}
-		if(x == this.x - direction && y == this.y) {
+		if(x == this.x - 1 && y == this.y) {
 			canSwingLeft = true;
-			addMovement(x + direction, y - 1, movements);
-			addMovement(x + direction, y + 1, movements);
 		}
 	}
 
@@ -128,12 +111,7 @@ public class Paladin extends Piece{
 			movements.add(new Vector2(x, y));
 		}
 	}
-	
-	private void addNonAtackMovement(float x, float y, ArrayList<Vector2> movements) {
-		if (board.getTile(x, y) != null && board.getTile(x, y).getPiece()==null) {
-			movements.add(new Vector2(x, y));
-		}
-	}
+
 	
 	public String getInfo() {
 		 LectorLineas Reader, configReader;

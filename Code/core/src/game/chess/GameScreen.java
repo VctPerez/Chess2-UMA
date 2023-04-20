@@ -80,8 +80,6 @@ public class GameScreen extends AbstractScreen {
 	//Modo depuracion
 	private boolean debugMode = false;
 
-	//Control bombarderos
-	private boolean WHasBomb = true, BHasBomb = false; //Guardan si tienen bombarderos, se actualiza en select
 
 	@Override
 	public void show() {
@@ -378,13 +376,10 @@ public class GameScreen extends AbstractScreen {
         	//Si se da el caso bomba no se mueve ninguna pieza por lo que no se comprueba nada simplemente explota
         	if(checkBomber()) {
             	explosion(current_x,current_y);
-            }else if(checkPaladin(next_x, next_y)){
-            	
-            }else {	
+            }if(!checkPaladin(next_x, next_y)){	
             	
             	checkMarshal();
             	
-            	//checkPaladin(next_x, next_y);
             	
             	checkCastling(next_x);
 
@@ -448,32 +443,30 @@ public class GameScreen extends AbstractScreen {
 	}
 	
 	private Boolean checkPaladin(float next_x, float next_y) {
-		Boolean paladinSwing = false;
+		Boolean swing = false;
 		if(currentTile.getPiece() instanceof Paladin) {
 			Paladin p = (Paladin)currentTile.getPiece();
 			if(next_x == current_x && next_y == current_y + 1 && p.canSwingUp) {
-				board.getTile(next_x-1,next_y).sendPieceToGraveyard();
-				board.getTile(next_x,next_y).sendPieceToGraveyard();
-				board.getTile(next_x+1,next_y).sendPieceToGraveyard();
-				paladinSwing = true;
+				paladinSwing(1, 0, next_x, next_y);
+				swing=true;
 			}else if(next_x == current_x && next_y == current_y - 1 && p.canSwingDown) {
-				board.getTile(next_x-1,next_y).sendPieceToGraveyard();
-				board.getTile(next_x,next_y).sendPieceToGraveyard();
-				board.getTile(next_x+1,next_y).sendPieceToGraveyard();
-				paladinSwing = true;
+				paladinSwing(1, 0, next_x, next_y);
+				swing=true;
 			}else if(next_x == current_x + 1 && next_y == current_y && p.canSwingRight) {
-				board.getTile(next_x,next_y-1).sendPieceToGraveyard();
-				board.getTile(next_x,next_y).sendPieceToGraveyard();
-				board.getTile(next_x,next_y+1).sendPieceToGraveyard();
-				paladinSwing = true;
+				paladinSwing(0, 1, next_x, next_y);
+				swing=true;
 			}else if(next_x == current_x - 1 && next_y == current_y && p.canSwingLeft) {
-				board.getTile(next_x,next_y-1).sendPieceToGraveyard();
-				board.getTile(next_x,next_y).sendPieceToGraveyard();
-				board.getTile(next_x,next_y+1).sendPieceToGraveyard();
-				paladinSwing = true;
-			}
+				paladinSwing(0, 1, next_x, next_y);
+				swing=true;
+			}			
 		}
-		return paladinSwing;
+		return swing;
+	}
+	
+	private void paladinSwing(float i, float j, float next_x, float next_y) {
+		board.getTile(next_x-i,next_y-j).sendPieceToGraveyard();
+		board.getTile(next_x,next_y).sendPieceToGraveyard();
+		board.getTile(next_x+1,next_y+j).sendPieceToGraveyard();
 	}
 
 	/**
@@ -497,15 +490,15 @@ public class GameScreen extends AbstractScreen {
 	}
 
 	/**
-	 * Devuelve {@code true} si con el conjunto de piezas {@code pisses} no se pueden hacer movimientos, si tiene devuelve {@code false}
-	 * @param pisses las piezas que se usan para la comprobación
+	 * Devuelve {@code true} si con el conjunto de piezas {@code pieces} no se pueden hacer movimientos, si tiene devuelve {@code false}
+	 * @param pieces las piezas que se usan para la comprobación
 	 */
-	private boolean hasMoves(ArrayList<Piece> pisses) {
-		boolean tieneMov = false;
-		for (int i = 0; i < pisses.size() && !tieneMov; i++) { //Si una pieza tiene movimientos se sale
-			tieneMov = !pisses.get(i).getValidMovements().isEmpty();
+	private boolean hasMoves(ArrayList<Piece> pieces) {
+		boolean hasMoves = false;
+		for (int i = 0; i < pieces.size() && !hasMoves; i++) { //Si una pieza tiene movimientos se sale
+			hasMoves = !pieces.get(i).getValidMovements().isEmpty();
 		}
-		return tieneMov;
+		return hasMoves;
 	}
 
 	/**
@@ -520,17 +513,6 @@ public class GameScreen extends AbstractScreen {
 			board.getTile(8, current_y).move(current_x+1,current_y);
 		}
 
-	}
-
-	/**
-	 * Elimina el enroque si se ha seleccionado el rey y está en jaque
-	 */
-	private void castleCancel(){
-		if (isCheck() && currentTile.getPiece() instanceof King){
-			//Si es jaque se le quita al rey su habilidad de enrocar por la fuerza
-			currentTile_validMovements.remove(new Vector2(current_x - 2, current_y));
-			currentTile_validMovements.remove(new Vector2(current_x + 2, current_y));
-		}
 	}
 	
 	/**

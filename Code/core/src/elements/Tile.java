@@ -104,25 +104,25 @@ public class Tile extends Actor{
 	
 	
 	public void sendPieceToGraveyard() {
-		if(piece.color) {
-
-			Render.GameScreen.graveyardWhite.add(piece);
-		}else {
-			
-			Render.GameScreen.graveyardBlack.add(piece);
+		if(piece!=null) {
+			if(piece.color) {
+				Render.GameScreen.graveyardWhite.add(piece);
+			}else {
+				Render.GameScreen.graveyardBlack.add(piece);
+			}
+			this.piece=null;
 		}
-		this.piece=null;
 	}
 	
 	public void simulateSendPieceToGraveyard() {
-		if(piece.color) {
-
-			Render.GameScreen.graveyardWhite.simulateAdd(piece);
-		}else {
-			
-			Render.GameScreen.graveyardBlack.simulateAdd(piece);
+		if(piece!=null) {
+			if(piece.color) {
+				Render.GameScreen.graveyardWhite.simulateAdd(piece);
+			}else {
+				Render.GameScreen.graveyardBlack.simulateAdd(piece);
+			}
+			this.piece=null;
 		}
-		this.piece=null;
 	}
 	
 	/**
