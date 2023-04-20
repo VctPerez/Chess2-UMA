@@ -37,7 +37,7 @@ public class MainScreen extends AbstractScreen {
     	
     	//Abrir los ficheros de configuracion e idioma
     	configReader = new LectorLineas("files/config.txt"); //Lector del txt configuracion para sacar el idioma
-    	languageReader = new LectorLineas("files/lang/"+ configReader.leerLinea(1) + "main.txt"); //Abrimos el idioma que toca del archivo configuracion
+    	languageReader = new LectorLineas("files/lang/"+ configReader.leerLinea(Settings.language) + "main.txt"); //Abrimos el idioma que toca del archivo configuracion
 //    	languageReader = new LectorLineas("files/lang/esp/main.txt"); //Abrimos el idioma que toca del archivo configuracion
      
     	createTableElements();
@@ -53,7 +53,7 @@ public class MainScreen extends AbstractScreen {
         Gdx.input.setInputProcessor(stage);
         Render.bgMusic = Render.app.getManager().get(Resources.MENU_THEME);
         Render.bgMusic.setLooping(true);
-        Render.bgMusic.setVolume(0);
+        Render.bgMusic.setVolume(Settings.musicVolume);
         Render.bgMusic.play();
     }
 
