@@ -46,6 +46,10 @@ public class Render {
     public static LoadingScreen LOADINGSCREEN;
     public static CreateMatchScreen CREATEMATCHSCREEN;
     public static DraftScreen DRAFTSCREEN;
+    public static AbstractScreen MATCHMAKINGSCREEN;
+    public static AbstractScreen MODESCREEN;
+    public static AbstractScreen CLASSICMANSCREEN;
+    public static AbstractScreen MODIFIEDMANSCREEN;
 
     public static Host host;
     public static Guest guest;
