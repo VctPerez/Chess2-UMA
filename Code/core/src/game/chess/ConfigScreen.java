@@ -21,6 +21,7 @@ import interaccionFichero.EscritorLineas;
 import interaccionFichero.LectorLineas;
 import utils.Render;
 import utils.Resources;
+import utils.Settings;
 import utils.TextButton;
 import utils.TextField;
 
@@ -58,7 +59,7 @@ public class ConfigScreen extends AbstractScreen {
     	//Abrir los ficheros de configuracion e idioma
     	configReader = new LectorLineas("files/config.txt"); //Lector del txt configuracion para sacar el idioma
     	configWriter = new EscritorLineas("files/config.txt");
-    	languageReader = new LectorLineas("files/lang/"+ configReader.leerLinea(1) + "settings.txt"); //Abrimos el idioma que toca del archivo configuracion
+    	languageReader = new LectorLineas("files/lang/"+ configReader.leerLinea(Settings.language) + "settings.txt"); //Abrimos el idioma que toca del archivo configuracion
     	
     	
     	
@@ -134,6 +135,7 @@ public class ConfigScreen extends AbstractScreen {
         		setVolume(slider[i].getValue(), i);
         	}
         }
+        
         
         //---------------
 
@@ -248,6 +250,15 @@ public class ConfigScreen extends AbstractScreen {
     private void setVolume(float value,int index) {
     	slider[index].setValue(value);
     	textField[index].setText(String.format("%.0f", value));
+    	
+    	switch (index) {
+		case 0:
+			Settings.setMusicVolume(value);
+			break;
+		case 1:
+			Settings.setSfxVolume(value);
+			break;
+    	}
     }
     
     /**
@@ -258,6 +269,8 @@ public class ConfigScreen extends AbstractScreen {
 	private void setLanguage(int value) {
 		System.out.println("idioma: " + configReader.leerLinea(value) + "\tlinea: " + value);
     	languageReader.setNombreFichero("files/lang/"+ configReader.leerLinea(value) + "settings.txt");
+    	
+    	Settings.setLanguage(value);
 
     	for(int i = 0; i < label.length ; i++) {
     		label[i].setText(languageReader.leerLinea(i+1));

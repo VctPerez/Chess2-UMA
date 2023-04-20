@@ -364,7 +364,7 @@ public class GameScreen extends AbstractScreen {
 
 		if(nextTile.getPiece().color()) {
 			for(Piece piece: whitePieces) {
-				if (piece.getValidMovements().contains(blackKing) || piece instanceof Bomber && bomberAttacksKing((Bomber) piece)) {
+				if (piece.getValidMovements().contains(blackKing) || (piece instanceof Bomber && bomberAttacksKing((Bomber) piece))) {
 					blackCheck = true;
 					board.getTile(blackKing.x, blackKing.y).attacked = true;
 
@@ -374,7 +374,7 @@ public class GameScreen extends AbstractScreen {
 			
 		}else if(!nextTile.getPiece().color()){
 			for(Piece piece: blackPieces) {
-				if(piece.getValidMovements().contains(whiteKing) || piece instanceof Bomber && bomberAttacksKing((Bomber) piece)) {
+				if(piece.getValidMovements().contains(whiteKing) || (piece instanceof Bomber && bomberAttacksKing((Bomber) piece))) {
 					whiteCheck =true;
 					board.getTile(whiteKing.x, whiteKing.y).attacked = true;
 					
@@ -448,6 +448,8 @@ public class GameScreen extends AbstractScreen {
             	explosion(current_x,current_y);
             }else {
             	
+            	checkMarshal();
+            	
             	checkCastling(next_x);
 
                 currentTile.move(next_x, next_y);
@@ -519,6 +521,12 @@ public class GameScreen extends AbstractScreen {
 			}
 		}
 		return res;
+	}
+	
+	private void checkMarshal() {
+		if(currentTile.piece instanceof Midas && nextTile.piece!= null) {
+			currentTile.piece.ate++;
+		}
 	}
 
 	private boolean bomberInRangeOfKing(Bomber bomb){

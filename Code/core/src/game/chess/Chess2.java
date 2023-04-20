@@ -10,10 +10,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
+import interaccionFichero.LectorLineas;
 import utils.IOS;
 import utils.Parser;
 import utils.Render;
 import utils.Resources;
+import utils.Settings;
 
 public class Chess2 extends Game {
 	public static boolean hosting;
@@ -41,6 +43,7 @@ public class Chess2 extends Game {
 		manager.load(Resources.ARROW_PATH, Texture.class);
 		manager.load(Resources.BOMBER_PATH,Texture.class);
 		manager.load(Resources.WARDEN_PATH,Texture.class);
+		manager.load(Resources.MIDAS_PATH,Texture.class);
 		
 		//RANDOM PIECES
 		manager.load(Resources.RND_PATH,Texture.class);
@@ -83,6 +86,13 @@ public class Chess2 extends Game {
 		manager.load(Resources.LODINGSOUND4, Sound.class);
 		manager.load(Resources.LOADINGSCREEN_PATH, Texture.class);
 	}
+	
+	private void loadSettings() {
+    	LectorLineas configReader = new LectorLineas("files/config.txt");
+    	Settings.updateSettings(configReader.leerFLOATLinea(5), configReader.leerFLOATLinea(6), configReader.leerINTLinea(7));
+	}
+	
+	
 	@Override
 	public void create () {
 
@@ -92,6 +102,9 @@ public class Chess2 extends Game {
 		Render.inputs = new IOS();
 		Gdx.input.setInputProcessor(Render.inputs);
 		manager = new AssetManager();
+		
+		loadSettings();
+		
 		loadResources();
 		//while(!manager.isFinished());
 		Render.LOADINGSCREEN = new LoadingScreen();

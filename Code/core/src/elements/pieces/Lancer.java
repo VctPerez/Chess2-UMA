@@ -118,12 +118,12 @@ public class Lancer extends Piece{
 		 LectorLineas Reader, configReader;
 		 configReader = new LectorLineas("files/config.txt");
 		 String config = configReader.leerLinea(1);
-	     Reader = new LectorLineas("files/lang/"+ config + "Clasicas.txt");
+	     Reader = new LectorLineas("files/lang/"+ config + "Modified.txt");
 		 switch (config){
 			 case "esp/":
-				 return Reader.leerTramo(1, 5);
+				 return Reader.leerTramo(28, 32);
 			 case "eng/":
-				 return Reader.leerTramo(1,4);
+				 return Reader.leerTramo(28,33);
 			 default:
 				 throw new IllegalArgumentException("Configuración errónea");
 		 }

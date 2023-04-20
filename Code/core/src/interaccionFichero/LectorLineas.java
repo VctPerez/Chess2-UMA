@@ -157,6 +157,20 @@ public class LectorLineas
 	}
 	
 	/**
+	 * La funcion saca un float de una linea, para que funcione en la linea
+	 * no puede haber algo que no sea el float
+	 * @param numeroDeLinea
+	 * : Numero de linea donde se encuentra nuestro dato
+	 * @return
+	 * Devuelve el float leido del fichero
+	 */
+	public float leerFLOATLinea(int numeroDeLinea) //Para funcionar necesita que en la linea solo este el numero
+	{
+		String n = leerLinea(numeroDeLinea);
+		return (float) Float.parseFloat(n);
+	}
+	
+	/**
 	 * La funcion saca un booleano de una linea, para que funcione en la linea
 	 * no puede haber algo que no sea el estado del booleano. Para que devuelva
 	 * True el fichero debe leer necesariamente "true" sin importar mayusculas,
