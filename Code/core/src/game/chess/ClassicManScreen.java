@@ -26,7 +26,6 @@ import utils.TextButton;
 	
 public class ClassicManScreen extends AbstractScreen{
 	public static Stage stage;
-	private static Background background;
 
 	TextButton textButton;
 	Label title;
@@ -40,10 +39,6 @@ public class ClassicManScreen extends AbstractScreen{
     	
     	table = new Table();
     	table.setFillParent(true);
-    	
-    	background = new Background();
-    	background.setColor(new Color(60/255f, 60/255f,60/255f,1f));
-    	background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		
 		//Abrir los ficheros de configuracion e idioma
 	    configReader = new LectorLineas("files/config.txt"); //Lector del txt configuracion para sacar el idioma
@@ -66,7 +61,6 @@ public class ClassicManScreen extends AbstractScreen{
 		}
 		
 	private void addActors() {
-		stage.addActor(background);
 		stage.addActor(table);
 	}
 

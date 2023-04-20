@@ -25,7 +25,6 @@ import utils.TextField;
 public class ManualScreen extends AbstractScreen{
 
 		public static Stage stage;
-		Background background;	
 	
 		TextButton[] textButton;
 		Label title;
@@ -43,10 +42,6 @@ public class ManualScreen extends AbstractScreen{
 	    	configReader = new LectorLineas("files/config.txt"); //Lector del txt configuracion para sacar el idioma
 	    	languageReader = new LectorLineas("files/lang/"+ configReader.leerLinea(1) + "Manual.txt"); //Abrimos el idioma que toca del archivo configuracion
 	    	
-	    	background = new Background();
-	    	background.setColor(new Color(60/255f, 60/255f,60/255f,1f));
-	    	background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-	    	
 	    	//Inicializar los elementos de la escena
 	    	createTableElements();
 		    	
@@ -59,7 +54,6 @@ public class ManualScreen extends AbstractScreen{
 	    }
 
 	    private void addActors() {
-	    	stage.addActor(background);
 	        stage.addActor(table);
 		}
 

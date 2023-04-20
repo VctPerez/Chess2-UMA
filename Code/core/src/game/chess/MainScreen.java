@@ -13,8 +13,7 @@ import utils.*;
 import interaccionFichero.*;
 
 public class MainScreen extends AbstractScreen {
-	public static Stage stage;
-	Background background;	
+	public static Stage stage;	
 	
     TextButton[] textButton;
     Table table;
@@ -31,9 +30,6 @@ public class MainScreen extends AbstractScreen {
     	table.setFillParent(true);
 //    	table.debug();
     	
-    	background = new Background();
-    	background.setColor(new Color(60/255f, 60/255f,60/255f,1f));
-    	background.setSize(Render.SCREEN_WIDTH, Render.SCREEN_HEIGHT);
     	
     	//Abrir los ficheros de configuracion e idioma
     	configReader = new LectorLineas("files/config.txt"); //Lector del txt configuracion para sacar el idioma
@@ -70,7 +66,7 @@ public class MainScreen extends AbstractScreen {
         
         if(textButton[0].isPressed()){
             Render.bgMusic.stop();
-            Render.app.setScreen(Render.DRAFTSCREEN);
+            Render.app.setScreen(Render.MATCHMAKINGSCREEN);
         }
         if(textButton[1].isPressed()) {
         	Render.app.setScreen(Render.CONFIGSCREEN);
@@ -99,7 +95,6 @@ public class MainScreen extends AbstractScreen {
     }
     
     private void addActors() {
-        stage.addActor(background);
         stage.addActor(table);
     }
     

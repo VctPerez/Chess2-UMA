@@ -26,7 +26,6 @@ import utils.TextField;
 
 public class ConfigScreen extends AbstractScreen {
 	public static Stage stage;
-	private Background background;
 	
     private Label[] label;
     private Slider[] slider;
@@ -60,11 +59,6 @@ public class ConfigScreen extends AbstractScreen {
     	configWriter = new EscritorLineas("files/config.txt");
     	languageReader = new LectorLineas("files/lang/"+ configReader.leerLinea(Settings.language) + "settings.txt"); //Abrimos el idioma que toca del archivo configuracion
     	
-    	
-    	
-    	background = new Background();
-    	background.setColor(new Color(60/255f, 60/255f,60/255f,1f));
-    	background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     	
     	//Inicializar los elementos de la escena
     	createTableElements();
@@ -137,7 +131,7 @@ public class ConfigScreen extends AbstractScreen {
 
     @Override
     public void render(float delta) {
-        //=Render.clearScreen();
+        Render.clearScreen();
 
         Render.camera.update();
         Render.Batch.setProjectionMatrix(Render.camera.combined);
@@ -200,7 +194,6 @@ public class ConfigScreen extends AbstractScreen {
      * Método que añade los actores a la escena
      */
     private void addActors() {
-        stage.addActor(background);
         stage.addActor(rootTable);
         stage.addActor(optionsTable);
     }
