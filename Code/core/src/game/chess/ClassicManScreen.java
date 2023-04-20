@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane.ScrollPaneStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -25,15 +27,20 @@ import utils.TextButton;
 public class ClassicManScreen extends AbstractScreen{
 	public static Stage stage;
 	private static Background background;
-	
-	Image Logo;
-	Text volverText,Titulo;
-	TextButton volver;
+
+	TextButton textButton;
+	Label title;
+	Table table;
 	LectorLineas languageReader, configReader;
+	ScrollPane scrollPane;
 	
 	@Override
 	public void show() {
     	stage = new Stage(new FitViewport(1280, 720));
+    	
+    	table = new Table();
+    	table.setFillParent(true);
+    	
     	background = new Background();
     	background.setColor(new Color(60/255f, 60/255f,60/255f,1f));
     	background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -42,18 +49,42 @@ public class ClassicManScreen extends AbstractScreen{
 	    configReader = new LectorLineas("files/config.txt"); //Lector del txt configuracion para sacar el idioma
 	    languageReader = new LectorLineas("files/lang/"+ configReader.leerLinea(1) + "Manual.txt"); //Abrimos el idioma que toca del archivo configuracion
 	    	
-	    //Fuente Arial para probar
-	    Titulo = new Text(Resources.FONT_MENU_PATH,50,Color.WHITE,5);
-	    Titulo.setText(languageReader.leerLinea(5));
-	    volverText = new Text(Resources.FONT_MENU_PATH,28,Color.WHITE,3);
-	    volverText.setText(languageReader.leerLinea(1));
+	    //Inicializar los elementos de la escena
+    	createTableElements();
 	    	
-	    volverText.setPosition(100,100);
-	    volver = new TextButton(languageReader.leerLinea(1));
-	    Titulo.setPosition(100,600);
-	    
-	    String text="";
-			
+	    //Introducir los elementos en la table
+	    setupTable();
+	    //Añadir todos los actores a la escena;
+    	addActors();
+		     
+		//Para tener dos inputs:
+		InputMultiplexer inputMultiplexer = new InputMultiplexer();
+		inputMultiplexer.addProcessor(stage);
+		inputMultiplexer.addProcessor(Render.inputs);
+		     
+		Gdx.input.setInputProcessor(inputMultiplexer);
+		}
+		
+	private void addActors() {
+		stage.addActor(background);
+		stage.addActor(table);
+	}
+
+	private void setupTable() {
+		table.left().pad(50);
+	    table.add(title).left().space(50);
+	    table.row();
+	    table.add(scrollPane).width(scrollPane.getWidth()).height(scrollPane.getHeight()).left();
+	    table.row();
+	    table.add(textButton).left().space(25);
+	}
+
+	private void createTableElements() {
+    	title = new Label("Manual", Render.app.getManager().get(Resources.SKIN_PATH,Skin.class), "TitleStyle");
+    	textButton = new TextButton(languageReader.leerLinea(1));
+    	
+    	String text="";
+		
 	    if(configReader.leerLinea(1).equals("esp/")) {
 				text+=languageReader.leerTramo(6, 187);
 	    }else {
@@ -62,7 +93,7 @@ public class ClassicManScreen extends AbstractScreen{
 			
 		Label label = new Label(text, new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 		label.setWrap(true);
-		ScrollPane scrollPane = new ScrollPane(label);
+		scrollPane = new ScrollPane(label);
 		scrollPane.setSize(700f, 400f);
 		scrollPane.setPosition(100f, 140f);
 		scrollPane.setScrollingDisabled(false, false);
@@ -73,27 +104,8 @@ public class ClassicManScreen extends AbstractScreen{
 		//style.vScroll = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("White.png"))));
 		style.vScrollKnob = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("White.png"))));
 		scrollPane.setStyle(style);
-		
-			
-		Logo = new Image("Logo_Blanco.png");
-		Logo.setPosition(800,-50);
-		Logo.setSize(500, 500);
-		Logo.setTransparency(0.25f);
-		     
-		//Para tener dos inputs:
-		InputMultiplexer inputMultiplexer = new InputMultiplexer();
-		inputMultiplexer.addProcessor(stage);
-		inputMultiplexer.addProcessor(Render.inputs);
-		
-		stage.addActor(background);
-		stage.addActor(scrollPane);
-		stage.addActor(Titulo);
-		stage.addActor(Logo);
-		stage.addActor(volver);
-		     
-		Gdx.input.setInputProcessor(inputMultiplexer);
-		}
-		
+	}
+
 	@Override
 	public void render(float delta) {
 			Render.clearScreen();
@@ -107,7 +119,7 @@ public class ClassicManScreen extends AbstractScreen{
 		    stage.act();
 		    stage.draw();
 		          
-		    if(volver.isPressed()){
+		    if(textButton.isPressed()){
 		    	stage.dispose();
 		         Render.app.setScreen(Render.MANUALSCREEN);
 		    }

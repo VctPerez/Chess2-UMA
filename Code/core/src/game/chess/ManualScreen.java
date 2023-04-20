@@ -2,7 +2,15 @@ package game.chess;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Slider;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import elements.Background;
@@ -12,62 +20,71 @@ import utils.Render;
 import utils.Resources;
 import utils.Text;
 import utils.TextButton;
+import utils.TextField;
 
 public class ManualScreen extends AbstractScreen{
 
 		public static Stage stage;
 		Background background;	
 	
-	    TextButton volver,clasico,modificado;
-	    Text volverText,Titulo,clasicoText,modificadoText;
-	    Image Logo;
+		TextButton[] textButton;
+		Label title;
+		Table table;
 	    LectorLineas languageReader, configReader;
 	    
 	    @Override
 	    public void show() {
 	    	stage = new Stage(new FitViewport(1280, 720));
-	    	background = new Background();
-	    	background.setColor(new Color(60/255f, 60/255f,60/255f,1f));
-	    	background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+	    	
+	    	table = new Table();
+	    	table.setFillParent(true);
 	    	
 	    	//Abrir los ficheros de configuracion e idioma
 	    	configReader = new LectorLineas("files/config.txt"); //Lector del txt configuracion para sacar el idioma
 	    	languageReader = new LectorLineas("files/lang/"+ configReader.leerLinea(1) + "Manual.txt"); //Abrimos el idioma que toca del archivo configuracion
 	    	
-	    	//Fuente Arial para probar
-	    	Titulo = new Text(Resources.FONT_MENU_PATH,100,Color.WHITE,3);
-	    	Titulo.setText(languageReader.leerLinea(4));
-	    	volverText = new Text(Resources.FONT_MENU_PATH,28,Color.WHITE,3);
-	    	volverText.setText(languageReader.leerLinea(1)); //Jugar = Linea 1
-	    	clasicoText = new Text(Resources.FONT_MENU_PATH,50,Color.WHITE,3);
-	    	clasicoText.setText(languageReader.leerLinea(2)); //Salir = Linea 3
-	    	modificadoText = new Text(Resources.FONT_MENU_PATH,50,Color.WHITE,3);
-	    	modificadoText.setText(languageReader.leerLinea(3)); //Configuracion = Linea 
+	    	background = new Background();
+	    	background.setColor(new Color(60/255f, 60/255f,60/255f,1f));
+	    	background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 	    	
-	    	Titulo.setPosition(100,600);
-	        volverText.setPosition(100,100);
-	        clasicoText.setPosition(100,400);
-	        modificadoText.setPosition(100,300);
-	        volver = new TextButton(languageReader.leerLinea(1));
-	        clasico = new TextButton(languageReader.leerLinea(2));
-	        modificado = new TextButton(languageReader.leerLinea(3));
+	    	//Inicializar los elementos de la escena
+	    	createTableElements();
+		    	
+		    //Introducir los elementos en la table
+		    setupTable();
+		    //Añadir todos los actores a la escena;
+	    	addActors();
 	        
-	        Logo = new Image("Logo_Blanco.png");
-	        Logo.setPosition(800,-50);
-	        Logo.setSize(500, 500);
-	        Logo.setTransparency(0.25f);
-	        
-	        stage.addActor(background);
-	        stage.addActor(Logo);
-	        stage.addActor(Titulo);
-	        stage.addActor(volver);
-	        stage.addActor(clasico);
-	        stage.addActor(modificado);
-	        
-	        Gdx.input.setInputProcessor(Render.inputs);
+	        Gdx.input.setInputProcessor(stage);
 	    }
 
-	    @Override
+	    private void addActors() {
+	    	stage.addActor(background);
+	        stage.addActor(table);
+		}
+
+		private void setupTable() {
+			table.left().pad(50);
+	    	table.add(title).left().space(50);
+	    	table.row();
+	    	for (int i = 0 ; i < textButton.length ; i++) {
+	    		table.add(textButton[i]).left().space(25);
+	        	table.row();
+	    	}
+		}
+
+		private void createTableElements() {
+	    	
+	    	textButton = new TextButton[3];
+	    	
+	    	title = new Label("Manual", Render.app.getManager().get(Resources.SKIN_PATH,Skin.class), "TitleStyle");
+	    	
+	    	textButton[0] = new TextButton(languageReader.leerLinea(2));
+	    	textButton[1] = new TextButton(languageReader.leerLinea(3));
+	    	textButton[2] = new TextButton(languageReader.leerLinea(1));
+	    }
+
+		@Override
 	    public void render(float delta) {
 	        Render.clearScreen();
 
@@ -77,16 +94,19 @@ public class ManualScreen extends AbstractScreen{
 	        Render.Batch.begin();
 	        //---------------
 	        
+	        stage.act();
 	        stage.draw();
 	        
-	        if(volver.isPressed()){
-	            Render.app.setScreen(Render.MAINSCREEN);
+	        if(textButton[0].isPressed()){
+	            Render.bgMusic.stop();
+	            Render.app.setScreen(new ClassicManScreen());
+	            //Render.app.setScreen(Render.CREATEMATCHSCREEN);
 	        }
-	        if(clasico.isPressed()) {
-	        	Render.app.setScreen(new ClassicManScreen());
+	        if(textButton[1].isPressed()) {
+
 	        }
-	        if(modificado.isPressed()) {
-	        	//TODO
+	        if(textButton[2].isPressed()){
+	        	Render.app.setScreen(Render.MAINSCREEN);
 	        }
 	        
 	        //-----------------

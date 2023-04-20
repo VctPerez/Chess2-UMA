@@ -97,9 +97,8 @@ public class DraftScreen extends AbstractScreen {
 		queens = new ArrayList<>();
 		kings = new ArrayList<>();
 		
-		pawns.add(Resources.PAWN_PATH);
-		pawns.add(Resources.LANCER_PATH);
 		pawns.add(Resources.WARDEN_PATH);
+		pawns.add(Resources.LANCER_PATH);
 		Collections.shuffle(pawns);
 		
 		knights.add(Resources.KNIGHT_PATH);
@@ -115,6 +114,7 @@ public class DraftScreen extends AbstractScreen {
 		bishops.add(Resources.BISHOP_PATH);
 		bishops.add(Resources.RND_PATH);
 		bishops.add(Resources.BISHOP_PATH);
+		bishops.add(Resources.RND_PATH);
 		Collections.shuffle(bishops);
 		
 		queens.add(Resources.QUEEN_PATH);
@@ -122,8 +122,8 @@ public class DraftScreen extends AbstractScreen {
 		queens.add(Resources.QUEEN_PATH);
 		Collections.shuffle(queens);
 		
-		kings.add(Resources.MIDAS_PATH);
-		kings.add(Resources.MIDAS_PATH);
+		kings.add(Resources.KING_PATH);
+		kings.add(Resources.KING_PATH);
 		kings.add(Resources.KING_PATH);
 		Collections.shuffle(kings);
 	}
