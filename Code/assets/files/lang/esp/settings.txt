@@ -5,3 +5,4 @@ idioma
  español
 aplicar
 volver
+resetear
