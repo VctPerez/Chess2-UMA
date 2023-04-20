@@ -378,9 +378,13 @@ public class GameScreen extends AbstractScreen {
         	//Si se da el caso bomba no se mueve ninguna pieza por lo que no se comprueba nada simplemente explota
         	if(checkBomber()) {
             	explosion(current_x,current_y);
-            }else {
+            }else if(checkPaladin(next_x, next_y)){
+            	
+            }else {	
             	
             	checkMarshal();
+            	
+            	//checkPaladin(next_x, next_y);
             	
             	checkCastling(next_x);
 
@@ -410,8 +414,8 @@ public class GameScreen extends AbstractScreen {
     }
 	
 	private void checkMarshal() {
-		if(currentTile.piece instanceof Midas && nextTile.piece!= null) {
-			currentTile.piece.ate++;
+		if(currentTile.getPiece() instanceof Midas && nextTile.getPiece()!= null) {
+			currentTile.getPiece().ate++;
 		}
 	}
 
@@ -440,8 +444,36 @@ public class GameScreen extends AbstractScreen {
 	}
 
 	private boolean checkBomber() {
-		//Comprobar redundancias
-		return currentTile.piece instanceof Bomber && nextTile.piece!= null;
+		return currentTile.getPiece() instanceof Bomber && nextTile.getPiece()!= null;
+	}
+	
+	private Boolean checkPaladin(float next_x, float next_y) {
+		Boolean paladinSwing = false;
+		if(currentTile.getPiece() instanceof Paladin) {
+			Paladin p = (Paladin)currentTile.getPiece();
+			if(next_x == current_x && next_y == current_y + 1 && p.canSwingUp) {
+				board.getTile(next_x-1,next_y).sendPieceToGraveyard();
+				board.getTile(next_x,next_y).sendPieceToGraveyard();
+				board.getTile(next_x+1,next_y).sendPieceToGraveyard();
+				paladinSwing = true;
+			}else if(next_x == current_x && next_y == current_y - 1 && p.canSwingDown) {
+				board.getTile(next_x-1,next_y).sendPieceToGraveyard();
+				board.getTile(next_x,next_y).sendPieceToGraveyard();
+				board.getTile(next_x+1,next_y).sendPieceToGraveyard();
+				paladinSwing = true;
+			}else if(next_x == current_x + 1 && next_y == current_y && p.canSwingRight) {
+				board.getTile(next_x,next_y-1).sendPieceToGraveyard();
+				board.getTile(next_x,next_y).sendPieceToGraveyard();
+				board.getTile(next_x,next_y+1).sendPieceToGraveyard();
+				paladinSwing = true;
+			}else if(next_x == current_x - 1 && next_y == current_y && p.canSwingLeft) {
+				board.getTile(next_x,next_y-1).sendPieceToGraveyard();
+				board.getTile(next_x,next_y).sendPieceToGraveyard();
+				board.getTile(next_x,next_y+1).sendPieceToGraveyard();
+				paladinSwing = true;
+			}
+		}
+		return paladinSwing;
 	}
 
 	/**
@@ -608,14 +640,14 @@ public class GameScreen extends AbstractScreen {
 	public void testDrafts() {
 		
 		//Para probar la pieza random
-		Render.player1Draft.add(Resources.BOMBER_PATH);
+		Render.player1Draft.add(Resources.PALADIN_PATH);
 		Render.player1Draft.add(Resources.KNIGHT_PATH);
 		Render.player1Draft.add(Resources.ROOK_PATH);
 		Render.player1Draft.add(Resources.RND_PATH);
 		Render.player1Draft.add(Resources.QUEEN_PATH);
 		Render.player1Draft.add(Resources.KING_PATH);
 		
-		Render.player2Draft.add(Resources.PAWN_PATH);
+		Render.player2Draft.add(Resources.PALADIN_PATH);
 		Render.player2Draft.add(Resources.KNIGHT_PATH);
 		Render.player2Draft.add(Resources.ROOK_PATH);
 		Render.player2Draft.add(Resources.RND_PATH);

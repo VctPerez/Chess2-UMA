@@ -44,6 +44,7 @@ public class Chess2 extends Game {
 		manager.load(Resources.ARROW_PATH, Texture.class);
 		manager.load(Resources.BOMBER_PATH, Texture.class);
 		manager.load(Resources.WARDEN_PATH, Texture.class);
+		manager.load(Resources.PALADIN_PATH, Texture.class);
 		manager.load(Resources.MIDAS_PATH, Texture.class);
 
 		// RANDOM PIECES
@@ -123,6 +124,8 @@ public class Chess2 extends Game {
 		Render.LOBBYSCREEN = new LobbyScreen();
 		Render.CREATEMATCHSCREEN = new CreateMatchScreen();
 		Render.DRAFTSCREEN = new DraftScreen();
+		Render.MATCHMAKINGSCREEN = new MatchMakingScreen();
+		Render.CLASSICMANSCREEN = new ClassicManScreen(); 
 
 		//this.setScreen(new GameScreen());
 		 this.setScreen(Render.MAINSCREEN);

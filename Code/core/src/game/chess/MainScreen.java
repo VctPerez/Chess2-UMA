@@ -70,8 +70,7 @@ public class MainScreen extends AbstractScreen {
         
         if(textButton[0].isPressed()){
             Render.bgMusic.stop();
-            Render.app.setScreen(new PruebaScreen());
-            //Render.app.setScreen(Render.CREATEMATCHSCREEN);
+            Render.app.setScreen(Render.DRAFTSCREEN);
         }
         if(textButton[1].isPressed()) {
         	Render.app.setScreen(Render.CONFIGSCREEN);
