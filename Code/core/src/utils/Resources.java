@@ -45,6 +45,7 @@ public class Resources {
     public static final String RIDER_PATH = "sprites/Testing-Pieces/Pieces Modified/White_Rider.png";
     public static final String BOMBER_PATH = "sprites/Testing-Pieces/Pieces Modified/Butanero.png";
     public static final String WARDEN_PATH = "sprites/Testing-Pieces/Pieces Modified/White_Warden.png";
+    public static final String PALADIN_PATH = "sprites/Testing-Pieces/Pieces Modified/White_Paladin.png";
     public static final String RND_PATH = "sprites/Testing-Pieces/Pieces Modified/White_Joker.png";
     public static final String MIDAS_PATH = "piece2.png";
     

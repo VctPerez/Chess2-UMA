@@ -26,24 +26,6 @@ public class Bomber extends Piece{
 	public void draw(Batch batch, float parentAlpha) {
 		super.draw(batch, parentAlpha);
 	}
-	
-	/**
-	 * Comprueba que las casillas a las que el bombardero pueda moverse estan dentro del tablero y si tienen alguna pieza dentro
-	 * @param board
-	 * @param x
-	 * @param y
-	 * @return
-	 */
-	private Boolean checkBoard(Board board, int i, float x, float y) {
-		Boolean res = false;
-		if(i!=0 && board.getTile(x, y)!=null && board.getTile(x, y).getPiece()!=null && !sameColor(board.getTile(x, y).getPiece())) {
-			res = true;
-		}else if(i==0 && board.getTile(x, y)!=null && board.getTile(x, y).getPiece()==null) {
-			res = true;
-		}
-		
-		return res;
-	}
 
 	/**
 	 * A�ade a movements todos los movimientos posibles del jinete
@@ -98,24 +80,20 @@ public class Bomber extends Piece{
 			addNonAtackMovement(x - 2*direction, y, movements);			
 		}
 			
-		System.out.println("MOVEMENTS -> " + movements.toString());
 		return movements;
 	}
 
 	public void addMovement(float x, float y, Board board, ArrayList<Vector2> movements) {
 		if (board.getTile(x, y) != null && !sameColor(board.getTile(x, y).getPiece())) {
 			if(board.getTile(x, y).getPiece()!=null) {
-				System.out.println("PUEDE EXPLOTAR");
 				canExplode = true;
 			}
-			//System.out.println("MOVIMIENTO AÑADIDO A: " + x + ", "+y);
 			movements.add(new Vector2(x, y));
 		}
 	}
 	
 	private void addNonAtackMovement(float x, float y, ArrayList<Vector2> movements) {
 		if (board.getTile(x, y) != null && board.getTile(x, y).getPiece()==null) {
-			//System.out.println("MOVIMIENTO AÑADIDO A: " + x + ", "+y);
 			movements.add(new Vector2(x, y));
 		}
 	}
