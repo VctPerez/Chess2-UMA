@@ -1,42 +1,42 @@
  Classic Pawn:
-   The pawn moves vertically
-  through its column, and cannot
-  go backwards, and captures diagonally.
+  The pawn moves vertically
+ through its column, and cannot
+ go backwards, and captures diagonally.
  
  Classic Bishop:
-   Walks diagonally one or more tiles
-  up to the closest captured tile.
+  Walks diagonally one or more tiles
+ up to the closest captured tile.
   
  Classic Knight:
-   The knight is the only piece on the board
-  that can jump over other pieces.
+  The knight is the only piece on the board
+ that can jump over other pieces.
   
-   The knight moves two tiles vertically
-  or horizontally and one more
-  perpendicularly.
-  The knight's move looks like an "L".
+  The knight moves two tiles vertically
+ or horizontally and one more
+ perpendicularly.
+ The knight's move looks like an "L".
   
  Classic Rook:
-   Moves in straight lines in the lines and
-  columns of the board, but cannot move
-  over other pieces.
+  Moves in straight lines in the lines and
+ columns of the board, but cannot move
+ over other pieces.
   
-   Additionally, if it has not been moved
-   yet, one rook may castle with the king.
+  Additionally, if it has not been moved
+ yet, one rook may castle with the king.
    
  Classic Queen:
-   The queen moves any amount of tiles
-  vertically, horizontally or diagonally
-  in a straight line. In other words,
-  like a rook and a bishop combined.
+  The queen moves any amount of tiles
+ vertically, horizontally or diagonally
+ in a straight line. In other words,
+ like a rook and a bishop combined.
   
  Classic King:
-   The king may move to any adjacent tile.
+  The king may move to any adjacent tile.
    
-   It may not move to a tile threatened by
-  an enemy piece, and is the only piece that
-  must be protected, limiting other pieces
-  movement.
+  It may not move to a tile threatened by
+ an enemy piece, and is the only piece that
+ must be protected, limiting other pieces
+ movement.
 
 
   

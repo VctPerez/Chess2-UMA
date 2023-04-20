@@ -49,6 +49,9 @@ public class Parser {
 		case Resources.WARDEN_PATH:
 			piece = new Guardian(color,x,y,board);
 			break;
+		case Resources.MIDAS_PATH:
+			piece = new Midas(color,x,y,board);
+			break;
 		}
 		return piece;
 	}

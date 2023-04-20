@@ -1,17 +1,32 @@
-Joker:
-Inicialmente tiene los movimientos
-de un Alfil y cada vez que se mueve
-copias �nicamente los movimientos de una 
-pieza aleatoria de entre las piezas clásicas
-a excepción del rey.
+ Joker:
+  Inicialmente tiene los movimientos
+ de un Alfil y cada vez que se mueve
+ copias �nicamente los movimientos de una 
+ pieza aleatoria de entre las piezas clásicas
+ a excepción del rey.
 
-Jinete:
-El jinete tiene los movimientos del caballo
-pero con un aspecto m�s ofensivo, en cambio, 
-pierdes capacidad defensiva con unos movimientos
-m�s acotados.
+ Jinete:
+  El jinete tiene los movimientos del caballo
+ pero con un aspecto m�s ofensivo, en cambio, 
+ pierdes capacidad defensiva con unos movimientos
+ mas acotados.
    
-Bombardero:
-Se mueve solo a casillas adyacentes sin movimiento
-diagonal, si captura otra pieza explotar� 
-eliminandose a si mismo y a las piezas de alrededor.
+ Bombardero:
+  Se mueve solo a casillas adyacentes sin movimiento
+ diagonal, si captura otra pieza explotar� 
+ eliminandose a si mismo y a las piezas de alrededor.
+
+
+ Guardian:
+  El guardian pierde la capacidad de hacer el
+ movimiento doble al salir de su fila inicial
+ que tienen los peones, pero en cambio, tienen 
+ la capacidad de retroceder 1 casilla para 
+ luego estar obligados a saltar 2,come como 
+ un peón.
+
+ Lancero:
+  Movimiento similar e inverso al del peon,
+ se mueve en diagonal y come a la pieza que
+ se encuentre delante, al salir de su fila
+ original puede hacer el doble movimiento
