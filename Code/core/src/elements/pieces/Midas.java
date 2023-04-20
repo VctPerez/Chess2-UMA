@@ -33,7 +33,7 @@ public class Midas extends Piece {
 		
 		
 		if(color) {
-			GameScreen.whiteKing.set(x, y);
+			Render.GameScreen.whiteKing.set(x, y);
 		}else {
 			
 			Render.GameScreen.blackKing.set(x, y);
@@ -80,7 +80,7 @@ public class Midas extends Piece {
 			addMovement(x + direction, y - direction, board, movements);
 			addMovement(x - direction, y + direction, board, movements);
 		}
-		if (super.ate >= 2) {
+		if (super.ate >= 3) {
 			addMovement(x, y + 2*direction, board, movements);
 			addMovement(x, y - 2*direction, board, movements);
 			addMovement(x + 2*direction, y, board, movements);
@@ -112,9 +112,9 @@ public class Midas extends Piece {
 		Reader = new LectorLineas("files/lang/" + config + "Modified.txt");
 		switch (config) {
 		case "esp/":
-			return Reader.leerTramo(14, 17);
+			return Reader.leerTramo(34, 41);
 		case "eng/":
-			return Reader.leerTramo(13, 18);
+			return Reader.leerTramo(35, 42);
 		default:
 			throw new IllegalArgumentException("Configuración errónea");
 		}

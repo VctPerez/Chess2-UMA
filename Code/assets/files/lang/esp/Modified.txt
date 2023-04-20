@@ -30,3 +30,12 @@
  se mueve en diagonal y come a la pieza que
  se encuentre delante, al salir de su fila
  original puede hacer el doble movimiento
+ 
+ Midas:
+  Comienza con un set de movimientos en
+ forma de cruz, pudiendo moverse 1 sola
+ casilla, al comer 1 pieza "evoluciona"
+ y adopta el movimiento de 1 casilla en 
+ cada direccion y al comer 2 piezas mas
+ consigue su forma final ampliando su
+ rango
