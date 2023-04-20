@@ -17,8 +17,8 @@ public class Background extends Actor{
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		batch.end();
-		fondo.setProjectionMatrix(batch.getProjectionMatrix());
-		fondo.setTransformMatrix(batch.getTransformMatrix());
+		//fondo.setProjectionMatrix(batch.getProjectionMatrix());
+		//fondo.setTransformMatrix(batch.getTransformMatrix());
 		
 		fondo.begin(ShapeType.Filled);
 	

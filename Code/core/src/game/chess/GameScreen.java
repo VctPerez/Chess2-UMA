@@ -375,8 +375,9 @@ public class GameScreen extends AbstractScreen {
         	
         	//Si se da el caso bomba no se mueve ninguna pieza por lo que no se comprueba nada simplemente explota
         	if(checkBomber()) {
-            	explosion(current_x,current_y);
-            }if(!checkPaladin(next_x, next_y)){	
+            	Bomber b = (Bomber)currentTile.getPiece();
+            	b.explode();
+            }else if(!checkPaladin(next_x, next_y)){	
             	
             	checkMarshal();
             	
@@ -424,19 +425,7 @@ public class GameScreen extends AbstractScreen {
 	    }
 	}
 
-	private void explosion(int x, int y) {
-		for(int i=x-1;i<=x+1;i++) {
-			for(int j=y-1;j<=y+1;j++) {
-				if(correctTile(i,j) && board.getTile(i, j).piece!=null) {
-					board.getTile(i, j).sendPieceToGraveyard();
-				}
-			}
-		}
-	}
-
-	private boolean correctTile(int i, int j) {
-		return i>=1 && i<=8 && j>=1 && j<=8;
-	}
+	
 
 	private boolean checkBomber() {
 		return currentTile.getPiece() instanceof Bomber && nextTile.getPiece()!= null;
@@ -467,6 +456,8 @@ public class GameScreen extends AbstractScreen {
 		board.getTile(next_x-i,next_y-j).sendPieceToGraveyard();
 		board.getTile(next_x,next_y).sendPieceToGraveyard();
 		board.getTile(next_x+1,next_y+j).sendPieceToGraveyard();
+		Paladin p = (Paladin)currentTile.getPiece();
+		p.swingSound();
 	}
 
 	/**

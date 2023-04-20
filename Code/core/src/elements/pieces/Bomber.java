@@ -2,9 +2,12 @@ package elements.pieces;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Action;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 
 import elements.Board;
 import elements.Piece;
@@ -51,7 +54,6 @@ public class Bomber extends Piece{
 		addMovement(x + direction, y, board, movements);
 		addMovement(x - direction, y, board, movements);
 
-		
 		if(canExplode) {
 			System.out.println("Puede  explotar");
 			addMovement(x + direction, y + direction, board, movements);
@@ -64,8 +66,6 @@ public class Bomber extends Piece{
 			addNonAtackMovement(x - direction, y + direction, movements);
 			addNonAtackMovement(x - direction, y - direction, movements);
 		}
-		
-
 		
 		if(board.getTile(x, y+direction) != null && board.getTile(x, y+direction).getPiece()== null) {
 			addNonAtackMovement(x, y + 2*direction, movements);			
@@ -97,6 +97,30 @@ public class Bomber extends Piece{
 			movements.add(new Vector2(x, y));
 		}
 	}
+	
+	public void explode() {
+		Action explosionSfx = new Action() {
+			Sound sound = Render.app.getManager().get(Resources.EXPLOSION_SOUND, Sound.class);
+
+			public boolean act(float delta) {
+				sound.play(0.5f);
+				return true;
+			}
+		};
+		addAction(Actions.after(explosionSfx));
+		explosion();
+	}
+	
+	private void explosion() {
+		for(int i=x-1;i<=x+1;i++) {
+			for(int j=y-1;j<=y+1;j++) {
+				if(board.getTile(i, j)!=null && board.getTile(i, j).piece!=null) {
+					board.getTile(i, j).sendPieceToGraveyard();
+				}
+			}
+		}
+	}
+
 	
 	public void dispose() {
 		sprite.dispose();

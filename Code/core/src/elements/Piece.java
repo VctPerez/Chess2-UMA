@@ -102,7 +102,7 @@ public abstract class Piece extends Actor {
 		this.y = y;
 		Tile tile = Render.GameScreen.board.getTile(x, y);
 
-		Action completeAction = new Action() {
+		Action moveSfx = new Action() {
 			Sound sound = Render.app.getManager().get(Resources.PIECEMOVE_SOUND, Sound.class);
 
 			public boolean act(float delta) {
@@ -111,7 +111,7 @@ public abstract class Piece extends Actor {
 			}
 		};
 		addAction(Actions.moveTo(tile.getX(), tile.getY(), 0.5f));// hacer que la animación sea más consistente
-		addAction(Actions.after(completeAction));
+		addAction(Actions.after(moveSfx));
 	}
 
 	public void setSprite(String path) {

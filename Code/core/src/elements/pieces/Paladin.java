@@ -2,9 +2,12 @@ package elements.pieces;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Action;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 
 import elements.Board;
 import elements.Piece;
@@ -110,6 +113,18 @@ public class Paladin extends Piece{
 			}
 			movements.add(new Vector2(x, y));
 		}
+	}
+	
+	public void swingSound() {
+		Action swingSfx = new Action() {
+			Sound sound = Render.app.getManager().get(Resources.PALADINSWING_SOUND, Sound.class);
+
+			public boolean act(float delta) {
+				sound.play(0.5f);
+				return true;
+			}
+		};
+		addAction(Actions.after(swingSfx));
 	}
 
 	
