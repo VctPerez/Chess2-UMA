@@ -295,6 +295,7 @@ public class GameScreen extends AbstractScreen {
 		if(nextTile.getPiece().color()) {
 			for(Piece piece: whitePieces) {
 				if (piece.getValidMovements().contains(blackKing)) {
+
 					blackCheck = true;
 					board.getTile(blackKing.x, blackKing.y).attacked = true;
 
@@ -304,7 +305,9 @@ public class GameScreen extends AbstractScreen {
 			
 		}else if(!nextTile.getPiece().color()){
 			for(Piece piece: blackPieces) {
+
 				if(piece.getValidMovements().contains(whiteKing)) {
+
 					whiteCheck =true;
 					board.getTile(whiteKing.x, whiteKing.y).attacked = true;
 					
@@ -377,6 +380,8 @@ public class GameScreen extends AbstractScreen {
             	explosion(current_x,current_y);
             }else {
             	
+            	checkMarshal();
+            	
             	checkCastling(next_x);
 
                 currentTile.move(next_x, next_y);
@@ -403,6 +408,12 @@ public class GameScreen extends AbstractScreen {
 
         }
     }
+	
+	private void checkMarshal() {
+		if(currentTile.piece instanceof Midas && nextTile.piece!= null) {
+			currentTile.piece.ate++;
+		}
+	}
 
 	private void checkGuardian(int next_y) {
 		if(current_y - 1 == next_y && nextTile.getPiece().color()){

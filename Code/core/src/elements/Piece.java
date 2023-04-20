@@ -30,6 +30,7 @@ public abstract class Piece extends Actor {
 	public Board board;
 	public Boolean isPassantable = false;
 	public Boolean backed;
+	public int ate;
 
 	public Piece(Boolean color, Texture texture, int x, int y, Board board) {
 		this.board = board;
@@ -38,6 +39,7 @@ public abstract class Piece extends Actor {
 		this.color = color;
 		this.alive = true;
 		this.backed = false;
+		this.ate=0;
 		this.x = x;
 		this.y = y;
 

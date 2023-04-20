@@ -1,18 +1,33 @@
-Joker:
-Inicially has the Bishop movements
-and each time it moves, it copies
-only the movements of a random piece
-of the classic ones except for the king.
+ Joker:
+  Inicially has the Bishop movements
+ and each time it moves, it copies
+ only the movements of a random piece
+ of the classic ones except for the king.
    
-Rider:
-The rider has the movements of the horse 
-but more offensive, on the other hand, 
-he loses the defensive ability with 
-more limited movements.
+ Rider:
+  The rider has the movements of the horse 
+ but more offensive, on the other hand, 
+ he loses the defensive ability with 
+ more limited movements.
 
-Bomber:
-Moves only to adyacent tiles without
-diagonal moves, if it captures an 
-enemy piece it will explode removing
-itself and the adyacents pieces from the
-table.
+ Bomber:
+  Moves only to adyacent tiles without
+ diagonal moves, if it captures an 
+ enemy piece it will explode removing
+ itself and the adyacents pieces from the
+ table.
+
+ Warden:
+  The Warden loses the ability to do the
+ double move when leaving your starting 
+ rowas the pawns have, but instead, 
+ they have the ability to move back 1 tile 
+ to then be forced to jump 2, they can eat
+ other pieces as a pawn can.
+
+ Lancer:
+  Inverse and similar movements as the 
+  pawn,moves diagonally and eats the 
+  piece located is in front of it, 
+  when leaving your row original can 
+  do double movement.

@@ -8,7 +8,7 @@ public class LectorLineas
 	private String ent;
 	private FileHandle file;
 	private String[] lines;
-	
+
 	/**
 	 * Crea el lector de lineas para el fichero con el nombre que especificamos
 	 * @param nombreFichero
@@ -23,7 +23,9 @@ public class LectorLineas
 	public FileHandle getFile() {
 		return file;
 	}
-
+	public int getLinesNumber(){
+		return lines.length;
+	}
 	/**
 	 * Devuelve el nombre del fichero sobre el que estamos trabajando
 	 * @return
@@ -43,8 +45,16 @@ public class LectorLineas
 	{
 		ent = nombreFichero;
 		file = Gdx.files.internal(ent);
-		//lines = file.readString().split("\n");
-		lines = file.readString().split(System.lineSeparator());
+		lines = file.readString().split("\\r?\\n");
+		//lines = file.readString().split(System.lineSeparator());
+	}
+
+	/**
+	 * Se encarga de actualizar el Lector por si se ha hecho algun cambio
+	 */
+	public void update(){
+		file = Gdx.files.internal(ent);
+		lines = file.readString().split("\\r?\\n");
 	}
 	
 	/**
@@ -144,6 +154,20 @@ public class LectorLineas
 	{
 		String n = leerLinea(numeroDeLinea);
 		return (double) Double.parseDouble(n);
+	}
+	
+	/**
+	 * La funcion saca un float de una linea, para que funcione en la linea
+	 * no puede haber algo que no sea el float
+	 * @param numeroDeLinea
+	 * : Numero de linea donde se encuentra nuestro dato
+	 * @return
+	 * Devuelve el float leido del fichero
+	 */
+	public float leerFLOATLinea(int numeroDeLinea) //Para funcionar necesita que en la linea solo este el numero
+	{
+		String n = leerLinea(numeroDeLinea);
+		return (float) Float.parseFloat(n);
 	}
 	
 	/**
