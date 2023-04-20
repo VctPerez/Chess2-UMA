@@ -16,6 +16,7 @@ import utils.Resources;
 import utils.Text;
 
 public class Bomber extends Piece{
+	boolean canExplode;
 
 	public Bomber(Boolean color, int x, int y,Board board) {
 		super(color, Render.app.getManager().get(Resources.BOMBER_PATH, Texture.class), x ,y,board);
@@ -24,6 +25,24 @@ public class Bomber extends Piece{
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		super.draw(batch, parentAlpha);
+	}
+	
+	/**
+	 * Comprueba que las casillas a las que el bombardero pueda moverse estan dentro del tablero y si tienen alguna pieza dentro
+	 * @param board
+	 * @param x
+	 * @param y
+	 * @return
+	 */
+	private Boolean checkBoard(Board board, int i, float x, float y) {
+		Boolean res = false;
+		if(i!=0 && board.getTile(x, y)!=null && board.getTile(x, y).getPiece()!=null && !sameColor(board.getTile(x, y).getPiece())) {
+			res = true;
+		}else if(i==0 && board.getTile(x, y)!=null && board.getTile(x, y).getPiece()==null) {
+			res = true;
+		}
+		
+		return res;
 	}
 
 	/**
@@ -43,16 +62,60 @@ public class Bomber extends Piece{
 		}else {
 			direction = -1;
 		}
-			addMovement(x, y + direction, board, movements);
-			addMovement(x, y - direction, board, movements);
-			addMovement(x + direction, y, board, movements);
-			addMovement(x - direction, y, board, movements);
+		
+		canExplode = false;
+		addMovement(x, y + direction, board, movements);
+		addMovement(x, y - direction, board, movements);
+		addMovement(x + direction, y, board, movements);
+		addMovement(x - direction, y, board, movements);
 
+		
+		if(canExplode) {
+			System.out.println("Puede  explotar");
+			addMovement(x + direction, y + direction, board, movements);
+			addMovement(x + direction, y - direction, board, movements);
+			addMovement(x - direction, y + direction, board, movements);
+			addMovement(x - direction, y - direction, board, movements);		
+		}else {
+			addNonAtackMovement(x + direction, y + direction, movements);
+			addNonAtackMovement(x + direction, y - direction, movements);
+			addNonAtackMovement(x - direction, y + direction, movements);
+			addNonAtackMovement(x - direction, y - direction, movements);
+		}
+		
+
+		
+		if(board.getTile(x, y+direction) != null && board.getTile(x, y+direction).getPiece()== null) {
+			addNonAtackMovement(x, y + 2*direction, movements);			
+		}
+		if(board.getTile(x, y-direction) != null && board.getTile(x, y-direction).getPiece()== null) {
+			addNonAtackMovement(x, y - 2*direction, movements);			
+		}
+		if(board.getTile(x + direction, y) != null && board.getTile(x + direction, y).getPiece()== null) {
+			addNonAtackMovement(x + 2*direction, y, movements);			
+		}
+		if(board.getTile(x - direction, y) != null && board.getTile(x - direction, y).getPiece()== null) {
+			addNonAtackMovement(x - 2*direction, y, movements);			
+		}
+			
+		System.out.println("MOVEMENTS -> " + movements.toString());
 		return movements;
 	}
 
 	public void addMovement(float x, float y, Board board, ArrayList<Vector2> movements) {
 		if (board.getTile(x, y) != null && !sameColor(board.getTile(x, y).getPiece())) {
+			if(board.getTile(x, y).getPiece()!=null) {
+				System.out.println("PUEDE EXPLOTAR");
+				canExplode = true;
+			}
+			//System.out.println("MOVIMIENTO AÑADIDO A: " + x + ", "+y);
+			movements.add(new Vector2(x, y));
+		}
+	}
+	
+	private void addNonAtackMovement(float x, float y, ArrayList<Vector2> movements) {
+		if (board.getTile(x, y) != null && board.getTile(x, y).getPiece()==null) {
+			//System.out.println("MOVIMIENTO AÑADIDO A: " + x + ", "+y);
 			movements.add(new Vector2(x, y));
 		}
 	}
