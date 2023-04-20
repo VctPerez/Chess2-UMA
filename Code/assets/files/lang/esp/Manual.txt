@@ -1,6 +1,6 @@
 Volver
-Clásico
-Modificado
+Modo Clásico
+Modo Modificado
 Manual
 Juego Clásico:
 

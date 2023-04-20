@@ -1,6 +1,6 @@
 Return
-Classic
-Modified
+classic mode
+modified mode
 Manual
 Classic Mode:
 

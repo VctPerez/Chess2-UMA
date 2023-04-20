@@ -27,7 +27,16 @@
 
  Lancer:
   Inverse and similar movements as the 
-  pawn,moves diagonally and eats the 
-  piece located is in front of it, 
-  when leaving your row original can 
-  do double movement.
+ pawn,moves diagonally and eats the 
+ piece located is in front of it, 
+ when leaving your row original can 
+ do double movement.
+  
+ Midas:
+  Start with a set of movements in
+ cross shape, being able to move 1 alone
+ square, when eating 1 piece "evolves"
+ and adopts the movement of 1 square in
+ each direction and when eating 2 more
+ pieces gets its final form by expanding 
+ its range.

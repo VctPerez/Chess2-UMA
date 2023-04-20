@@ -35,7 +35,7 @@ public class King extends Piece{
 		
 		
 		if(color) {
-			GameScreen.whiteKing.set(x, y);
+			Render.GameScreen.whiteKing.set(x, y);
 		}else {
 			
 			Render.GameScreen.blackKing.set(x, y);
