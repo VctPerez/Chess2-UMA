@@ -41,6 +41,7 @@ public class Paladin extends Piece{
 			nextTilePiece = nextTile.getPiece();
 		}
 		if(nextTilePiece instanceof Colosus) {
+			System.out.println("COLOSO");
 			removeMovements.add(move);
 			hasSwang = false;
 		}else {
@@ -50,18 +51,20 @@ public class Paladin extends Piece{
 			}else {
 				hasSwang = true;
 			}
+			
+			if (color && !isKingSafe(Render.GameScreen.blackPieces, Render.GameScreen.whiteKing)) {
+				removeMovements.add(move);
+			} else if (!color && !isKingSafe(Render.GameScreen.whitePieces, Render.GameScreen.blackKing)) {
+				removeMovements.add(move);
+			} else if (color && isKingSafe(Render.GameScreen.blackPieces, Render.GameScreen.whiteKing)) {
+			}
+			if(!hasSwang) {			
+				undoLastMovement(currentTile, nextTile, nextTilePiece);
+			}else {
+				reviveSwing(simulatedSwing);
+			}
 		}
-		if (color && !isKingSafe(Render.GameScreen.blackPieces, Render.GameScreen.whiteKing)) {
-			removeMovements.add(move);
-		} else if (!color && !isKingSafe(Render.GameScreen.whitePieces, Render.GameScreen.blackKing)) {
-			removeMovements.add(move);
-		} else if (color && isKingSafe(Render.GameScreen.blackPieces, Render.GameScreen.whiteKing)) {
-		}
-		if(!hasSwang) {			
-			undoLastMovement(currentTile, nextTile, nextTilePiece);
-		}else {
-			reviveSwing(simulatedSwing);
-		}
+		
 	}
 	
 	@Override
@@ -93,7 +96,7 @@ public class Paladin extends Piece{
 	
 	private void swingTile(float i, float j, float next_x, float next_y){
 		Tile tile = board.getTile(next_x+i,next_y+j);
-		if(tile!=null) {
+		if(tile!=null && tile.getPiece()!=null && !(tile.getPiece() instanceof Colosus)) {
 			tile.sendPieceToGraveyard();
 		}
 	}
@@ -126,7 +129,7 @@ public class Paladin extends Piece{
 		Tile tile = board.getTile(next_x+i,next_y+j);
 		if(tile!=null) {
 			Piece piece = tile.getPiece();
-			if(piece!=null) {
+			if(piece!=null && !(piece instanceof Colosus)) {
 			simulatedSwing.put(new Vector2(next_x+i,next_y+j), piece);
 			tile.setPiece(null);
 				if(piece.color()) {
