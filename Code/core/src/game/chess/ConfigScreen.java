@@ -63,7 +63,7 @@ public class ConfigScreen extends AbstractScreen {
     	//Inicializar los elementos de la escena
     	createTableElements();
 
-    	//Añadir las acciones a los botones
+    	//Aï¿½adir las acciones a los botones
 		/*slider[0].addListener(new ClickListener(){
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
@@ -121,9 +121,9 @@ public class ConfigScreen extends AbstractScreen {
     	
     	//Introducir los elementos en la table
     	setupTable();
-    	//Añadir todos los actores a la escena;
+    	//Aï¿½adir todos los actores a la escena;
     	addActors();
-    	//Leer y aplicar configuración inicial
+    	//Leer y aplicar configuraciï¿½n inicial
     	readSettings();
     	
         Gdx.input.setInputProcessor(stage);
@@ -159,7 +159,7 @@ public class ConfigScreen extends AbstractScreen {
     }
     
     /**
-     * Método para inicializar todos los elementos de la escena.
+     * Mï¿½todo para inicializar todos los elementos de la escena.
      */
     private void createTableElements() {
 	
@@ -191,14 +191,14 @@ public class ConfigScreen extends AbstractScreen {
     	
     }
     /**
-     * Método que añade los actores a la escena
+     * Mï¿½todo que aï¿½ade los actores a la escena
      */
     private void addActors() {
         stage.addActor(rootTable);
         stage.addActor(optionsTable);
     }
     /**
-     * Método que crea la estructura de las tablas. Cada "párrafo" hace referencia a
+     * Mï¿½todo que crea la estructura de las tablas. Cada "pï¿½rrafo" hace referencia a
      * una fila de la tabla.
      */
     private void setupTable() {
@@ -225,8 +225,8 @@ public class ConfigScreen extends AbstractScreen {
     }
     
     /**
-     * Establece los valores y el idioma de los textos en función de
-     * los parámetros establecidos en el archivo de configuración "config.txt"
+     * Establece los valores y el idioma de los textos en funciï¿½n de
+     * los parï¿½metros establecidos en el archivo de configuraciï¿½n "config.txt"
      */
     private void readSettings() {
     	for(int i = 0; i < slider.length ; i++) {
@@ -238,7 +238,7 @@ public class ConfigScreen extends AbstractScreen {
     }
     /**
      * Escribe los valores obtenidos de los elementos de la UI
-     * en el archivo de configuración "config.txt"
+     * en el archivo de configuraciï¿½n "config.txt"
      */
     private void writeSettings() {
 		configWriter.escribirLinea(5, String.valueOf(Settings.musicVolume));
@@ -270,7 +270,7 @@ public class ConfigScreen extends AbstractScreen {
     
     /**
      * Metodo para actualizar el Idioma de los textos. El valor de entrada es
-     * el número de fila del lenguaje en el archivo "config.txt".
+     * el nï¿½mero de fila del lenguaje en el archivo "config.txt".
      * @param value Idioma a establecer (1_ENG 2_ESP)
      */
 	private void setLanguage(int value) {

@@ -2,7 +2,9 @@ package game.chess;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import multiplayer.Host;
 import multiplayer.Player;
@@ -34,7 +36,7 @@ public class LobbyScreen extends AbstractScreen{
     @Override
     public void show() {
         stage = new Stage(new FitViewport(1280, 720));
-        Gdx.input.setInputProcessor(Render.inputs);
+        Gdx.input.setInputProcessor(stage);
 
         Text p1;
         if(host) {
@@ -61,6 +63,7 @@ public class LobbyScreen extends AbstractScreen{
         //statusP2 = new Text("CONNECTED", Resources.FONT_MENU_PATH, 30, Color.RED, 3);
         findMatch = new TextButton("FIND");
         findMatch.setPosition(600,400);
+        addListener();
 
         p1.setPosition(300,600);
         statusP1.setPosition(300,550);
@@ -88,14 +91,26 @@ public class LobbyScreen extends AbstractScreen{
         }
         Render.Batch.end();
     }
-
+    private void addListener(){
+        findMatch.addListener(new ClickListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                if(!Render.host.isP2connected() && !finding){
+                    Render.host.start();
+                    System.out.println("La hebra 2 va por su cuenta");
+                } else if (finding && !Render.host.isP2connected()) {
+                    cancelSearch();
+                }
+                return true;
+            }
+        });
+    }
     public void matchFinder() throws IOException {
         finding = Render.host.isServerOpen();
-        if (findMatch.isPressed() && !Render.host.isP2connected()) {
+        /*if (findMatch.isPressed() && !Render.host.isP2connected()) {
             //System.out.println("buscando...");
             if (!finding) {
-                Render.host.start();
-                System.out.println("La hebra 2 va por su cuenta");
+
             }
         }
         if(!Render.host.isP2connected()){
@@ -104,7 +119,7 @@ public class LobbyScreen extends AbstractScreen{
             if (finding && !findMatch.isPressed()) {
                 cancelSearch();
             }
-        }
+        }*/
         if (Render.host.isP2connected() &&!configured) {
             statusP2.setColor(Color.GREEN);
             Render.host.receivePlayer2();

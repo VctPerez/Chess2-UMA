@@ -33,7 +33,7 @@ public class PruebaScreen extends AbstractScreen{
 //        texto.getStyle().font.getData().setScale(1.5f);
         
         //Por algun motivo solo deja escalar el tamaño correctamenete con setBounds
-        cuadroTexto.setBounds(200, 200, 300, 100);
+        cuadroTexto.setBounds(500, 200, 300, 100);
         
         scene = new Stage(new FitViewport(1280, 720));
         scene.addActor(cuadroTexto);

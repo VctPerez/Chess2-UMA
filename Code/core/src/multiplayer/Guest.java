@@ -7,41 +7,51 @@ import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class Guest extends Thread{
+public class Guest{
     private String ipDest;
     Socket gameConnection;
     Player player2, player1;
-    private boolean finished = false;
+    private boolean connected = false;
 
     /**
      * Inicializa el guest
      */
-    public Guest(){
+    public Guest(String name){
+        player2 = new Player(name);
     }
-
+    /*
     @Override
     public void run() {
         try {
             JFrame frame = new JFrame();
             Object result = JOptionPane.showInputDialog(frame, "Introduce tu nombre (espacio) la ip:");
-            String[] options = result.toString().split(" ");
-            player2 = new Player(options[0]);
-            gameConnection = new Socket(options[1], 8000);
-            System.out.println("conectado -> " + gameConnection.isConnected());
-            sendPlayer2();
-            receivePlayer1();
-            finished = true;
+            if(result != null){
+                String[] options = result.toString().split(" ");
+                player2 = new Player(options[0]);
+                gameConnection = new Socket(options[1], 8000);
+                System.out.println("conectado -> " + gameConnection.isConnected());
+                sendPlayer2();
+                receivePlayer1();
+                finished = true;
+            }
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }*/
+    public void connect(String ip) throws IOException {
+        gameConnection = new Socket(ip, 8000);
+        connected = gameConnection.isConnected();
+        sendPlayer2();
+        receivePlayer1();
     }
 
     /**
      * Devuelve si ha podido conectarse
      * @return
      */
-    public boolean getStatus(){
-        return finished;
+    public boolean isConnected(){
+        return connected;
     }
 
     /**
