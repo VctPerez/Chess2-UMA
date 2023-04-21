@@ -1,0 +1,7 @@
+sala
+jugador 1:
+codigo:
+jugador 2:
+conectado
+buscar
+empezar

@@ -1,6 +1,6 @@
 package utils;
 /**
- * Clase estática que contiene los valores de configuración del usuario.
+ * Clase estï¿½tica que contiene los valores de configuraciï¿½n del usuario.
  */
 public class Settings {
 
@@ -13,11 +13,13 @@ public class Settings {
 	}
 	
 	public static void setSfxVolume(float value) {
-		sfxVolume = (float) Math.pow((value/10),2);
+//		sfxVolume = (float) Math.pow((value/10),2);
+		sfxVolume = value;
 	}
 	
 	public static void setMusicVolume(Float value) {
-		musicVolume = (float) Math.pow((value/10),2);
+//		musicVolume = (float) Math.pow((value/10),2);
+		musicVolume = value;
 	}
 	
 	public static void updateSettings(float musicVolume, float sfxVolume, int language) {

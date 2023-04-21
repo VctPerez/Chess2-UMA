@@ -1,21 +1,19 @@
 package game.chess;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
-import elements.Background;
 import interaccionFichero.LectorLineas;
 import utils.Render;
 import utils.Resources;
 import utils.Settings;
 import utils.TextButton;
 
-public class MatchMakingScreen extends AbstractScreen{
+public class ModeScreen extends AbstractScreen{
 	public static Stage stage;
 	private Table table;
 
@@ -54,11 +52,11 @@ public class MatchMakingScreen extends AbstractScreen{
         stage.draw();
         
         if(textButton[0].isPressed()) {
-        	Render.app.setScreen(Render.CREATEMATCHSCREEN);
+//        	Render.app.setScreen(Render.CREATEMATCHSCREEN);
         }else if(textButton[1].isPressed()) {
-        	Render.app.setScreen(Render.MODESCREEN);
+//        	Render.app.setScreen(Render.MODESCREEN);
         }else if(textButton[2].isPressed()) {
-        	Render.app.setScreen(Render.MAINSCREEN);
+        	Render.app.setScreen(Render.MATCHMAKINGSCREEN);
         }
         
         //-----------------
@@ -69,10 +67,10 @@ public class MatchMakingScreen extends AbstractScreen{
     	
     	textButton = new TextButton[3];
     	
-    	title = new Label(languageReader.leerLinea(1), Render.app.getManager().get(Resources.SKIN_PATH,Skin.class), "TitleStyle");//Manual
+    	title = new Label(languageReader.leerLinea(5), Render.app.getManager().get(Resources.SKIN_PATH,Skin.class), "TitleStyle");//Manual
     	
-    	textButton[0] = new TextButton(languageReader.leerLinea(2));//Online
-    	textButton[1] = new TextButton(languageReader.leerLinea(3));//Local
+    	textButton[0] = new TextButton(languageReader.leerLinea(6));//Modified
+    	textButton[1] = new TextButton(languageReader.leerLinea(7));//Classic
     	textButton[2] = new TextButton(languageReader.leerLinea(4));//Return
     }
     
@@ -95,7 +93,9 @@ public class MatchMakingScreen extends AbstractScreen{
         Render.SCREEN_WIDTH = width;
         Render.SCREEN_HEIGHT = height;
         Render.camera.setToOrtho(false, width, height);
+        
         stage.getViewport().update(width, height);
+        
     }
 
     @Override

@@ -2,3 +2,9 @@ matchmaking
 modo online
 modo local
 volver
+modo de Juego
+modificado
+clasico
+crear partida
+buscar partida
+codigo
