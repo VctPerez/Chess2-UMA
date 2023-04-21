@@ -13,11 +13,11 @@ public class Settings {
 	}
 	
 	public static void setSfxVolume(float value) {
-		sfxVolume = value;
+		sfxVolume = (float) Math.pow((value/10),2);
 	}
 	
 	public static void setMusicVolume(Float value) {
-		musicVolume = value;
+		musicVolume = (float) Math.pow((value/10),2);
 	}
 	
 	public static void updateSettings(float musicVolume, float sfxVolume, int language) {

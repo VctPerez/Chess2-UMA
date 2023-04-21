@@ -1,7 +1,6 @@
 package game.chess;
 
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
@@ -27,19 +26,18 @@ import utils.TextField;
 
 public class ConfigScreen extends AbstractScreen {
 	public static Stage stage;
-	Background background;	
 	
-    Label[] label;
-    Slider[] slider;
-    TextField[] textField;
-    TextButton[] textButton;
-    SelectBox<String> selectBox;
+    private Label[] label;
+    private Slider[] slider;
+    private TextField[] textField;
+    private TextButton[] textButton;
+    private SelectBox<String> selectBox;
     
-    Table rootTable;
-    Table optionsTable;
+    private Table rootTable;
+    private Table optionsTable;
     
-    LectorLineas languageReader, configReader;
-    EscritorLineas languageWriter, configWriter;
+    private LectorLineas languageReader, configReader;
+    private EscritorLineas configWriter;
     
     
     @Override
@@ -62,16 +60,11 @@ public class ConfigScreen extends AbstractScreen {
     	languageReader = new LectorLineas("files/lang/"+ configReader.leerLinea(Settings.language) + "settings.txt"); //Abrimos el idioma que toca del archivo configuracion
     	
     	
-    	
-    	background = new Background();
-    	background.setColor(new Color(60/255f, 60/255f,60/255f,1f));
-    	background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-    	
     	//Inicializar los elementos de la escena
     	createTableElements();
 
     	//Añadir las acciones a los botones
-		slider[0].addListener(new ClickListener(){
+		/*slider[0].addListener(new ClickListener(){
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				writeSettings(0);
@@ -82,25 +75,44 @@ public class ConfigScreen extends AbstractScreen {
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				writeSettings(1);
 			}
-		});
+		});*/
 
     	textButton[0].addListener(new ClickListener() {
     		@Override
     		public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
     			//Aplicar cambios
-    			writeSettings(2);
+    			writeSettings();
 				//configReader = new LectorLineas("files/config.txt");
 				readSettings();
+				textButton[2].setVisible(false);
 				//setLanguage(configReader.leerINTLinea(7));
     			return true;
     		}
     	});
-    	
+
+		textButton[2].addListener(new ClickListener(){
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				readSettings();
+				return true;
+			}
+		});
+		selectBox.getList().addListener(new ClickListener(){
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				return super.touchDown(event, x, y, pointer, button);
+			}
+
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				System.out.println("activao");
+			}
+		});
     	textButton[1].addListener(new ClickListener() {
     		@Override
     		public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
     			//Volver al menu
-    			Render.app.setScreen(Render.MAINSCREEN);
+    			Render.app.setScreen(new MainScreen());
     			return true;
     		}
     	});
@@ -132,11 +144,16 @@ public class ConfigScreen extends AbstractScreen {
         //Manage Inputs
         for(int i = 0; i < slider.length ; i++) {
         	if(slider[i].isDragging() || stage.keyDown(Keys.ANY_KEY)) {
-        		setVolume(slider[i].getValue(), i);
+				setVolume(slider[i].getValue(),i);
+				if(i == 0){
+					Settings.setMusicVolume(slider[i].getValue());
+				}else if(i == 1){
+					Settings.setSfxVolume(slider[i].getValue());
+				}
         	}
         }
         
-        
+        checkChanges();
         //---------------
 
     }
@@ -149,7 +166,7 @@ public class ConfigScreen extends AbstractScreen {
     	label = new Label[3];
     	slider = new Slider[2];
     	textField = new TextField[2];
-    	textButton = new TextButton[2]; 
+    	textButton = new TextButton[3];
     	
     	//LABELS
     	for(int i = 0; i < label.length ; i++) {
@@ -166,7 +183,8 @@ public class ConfigScreen extends AbstractScreen {
     		
     		textButton[i] = new TextButton("");
     	}
-    	
+    	textButton[2] = new TextButton("");
+		textButton[2].setVisible(false);
     	//SELECTBOX
     	selectBox = new SelectBox<String>(Render.app.getManager().get(Resources.SKIN_PATH,Skin.class));
     	selectBox.setItems("","");
@@ -176,7 +194,6 @@ public class ConfigScreen extends AbstractScreen {
      * Método que añade los actores a la escena
      */
     private void addActors() {
-        stage.addActor(background);
         stage.addActor(rootTable);
         stage.addActor(optionsTable);
     }
@@ -202,6 +219,7 @@ public class ConfigScreen extends AbstractScreen {
     	
     	//SETUP OPTIONS TABLE
     	optionsTable.right().bottom().padBottom(50).padRight(150);
+		optionsTable.add(textButton[2]).space(25);
     	optionsTable.add(textButton[0]).space(25);
     	optionsTable.add(textButton[1]).space(25);
     }
@@ -222,25 +240,14 @@ public class ConfigScreen extends AbstractScreen {
      * Escribe los valores obtenidos de los elementos de la UI
      * en el archivo de configuración "config.txt"
      */
-    private void writeSettings(int index) {
-		switch (index){
-			case 0:
-				configWriter.escribirLinea(5, Float.toString(slider[0].getValue()));
-				break;
-			case 1:
-				configWriter.escribirLinea(6, Float.toString(slider[1].getValue()));
-				break;
-			case 2:
-				configWriter.escribirLinea(7, Integer.toString(selectBox.getSelectedIndex() + 1));
-				break;
-		}
-
-
+    private void writeSettings() {
+		configWriter.escribirLinea(5, String.valueOf(Settings.musicVolume));
+		configWriter.escribirLinea(6, String.valueOf(Settings.sfxVolume));
+		configWriter.escribirLinea(7, Integer.toString(selectBox.getSelectedIndex() + 1));
+	}
     	// + 1 porque en el archivo de configuracion los idiomas se representan desde la fila 1
     	// En el archivo config.txt cada valor representa un idioma(1_ENG 2_ESP)
 
-    	
-    }
     /**
      * Metodo para actualizar el valor de la Slider y la TextField
      * de alguna fila de la rootTable
@@ -283,6 +290,17 @@ public class ConfigScreen extends AbstractScreen {
     	selectBox.setItems(languageReader.leerLinea(4),languageReader.leerLinea(5));
     	selectBox.setSelectedIndex(value-1);
     }
+
+	private void checkChanges(){
+		if(slider[0].getValue() != configReader.leerFLOATLinea(5) ||
+			slider[1].getValue() != configReader.leerFLOATLinea(6) ||
+				selectBox.getSelectedIndex() + 1 != configReader.leerINTLinea(7)){
+
+			textButton[2].setVisible(true);
+		}else{
+			textButton[2].setVisible(false);
+		}
+	}
 
     @Override
     public void resize(int width, int height) {

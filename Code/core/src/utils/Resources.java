@@ -16,6 +16,8 @@ public class Resources {
     public static final String TEXTBUTTON_HOVERSOUND = "sound/buttonMouseOverSound.mp3";
     public static final String TEXTBUTTON_CLICKSOUND = "sound/buttonClickedSound.mp3";
     public static final String PIECEMOVE_SOUND = "sound/pieceMove.mp3";
+    public static final String PALADINSWING_SOUND = "sound/paladinSwing.mp3";
+    public static final String EXPLOSION_SOUND = "sound/bomberExplosion.mp3";
     public static final String LODINGSOUND1 = "sound/LoadingScreen/loading1.mp3";
     public static final String LODINGSOUND2 = "sound/LoadingScreen/loading2.mp3";
     public static final String LODINGSOUND3 = "sound/LoadingScreen/loading3.mp3";
@@ -43,10 +45,11 @@ public class Resources {
     
     public static final String LANCER_PATH = "sprites/Testing-Pieces/Pieces Modified/White_Lancer.png";
     public static final String RIDER_PATH = "sprites/Testing-Pieces/Pieces Modified/White_Rider.png";
-    public static final String BOMBER_PATH = "sprites/Testing-Pieces/Pieces Modified/Butanero.png";
+    public static final String BOMBER_PATH = "sprites/Testing-Pieces/Pieces Modified/White_Bomber.png";
     public static final String WARDEN_PATH = "sprites/Testing-Pieces/Pieces Modified/White_Warden.png";
+    public static final String PALADIN_PATH = "sprites/Testing-Pieces/Pieces Modified/White_Paladin.png";
     public static final String RND_PATH = "sprites/Testing-Pieces/Pieces Modified/White_Joker.png";
-    public static final String MIDAS_PATH = "piece2.png";
+    public static final String MIDAS_PATH = "sprites/Testing-Pieces/Pieces Modified/White_Midas.png";
     
     public static final String RND_KNIGHT_PATH = "sprites/Testing-Pieces/Pieces Rnd Form/RndWhite_Knight.png";
     public static final String RND_ROOK_PATH = "sprites/Testing-Pieces/Pieces Rnd Form/RndWhite_Rook.png";

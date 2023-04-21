@@ -2,9 +2,12 @@ package elements.pieces;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Action;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 
 import elements.Board;
 import elements.Piece;
@@ -25,24 +28,6 @@ public class Bomber extends Piece{
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		super.draw(batch, parentAlpha);
-	}
-	
-	/**
-	 * Comprueba que las casillas a las que el bombardero pueda moverse estan dentro del tablero y si tienen alguna pieza dentro
-	 * @param board
-	 * @param x
-	 * @param y
-	 * @return
-	 */
-	private Boolean checkBoard(Board board, int i, float x, float y) {
-		Boolean res = false;
-		if(i!=0 && board.getTile(x, y)!=null && board.getTile(x, y).getPiece()!=null && !sameColor(board.getTile(x, y).getPiece())) {
-			res = true;
-		}else if(i==0 && board.getTile(x, y)!=null && board.getTile(x, y).getPiece()==null) {
-			res = true;
-		}
-		
-		return res;
 	}
 
 	/**
@@ -69,7 +54,6 @@ public class Bomber extends Piece{
 		addMovement(x + direction, y, board, movements);
 		addMovement(x - direction, y, board, movements);
 
-		
 		if(canExplode) {
 			System.out.println("Puede  explotar");
 			addMovement(x + direction, y + direction, board, movements);
@@ -82,8 +66,6 @@ public class Bomber extends Piece{
 			addNonAtackMovement(x - direction, y + direction, movements);
 			addNonAtackMovement(x - direction, y - direction, movements);
 		}
-		
-
 		
 		if(board.getTile(x, y+direction) != null && board.getTile(x, y+direction).getPiece()== null) {
 			addNonAtackMovement(x, y + 2*direction, movements);			
@@ -98,27 +80,47 @@ public class Bomber extends Piece{
 			addNonAtackMovement(x - 2*direction, y, movements);			
 		}
 			
-		System.out.println("MOVEMENTS -> " + movements.toString());
 		return movements;
 	}
 
 	public void addMovement(float x, float y, Board board, ArrayList<Vector2> movements) {
 		if (board.getTile(x, y) != null && !sameColor(board.getTile(x, y).getPiece())) {
 			if(board.getTile(x, y).getPiece()!=null) {
-				System.out.println("PUEDE EXPLOTAR");
 				canExplode = true;
 			}
-			//System.out.println("MOVIMIENTO AÑADIDO A: " + x + ", "+y);
 			movements.add(new Vector2(x, y));
 		}
 	}
 	
 	private void addNonAtackMovement(float x, float y, ArrayList<Vector2> movements) {
 		if (board.getTile(x, y) != null && board.getTile(x, y).getPiece()==null) {
-			//System.out.println("MOVIMIENTO AÑADIDO A: " + x + ", "+y);
 			movements.add(new Vector2(x, y));
 		}
 	}
+	
+	public void explode() {
+		Action explosionSfx = new Action() {
+			Sound sound = Render.app.getManager().get(Resources.EXPLOSION_SOUND, Sound.class);
+
+			public boolean act(float delta) {
+				sound.play(0.5f);
+				return true;
+			}
+		};
+		addAction(Actions.after(explosionSfx));
+		explosion();
+	}
+	
+	private void explosion() {
+		for(int i=x-1;i<=x+1;i++) {
+			for(int j=y-1;j<=y+1;j++) {
+				if(board.getTile(i, j)!=null && board.getTile(i, j).piece!=null) {
+					board.getTile(i, j).sendPieceToGraveyard();
+				}
+			}
+		}
+	}
+
 	
 	public void dispose() {
 		sprite.dispose();

@@ -80,8 +80,6 @@ public class GameScreen extends AbstractScreen {
 	//Modo depuracion
 	private boolean debugMode = false;
 
-	//Control bombarderos
-	private boolean WHasBomb = true, BHasBomb = false; //Guardan si tienen bombarderos, se actualiza en select
 
 	@Override
 	public void show() {
@@ -377,10 +375,12 @@ public class GameScreen extends AbstractScreen {
         	
         	//Si se da el caso bomba no se mueve ninguna pieza por lo que no se comprueba nada simplemente explota
         	if(checkBomber()) {
-            	explosion(current_x,current_y);
-            }else {
+            	Bomber b = (Bomber)currentTile.getPiece();
+            	b.explode();
+            }else if(!checkPaladin(next_x, next_y)){	
             	
             	checkMarshal();
+            	
             	
             	checkCastling(next_x);
 
@@ -410,8 +410,8 @@ public class GameScreen extends AbstractScreen {
     }
 	
 	private void checkMarshal() {
-		if(currentTile.piece instanceof Midas && nextTile.piece!= null) {
-			currentTile.piece.ate++;
+		if(currentTile.getPiece() instanceof Midas && nextTile.getPiece()!= null) {
+			currentTile.getPiece().ate++;
 		}
 	}
 
@@ -425,23 +425,39 @@ public class GameScreen extends AbstractScreen {
 	    }
 	}
 
-	private void explosion(int x, int y) {
-		for(int i=x-1;i<=x+1;i++) {
-			for(int j=y-1;j<=y+1;j++) {
-				if(correctTile(i,j) && board.getTile(i, j).piece!=null) {
-					board.getTile(i, j).sendPieceToGraveyard();
-				}
-			}
-		}
-	}
-
-	private boolean correctTile(int i, int j) {
-		return i>=1 && i<=8 && j>=1 && j<=8;
-	}
+	
 
 	private boolean checkBomber() {
-		//Comprobar redundancias
-		return currentTile.piece instanceof Bomber && nextTile.piece!= null;
+		return currentTile.getPiece() instanceof Bomber && nextTile.getPiece()!= null;
+	}
+	
+	private Boolean checkPaladin(float next_x, float next_y) {
+		Boolean swing = false;
+		if(currentTile.getPiece() instanceof Paladin) {
+			Paladin p = (Paladin)currentTile.getPiece();
+			if(next_x == current_x && next_y == current_y + 1 && p.canSwingUp) {
+				paladinSwing(1, 0, next_x, next_y);
+				swing=true;
+			}else if(next_x == current_x && next_y == current_y - 1 && p.canSwingDown) {
+				paladinSwing(1, 0, next_x, next_y);
+				swing=true;
+			}else if(next_x == current_x + 1 && next_y == current_y && p.canSwingRight) {
+				paladinSwing(0, 1, next_x, next_y);
+				swing=true;
+			}else if(next_x == current_x - 1 && next_y == current_y && p.canSwingLeft) {
+				paladinSwing(0, 1, next_x, next_y);
+				swing=true;
+			}			
+		}
+		return swing;
+	}
+	
+	private void paladinSwing(float i, float j, float next_x, float next_y) {
+		board.getTile(next_x-i,next_y-j).sendPieceToGraveyard();
+		board.getTile(next_x,next_y).sendPieceToGraveyard();
+		board.getTile(next_x+1,next_y+j).sendPieceToGraveyard();
+		Paladin p = (Paladin)currentTile.getPiece();
+		p.swingSound();
 	}
 
 	/**
@@ -465,15 +481,15 @@ public class GameScreen extends AbstractScreen {
 	}
 
 	/**
-	 * Devuelve {@code true} si con el conjunto de piezas {@code pisses} no se pueden hacer movimientos, si tiene devuelve {@code false}
-	 * @param pisses las piezas que se usan para la comprobación
+	 * Devuelve {@code true} si con el conjunto de piezas {@code pieces} no se pueden hacer movimientos, si tiene devuelve {@code false}
+	 * @param pieces las piezas que se usan para la comprobación
 	 */
-	private boolean hasMoves(ArrayList<Piece> pisses) {
-		boolean tieneMov = false;
-		for (int i = 0; i < pisses.size() && !tieneMov; i++) { //Si una pieza tiene movimientos se sale
-			tieneMov = !pisses.get(i).getValidMovements().isEmpty();
+	private boolean hasMoves(ArrayList<Piece> pieces) {
+		boolean hasMoves = false;
+		for (int i = 0; i < pieces.size() && !hasMoves; i++) { //Si una pieza tiene movimientos se sale
+			hasMoves = !pieces.get(i).getValidMovements().isEmpty();
 		}
-		return tieneMov;
+		return hasMoves;
 	}
 
 	/**
@@ -488,17 +504,6 @@ public class GameScreen extends AbstractScreen {
 			board.getTile(8, current_y).move(current_x+1,current_y);
 		}
 
-	}
-
-	/**
-	 * Elimina el enroque si se ha seleccionado el rey y está en jaque
-	 */
-	private void castleCancel(){
-		if (isCheck() && currentTile.getPiece() instanceof King){
-			//Si es jaque se le quita al rey su habilidad de enrocar por la fuerza
-			currentTile_validMovements.remove(new Vector2(current_x - 2, current_y));
-			currentTile_validMovements.remove(new Vector2(current_x + 2, current_y));
-		}
 	}
 	
 	/**
@@ -608,14 +613,14 @@ public class GameScreen extends AbstractScreen {
 	public void testDrafts() {
 		
 		//Para probar la pieza random
-		Render.player1Draft.add(Resources.BOMBER_PATH);
+		Render.player1Draft.add(Resources.PALADIN_PATH);
 		Render.player1Draft.add(Resources.KNIGHT_PATH);
 		Render.player1Draft.add(Resources.ROOK_PATH);
 		Render.player1Draft.add(Resources.RND_PATH);
 		Render.player1Draft.add(Resources.QUEEN_PATH);
 		Render.player1Draft.add(Resources.KING_PATH);
 		
-		Render.player2Draft.add(Resources.PAWN_PATH);
+		Render.player2Draft.add(Resources.PALADIN_PATH);
 		Render.player2Draft.add(Resources.KNIGHT_PATH);
 		Render.player2Draft.add(Resources.ROOK_PATH);
 		Render.player2Draft.add(Resources.RND_PATH);
