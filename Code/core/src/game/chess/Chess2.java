@@ -69,7 +69,10 @@ public class Chess2 extends Game {
 		Render.CLASSICMANSCREEN = new ClassicManScreen();
 		Render.MANUALSCREEN = new ManualScreen();
 
-		this.setScreen(Render.GAMESCREEN);
+		Render.GameScreen = new GameScreen();
+		this.setScreen(Render.GameScreen);
+//		 this.setScreen(Render.MAINSCREEN);
+		// this.setScreen(Render.DRAFTSCREEN);
 
 	}
 

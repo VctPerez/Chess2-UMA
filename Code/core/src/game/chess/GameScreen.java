@@ -198,11 +198,45 @@ public class GameScreen extends AbstractScreen {
 	 * @param next_x
 	 * @param next_y
 	 */
-	private void isMate(float next_x, float next_y) {
-		ArrayList<Vector2> nextTile_validMovements = nextTile.getPiece().getValidMovements();
-		if(nextTile.getPiece().color() && nextTile_validMovements.contains(blackKing)) {
-			blackMate=true;
-			board.getTile(blackKing.x,blackKing.y ).attacked = true;
+	private static boolean updateCheck() {
+		int i = 0;
+		if(nextTile.getPiece().color()) {
+			while(i<whitePieces.size()) {
+				Piece piece = whitePieces.get(i);
+				i++;
+				if (piece.getValidMovements().contains(blackKing)) {
+
+					blackCheck = true;
+					board.getTile(blackKing.x, blackKing.y).attacked = true;
+
+					System.out.println("REY NEGRO EN JAQUE");
+				}
+			}
+			
+		}else if(!nextTile.getPiece().color()){
+			while(i<blackPieces.size()) {
+				Piece piece = blackPieces.get(i);
+				i++;
+				if(piece.getValidMovements().contains(whiteKing)) {
+
+					whiteCheck =true;
+					board.getTile(whiteKing.x, whiteKing.y).attacked = true;
+					
+					System.out.println("REY BLANCO EN JAQUE");
+				}
+			}
+		}
+		/*
+		if(nextTile.getPiece().color()) {
+			for(Piece piece: whitePieces) {
+				if (piece.getValidMovements().contains(blackKing)) {
+
+					blackCheck = true;
+					board.getTile(blackKing.x, blackKing.y).attacked = true;
+
+					System.out.println("REY NEGRO EN JAQUE");
+				}
+			}
 			
 			System.out.println("REY NEGRO EN JAQUE");
 			
@@ -212,6 +246,8 @@ public class GameScreen extends AbstractScreen {
 			
 			System.out.println("REY BLANCO EN JAQUE");
 		}
+		*/
+		return isCheck();
 	}
 	
 	/**
@@ -224,9 +260,16 @@ public class GameScreen extends AbstractScreen {
 		boolean isCheckMate = false;
 		if(Mate) {
 			ArrayList<Vector2> validMovements = new ArrayList<>();
+			int i = 0;
+			while(i<pieces.size()) {
+				validMovements.addAll(pieces.get(i).getValidMovements());
+				i++;
+			}
+			/*
 			for(Piece piece: pieces) {
 				validMovements.addAll(piece.getValidMovements());
 			}
+			*/
 			System.out.println("LISTA DE MOVIMIMIENTOS LEGALES -> " + validMovements);
 			if(validMovements.isEmpty()) {
 				isCheckMate=true;
@@ -237,9 +280,9 @@ public class GameScreen extends AbstractScreen {
 	/**
 	 * Elimina los jaques a cualquier rey ya que si estaba en jaque ya que si has podido hacer un movimiento, lo has puesto a salvo, si no se pudiera seria jaque mate
 	 */
-	private void resetMate() {
-		blackMate=false;
-        whiteMate=false;
+	public void resetMate() {
+		blackCheck =false;
+        whiteCheck =false;
         board.getTile(blackKing.x,blackKing.y ).attacked = false;
         board.getTile(whiteKing.x, whiteKing.y).attacked = false;
 	}
@@ -264,6 +307,19 @@ public class GameScreen extends AbstractScreen {
 	 * @param next_y
 	 */
 	private void moveCurrentPieceTo(int next_x, int next_y) {
+        if (currentTile_validMovements.contains(new Vector2(next_x, next_y)) || debugMode) {
+        	
+        	//Si se da el caso bomba no se mueve ninguna pieza por lo que no se comprueba nada simplemente explota
+        	if(checkBomber()) {
+            	Bomber b = (Bomber)currentTile.getPiece();
+            	b.explode();
+            	resetMate();
+            }else if(!currentTile.getPiece().checkPaladin(next_x, next_y)){	
+            	
+            	checkMarshal();
+            	
+            	
+            	checkCastling(next_x);
 
         if (currentTile_validMovements.contains(new Vector2(next_x, next_y))) {
 
@@ -288,6 +344,28 @@ public class GameScreen extends AbstractScreen {
 
         }
     }
+	
+	private void checkMarshal() {
+		if(currentTile.getPiece() instanceof Midas && nextTile.getPiece()!= null) {
+			currentTile.getPiece().ate++;
+		}
+	}
+
+	private void checkGuardian(int next_y) {
+		if(current_y - 1 == next_y && nextTile.getPiece().color()){
+			nextTile.getPiece().backed=true;
+		}else if(current_y + 1 == next_y && !nextTile.getPiece().color()) {
+			nextTile.getPiece().backed=true;
+	    }else {
+	    	nextTile.getPiece().backed=false;
+	    }
+	}
+
+	
+
+	private boolean checkBomber() {
+		return currentTile.getPiece() instanceof Bomber && nextTile.getPiece()!= null;
+	}
 
 	/**
 	 * Comprueba si el ultimo movimiento era un enroque para mover tambien la torre que corresponda

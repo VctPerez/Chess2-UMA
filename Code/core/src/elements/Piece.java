@@ -111,6 +111,11 @@ public abstract class Piece extends Actor {
 	private Boolean checkBoard(Board board, float x, float y) {
 		return null;
 	}
+	
+	@SuppressWarnings("unused")
+	public Boolean checkPaladin(float next_x, float next_y) {
+		return false;
+	}
 
 	/**
 	 * Filtra todos los posibles movimientos de una pieza y solo permite aquellos que sean legales. Se hace borrando los movimientos ilegales de la lista de posibles movimientos 
@@ -142,10 +147,11 @@ public abstract class Piece extends Actor {
 		if(nextTile.getPiece()!=null) {
 			nextTilePiece = nextTile.getPiece();
 		}
-		currentTile.moveTo(nextTile);
 		
-		//check king
-		if(color && !isKingSafe(GameScreen.blackPieces, GameScreen.whiteKing)) {
+		currentTile.simulateMoveTo(nextTile);
+
+		// check king
+		if (color && !isKingSafe(Render.GameScreen.blackPieces, Render.GameScreen.whiteKing)) {
 			removeMovements.add(move);
 		}else if(!color && !isKingSafe(GameScreen.whitePieces, GameScreen.blackKing)) {
 			removeMovements.add(move);
