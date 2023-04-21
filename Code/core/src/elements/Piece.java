@@ -143,6 +143,7 @@ public abstract class Piece extends Actor {
 	public void dispose() {
 		sprite.dispose();
 	}
+	
 
 	/**
 	 * 
@@ -160,6 +161,10 @@ public abstract class Piece extends Actor {
 	@SuppressWarnings("unused")
 	private Boolean checkBoard(Board board, float x, float y) {
 		return null;
+	}
+	
+	public Boolean checkPaladin(float next_x, float next_y) {
+		return false;
 	}
 
 	/**
@@ -199,7 +204,7 @@ public abstract class Piece extends Actor {
 		if (nextTile.getPiece() != null) {
 			nextTilePiece = nextTile.getPiece();
 		}
-		if(nextTilePiece instanceof Colosus && !(currentTile.piece instanceof King || currentTile.piece instanceof Midas)) {
+		if(nextTilePiece instanceof Colosus) {
 			removeMovements.add(move);
 		}
 		currentTile.simulateMoveTo(nextTile);

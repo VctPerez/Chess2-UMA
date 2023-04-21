@@ -289,9 +289,11 @@ public class GameScreen extends AbstractScreen {
 	 * Actualiza los valores de jaque en el tablero
 	 */
 	private static boolean updateCheck() {
-
+		int i = 0;
 		if(nextTile.getPiece().color()) {
-			for(Piece piece: whitePieces) {
+			while(i<whitePieces.size()) {
+				Piece piece = whitePieces.get(i);
+				i++;
 				if (piece.getValidMovements().contains(blackKing)) {
 
 					blackCheck = true;
@@ -302,8 +304,9 @@ public class GameScreen extends AbstractScreen {
 			}
 			
 		}else if(!nextTile.getPiece().color()){
-			for(Piece piece: blackPieces) {
-
+			while(i<blackPieces.size()) {
+				Piece piece = blackPieces.get(i);
+				i++;
 				if(piece.getValidMovements().contains(whiteKing)) {
 
 					whiteCheck =true;
@@ -313,6 +316,7 @@ public class GameScreen extends AbstractScreen {
 				}
 			}
 		}
+		
 		return isCheck();
 	}
 
@@ -324,13 +328,20 @@ public class GameScreen extends AbstractScreen {
 	 * @param pieces
 	 * @return true si el color que está en mate no tiene movimientos disponibles que hagan que el rey esté a salvo.
 	 */
-	private static boolean isCheckMate(boolean check, ArrayList<Piece> pieces) {
+	private static boolean isCheckMate(boolean Mate, ArrayList<Piece> pieces) {
 		boolean isCheckMate = false;
-		if(check) {
+		if(Mate) {
 			ArrayList<Vector2> validMovements = new ArrayList<>();
+			int i = 0;
+			while(i<pieces.size()) {
+				validMovements.addAll(pieces.get(i).getValidMovements());
+				i++;
+			}
+			/*
 			for(Piece piece: pieces) {
 				validMovements.addAll(piece.getValidMovements());
 			}
+			*/
 			System.out.println("LISTA DE MOVIMIMIENTOS LEGALES -> " + validMovements);
 			if(validMovements.isEmpty()) {
 				isCheckMate=true;
@@ -341,7 +352,7 @@ public class GameScreen extends AbstractScreen {
 	/**
 	 * Elimina los jaques a cualquier rey ya que si estaba en jaque ya que si has podido hacer un movimiento, lo has puesto a salvo, si no se pudiera seria jaque mate
 	 */
-	private void resetMate() {
+	public void resetMate() {
 		blackCheck =false;
         whiteCheck =false;
         board.getTile(blackKing.x,blackKing.y ).attacked = false;
@@ -377,7 +388,7 @@ public class GameScreen extends AbstractScreen {
         	if(checkBomber()) {
             	Bomber b = (Bomber)currentTile.getPiece();
             	b.explode();
-            }else if(!checkPaladin(next_x, next_y)){	
+            }else if(!currentTile.getPiece().checkPaladin(next_x, next_y)){	
             	
             	checkMarshal();
             	
@@ -429,35 +440,6 @@ public class GameScreen extends AbstractScreen {
 
 	private boolean checkBomber() {
 		return currentTile.getPiece() instanceof Bomber && nextTile.getPiece()!= null;
-	}
-	
-	private Boolean checkPaladin(float next_x, float next_y) {
-		Boolean swing = false;
-		if(currentTile.getPiece() instanceof Paladin) {
-			Paladin p = (Paladin)currentTile.getPiece();
-			if(next_x == current_x && next_y == current_y + 1 && p.canSwingUp) {
-				paladinSwing(1, 0, next_x, next_y);
-				swing=true;
-			}else if(next_x == current_x && next_y == current_y - 1 && p.canSwingDown) {
-				paladinSwing(1, 0, next_x, next_y);
-				swing=true;
-			}else if(next_x == current_x + 1 && next_y == current_y && p.canSwingRight) {
-				paladinSwing(0, 1, next_x, next_y);
-				swing=true;
-			}else if(next_x == current_x - 1 && next_y == current_y && p.canSwingLeft) {
-				paladinSwing(0, 1, next_x, next_y);
-				swing=true;
-			}			
-		}
-		return swing;
-	}
-	
-	private void paladinSwing(float i, float j, float next_x, float next_y) {
-		board.getTile(next_x-i,next_y-j).sendPieceToGraveyard();
-		board.getTile(next_x,next_y).sendPieceToGraveyard();
-		board.getTile(next_x+1,next_y+j).sendPieceToGraveyard();
-		Paladin p = (Paladin)currentTile.getPiece();
-		p.swingSound();
 	}
 
 	/**
