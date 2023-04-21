@@ -531,7 +531,153 @@ jsonData: {
 			file: C:/Users/adrid/Documents/GitHub/Chess2-UMA/Code/assets/fonts/TitleStyle_Label_FONT.fnt
 		}
 	]
-	freeTypeFonts: []
+	freeTypeFonts: [
+		{
+			class: com.ray3k.skincomposer.data.FreeTypeFontData
+			name: Default_Label
+			file: C:/Users/adrid/Documents/GitHub/Chess2-UMA/Code/assets/fonts/upheavtt.ttf
+			previewTTF: IBMPlexSerif-Medium
+			useCustomSerializer: true
+			size: 20
+			mono: false
+			hinting: None
+			color: TEXT_COLOR
+			gamma: 0
+			renderCount: 2
+			borderWidth: 0
+			borderColor: null
+			borderStraight: false
+			borderGamma: 0
+			shadowOffsetX: 0
+			shadowOffsetY: 0
+			shadowColor: null
+			spaceX: 0
+			spaceY: 0
+			characters: ""
+			kerning: true
+			flip: false
+			genMipMaps: false
+			minFilter: Nearest
+			magFilter: Nearest
+			incremental: false
+		}
+		{
+			class: com.ray3k.skincomposer.data.FreeTypeFontData
+			name: Default_TextButton
+			file: C:/Users/adrid/Documents/GitHub/Chess2-UMA/Code/assets/fonts/upheavtt.ttf
+			previewTTF: IBMPlexSerif-Medium
+			useCustomSerializer: true
+			size: 60
+			mono: false
+			hinting: None
+			color: TEXT_COLOR
+			gamma: 0
+			renderCount: 2
+			borderWidth: 6
+			borderColor: TEXT_BORDER_COLOR
+			borderStraight: false
+			borderGamma: 1
+			shadowOffsetX: 0
+			shadowOffsetY: 0
+			shadowColor: null
+			spaceX: 0
+			spaceY: 0
+			characters: ""
+			kerning: true
+			flip: false
+			genMipMaps: false
+			minFilter: Nearest
+			magFilter: Nearest
+			incremental: false
+		}
+		{
+			class: com.ray3k.skincomposer.data.FreeTypeFontData
+			name: Default_TextField
+			file: C:/Users/adrid/Documents/GitHub/Chess2-UMA/Code/assets/fonts/upheavtt.ttf
+			previewTTF: IBMPlexSerif-Medium
+			useCustomSerializer: true
+			size: 46
+			mono: false
+			hinting: None
+			color: TEXT_COLOR
+			gamma: 0
+			renderCount: 2
+			borderWidth: 0
+			borderColor: null
+			borderStraight: false
+			borderGamma: 1.8
+			shadowOffsetX: 0
+			shadowOffsetY: 0
+			shadowColor: null
+			spaceX: 0
+			spaceY: 0
+			characters: ""
+			kerning: true
+			flip: false
+			genMipMaps: false
+			minFilter: Nearest
+			magFilter: Nearest
+			incremental: false
+		}
+		{
+			class: com.ray3k.skincomposer.data.FreeTypeFontData
+			name: SingleClickStyle_TextButton
+			file: C:/Users/adrid/Documents/GitHub/Chess2-UMA/Code/assets/fonts/upheavtt.ttf
+			previewTTF: IBMPlexSerif-Medium
+			useCustomSerializer: true
+			size: 40
+			mono: false
+			hinting: None
+			color: TEXT_COLOR
+			gamma: 0
+			renderCount: 2
+			borderWidth: 4
+			borderColor: TEXT_BORDER_COLOR
+			borderStraight: false
+			borderGamma: 0
+			shadowOffsetX: 0
+			shadowOffsetY: 0
+			shadowColor: null
+			spaceX: 0
+			spaceY: 0
+			characters: ""
+			kerning: true
+			flip: false
+			genMipMaps: false
+			minFilter: Nearest
+			magFilter: Nearest
+			incremental: false
+		}
+		{
+			class: com.ray3k.skincomposer.data.FreeTypeFontData
+			name: TitleStyle_Label
+			file: C:/Users/adrid/Documents/GitHub/Chess2-UMA/Code/assets/fonts/upheavtt.ttf
+			previewTTF: IBMPlexSerif-Medium
+			useCustomSerializer: true
+			size: 120
+			mono: false
+			hinting: None
+			color: TEXT_COLOR
+			gamma: 0
+			renderCount: 2
+			borderWidth: 7
+			borderColor: TEXT_BORDER_COLOR
+			borderStraight: false
+			borderGamma: 0.5
+			shadowOffsetX: 0
+			shadowOffsetY: 0
+			shadowColor: null
+			spaceX: 0
+			spaceY: 0
+			characters: ""
+			kerning: true
+			flip: false
+			genMipMaps: false
+			minFilter: Nearest
+			magFilter: Nearest
+			incremental: false
+		}
+	]
 	classStyleMap: {
 		com.badlogic.gdx.scenes.scene2d.ui.CheckBox: [
 			{
@@ -883,7 +1029,7 @@ jsonData: {
 						type: com.badlogic.gdx.graphics.g2d.BitmapFont
 						name: font
 						optional: false
-						value: Default_TextField_FONT
+						value: Default_TextField
 					}
 					fontColor: {
 						type: com.badlogic.gdx.graphics.Color
@@ -1634,7 +1780,7 @@ jsonData: {
 						type: com.badlogic.gdx.graphics.g2d.BitmapFont
 						name: font
 						optional: false
-						value: Default_TextButtons_FONT
+						value: Default_TextButton
 					}
 					fontColor: {
 						type: com.badlogic.gdx.graphics.Color
@@ -1793,7 +1939,7 @@ jsonData: {
 						type: com.badlogic.gdx.graphics.g2d.BitmapFont
 						name: font
 						optional: false
-						value: SingleClickStyle_TextButtons_FONT
+						value: SingleClickStyle_TextButton
 					}
 					fontColor: {
 						type: com.badlogic.gdx.graphics.Color
@@ -2015,7 +2161,7 @@ jsonData: {
 						type: com.badlogic.gdx.graphics.g2d.BitmapFont
 						name: font
 						optional: false
-						value: Default_TextField_FONT
+						value: Default_TextField
 					}
 					fontColorSelected: {
 						type: com.badlogic.gdx.graphics.Color
@@ -2255,7 +2401,7 @@ jsonData: {
 						type: com.badlogic.gdx.graphics.g2d.BitmapFont
 						name: font
 						optional: false
-						value: Default_Label_FONT
+						value: Default_Label
 					}
 					fontColor: {
 						type: com.badlogic.gdx.graphics.Color
@@ -2282,7 +2428,7 @@ jsonData: {
 						type: com.badlogic.gdx.graphics.g2d.BitmapFont
 						name: font
 						optional: false
-						value: TitleStyle_Label_FONT
+						value: TitleStyle_Label
 					}
 					fontColor: {
 						type: com.badlogic.gdx.graphics.Color
@@ -2309,7 +2455,7 @@ jsonData: {
 						type: com.badlogic.gdx.graphics.g2d.BitmapFont
 						name: font
 						optional: false
-						value: Default_TextButtons_FONT
+						value: Default_TextButton
 					}
 					fontColor: {
 						type: com.badlogic.gdx.graphics.Color

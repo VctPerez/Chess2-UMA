@@ -339,7 +339,7 @@ public class OnlineGameScreen extends GameScreen {
 	/**
 	 * Elimina los jaques a cualquier rey ya que si estaba en jaque ya que si has podido hacer un movimiento, lo has puesto a salvo, si no se pudiera seria jaque mate
 	 */
-	private void resetMate() {
+	public void resetMate() {
 		blackCheck =false;
         whiteCheck =false;
         board.getTile(blackKing.x,blackKing.y ).attacked = false;

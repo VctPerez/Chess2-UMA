@@ -86,7 +86,7 @@ public class MainScreen extends AbstractScreen {
     	
     	textButton = new TextButton[4];
     	
-    	title = new Label("chess 2", Render.app.getManager().get(Resources.SKIN_PATH,Skin.class), "TitleStyle");
+    	title = new Label("chess 2", Render.skin, "TitleStyle");
     	
     	textButton[0] = new TextButton(languageReader.leerLinea(1));//Jugar = Linea 1
     	textButton[1] = new TextButton(languageReader.leerLinea(4));//Configuracion = Linea 4
@@ -100,10 +100,11 @@ public class MainScreen extends AbstractScreen {
     
     private void setupTable() {
     	table.left().pad(50);
-    	table.add(title).left().space(50);
+    	table.defaults().left().space(40);
+    	table.add(title);
     	table.row();
     	for (int i = 0 ; i < textButton.length ; i++) {
-    		table.add(textButton[i]).left().space(25);
+    		table.add(textButton[i]);
         	table.row();
     	}
     }

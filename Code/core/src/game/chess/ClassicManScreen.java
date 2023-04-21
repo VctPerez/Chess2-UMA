@@ -74,7 +74,7 @@ public class ClassicManScreen extends AbstractScreen{
 	}
 
 	private void createTableElements() {
-    	title = new Label("Manual", Render.app.getManager().get(Resources.SKIN_PATH,Skin.class), "TitleStyle");
+    	title = new Label("Manual", Render.skin, "TitleStyle");
     	textButton = new TextButton(languageReader.leerLinea(1));
     	
     	String text="";

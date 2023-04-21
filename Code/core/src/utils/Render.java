@@ -30,6 +30,7 @@ public class Render {
     public static OrthographicCamera camera;
 
     public static Viewport viewport;
+    public static Skin skin;
 
     public static Chess2 app;
 

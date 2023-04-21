@@ -67,7 +67,7 @@ public class ModeScreen extends AbstractScreen{
     	
     	textButton = new TextButton[3];
     	
-    	title = new Label(languageReader.leerLinea(5), Render.app.getManager().get(Resources.SKIN_PATH,Skin.class), "TitleStyle");//Manual
+    	title = new Label(languageReader.leerLinea(5), Render.skin, "TitleStyle");//Manual
     	
     	textButton[0] = new TextButton(languageReader.leerLinea(6));//Modified
     	textButton[1] = new TextButton(languageReader.leerLinea(7));//Classic
@@ -80,10 +80,11 @@ public class ModeScreen extends AbstractScreen{
     
     private void setupTable() {
     	table.left().pad(50);
-    	table.add(title).left().space(50);
+    	table.defaults().left().space(40);
+    	table.add(title);
     	table.row();
     	for (int i = 0 ; i < textButton.length ; i++) {
-    		table.add(textButton[i]).left().space(25);
+    		table.add(textButton[i]);
         	table.row();
     	}
     }

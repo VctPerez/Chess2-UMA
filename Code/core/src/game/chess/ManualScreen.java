@@ -58,11 +58,12 @@ public class ManualScreen extends AbstractScreen{
 		}
 
 		private void setupTable() {
-			table.left().pad(50);
-	    	table.add(title).left().space(50);
+	    	table.left().pad(50);
+	    	table.defaults().left().space(40);
+	    	table.add(title);
 	    	table.row();
 	    	for (int i = 0 ; i < textButton.length ; i++) {
-	    		table.add(textButton[i]).left().space(25);
+	    		table.add(textButton[i]);
 	        	table.row();
 	    	}
 		}
@@ -71,7 +72,7 @@ public class ManualScreen extends AbstractScreen{
 	    	
 	    	textButton = new TextButton[3];
 	    	
-	    	title = new Label("Manual", Render.app.getManager().get(Resources.SKIN_PATH,Skin.class), "TitleStyle");
+	    	title = new Label("Manual", Render.skin, "TitleStyle");
 	    	
 	    	textButton[0] = new TextButton(languageReader.leerLinea(2));
 	    	textButton[1] = new TextButton(languageReader.leerLinea(3));

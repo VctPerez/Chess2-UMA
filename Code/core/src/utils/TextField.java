@@ -16,7 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 public class TextField extends com.badlogic.gdx.scenes.scene2d.ui.TextField{
 	
 	public TextField(String defaultText, String styleName) {
-		super(defaultText, Render.app.getManager().get(Resources.SKIN_PATH,Skin.class),styleName);
+		super(defaultText, Render.skin,styleName);
 		this.addListener(new ClickListener() {
 			@Override
 			public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {

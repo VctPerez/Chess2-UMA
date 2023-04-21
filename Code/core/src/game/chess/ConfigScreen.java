@@ -170,23 +170,23 @@ public class ConfigScreen extends AbstractScreen {
     	
     	//LABELS
     	for(int i = 0; i < label.length ; i++) {
-    		label[i] = new Label("", Render.app.getManager().get(Resources.SKIN_PATH,Skin.class), "ConfigStyle");
+    		label[i] = new Label("", Render.skin, "ConfigStyle");
     	}
     	
     	//SLIDERS - TEXTFIELDS - TEXTBUTTONS
     	for(int i = 0; i < slider.length ; i++) {
-    		slider[i] = new Slider(0, 100, 1, false, Render.app.getManager().get(Resources.SKIN_PATH,Skin.class));
+    		slider[i] = new Slider(0, 100, 1, false, Render.skin);
     		
     		textField[i] = new TextField("0");
     		textField[i].setAlignment(Align.center);
     		textField[i].setDisabled(true);
     		
-    		textButton[i] = new TextButton("");
+    		textButton[i] = new TextButton("","SingleClickStyle");
     	}
-    	textButton[2] = new TextButton("");
+    	textButton[2] = new TextButton("","SingleClickStyle");
 		textButton[2].setVisible(false);
     	//SELECTBOX
-    	selectBox = new SelectBox<String>(Render.app.getManager().get(Resources.SKIN_PATH,Skin.class));
+    	selectBox = new SelectBox<String>(Render.skin);
     	selectBox.setItems("","");
     	
     }
@@ -307,6 +307,8 @@ public class ConfigScreen extends AbstractScreen {
         Render.SCREEN_WIDTH = width;
         Render.SCREEN_HEIGHT = height;
         Render.camera.setToOrtho(false, width, height);
+        
+        stage.getViewport().update(width, height);
     }
 
     @Override
