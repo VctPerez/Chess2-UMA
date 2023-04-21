@@ -25,8 +25,12 @@ public class Host extends Thread {
     @Override
     public void run() {
         try {
-            System.out.println("Server abierto");
-            waitConnection();
+            if(!isP2connected()){
+                System.out.println("Server abierto");
+                waitConnection();
+            }else{
+                receiveMessage();
+            }
         } catch (Exception e) {
             System.err.println("Server closed - " + e.getClass().getName());
             e.printStackTrace();
@@ -102,5 +106,16 @@ public class Host extends Thread {
      */
     public Player getPlayer2(){
         return p2;
+    }
+
+    public void sendMessage(String message) throws IOException {
+        PrintWriter pw = new PrintWriter(player2.getOutputStream());
+        pw.println(message);
+        pw.flush();
+    }
+    public String receiveMessage() throws IOException {
+        InputStreamReader in = new InputStreamReader(player2.getInputStream());
+        BufferedReader buffer = new BufferedReader(in);
+        return buffer.readLine();
     }
 }

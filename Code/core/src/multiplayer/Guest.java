@@ -7,11 +7,13 @@ import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class Guest{
+public class Guest extends Thread{
     private String ipDest;
     Socket gameConnection;
     Player player2, player1;
     private boolean connected = false;
+    private String message = "";
+    private boolean receiving = false;
 
     /**
      * Inicializa el guest
@@ -39,6 +41,18 @@ public class Guest{
             throw new RuntimeException(e);
         }
     }*/
+
+    @Override
+    public void run() {
+        try {
+            while(receiving){
+                receiveMessage();
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public void connect(String ip) throws IOException {
         gameConnection = new Socket(ip, 8000);
         connected = gameConnection.isConnected();
@@ -89,5 +103,24 @@ public class Guest{
         PrintWriter pw = new PrintWriter(gameConnection.getOutputStream());
         pw.println(player2.getName());
         pw.flush();
+    }
+
+    public void sendMessage(String message) throws IOException {
+        PrintWriter pw = new PrintWriter(gameConnection.getOutputStream());
+        pw.println(message);
+        pw.flush();
+    }
+    public void receiveMessage() throws IOException {
+        InputStreamReader in = new InputStreamReader(gameConnection.getInputStream());
+        BufferedReader buffer = new BufferedReader(in);
+        message = buffer.readLine();
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setReceiving(boolean receiving) {
+        this.receiving = receiving;
     }
 }

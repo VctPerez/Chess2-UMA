@@ -83,6 +83,8 @@ public class CreateMatchScreen extends AbstractScreen{
         }*/
         if(finding) {
             if (Render.guest.isConnected()) {
+                Render.guest.setReceiving(true);
+                Render.guest.start();
                 Render.LOBBYSCREEN.create(Render.guest.getPlayer2().getName(), false);
                 Render.app.setScreen(Render.LOBBYSCREEN);
             }

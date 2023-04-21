@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import interaccionFichero.LectorLineas;
+import multiplayer.Guest;
 import multiplayer.Host;
 import multiplayer.Player;
 import utils.*;
@@ -70,7 +71,7 @@ public class LobbyScreen extends AbstractScreen{
         statusP1.setPosition(300,550);
         p2.setPosition(300,200);
         statusP2.setPosition(300, 150);
-        stage.addActor(match);
+        if(Render.hosting)stage.addActor(match);
         stage.addActor(p1);
         stage.addActor(statusP1);
         stage.addActor(p2);
@@ -86,7 +87,13 @@ public class LobbyScreen extends AbstractScreen{
         stage.act();
         stage.draw();
         try {
-            if(Render.hosting)matchFinder();
+            if(Render.hosting){
+                matchFinder();
+            }else{
+                if(Render.guest.getMessage().equalsIgnoreCase("start")){
+                    Render.app.setScreen(Render.DRAFTSCREEN);
+                }
+            }
         }catch(IOException e){
             System.err.println(e.getMessage());
         }
@@ -101,6 +108,13 @@ public class LobbyScreen extends AbstractScreen{
                     System.out.println("La hebra 2 va por su cuenta");
                 } else if (finding && !Render.host.isP2connected()) {
                     cancelSearch();
+                }else if(Render.host.isP2connected()){
+                    try {
+                        Render.host.sendMessage("start");
+                        Render.app.setScreen(Render.DRAFTSCREEN);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
                 return true;
             }

@@ -7,10 +7,6 @@ import elements.Piece;
 import elements.pieces.*;
 
 public class Parser {
-
-	public Parser() {
-		
-	}
 	
 	public static Piece getPieceFromPath(String piecePath, boolean color, int x, int y, Board board) {
 		Piece piece = null;
