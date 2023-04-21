@@ -19,9 +19,6 @@ public class Bishop extends Piece{
 		super(color, Render.app.getManager().get(Resources.BISHOP_PATH, Texture.class), x, y, board);
 	}
 	
-	public Bishop() {
-		super(Render.app.getManager().get(Resources.BISHOP_PATH, Texture.class));
-	}
 	
 	public void draw(Batch batch, float parentAlpha) {
 		super.draw(batch, parentAlpha);
