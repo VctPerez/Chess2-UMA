@@ -108,14 +108,14 @@ public class DraftScreen extends AbstractScreen {
 		Collections.shuffle(knights);
 		
 		rooks.add(Resources.ROOK_PATH);
-		rooks.add(Resources.ROOK_PATH);
+		rooks.add(Resources.COLOSUS_PATH);
 		rooks.add(Resources.ROOK_PATH);
 		Collections.shuffle(rooks);
 		
 		bishops.add(Resources.BISHOP_PATH);
 		bishops.add(Resources.RND_PATH);
-		bishops.add(Resources.BISHOP_PATH);
-		bishops.add(Resources.RND_PATH);
+		bishops.add(Resources.PALADIN_PATH);
+		bishops.add(Resources.PALADIN_PATH);
 		Collections.shuffle(bishops);
 		
 		queens.add(Resources.QUEEN_PATH);

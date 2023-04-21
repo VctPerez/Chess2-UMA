@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 
+import elements.pieces.*;
 import interaccionFichero.LectorLineas;
 import utils.Image;
 import utils.Render;
@@ -198,6 +199,9 @@ public abstract class Piece extends Actor {
 		if (nextTile.getPiece() != null) {
 			nextTilePiece = nextTile.getPiece();
 		}
+		if(nextTilePiece instanceof Colosus && !(currentTile.piece instanceof King || currentTile.piece instanceof Midas)) {
+			removeMovements.add(move);
+		}
 		currentTile.simulateMoveTo(nextTile);
 
 		// check king
@@ -206,6 +210,7 @@ public abstract class Piece extends Actor {
 		} else if (!color && !isKingSafe(Render.GameScreen.whitePieces, Render.GameScreen.blackKing)) {
 			removeMovements.add(move);
 		}
+		
 
 		undoLastMovement(currentTile, nextTile, nextTilePiece);
 	}

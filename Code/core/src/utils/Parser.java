@@ -55,6 +55,10 @@ public class Parser {
 		case Resources.MIDAS_PATH:
 			piece = new Midas(color,x,y,board);
 			break;
+		case Resources.COLOSUS_PATH:
+			piece = new Colosus(color,x,y,board);
+			break;	
+		
 		}
 		return piece;
 	}
