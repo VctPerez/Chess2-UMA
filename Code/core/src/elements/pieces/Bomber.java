@@ -1,6 +1,8 @@
 package elements.pieces;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
@@ -11,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 
 import elements.Board;
 import elements.Piece;
+import elements.Tile;
 import game.chess.GameScreen;
 import interaccionFichero.LectorLineas;
 import utils.Image;
@@ -28,6 +31,109 @@ public class Bomber extends Piece{
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		super.draw(batch, parentAlpha);
+	}
+	
+	@Override
+	protected void simulateMovement(Tile currentTile, Vector2 move, ArrayList<Vector2> removeMovements) {
+		Boolean hasExploded;
+		Map<Vector2, Piece> simulatedExplosion = new HashMap<>();
+		Tile nextTile = board.getTile((int) move.x, (int) move.y);
+		Piece nextTilePiece = null;
+		if (nextTile.getPiece() != null) {
+			nextTilePiece = nextTile.getPiece();
+		}
+		if(nextTilePiece instanceof Colosus) {
+			System.out.println("COLOSO");
+			removeMovements.add(move);
+			hasExploded = false;
+		}else {
+			if(checkBomber(move.x, move.y)) {
+				simulateExplosion(simulatedExplosion);
+				hasExploded = true;
+			}else {
+				currentTile.simulateMoveTo(nextTile);
+				hasExploded = false;
+			}
+			
+			if (color && !isKingSafe(Render.GameScreen.blackPieces, Render.GameScreen.whiteKing)) {
+				removeMovements.add(move);
+			} else if (!color && !isKingSafe(Render.GameScreen.whitePieces, Render.GameScreen.blackKing)) {
+				removeMovements.add(move);
+			}
+			if(!hasExploded) {			
+				undoLastMovement(currentTile, nextTile, nextTilePiece);
+			}else {
+				reviveExplosion(simulatedExplosion);
+			}
+		}
+		
+	}
+	
+	@Override
+	public Boolean checkBomber(float next_x, float next_y) {
+		Boolean explode = false;
+		if(next_x == x && next_y == y + 1 && canExplode && board.getTile(next_x, next_y).getPiece()!=null) {
+			explode=true;
+		}else if(next_x == x && next_y == y - 1 && canExplode && board.getTile(next_x, next_y).getPiece()!=null) {
+			explode=true;
+		}else if(next_x == x + 1 && next_y == y && canExplode && board.getTile(next_x, next_y).getPiece()!=null) {
+			explode=true;
+		}else if(next_x == x - 1 && next_y == y && canExplode && board.getTile(next_x, next_y).getPiece()!=null) {
+			explode=true;
+		}
+	return explode;
+	}
+	
+	public void explode() {
+		Action explosionSfx = new Action() {
+			Sound sound = Render.app.getManager().get(Resources.EXPLOSION_SOUND, Sound.class);
+
+			public boolean act(float delta) {
+				sound.play(0.5f);
+				return true;
+			}
+		};
+		addAction(Actions.after(explosionSfx));
+		explosion();
+	}
+	
+	private void explosion() {
+		for(int i=x-1;i<=x+1;i++) {
+			for(int j=y-1;j<=y+1;j++) {
+				if(board.getTile(i, j)!=null && board.getTile(i, j).getPiece()!=null && !(board.getTile(i, j).getPiece() instanceof Colosus)) {
+					board.getTile(i, j).sendPieceToGraveyard();
+				}
+			}
+		}
+	}
+	
+	public void simulateExplosion(Map<Vector2, Piece> simulatedSwing) {
+		for(int i=x-1;i<=x+1;i++) {
+			for(int j=y-1;j<=y+1;j++) {
+				Tile tile = board.getTile(i,j);
+				if(tile!=null && tile.getPiece()!=null && !(tile.getPiece() instanceof Colosus)) {
+					simulatedSwing.put(new Vector2(i,j), tile.getPiece());
+					if(tile.getPiece().color()) {
+						GameScreen.whitePieces.remove(tile.getPiece());
+					}else {
+						GameScreen.blackPieces.remove(tile.getPiece());
+					}
+					tile.setPiece(null);
+				}
+			}
+		}
+	}
+	
+	
+	public void reviveExplosion(Map<Vector2, Piece> simulatedExplosion) {//implementar un mapa donde la clave sea la posicion o la pieza y el valor lo otro, asi no hay q chekear para revivir, solo revivir
+		for(Vector2 tile : simulatedExplosion.keySet()) {
+			board.getTile(tile.x, tile.y).setPiece(simulatedExplosion.get(tile));
+			if(simulatedExplosion.get(tile).color()) {
+				GameScreen.whitePieces.add(simulatedExplosion.get(tile));
+			}else {
+				GameScreen.blackPieces.add(simulatedExplosion.get(tile));
+			}
+		}
 	}
 
 	/**
@@ -67,6 +173,7 @@ public class Bomber extends Piece{
 			addNonAtackMovement(x - direction, y - direction, movements);
 		}
 		
+		/*movimiento de dos en linea recta
 		if(board.getTile(x, y+direction) != null && board.getTile(x, y+direction).getPiece()== null) {
 			addNonAtackMovement(x, y + 2*direction, movements);			
 		}
@@ -79,9 +186,12 @@ public class Bomber extends Piece{
 		if(board.getTile(x - direction, y) != null && board.getTile(x - direction, y).getPiece()== null) {
 			addNonAtackMovement(x - 2*direction, y, movements);			
 		}
+		*/
 			
 		return movements;
 	}
+	
+	
 
 	public void addMovement(float x, float y, Board board, ArrayList<Vector2> movements) {
 		if (board.getTile(x, y) != null && !sameColor(board.getTile(x, y).getPiece())) {
@@ -98,28 +208,7 @@ public class Bomber extends Piece{
 		}
 	}
 	
-	public void explode() {
-		Action explosionSfx = new Action() {
-			Sound sound = Render.app.getManager().get(Resources.EXPLOSION_SOUND, Sound.class);
-
-			public boolean act(float delta) {
-				sound.play(0.5f);
-				return true;
-			}
-		};
-		addAction(Actions.after(explosionSfx));
-		explosion();
-	}
 	
-	private void explosion() {
-		for(int i=x-1;i<=x+1;i++) {
-			for(int j=y-1;j<=y+1;j++) {
-				if(board.getTile(i, j)!=null && board.getTile(i, j).piece!=null) {
-					board.getTile(i, j).sendPieceToGraveyard();
-				}
-			}
-		}
-	}
 
 	
 	public void dispose() {

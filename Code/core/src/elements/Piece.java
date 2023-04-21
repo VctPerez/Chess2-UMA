@@ -166,6 +166,10 @@ public abstract class Piece extends Actor {
 	public Boolean checkPaladin(float next_x, float next_y) {
 		return false;
 	}
+	
+	public Boolean checkBomber(float next_x, float next_y) {
+		return false;
+	}
 
 	/**
 	 * Filtra todos los posibles movimientos de una pieza y solo permite aquellos
@@ -206,18 +210,20 @@ public abstract class Piece extends Actor {
 		}
 		if(nextTilePiece instanceof Colosus) {
 			removeMovements.add(move);
-		}
-		currentTile.simulateMoveTo(nextTile);
+		}else {
+			currentTile.simulateMoveTo(nextTile);
 
-		// check king
-		if (color && !isKingSafe(Render.GameScreen.blackPieces, Render.GameScreen.whiteKing)) {
-			removeMovements.add(move);
-		} else if (!color && !isKingSafe(Render.GameScreen.whitePieces, Render.GameScreen.blackKing)) {
-			removeMovements.add(move);
+			// check king
+			if (color && !isKingSafe(Render.GameScreen.blackPieces, Render.GameScreen.whiteKing)) {
+				removeMovements.add(move);
+			} else if (!color && !isKingSafe(Render.GameScreen.whitePieces, Render.GameScreen.blackKing)) {
+				removeMovements.add(move);
+			}
+			
+
+			undoLastMovement(currentTile, nextTile, nextTilePiece);
 		}
 		
-
-		undoLastMovement(currentTile, nextTile, nextTilePiece);
 	}
 
 	/**

@@ -385,7 +385,7 @@ public class GameScreen extends AbstractScreen {
         if (currentTile_validMovements.contains(new Vector2(next_x, next_y)) || debugMode) {
         	
         	//Si se da el caso bomba no se mueve ninguna pieza por lo que no se comprueba nada simplemente explota
-        	if(checkBomber()) {
+        	if(currentTile.getPiece().checkBomber(next_x, next_y)) {
             	Bomber b = (Bomber)currentTile.getPiece();
             	b.explode();
             }else if(!currentTile.getPiece().checkPaladin(next_x, next_y)){	
@@ -435,12 +435,7 @@ public class GameScreen extends AbstractScreen {
 	    	nextTile.getPiece().backed=false;
 	    }
 	}
-
 	
-
-	private boolean checkBomber() {
-		return currentTile.getPiece() instanceof Bomber && nextTile.getPiece()!= null;
-	}
 
 	/**
 	 * Lleva a cabo los cálculos necesarios para saber si se ha llegado a un empate sabiendo que no es jaque mate
@@ -595,14 +590,14 @@ public class GameScreen extends AbstractScreen {
 	public void testDrafts() {
 		
 		//Para probar la pieza random
-		Render.player1Draft.add(Resources.PALADIN_PATH);
+		Render.player1Draft.add(Resources.BOMBER_PATH);
 		Render.player1Draft.add(Resources.COLOSUS_PATH);
 		Render.player1Draft.add(Resources.ROOK_PATH);
 		Render.player1Draft.add(Resources.RND_PATH);
 		Render.player1Draft.add(Resources.QUEEN_PATH);
 		Render.player1Draft.add(Resources.KING_PATH);
 		
-		Render.player2Draft.add(Resources.PALADIN_PATH);
+		Render.player2Draft.add(Resources.BOMBER_PATH);
 		Render.player2Draft.add(Resources.KNIGHT_PATH);
 		Render.player2Draft.add(Resources.ROOK_PATH);
 		Render.player2Draft.add(Resources.RND_PATH);
