@@ -1,15 +1,15 @@
 package game.chess;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.io.IOException;
+import java.util.*;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.StringBuilder;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import elements.*;
@@ -31,9 +31,11 @@ public class DraftScreen extends AbstractScreen {
 	private LectorLineas languageReader, configReader;
 	
 	TileButton tile1, tile2;
+	private boolean draftCompleted = false; // controla que ya se han enviado ambos los drafts
 
 	@Override
 	public void show() {
+		System.out.println("El modo de draft es " + Render.DraftController);
 		stage = new Stage(new FitViewport(1280, 720));
 		Gdx.input.setInputProcessor(stage);
 		stage.clear();
@@ -195,6 +197,39 @@ public class DraftScreen extends AbstractScreen {
 						Render.player2Draft.addAll(draft.values());
 						Render.GameScreen=new GameScreen();
 						Render.app.setScreen(Render.GameScreen);
+					}else if(Render.DraftController == 3){
+						try {
+							if(Render.hosting) {
+								Render.player1Draft.addAll(draft.values());
+								Render.host.sendMessage(draftMessage());
+								System.out.println("dcompleted: " + draftCompleted);
+								if(!Render.host.getMessage().equals("")) {
+									System.out.println("Draft: " + Render.host.getMessage());
+									saveOpponentDraft(Render.host.getMessage());
+									Render.host.resetMessage();
+									draftCompleted = true;
+								}
+							}else{
+								Render.player2Draft.addAll(draft.values());
+								Render.guest.sendMessage(draftMessage());
+								System.out.println("dcompleted: " + draftCompleted);
+								if(!Render.guest.getMessage().equals("")) {
+									System.out.println("Draft: " + Render.guest.getMessage());
+									saveOpponentDraft(Render.guest.getMessage());
+									Render.guest.resetMessage();
+									draftCompleted = true;
+								}
+							}
+							System.out.println("dcompleted: " + draftCompleted);
+							if(draftCompleted){
+								System.out.println("host? " + Render.hosting);
+								Render.GameScreen = new OnlineGameScreen();
+								Render.app.setScreen(Render.GameScreen);
+							}
+						}catch (IOException e) {
+								throw new RuntimeException(e);
+							}
+						//app.setScreen(new GameScreen());
 					}
 					
 				}
@@ -260,6 +295,21 @@ public class DraftScreen extends AbstractScreen {
 		case 5:
 			updateTileButtons(kings);
 			break;
+		}
+	}
+	private String draftMessage(){
+		StringBuilder sb= new StringBuilder();
+		for(String piece : draft.values()){
+			sb.append(piece).append("#");
+		}
+		return sb.toString();
+	}
+
+	private void saveOpponentDraft(String draft){
+		if(Render.hosting){
+			Render.player2Draft.addAll(Arrays.stream(draft.split("#")).toList());
+		}else{
+			Render.player1Draft.addAll(Arrays.stream(draft.split("#")).toList());
 		}
 	}
 

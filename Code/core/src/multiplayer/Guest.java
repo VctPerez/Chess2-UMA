@@ -116,10 +116,24 @@ public class Guest extends Thread{
         message = buffer.readLine();
     }
 
+    /**
+     * Devuelve el mensaje recibido
+     * @return mensaje
+     */
     public String getMessage() {
         return message;
     }
 
+    /**
+     * Resetea el valor del mensaje
+     */
+    public void resetMessage() {
+        this.message = "";
+    }
+    /**
+     * Establece el parametro para que el jugador reciba mensajes
+     * @param receiving
+     */
     public void setReceiving(boolean receiving) {
         this.receiving = receiving;
     }

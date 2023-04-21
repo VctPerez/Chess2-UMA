@@ -28,7 +28,7 @@ public class MainScreen extends AbstractScreen {
     	stage = new Stage(new FitViewport(1280, 720));
     	table = new Table();
     	table.setFillParent(true);
-//    	table.debug();
+   	    //table.debug();
     	
     	
     	//Abrir los ficheros de configuracion e idioma
@@ -56,10 +56,6 @@ public class MainScreen extends AbstractScreen {
     @Override
     public void render(float delta) {
         Render.clearScreen();
-
-        Render.camera.update();
-        Render.Batch.setProjectionMatrix(Render.camera.combined);
-        
         //---------------
         stage.act();
         stage.draw();
@@ -118,7 +114,6 @@ public class MainScreen extends AbstractScreen {
     public void resize(int width, int height) {
         Render.SCREEN_WIDTH = width;
         Render.SCREEN_HEIGHT = height;
-        Render.camera.setToOrtho(false, width, height);
         
         stage.getViewport().update(width, height);
     }

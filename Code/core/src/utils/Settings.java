@@ -20,6 +20,8 @@ public class Settings {
 	public static void setMusicVolume(Float value) {
 //		musicVolume = (float) Math.pow((value/10),2);
 		musicVolume = value;
+		if(Render.bgMusic != null)Render.bgMusic.setVolume(musicVolume/100);
+		System.out.println("Volumen = " + value);
 	}
 	
 	public static void updateSettings(float musicVolume, float sfxVolume, int language) {

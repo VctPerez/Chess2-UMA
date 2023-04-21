@@ -91,6 +91,7 @@ public class LobbyScreen extends AbstractScreen{
                 matchFinder();
             }else{
                 if(Render.guest.getMessage().equalsIgnoreCase("start")){
+                    Render.guest.resetMessage();
                     Render.app.setScreen(Render.DRAFTSCREEN);
                 }
             }
@@ -139,11 +140,11 @@ public class LobbyScreen extends AbstractScreen{
             match.setText(languageReader.leerLinea(7));
             if(!configured) {
                 statusP2.setColor(Color.GREEN);
-                Render.host.receivePlayer2();
+                //Render.host.receivePlayer2();
                 p2.setText(languageReader.leerLinea(4) + Render.host.getPlayer2().getName());
                 configured = true;
                 System.out.println("Jugador conectado");
-                Render.host.sendPlayer1();
+                //Render.host.sendPlayer1();
             }
         }else{
             match.setText(languageReader.leerLinea(6));

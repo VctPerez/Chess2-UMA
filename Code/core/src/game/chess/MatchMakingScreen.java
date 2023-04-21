@@ -54,8 +54,10 @@ public class MatchMakingScreen extends AbstractScreen{
         stage.draw();
         
         if(textButton[0].isPressed()) {
+            Render.DraftController = 3;
         	Render.app.setScreen(Render.CREATEMATCHSCREEN);
         }else if(textButton[1].isPressed()) {
+            Render.DraftController = 1;
         	Render.app.setScreen(Render.MODESCREEN);
         }else if(textButton[2].isPressed()) {
         	Render.app.setScreen(Render.MAINSCREEN);

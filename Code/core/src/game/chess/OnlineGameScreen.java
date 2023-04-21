@@ -89,7 +89,7 @@ public class OnlineGameScreen extends GameScreen {
 		
 		Gdx.input.setInputProcessor(stage);
 		
-		Render.hosting=true;
+		//Render.hosting=true;
 		
 		PLAYER = true;
 		

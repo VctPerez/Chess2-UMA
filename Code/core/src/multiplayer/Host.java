@@ -1,5 +1,7 @@
 package multiplayer;
 
+import utils.Render;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -9,6 +11,17 @@ public class Host extends Thread {
     private boolean accepting;
     private ServerSocket gameServer;
     private Player p2, p1;
+    private String message = "";
+
+    private boolean receiving;
+
+    /**
+     * Establece el parametro para que el jugador reciba mensajes
+     * @param receiving
+     */
+    public void setReceiving(boolean receiving) {
+        this.receiving = receiving;
+    }
 
     /**
      *
@@ -28,7 +41,11 @@ public class Host extends Thread {
             if(!isP2connected()){
                 System.out.println("Server abierto");
                 waitConnection();
-            }else{
+                receivePlayer2();
+                sendPlayer1();
+                setReceiving(true);
+            }
+            while(receiving) {
                 receiveMessage();
             }
         } catch (Exception e) {
@@ -113,9 +130,25 @@ public class Host extends Thread {
         pw.println(message);
         pw.flush();
     }
-    public String receiveMessage() throws IOException {
+    public void receiveMessage() throws IOException {
         InputStreamReader in = new InputStreamReader(player2.getInputStream());
         BufferedReader buffer = new BufferedReader(in);
-        return buffer.readLine();
+        message = buffer.readLine();
     }
+
+    /**
+     * Devuelve el mensaje recibido
+     * @return
+     */
+    public String getMessage() {
+        return message;
+    }
+
+    /**
+     * Resetea el valor del mensaje
+     */
+    public void resetMessage() {
+        this.message = "";
+    }
+
 }
