@@ -51,8 +51,6 @@ public class Paladin extends Piece{
 				hasSwang = true;
 			}
 		}
-
-		// check king
 		if (color && !isKingSafe(Render.GameScreen.blackPieces, Render.GameScreen.whiteKing)) {
 			removeMovements.add(move);
 		} else if (!color && !isKingSafe(Render.GameScreen.whitePieces, Render.GameScreen.blackKing)) {
@@ -69,19 +67,6 @@ public class Paladin extends Piece{
 	@Override
 	public Boolean checkPaladin(float next_x, float next_y) {
 		Boolean swing = false;
-		System.out.println("PALADIN COMPRUEBA CORTE: ["+next_x+", "+next_y+"]");
-		if(canSwingUp) {
-			System.out.println("Puede CORTA ARRIBA");
-		}else if(canSwingDown) {
-			System.out.println("Puede CORTA abj");
-		}else if(canSwingRight) {
-			System.out.println("Puede CORTA der");
-		}else if(canSwingLeft) {
-			System.out.println("Puede CORTA izq");
-		}
-		
-		
-		
 			if(next_x == x && next_y == y + 1 && canSwingUp) {
 				paladinSwing(1, 0, next_x, next_y);
 				swing=true;
@@ -95,7 +80,6 @@ public class Paladin extends Piece{
 				paladinSwing(0, 1, next_x, next_y);
 				swing=true;
 			}
-			
 		return swing;
 	}
 	
@@ -117,19 +101,15 @@ public class Paladin extends Piece{
 	public Boolean simulateCheckPaladin(float next_x, float next_y, Map<Vector2, Piece> simulatedSwing) {
 		Boolean swing = false;
 			if(next_x == x && next_y == y + 1 && canSwingUp) {
-				System.out.println("PUEDE CORTAR ARRIBA");
 				simulateSwing(1, 0, next_x, next_y, simulatedSwing);
 				swing=true;
 			}else if(next_x == x && next_y == y - 1 && canSwingDown) {
-				System.out.println("PUEDE CORTAR ABAJO");
 				simulateSwing(1, 0, next_x, next_y, simulatedSwing);
 				swing=true;
 			}else if(next_x == x + 1 && next_y == y && canSwingRight) {
-				System.out.println("PUEDE CORTAR DERECHA");
 				simulateSwing(0, 1, next_x, next_y, simulatedSwing);
 				swing=true;
 			}else if(next_x == x - 1 && next_y == y && canSwingLeft) {
-				System.out.println("PUEDE CORTAR IZQ");
 				simulateSwing(0, 1, next_x, next_y, simulatedSwing);
 				swing=true;
 			}
@@ -168,14 +148,9 @@ public class Paladin extends Piece{
 				}
 			}
 	}
-	
-	
-	
-	
-	
+
 	private Boolean checkBoard(Board board, float x, float y) {
 		Boolean res = true;
-		
 		if(board.getTile(x, y)==null) {
 			res = false;
 			validDirection = false;
@@ -238,19 +213,15 @@ public class Paladin extends Piece{
 	
 	private void addSwings(float x, float y, ArrayList<Vector2> movements) {
 		if(x == this.x && y == this.y+1) {
-			System.out.println("U");
 			canSwingUp = true;
 		}
 		if(x == this.x && y == this.y-1) {
-			System.out.println("D");
 			canSwingDown = true;
 		}
 		if(x == this.x + 1 && y == this.y) {
-			System.out.println("R");
 			canSwingRight = true;
 		}
 		if(x == this.x - 1 && y == this.y) {
-			System.out.println("L");
 			canSwingLeft = true;
 		}
 	}
@@ -264,7 +235,6 @@ public class Paladin extends Piece{
 		}
 	}
 
-	
 	public void swingSound() {
 		Action swingSfx = new Action() {
 			Sound sound = Render.app.getManager().get(Resources.PALADINSWING_SOUND, Sound.class);
