@@ -93,10 +93,10 @@ public class CreateMatchScreen extends AbstractScreen{
         titulo = new Label(languageReader.leerLinea(1)
                 , Render.app.getManager().get(Resources.SKIN_PATH, Skin.class), "TitleStyle");
         for(int i =  0; i < textbuttons.length-1; i++){
-            textbuttons[i] = new TextButton(languageReader.leerLinea(5+i));
+            textbuttons[i] = new TextButton(languageReader.leerLinea(8+i));
         }
         textbuttons[2] = new TextButton(languageReader.leerLinea(4));
-        textField = new TextField(languageReader.leerLinea(7));
+        textField = new TextField(languageReader.leerLinea(10));
         textField.setVisible(false);
         textField.setBounds(500, 235, 500, textField.getHeight());
     }

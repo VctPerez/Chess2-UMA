@@ -5,3 +5,6 @@ volver
 modo de Juego
 modificado
 clasico
+crear partida
+buscar partida
+codigo
