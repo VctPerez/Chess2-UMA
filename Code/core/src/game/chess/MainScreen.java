@@ -118,6 +118,8 @@ public class MainScreen extends AbstractScreen {
         Render.SCREEN_WIDTH = width;
         Render.SCREEN_HEIGHT = height;
         Render.camera.setToOrtho(false, width, height);
+        
+        stage.getViewport().update(width, height);
     }
 
     @Override

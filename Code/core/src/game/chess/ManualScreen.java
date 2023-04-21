@@ -94,10 +94,10 @@ public class ManualScreen extends AbstractScreen{
 	        if(textButton[0].isPressed()){
 	            Render.bgMusic.stop();
 	            Render.app.setScreen(new ClassicManScreen());
-	            //Render.app.setScreen(Render.CREATEMATCHSCREEN);
 	        }
 	        if(textButton[1].isPressed()) {
-
+	        	//TO DO
+//	        	Render.app.setScreen(Render.MODIFIEDMANSCREEN);
 	        }
 	        if(textButton[2].isPressed()){
 	        	Render.app.setScreen(Render.MAINSCREEN);
@@ -112,11 +112,14 @@ public class ManualScreen extends AbstractScreen{
 	        Render.SCREEN_WIDTH = width;
 	        Render.SCREEN_HEIGHT = height;
 	        Render.camera.setToOrtho(false, width, height);
+	        
+	        stage.getViewport().update(width, height);
+	        
 	    }
 
 	    @Override
 	    public void dispose() {
-	        // TODO: 21/03/2023  
+	        stage.dispose();
 	    }
 	}
 

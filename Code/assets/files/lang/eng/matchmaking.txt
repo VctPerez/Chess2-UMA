@@ -2,6 +2,6 @@ matchmaking
 online mode
 local mode
 return
-create match
-find match
-code
+game mode
+modified
+classic
