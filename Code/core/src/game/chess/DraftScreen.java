@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import elements.*;
+import interaccionFichero.LectorLineas;
 import utils.*;
 
 public class DraftScreen extends AbstractScreen {
@@ -27,6 +28,7 @@ public class DraftScreen extends AbstractScreen {
 	private TextButton next, back;
 	private Image arrow;
 	private int cont = 0;
+	private LectorLineas languageReader, configReader;
 	
 	TileButton tile1, tile2;
 
@@ -35,6 +37,9 @@ public class DraftScreen extends AbstractScreen {
 		stage = new Stage(new FitViewport(1280, 720));
 		Gdx.input.setInputProcessor(stage);
 		stage.clear();
+		
+		configReader = new LectorLineas("files/config.txt"); //Lector del txt configuracion para sacar el idioma
+    	languageReader = new LectorLineas("files/lang/"+ configReader.leerLinea(Settings.language) + "Draft-Game.txt");
 		
 		background = new Background();
 		background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -173,7 +178,7 @@ public class DraftScreen extends AbstractScreen {
 	private void initButtons() {
 		// Botones con nombre momentaneos, se cambiara y se a�adira a los ficheros de idiomas
 
-		next = new TextButton("Siguiente","SingleClickStyle");
+		next = new TextButton(languageReader.leerLinea(2),"SingleClickStyle");
 		next.setPosition(480,  50);
 		next.addCaptureListener(new InputListener() { 
 			@Override
@@ -195,13 +200,13 @@ public class DraftScreen extends AbstractScreen {
 				}
 				
 				if(cont==5){
-					next.setText("Finalizar");
+					next.setText(languageReader.leerLinea(3));
 				}
 			    return true;
 			    }
 			} );
 		
-		back = new TextButton("Atras","SingleClickStyle");
+		back = new TextButton(languageReader.leerLinea(1),"SingleClickStyle");
 		back.setPosition(175,  50);
 		back.addCaptureListener(new InputListener() { 
 			@Override
