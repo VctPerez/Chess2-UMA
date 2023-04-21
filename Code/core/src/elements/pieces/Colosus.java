@@ -12,13 +12,12 @@ import interaccionFichero.LectorLineas;
 import utils.Render;
 import utils.Resources;
 
-public class Bishop extends Piece{
+public class Colosus extends Piece{
 	private Boolean validDirection;
-	
-	public Bishop(Boolean color, int x, int y, Board board) {
-		super(color, Render.app.getManager().get(Resources.BISHOP_PATH, Texture.class), x, y, board);
+
+	public Colosus(Boolean color, int x, int y, Board board) {
+		super(color, Render.app.getManager().get(Resources.COLOSUS_PATH, Texture.class), x, y, board);
 	}
-	
 	
 	public void draw(Batch batch, float parentAlpha) {
 		super.draw(batch, parentAlpha);
@@ -31,11 +30,8 @@ public class Bishop extends Piece{
 			res = false;
 			validDirection = false;
 		}else {
-			if(board.getTile(x, y).getPiece()!=null && sameColor(board.getTile(x, y).getPiece())) {
+			if(board.getTile(x, y).getPiece()!=null) {
 				res = false;
-				validDirection = false;
-			}else if(board.getTile(x, y).getPiece()!=null && !sameColor(board.getTile(x, y).getPiece())) {
-				res = true;
 				validDirection = false;
 			}
 		}
@@ -43,11 +39,11 @@ public class Bishop extends Piece{
 	}
 	
 	private void checkDirection(float x, float y, int i, int j, ArrayList<Vector2> movements) {
-		 validDirection = true;
+	    validDirection = true;
 		Vector2 mov;
 		int k = 1;
 		
-		while(validDirection && k<8) {
+		while(validDirection && k<4) {
 			mov = new Vector2(x + i*k, y + j*k);
 			if(checkBoard(board, mov.x, mov.y)) {
 				movements.add(mov);
@@ -56,8 +52,9 @@ public class Bishop extends Piece{
 		}
 	}
 	
+	
 	/**
-	 * Anyade a movements todos los movimientos posibles del Alfil, en todas las direcciones, su maxima cantidad de movimientos
+	 * Añade a movements todos los movimientos posibles de la torre, en todas las direcciones, su maxima cantidad de movimientos
 	 * @param x
 	 * @param y
 	 * @return
@@ -66,13 +63,14 @@ public class Bishop extends Piece{
 	public ArrayList<Vector2> posibleMovements() {
 		ArrayList<Vector2> movements = new ArrayList<>();
 		
-		checkDirection(x, y, 1, 1, movements);
-		checkDirection(x, y, -1, -1, movements);
-		checkDirection(x, y, 1, -1, movements);
-		checkDirection(x, y, -1, 1, movements);
-
+		checkDirection(x, y, 1, 0, movements);
+		checkDirection(x, y, 0, 1, movements);
+		checkDirection(x, y, -1, 0, movements);
+		checkDirection(x, y, 0, -1, movements);
+		
 		return movements;
 	}
+	
 	public String getInfo() {
 		 LectorLineas Reader, configReader;
 		 configReader = new LectorLineas("files/config.txt");
@@ -80,9 +78,9 @@ public class Bishop extends Piece{
 		Reader = new LectorLineas("files/lang/"+ config + "Clasicas.txt");
 		switch (config){
 			case "esp/":
-				return Reader.leerTramo(7, 10);
+				return Reader.leerTramo(23, 32);
 			case "eng/":
-				return Reader.leerTramo(6,8);
+				return Reader.leerTramo(19,25);
 			default:
 				throw new IllegalArgumentException("Configuración errónea");
 		}
@@ -91,6 +89,7 @@ public class Bishop extends Piece{
 	@Override
 	public String toString() {
 		String str = super.toString();
-		return str.replace("X","Bishop");
+		return str.replace("X","Rook");
 	}
+
 }

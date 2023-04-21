@@ -97,11 +97,9 @@ public class DraftScreen extends AbstractScreen {
 		queens = new ArrayList<>();
 		kings = new ArrayList<>();
 		
-		//pawns.add(Resources.WARDEN_PATH);
-		//pawns.add(Resources.LANCER_PATH);
-		//pawns.add(Resources.PAWN_PATH);
-		pawns.add(Resources.PALADIN_PATH);
-		pawns.add(Resources.PALADIN_PATH);
+		pawns.add(Resources.WARDEN_PATH);
+		pawns.add(Resources.LANCER_PATH);
+		pawns.add(Resources.PAWN_PATH);
 		Collections.shuffle(pawns);
 		
 		knights.add(Resources.KNIGHT_PATH);
@@ -110,12 +108,13 @@ public class DraftScreen extends AbstractScreen {
 		Collections.shuffle(knights);
 		
 		rooks.add(Resources.ROOK_PATH);
-		rooks.add(Resources.ROOK_PATH);
+		rooks.add(Resources.COLOSUS_PATH);
 		rooks.add(Resources.ROOK_PATH);
 		Collections.shuffle(rooks);
 		
 		bishops.add(Resources.BISHOP_PATH);
 		bishops.add(Resources.RND_PATH);
+		bishops.add(Resources.PALADIN_PATH);
 		bishops.add(Resources.PALADIN_PATH);
 		Collections.shuffle(bishops);
 		
@@ -126,6 +125,7 @@ public class DraftScreen extends AbstractScreen {
 		
 		kings.add(Resources.KING_PATH);
 		kings.add(Resources.MIDAS_PATH);
+		kings.add(Resources.KING_PATH);
 		Collections.shuffle(kings);
 	}
 
@@ -174,7 +174,7 @@ public class DraftScreen extends AbstractScreen {
 		// Botones con nombre momentaneos, se cambiara y se a�adira a los ficheros de idiomas
 
 		next = new TextButton("Siguiente","SingleClickStyle");
-		next.setPosition(550,  50);
+		next.setPosition(480,  50);
 		next.addCaptureListener(new InputListener() { 
 			@Override
 			    public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -230,8 +230,9 @@ public class DraftScreen extends AbstractScreen {
 		tile2.hideFrame();
 		currentPieceSelection = tile1.getPiece();
 		info.getInfoFrom(currentPieceSelection);
-		
+		updateDraft();
 		arrow.setPosition(80, 100+100*(5-cont));
+		
 	}
 
 	public void changePiece() {

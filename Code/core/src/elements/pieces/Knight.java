@@ -18,9 +18,6 @@ public class Knight extends Piece {
 		super(color, Render.app.getManager().get(Resources.KNIGHT_PATH, Texture.class), x, y,board);
 	}
 	
-	public Knight() {
-		super(Render.app.getManager().get(Resources.KNIGHT_PATH, Texture.class));
-	}
 	
 
 	@Override

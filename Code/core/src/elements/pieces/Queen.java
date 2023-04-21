@@ -20,9 +20,7 @@ public class Queen extends Piece{
 		super(color, Render.app.getManager().get(Resources.QUEEN_PATH, Texture.class), x, y,board);
 	}
 	
-	public Queen() {
-		super(Render.app.getManager().get(Resources.QUEEN_PATH, Texture.class));
-	}
+
 	
 	public void draw(Batch batch, float parentAlpha) {
 		super.draw(batch, parentAlpha);

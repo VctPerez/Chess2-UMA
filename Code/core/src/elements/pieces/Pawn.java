@@ -23,9 +23,7 @@ public class Pawn extends Piece{
 		super(color, Render.app.getManager().get(Resources.PAWN_PATH, Texture.class), x ,y,board);
 	}
 	
-	public Pawn() {
-		super(Render.app.getManager().get(Resources.PAWN_PATH, Texture.class));
-	}
+
 	
 	
 	@Override

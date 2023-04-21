@@ -46,6 +46,9 @@ public class Chess2 extends Game {
 		manager.load(Resources.WARDEN_PATH, Texture.class);
 		manager.load(Resources.PALADIN_PATH, Texture.class);
 		manager.load(Resources.MIDAS_PATH, Texture.class);
+		manager.load(Resources.PALADIN_PATH, Texture.class);
+		manager.load(Resources.COLOSUS_PATH, Texture.class);
+		
 
 		// RANDOM PIECES
 		manager.load(Resources.RND_PATH, Texture.class);
@@ -69,8 +72,8 @@ public class Chess2 extends Game {
 		// MUSIC & SOUNDS
 		manager.load(Resources.MENU_THEME, Music.class);
 		manager.load(Resources.PIECEMOVE_SOUND, Sound.class);
-		manager.load(Resources.PALADINSWING_SOUND, Sound.class);
 		manager.load(Resources.EXPLOSION_SOUND, Sound.class);
+		manager.load(Resources.PALADINSWING_SOUND, Sound.class);
 		manager.load(Resources.TEXTBUTTON_HOVERSOUND, Sound.class);
 		manager.load(Resources.TEXTBUTTON_CLICKSOUND, Sound.class);
 
@@ -126,12 +129,12 @@ public class Chess2 extends Game {
 		Render.LOBBYSCREEN = new LobbyScreen();
 		Render.CREATEMATCHSCREEN = new CreateMatchScreen();
 		Render.DRAFTSCREEN = new DraftScreen();
-		Render.MATCHMAKINGSCREEN = new MatchMakingScreen();
-		Render.CLASSICMANSCREEN = new ClassicManScreen(); 
 
 		//this.setScreen(new GameScreen());
-		 this.setScreen(Render.MAINSCREEN);
-		// this.setScreen(Render.DRAFTSCREEN);
+		// this.setScreen(Render.MAINSCREEN);
+		 //this.setScreen(Render.DRAFTSCREEN);
+		Render.GameScreen = new GameScreen();
+		this.setScreen(Render.GameScreen);
 
 	}
 
