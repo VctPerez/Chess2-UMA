@@ -223,7 +223,7 @@ public class GameScreen extends AbstractScreen {
 					lowlight();
 					makeMove(currentTile, nextTile);
 					isPieceSelected = false;
-					System.out.println("pieza movida = " + moved);
+					//System.out.println("pieza movida = " + moved);
 				}
 			}
 		}
@@ -234,7 +234,7 @@ public class GameScreen extends AbstractScreen {
 			if(!Render.hosting) {
 				//Render.guest.resetMessage();
 				if(!Render.guest.getMessage().equals("")){
-					System.out.println(Render.guest.getMessage());
+					System.out.println("movimiento de blancas: " +Render.guest.getMessage());
 					parseMovement(Render.guest.getMessage());
 					PLAYER = false;
 					Render.guest.resetMessage();
@@ -242,7 +242,7 @@ public class GameScreen extends AbstractScreen {
 
 			}else{
 				if(!Render.host.getMessage().equals("")){
-					System.out.println(Render.host.getMessage());
+					System.out.println("movimiento de negras: " + Render.host.getMessage());
 					parseMovement(Render.host.getMessage());
 					PLAYER = true;
 					Render.host.resetMessage();
@@ -489,7 +489,7 @@ public class GameScreen extends AbstractScreen {
 			}
 
 			if(Render.DraftController != 3)changeTurn();
-			moved = true;
+			if(Render.hosting == PLAYER) moved = true;
 		}
 	}
 

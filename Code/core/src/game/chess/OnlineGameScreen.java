@@ -23,7 +23,7 @@ public class OnlineGameScreen extends GameScreen {
 					}
 				}else{
 					if(moved){
-						String movement = tile.getPos().x + "," + tile.getPos().y + "-" + nextTile.getPos().x + "," + nextTile.getPos().y;
+						String movement = currentTile.getPos().x + "," + currentTile.getPos().y + "-" + nextTile.getPos().x + "," + nextTile.getPos().y;
 						Render.guest.sendMessage(movement);
 						System.out.println("mensaje enviado con: "+ movement);
 						System.out.println("mensaje enviado from guest");
