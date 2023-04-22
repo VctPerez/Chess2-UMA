@@ -63,7 +63,7 @@ public class Render {
     //DRAFTS DE LOS DOS JUGADORES (puede que esten mejor en otra clase, es temporal)
     public static ArrayList<String> player1Draft = new ArrayList<>();
     public static ArrayList<String> player2Draft = new ArrayList<>();
-    public static GameScreen GameScreen;
+    public static GameScreen game_screen;
     public static int DraftController=3;
 
     /**

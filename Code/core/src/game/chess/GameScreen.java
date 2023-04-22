@@ -99,7 +99,7 @@ public class GameScreen extends AbstractScreen {
 
 		Gdx.input.setInputProcessor(stage);
 
-		Render.hosting = true;
+		
 
 		PLAYER = true;
 

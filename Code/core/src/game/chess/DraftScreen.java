@@ -190,13 +190,14 @@ public class DraftScreen extends AbstractScreen {
 					changePiece();
 				}else {// aqui o bien se manda el draft el otro o se crea otro draf(en modo local) -> tal vez haya q pasar el array del finalDraft como parámetro?
 					if(Render.DraftController==1) {
+						Render.hosting = true;
 						Render.player1Draft.addAll(draft.values());
 						Render.DraftController++;
 						Render.app.setScreen(new DraftScreen());
 					}else if(Render.DraftController==2) {
 						Render.player2Draft.addAll(draft.values());
-						Render.GameScreen=new GameScreen();
-						Render.app.setScreen(Render.GameScreen);
+						Render.game_screen=new GameScreen();
+						Render.app.setScreen(Render.game_screen);
 					}else if(Render.DraftController == 3){
 						try {
 							if(Render.hosting) {
@@ -223,8 +224,8 @@ public class DraftScreen extends AbstractScreen {
 							System.out.println("dcompleted: " + draftCompleted);
 							if(draftCompleted){
 								System.out.println("host? " + Render.hosting);
-								Render.GameScreen = new OnlineGameScreen();
-								Render.app.setScreen(Render.GameScreen);
+								Render.game_screen = new OnlineGameScreen();
+								Render.app.setScreen(Render.game_screen);
 							}
 						}catch (IOException e) {
 								throw new RuntimeException(e);

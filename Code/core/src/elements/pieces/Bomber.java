@@ -55,9 +55,9 @@ public class Bomber extends Piece{
 				hasExploded = false;
 			}
 			
-			if (color && !isKingSafe(Render.GameScreen.blackPieces, Render.GameScreen.whiteKing)) {
+			if (color && !isKingSafe(Render.game_screen.blackPieces, Render.game_screen.whiteKing)) {
 				removeMovements.add(move);
-			} else if (!color && !isKingSafe(Render.GameScreen.whitePieces, Render.GameScreen.blackKing)) {
+			} else if (!color && !isKingSafe(Render.game_screen.whitePieces, Render.game_screen.blackKing)) {
 				removeMovements.add(move);
 			}
 			if(!hasExploded) {			

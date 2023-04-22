@@ -27,22 +27,22 @@ public class King extends Piece{
 	
 	@Override
 	protected void updateXY(int x, int y) {
-		Render.GameScreen.board.getTile(this.x, this.y).attacked = false;
+		Render.game_screen.board.getTile(this.x, this.y).attacked = false;
 
 		super.updateXY(x, y);
 		
 		
 		if(color) {
-			Render.GameScreen.whiteKing.set(x, y);
+			Render.game_screen.whiteKing.set(x, y);
 		}else {
 			
-			Render.GameScreen.blackKing.set(x, y);
+			Render.game_screen.blackKing.set(x, y);
 		}
 	}
 	
 	@Override
 	protected void simulateMovement(Tile currentTile, Vector2 move, ArrayList<Vector2> removeMovements) {
-		Tile nextTile = Render.GameScreen.board.getTile((int)move.x,(int) move.y);
+		Tile nextTile = Render.game_screen.board.getTile((int)move.x,(int) move.y);
 		Piece nextTilePiece = null;
 		if(nextTile.getPiece()!=null) {
 			nextTilePiece = nextTile.getPiece();
@@ -50,9 +50,9 @@ public class King extends Piece{
 		currentTile.simulateMoveTo(nextTile);
 		
 			//check king
-			if(color && !isKingSafe(Render.GameScreen.blackPieces, new Vector2(move.x, move.y))) {
+			if(color && !isKingSafe(Render.game_screen.blackPieces, new Vector2(move.x, move.y))) {
 				removeMovements.add(move);
-			}else if(!color && !isKingSafe(Render.GameScreen.whitePieces, new Vector2(move.x, move.y))) {
+			}else if(!color && !isKingSafe(Render.game_screen.whitePieces, new Vector2(move.x, move.y))) {
 				removeMovements.add(move);
 			}
 			
@@ -112,9 +112,9 @@ public class King extends Piece{
 			for(int i=(int) start+1; i<dest;i++) {
 				if(board.getTile(i, y).piece!=null) {
 					res=false;
-				}else if (color && !isTileSafe(Render.GameScreen.blackPieces, new Vector2(i, y))) {
+				}else if (color && !isTileSafe(Render.game_screen.blackPieces, new Vector2(i, y))) {
 					res = false;
-				} else if (!color && !isTileSafe(Render.GameScreen.whitePieces, new Vector2(i, y))) {
+				} else if (!color && !isTileSafe(Render.game_screen.whitePieces, new Vector2(i, y))) {
 					res = false;
 				}
 			}
