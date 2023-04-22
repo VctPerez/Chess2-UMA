@@ -52,9 +52,9 @@ public class Paladin extends Piece{
 				hasSwang = true;
 			}
 			
-			if (color && !isKingSafe(Render.game_screen.blackPieces, Render.game_screen.whiteKing)) {
+			if (color && !isKingSafe(Render.GameScreen.blackPieces, Render.GameScreen.whiteKing)) {
 				removeMovements.add(move);
-			} else if (!color && !isKingSafe(Render.game_screen.whitePieces, Render.game_screen.blackKing)) {
+			} else if (!color && !isKingSafe(Render.GameScreen.whitePieces, Render.GameScreen.blackKing)) {
 				removeMovements.add(move);
 			}
 			
@@ -91,7 +91,7 @@ public class Paladin extends Piece{
 		swingTile(0, 0, next_x, next_y);
 		swingTile(+i, +j, next_x, next_y);
 		swingSound();
-		Render.game_screen.resetMate();
+		Render.GameScreen.resetMate();
 	}
 	
 	private void swingTile(float i, float j, float next_x, float next_y){

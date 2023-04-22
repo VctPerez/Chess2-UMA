@@ -142,9 +142,10 @@ public class Chess2 extends Game {
 		Render.CREATEMATCHSCREEN = new CreateMatchScreen();
 		Render.DRAFTSCREEN = new DraftScreen();
 
-		// Render.GameScreen = new GameScreen();
-		// this.setScreen(Render.GameScreen);
-		this.setScreen(Render.DRAFTSCREEN);
+		 Render.GameScreen = new GameScreen();
+		 Render.hosting=true;
+		 this.setScreen(Render.GameScreen);
+		//this.setScreen(Render.DRAFTSCREEN);
 		// this.setScreen(Render.MAINSCREEN);
 
 	}

@@ -33,10 +33,10 @@ public class Midas extends Piece {
 		
 		
 		if(color) {
-			Render.game_screen.whiteKing.set(x, y);
+			Render.GameScreen.whiteKing.set(x, y);
 		}else {
 			
-			Render.game_screen.blackKing.set(x, y);
+			Render.GameScreen.blackKing.set(x, y);
 		}
 	}
 	
@@ -49,9 +49,9 @@ public class Midas extends Piece {
 		currentTile.simulateMoveTo(nextTile);
 		
 			//check king
-			if(color && !isKingSafe(Render.game_screen.blackPieces, new Vector2(move.x, move.y))) {
+			if(color && !isKingSafe(Render.GameScreen.blackPieces, new Vector2(move.x, move.y))) {
 				removeMovements.add(move);
-			}else if(!color && !isKingSafe(Render.game_screen.whitePieces, new Vector2(move.x, move.y))) {
+			}else if(!color && !isKingSafe(Render.GameScreen.whitePieces, new Vector2(move.x, move.y))) {
 				removeMovements.add(move);
 			}
 			
@@ -125,9 +125,9 @@ public class Midas extends Piece {
 			for(int i=(int) start+1; i<dest;i++) {
 				if(board.getTile(i, y).piece!=null) {
 					res=false;
-				}else if (color && !isTileSafe(Render.game_screen.blackPieces, new Vector2(i, y))) {
+				}else if (color && !isTileSafe(Render.GameScreen.blackPieces, new Vector2(i, y))) {
 					res = false;
-				} else if (!color && !isTileSafe(Render.game_screen.whitePieces, new Vector2(i, y))) {
+				} else if (!color && !isTileSafe(Render.GameScreen.whitePieces, new Vector2(i, y))) {
 					res = false;
 				}
 			}

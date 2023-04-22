@@ -101,7 +101,7 @@ public abstract class Piece extends Actor {
 	protected void updateXY(int x, int y) {
 		this.x = x;
 		this.y = y;
-		Tile tile = Render.game_screen.board.getTile(x, y);
+		Tile tile = Render.GameScreen.board.getTile(x, y);
 
 		Action moveSfx = new Action() {
 			Sound sound = Render.app.getManager().get(Resources.PIECEMOVE_SOUND, Sound.class);
@@ -184,7 +184,7 @@ public abstract class Piece extends Actor {
 		ArrayList<Vector2> removeMovements = new ArrayList<>();
 		Tile currentTile = board.getTile(x, y);
 
-		if(Render.game_screen.blackPieces==null) {
+		if(Render.GameScreen.blackPieces==null) {
 			System.out.println("???????????????????????");
 		}else {
 			
@@ -220,9 +220,9 @@ public abstract class Piece extends Actor {
 			currentTile.simulateMoveTo(nextTile);
 
 			// check king
-			if (color && !isKingSafe(Render.game_screen.blackPieces, Render.game_screen.whiteKing)) {
+			if (color && !isKingSafe(Render.GameScreen.blackPieces, Render.GameScreen.whiteKing)) {
 				removeMovements.add(move);
-			} else if (!color && !isKingSafe(Render.game_screen.whitePieces, Render.game_screen.blackKing)) {
+			} else if (!color && !isKingSafe(Render.GameScreen.whitePieces, Render.GameScreen.blackKing)) {
 				removeMovements.add(move);
 			}
 			
@@ -263,9 +263,9 @@ public abstract class Piece extends Actor {
 
 		if (nextTilePiece != null && !nextTilePiece.alive()) {
 			if (nextTilePiece.color()) {
-				nextTile.setPiece(Render.game_screen.graveyardWhite.reviveLastPiece());
+				nextTile.setPiece(Render.GameScreen.graveyardWhite.reviveLastPiece());
 			} else if (!nextTilePiece.color()) {
-				nextTile.setPiece(Render.game_screen.graveyardBlack.reviveLastPiece());
+				nextTile.setPiece(Render.GameScreen.graveyardBlack.reviveLastPiece());
 			}
 		}
 	}

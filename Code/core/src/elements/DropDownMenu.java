@@ -74,34 +74,34 @@ public class DropDownMenu extends Actor{
             Piece newPiece = null;
             
             if(formerPiece.color()) {
-            	pieces = Render.game_screen.whitePieces;
+            	pieces = Render.GameScreen.whitePieces;
             }else {
-            	pieces = Render.game_screen.blackPieces;
+            	pieces = Render.GameScreen.blackPieces;
             }
             pieces.remove(formerPiece);
             formerPiece.remove();
             
             switch (current_y) {
 			case 4:
-				newPiece = new Queen(formerPiece.color(), (int)tile.getPos().x, (int)tile.getPos().y,Render.game_screen.board);
+				newPiece = new Queen(formerPiece.color(), (int)tile.getPos().x, (int)tile.getPos().y,Render.GameScreen.board);
 				break;
 			case 3:
-				newPiece = new Knight(formerPiece.color(), (int)tile.getPos().x, (int)tile.getPos().y,Render.game_screen.board);
+				newPiece = new Knight(formerPiece.color(), (int)tile.getPos().x, (int)tile.getPos().y,Render.GameScreen.board);
 				break;
 			case 2:
-				newPiece = new Rook(formerPiece.color(), (int)tile.getPos().x, (int)tile.getPos().y,Render.game_screen.board);
+				newPiece = new Rook(formerPiece.color(), (int)tile.getPos().x, (int)tile.getPos().y,Render.GameScreen.board);
 				break;
 			case 1:
-				newPiece = new Bishop(formerPiece.color(), (int)tile.getPos().x, (int)tile.getPos().y,Render.game_screen.board);
+				newPiece = new Bishop(formerPiece.color(), (int)tile.getPos().x, (int)tile.getPos().y,Render.GameScreen.board);
 				break;
 			default:
 				break;
 			}
             tile.setPiece(newPiece);
             pieces.add(newPiece);            	
-            Render.game_screen.stage.addActor(newPiece);
-            Render.game_screen.promoting = false;
-            Render.game_screen.mateControl(tile.getPos().x, tile.getPos().y);
+            Render.GameScreen.stage.addActor(newPiece);
+            Render.GameScreen.promoting = false;
+            Render.GameScreen.mateControl(tile.getPos().x, tile.getPos().y);
             remove();
 		
 	}

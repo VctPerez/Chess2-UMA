@@ -180,6 +180,10 @@ public class DraftScreen extends AbstractScreen {
 		addDraftPieceToStage(key, cont);
 	}
 
+	/**
+	 * Se inicializan los botones, el boton next se convierte en finalizar y dependiendo del modo de juego se realiza otro draft y se empieza una partida en local
+	 * o se envian y reciben los drafts con otro jugador
+	 */
 	private void initButtons() {
 		// Botones con nombre momentaneos, se cambiara y se a�adira a los ficheros de
 		// idiomas
@@ -192,8 +196,7 @@ public class DraftScreen extends AbstractScreen {
 				if (cont < 5) {
 					cont++;
 					changePiece();
-				} else {// aqui o bien se manda el draft el otro o se crea otro draf(en modo local) ->
-						// tal vez haya q pasar el array del finalDraft como parámetro?
+				} else {
 					if (Render.DraftController == 1) {
 						Render.hosting = true;
 						Render.player1Draft.addAll(draft.values());
@@ -201,8 +204,8 @@ public class DraftScreen extends AbstractScreen {
 						Render.app.setScreen(new DraftScreen());
 					} else if (Render.DraftController == 2) {
 						Render.player2Draft.addAll(draft.values());
-						Render.game_screen = new GameScreen();
-						Render.app.setScreen(Render.game_screen);
+						Render.GameScreen = new GameScreen();
+						Render.app.setScreen(Render.GameScreen);
 					} else if (Render.DraftController == 3) {
 						try {
 							if (Render.hosting) {
@@ -229,8 +232,8 @@ public class DraftScreen extends AbstractScreen {
 							System.out.println("dcompleted: " + draftCompleted);
 							if (draftCompleted) {
 								System.out.println("host? " + Render.hosting);
-								Render.game_screen = new OnlineGameScreen();
-								Render.app.setScreen(Render.game_screen);
+								Render.GameScreen = new OnlineGameScreen();
+								Render.app.setScreen(Render.GameScreen);
 							}
 						} catch (IOException e) {
 							throw new RuntimeException(e);

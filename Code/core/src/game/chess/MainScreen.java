@@ -27,7 +27,7 @@ public class MainScreen extends AbstractScreen {
     	
     	stage = new Stage(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
     	table = new Table();
-    	table.setFillParent(true);
+    	
    	    //table.debug();
     	
     	
@@ -95,6 +95,7 @@ public class MainScreen extends AbstractScreen {
     }
     
     private void setupTable() {
+    	table.setFillParent(true);
     	table.left().pad(50);
     	table.defaults().left().space(40);
     	table.add(title);

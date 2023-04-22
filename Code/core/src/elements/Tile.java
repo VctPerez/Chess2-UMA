@@ -94,7 +94,7 @@ public class Tile extends Actor{
 	}
 	
 	public void move(int x, int y) {
-		Tile nextTile = Render.game_screen.board.getTile(x, y);
+		Tile nextTile = Render.GameScreen.board.getTile(x, y);
 		piece.hasBeenMoved();
 		
 		piece.updateXY(x, y);
@@ -106,9 +106,9 @@ public class Tile extends Actor{
 	public void sendPieceToGraveyard() {
 		if(piece!=null) {
 			if(piece.color) {
-				Render.game_screen.graveyardWhite.add(piece);
+				Render.GameScreen.graveyardWhite.add(piece);
 			}else {
-				Render.game_screen.graveyardBlack.add(piece);
+				Render.GameScreen.graveyardBlack.add(piece);
 			}
 			this.piece=null;
 		}
@@ -117,9 +117,9 @@ public class Tile extends Actor{
 	public void simulateSendPieceToGraveyard() {
 		if(piece!=null) {
 			if(piece.color) {
-				Render.game_screen.graveyardWhite.simulateAdd(piece);
+				Render.GameScreen.graveyardWhite.simulateAdd(piece);
 			}else {
-				Render.game_screen.graveyardBlack.simulateAdd(piece);
+				Render.GameScreen.graveyardBlack.simulateAdd(piece);
 			}
 			this.piece=null;
 		}
