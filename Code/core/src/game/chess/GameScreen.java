@@ -90,7 +90,7 @@ public class GameScreen extends AbstractScreen {
 
 	@Override
 	public void show() {
-		stage = new Stage(new FitViewport(1280, 720));
+		stage = new Stage(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
 		stage.clear();
 		table = new Table();
 		table.setFillParent(true);
@@ -362,10 +362,7 @@ public class GameScreen extends AbstractScreen {
 				validMovements.addAll(pieces.get(i).getValidMovements());
 				i++;
 			}
-			/*
-			 * for(Piece piece: pieces) { validMovements.addAll(piece.getValidMovements());
-			 * }
-			 */
+
 			System.out.println("LISTA DE MOVIMIMIENTOS LEGALES -> " + validMovements);
 			if (validMovements.isEmpty()) {
 				isCheckMate = true;
@@ -572,25 +569,12 @@ public class GameScreen extends AbstractScreen {
 			if (board.getTile(next_x, current_y).getPiece() instanceof Pawn) {
 				res = lastPawn.isPassantable; // Es en passant si se le puede hacer al peón objetivo
 			}
-		} else if (piece instanceof Lancer && next_y == current_y + (piece.color() ? 1 : -1) && (next_x == current_x)) { // Si
-																															// avanza
-																															// a
-																															// una
-																															// casilla
-																															// en
-																															// linea
-																															// recta
-																															// sin
-																															// pieza,
-																															// está
-																															// tomando
-																															// al
-																															// paso
-			if (!res && board.getTile(next_x + 1, current_y).getPiece() instanceof Lancer) {
-				res = lastPawn.isPassantable; // Es en passant si se le puede hacer al peón objetivo
+		}else if (piece instanceof Lancer && next_y == current_y + (piece.color()?1:-1) && (next_x == current_x)){ //Si avanza a una casilla en linea recta sin pieza, está tomando al paso
+			if (!res && board.getTile(next_x + 1, current_y) != null && board.getTile(next_x + 1, current_y).getPiece() instanceof Lancer){
+				res = lastPawn.isPassantable; //Es en passant si se le puede hacer al peón objetivo
 			}
-			if (!res && board.getTile(next_x - 1, current_y).getPiece() instanceof Lancer) {
-				res = lastPawn.isPassantable; // Es en passant si se le puede hacer al peón objetivo
+			if(!res && board.getTile(next_x - 1, current_y)!=null && board.getTile(next_x - 1, current_y).getPiece() instanceof Lancer){
+				res = lastPawn.isPassantable; //Es en passant si se le puede hacer al peón objetivo
 			}
 		}
 		return res;

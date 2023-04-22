@@ -25,7 +25,7 @@ public class MainScreen extends AbstractScreen {
     @Override
     public void show() {
     	
-    	stage = new Stage(new FitViewport(1280, 720));
+    	stage = new Stage(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
     	table = new Table();
     	table.setFillParent(true);
    	    //table.debug();

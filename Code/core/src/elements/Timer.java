@@ -4,26 +4,40 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
-public class Timer extends Actor{
+import utils.Render;
+import utils.Resources;
+
+public class Timer extends Table{
 	private float timeRemaining;
 	private float x,y;
-	private String Etiqueta;
-	private BitmapFont font;
+	private String name;
+	private Label timer;
 	
-	public Timer(float time,float x,float y,String nombre) {
+	public Timer(float time,float x,float y,String name) {
+		super();
 		timeRemaining=time;
 		this.x=x;
 		this.y=y;
-		Etiqueta=nombre;
+		this.name = name;
+
+		timer = new Label(name + ": "+ this.toString(), Render.app.getManager().get(Resources.SKIN_PATH,Skin.class));
+		this.setFillParent(true);
+		//this.setPosition(x, y);
+		//this.add(timer);
+		this.left().pad(50);
+    	this.add(timer).left().space(50);
 		
-		font = new BitmapFont();
+	
 	}
 	
+	@Override
 	public void draw(Batch batch, float parentAlpha) {
-		batch.end();
-		batch.begin();
-		font.draw(batch,Etiqueta + ": " + this.toString(), x, y);
+		System.out.println(name + ": "+ this.toString());
+		timer.setText(name + ": "+ this.toString());
 	}
 	
 	public void render() {

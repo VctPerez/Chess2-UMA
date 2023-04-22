@@ -56,7 +56,6 @@ public class Chess2 extends Game {
 		manager.load(Resources.MIDAS_PATH, Texture.class);
 		manager.load(Resources.PALADIN_PATH, Texture.class);
 		manager.load(Resources.COLOSUS_PATH, Texture.class);
-		
 
 		// RANDOM PIECES
 		manager.load(Resources.RND_PATH, Texture.class);
@@ -121,9 +120,9 @@ public class Chess2 extends Game {
 		loadSettings();
 
 		loadSkin();
-		
+
 		loadResources();
-		
+
 		// while(!manager.isFinished());
 		Render.LOADINGSCREEN = new LoadingScreen();
 		// this.setScreen(Render.CONFIGSCREEN);
@@ -138,62 +137,64 @@ public class Chess2 extends Game {
 		Render.MODESCREEN = new ModeScreen();
 		Render.MANUALSCREEN = new ManualScreen();
 		Render.CLASSICMANSCREEN = new ClassicManScreen();
-//		Render.MODIFIEDMANSCREEN = new ModifiedManScreen();
+		// Render.MODIFIEDMANSCREEN = new ModifiedManScreen();
 		Render.LOBBYSCREEN = new LobbyScreen();
 		Render.CREATEMATCHSCREEN = new CreateMatchScreen();
 		Render.DRAFTSCREEN = new DraftScreen();
 
-//		this.setScreen(new GameScreen());
-		this.setScreen(Render.MAINSCREEN);
+		// Render.GameScreen = new GameScreen();
+		// this.setScreen(Render.GameScreen);
+		this.setScreen(Render.DRAFTSCREEN);
+		// this.setScreen(Render.MAINSCREEN);
 
 	}
-	
+
 	private void loadSkin() {
 		Render.skin = new Skin(Gdx.files.internal(Resources.SKIN_PATH)) {
-            //Override json loader to process FreeType fonts from skin JSON
-            @Override
-            protected Json getJsonLoader(final FileHandle skinFile) {
-                Json json = super.getJsonLoader(skinFile);
-                final Skin skin = this;
+			// Override json loader to process FreeType fonts from skin JSON
+			@Override
+			protected Json getJsonLoader(final FileHandle skinFile) {
+				Json json = super.getJsonLoader(skinFile);
+				final Skin skin = this;
 
-                json.setSerializer(FreeTypeFontGenerator.class, new Json.ReadOnlySerializer<FreeTypeFontGenerator>() {
-                    @Override
-                    public FreeTypeFontGenerator read(Json json,
-                            JsonValue jsonData, Class type) {
-                        String path = json.readValue("font", String.class, jsonData);
-                        jsonData.remove("font");
+				json.setSerializer(FreeTypeFontGenerator.class, new Json.ReadOnlySerializer<FreeTypeFontGenerator>() {
+					@Override
+					public FreeTypeFontGenerator read(Json json,
+							JsonValue jsonData, Class type) {
+						String path = json.readValue("font", String.class, jsonData);
+						jsonData.remove("font");
 
-                        Hinting hinting = Hinting.valueOf(json.readValue("hinting", 
-                                String.class, "AutoMedium", jsonData));
-                        jsonData.remove("hinting");
+						Hinting hinting = Hinting.valueOf(json.readValue("hinting",
+								String.class, "AutoMedium", jsonData));
+						jsonData.remove("hinting");
 
-                        TextureFilter minFilter = TextureFilter.valueOf(
-                                json.readValue("minFilter", String.class, "Nearest", jsonData));
-                        jsonData.remove("minFilter");
+						TextureFilter minFilter = TextureFilter.valueOf(
+								json.readValue("minFilter", String.class, "Nearest", jsonData));
+						jsonData.remove("minFilter");
 
-                        TextureFilter magFilter = TextureFilter.valueOf(
-                                json.readValue("magFilter", String.class, "Nearest", jsonData));
-                        jsonData.remove("magFilter");
+						TextureFilter magFilter = TextureFilter.valueOf(
+								json.readValue("magFilter", String.class, "Nearest", jsonData));
+						jsonData.remove("magFilter");
 
-                        FreeTypeFontParameter parameter = json.readValue(FreeTypeFontParameter.class, jsonData);
-                        parameter.hinting = hinting;
-                        parameter.minFilter = minFilter;
-                        parameter.magFilter = magFilter;
-                        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(skinFile.parent().child(path));
-                        BitmapFont font = generator.generateFont(parameter);
-                        skin.add(jsonData.name, font);
-                        if (parameter.incremental) {
-                            generator.dispose();
-                            return null;
-                        } else {
-                            return generator;
-                        }
-                    }
-                });
+						FreeTypeFontParameter parameter = json.readValue(FreeTypeFontParameter.class, jsonData);
+						parameter.hinting = hinting;
+						parameter.minFilter = minFilter;
+						parameter.magFilter = magFilter;
+						FreeTypeFontGenerator generator = new FreeTypeFontGenerator(skinFile.parent().child(path));
+						BitmapFont font = generator.generateFont(parameter);
+						skin.add(jsonData.name, font);
+						if (parameter.incremental) {
+							generator.dispose();
+							return null;
+						} else {
+							return generator;
+						}
+					}
+				});
 
-                return json;
-            }
-        };
+				return json;
+			}
+		};
 	}
 
 	@Override
