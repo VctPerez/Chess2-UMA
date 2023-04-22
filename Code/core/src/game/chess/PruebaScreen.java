@@ -24,6 +24,8 @@ public class PruebaScreen extends AbstractScreen{
 
 	@Override
 	public void show() {
+		if(Render.hosting) Render.host.resetMessage();
+		else Render.guest.resetMessage();
 		
         cuadroTexto = new TextField("prueba");
         cuadroTexto.setPosition(200, 200);

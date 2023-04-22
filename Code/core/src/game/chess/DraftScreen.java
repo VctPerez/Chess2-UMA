@@ -32,6 +32,7 @@ public class DraftScreen extends AbstractScreen {
 
 	TileButton tile1, tile2;
 	private boolean draftCompleted = false; // controla que ya se han enviado ambos los drafts
+	private boolean msgSent = false; //controla para no enviar el mensaje 2 veces
 
 	@Override
 	public void show() {
@@ -209,29 +210,29 @@ public class DraftScreen extends AbstractScreen {
 					} else if (Render.DraftController == 3) {
 						try {
 							if (Render.hosting) {
-								Render.player1Draft.addAll(draft.values());
-								Render.host.sendMessage(draftMessage());
-								System.out.println("dcompleted: " + draftCompleted);
+								if(!msgSent){
+									Render.player1Draft.addAll(draft.values());
+									Render.host.sendMessage(draftMessage());
+									msgSent = true;
+								}
 								if (!Render.host.getMessage().equals("")) {
-									System.out.println("Draft: " + Render.host.getMessage());
 									saveOpponentDraft(Render.host.getMessage());
 									Render.host.resetMessage();
 									draftCompleted = true;
 								}
 							} else {
-								Render.player2Draft.addAll(draft.values());
-								Render.guest.sendMessage(draftMessage());
-								System.out.println("dcompleted: " + draftCompleted);
+								if(!msgSent){
+									Render.player2Draft.addAll(draft.values());
+									Render.guest.sendMessage(draftMessage());
+									msgSent = true;
+								}
 								if (!Render.guest.getMessage().equals("")) {
-									System.out.println("Draft: " + Render.guest.getMessage());
 									saveOpponentDraft(Render.guest.getMessage());
 									Render.guest.resetMessage();
 									draftCompleted = true;
 								}
 							}
-							System.out.println("dcompleted: " + draftCompleted);
 							if (draftCompleted) {
-								System.out.println("host? " + Render.hosting);
 								Render.GameScreen = new OnlineGameScreen();
 								Render.app.setScreen(Render.GameScreen);
 							}
