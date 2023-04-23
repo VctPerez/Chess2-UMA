@@ -36,8 +36,8 @@ public class GameScreen extends AbstractScreen {
 	
 
 	// Control selección de piezas
-	private boolean isPieceSelected = false;
-	private ArrayList<Vector2> currentTile_validMovements = new ArrayList<>();
+	protected boolean isPieceSelected = false;
+	protected ArrayList<Vector2> currentTile_validMovements = new ArrayList<>();
 	private int current_x, current_y;
 	protected Tile currentTile = null;
 	protected static Tile nextTile = null;
@@ -183,10 +183,6 @@ public class GameScreen extends AbstractScreen {
 
 		stage.draw();
 		stage.act();
-
-		if(Render.DraftController == 3){
-			updateOnlineBoard();
-		}
 	}
 
 	public void update(Tile tile) {
@@ -223,42 +219,9 @@ public class GameScreen extends AbstractScreen {
 					lowlight();
 					makeMove(currentTile, nextTile);
 					isPieceSelected = false;
-					//System.out.println("pieza movida = " + moved);
 				}
 			}
 		}
-	}
-
-	private void updateOnlineBoard(){
-		if(Render.hosting != PLAYER){
-			if(!Render.hosting) {
-				//Render.guest.resetMessage();
-				if(!Render.guest.getMessage().equals("")){
-					System.out.println("movimiento de blancas: " +Render.guest.getMessage());
-					parseMovement(Render.guest.getMessage());
-					PLAYER = false;
-					Render.guest.resetMessage();
-				}
-
-			}else{
-				if(!Render.host.getMessage().equals("")){
-					System.out.println("movimiento de negras: " + Render.host.getMessage());
-					parseMovement(Render.host.getMessage());
-					PLAYER = true;
-					Render.host.resetMessage();
-				}
-			}
-		}
-	}
-
-	protected void parseMovement(String movement){
-		String[] params = movement.split("-");
-		String[] ogTile = params[0].split(",");
-		String[] nxtTile = params[1].split(",");
-
-		makeMove(board.getTile(Float.parseFloat(ogTile[0]), Float.parseFloat(ogTile[1])),
-				board.getTile(Float.parseFloat(nxtTile[0]), Float.parseFloat(nxtTile[1])));
-		System.out.println("movimiento parseado");
 	}
 
 	/**
@@ -289,7 +252,7 @@ public class GameScreen extends AbstractScreen {
 	 * 
 	 * @param color
 	 */
-	private void highlight(Boolean color) {
+	protected void highlight(Boolean color) {
 		for (Vector2 vector : currentTile_validMovements) {
 			Tile tile = board.getTile(vector.x, vector.y);
 			// En caso de que haya una pieza enemiga la resalta en rojo
@@ -305,7 +268,7 @@ public class GameScreen extends AbstractScreen {
 	 * Elimina el resaltado de las casillas contenidas en el array de movimientos
 	 * válidos.
 	 */
-	private void lowlight() {
+	protected void lowlight() {
 
 		for (Vector2 vector : currentTile_validMovements) {
 			Tile tile = board.getTile(vector.x, vector.y);
@@ -322,28 +285,17 @@ public class GameScreen extends AbstractScreen {
 	 * calcula los posibles movimientos y los resalta.
 	 * @param tile
 	 */
-	private void select(Tile tile) {
-		if(Render.DraftController != 3) {
-			if (tile.getPiece() != null && tile.getPiece().color() == PLAYER) {
+	protected void select(Tile tile) {
+		if (tile.getPiece() != null && tile.getPiece().color() == PLAYER) {
 
-				currentTile_validMovements = (tile.getPiece().getValidMovements());
+			currentTile_validMovements = (tile.getPiece().getValidMovements());
 
-				highlight(tile.getPiece().color());
+			highlight(tile.getPiece().color());
 
-				System.out.println(currentTile_validMovements.toString());
-				isPieceSelected = true;
-			}
-		}else{
-			if (tile.getPiece() != null && tile.getPiece().color() == Render.hosting && Render.hosting == PLAYER) {
-
-				currentTile_validMovements = (tile.getPiece().getValidMovements());
-
-				highlight(tile.getPiece().color());
-
-				System.out.println(currentTile_validMovements.toString());
-				isPieceSelected = true;
-			}
+			System.out.println(currentTile_validMovements.toString());
+			isPieceSelected = true;
 		}
+		
 	}
 
 	/**
@@ -445,7 +397,7 @@ public class GameScreen extends AbstractScreen {
 	 * @param currentTile
 	 * @param nextTile
 	 */
-	protected void makeMove(Tile currentTile, Tile nextTile) {
+	public void makeMove(Tile currentTile, Tile nextTile) {
 		current_x = (int)currentTile.getPos().x;
 		current_y = (int)currentTile.getPos().y;
 
@@ -464,7 +416,6 @@ public class GameScreen extends AbstractScreen {
 			} else if (!currentTile.getPiece().checkPaladin(next_x, next_y)) {
 
 				checkMidas();
-
 				checkCastling(next_x);
 
 				currentTile.move(next_x, next_y);
@@ -483,7 +434,6 @@ public class GameScreen extends AbstractScreen {
 				} else if (lastPawn != null) {
 					lastPawn.isPassantable = false;
 				}
-
 				mateControl(next_x, next_y);
 				stalemateControl();
 			}
@@ -534,7 +484,6 @@ public class GameScreen extends AbstractScreen {
 				System.out.println("Las blancas han empatado");
 				results.setDraw();
 				showPopup = true;
-
 			}
 		}
 	}

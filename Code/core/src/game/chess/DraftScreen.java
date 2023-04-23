@@ -209,7 +209,7 @@ public class DraftScreen extends AbstractScreen {
 						Render.app.setScreen(Render.GameScreen);
 					} else if (Render.DraftController == 3) {
 						try {
-							if (Render.hosting) {
+							if (Render.hosting) {//metodos en host y guest. Añadir una pantalla de espera al otro jugador, ambos deben empezar al mismo tiempo
 								if(!msgSent){
 									Render.player1Draft.addAll(draft.values());
 									Render.host.sendMessage(draftMessage());
