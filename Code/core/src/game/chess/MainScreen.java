@@ -78,6 +78,7 @@ public class MainScreen extends AbstractScreen {
 //        Render.Batch.end();
     }
     
+    
     private void createTableElements() {
     	
     	textButton = new TextButton[4];
@@ -90,10 +91,6 @@ public class MainScreen extends AbstractScreen {
     	textButton[3] = new TextButton(languageReader.leerLinea(3));//Salir = Linea 3; 
     }
     
-    private void addActors() {
-        stage.addActor(table);
-    }
-    
     private void setupTable() {
     	table.setFillParent(true);
     	table.left().pad(50);
@@ -104,6 +101,11 @@ public class MainScreen extends AbstractScreen {
     		table.add(textButton[i]);
         	table.row();
     	}
+    }
+    
+    private void addActors() {
+    	stage.addActor(Render.menuBG);
+    	stage.addActor(table);
     }
 
     @Override

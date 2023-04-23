@@ -86,6 +86,10 @@ public class Image extends Actor {
     public void setSize(float width, float height){
         sprt.setSize(width, height);
     }
+    
+    public void setImage(String path) {
+    	sprt.setTexture(new Texture(path));
+    }
 
     /**
      * Cambia la posicion de la imagen (siendo la posición la esquina inferior izquierda).

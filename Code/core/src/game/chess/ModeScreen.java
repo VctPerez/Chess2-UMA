@@ -75,6 +75,7 @@ public class ModeScreen extends AbstractScreen{
     }
     
     private void addActors() {
+    	stage.addActor(Render.menuBG);
     	stage.addActor(table);
     }
     

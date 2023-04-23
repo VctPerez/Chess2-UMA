@@ -1,6 +1,7 @@
 package game.chess;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -8,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
+import elements.Background;
 import utils.Render;
 import utils.Resources;
 import utils.TextButton;
@@ -21,6 +23,8 @@ public class PruebaScreen extends AbstractScreen{
     TextField cuadroTexto;
     TextButton texto;
     Stage scene;
+    
+    Background background;
 
 	@Override
 	public void show() {
@@ -36,8 +40,10 @@ public class PruebaScreen extends AbstractScreen{
         
         //Por algun motivo solo deja escalar el tamaño correctamenete con setBounds
         cuadroTexto.setBounds(500, 200, 300, 100);
+        background = new Background();
         
         scene = new Stage(new FitViewport(1280, 720));
+        scene.addActor(background);
         scene.addActor(cuadroTexto);
         scene.addActor(texto);
         
@@ -47,13 +53,9 @@ public class PruebaScreen extends AbstractScreen{
 	@Override
 	public void render(float delta) {
         Render.clearScreen();
-        
+               
         scene.act();
         scene.draw();
-        
-//        if(texto.isChecked()) {
-//        	System.out.println("hola");
-//        }
         
         if(texto.isPressed()) {
         	Render.app.setScreen(Render.MAINSCREEN);

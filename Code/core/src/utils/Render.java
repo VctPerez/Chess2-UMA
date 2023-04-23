@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import elements.Background;
 import game.chess.*;
 import multiplayer.Guest;
 import multiplayer.Host;
@@ -30,6 +31,7 @@ public class Render {
     public static OrthographicCamera camera;
 
     public static Viewport viewport;
+    public static Background menuBG;
     public static Skin skin;
 
     public static Chess2 app;
@@ -70,7 +72,7 @@ public class Render {
      * Este metodo se encarga de limpiar la pantalla al principio de cada Render.
      */
     public static void clearScreen(){
-        Gdx.gl20.glClearColor(0.2f, 0.2f, 0.2f, 1);
+        Gdx.gl20.glClearColor(0.0549019f, 0.062745f, 0.2666666f, 1f);
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
     }
 }

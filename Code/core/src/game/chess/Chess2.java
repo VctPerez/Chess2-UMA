@@ -18,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 
+import elements.Background;
 import interaccionFichero.LectorLineas;
 import utils.IOS;
 import utils.Parser;
@@ -114,6 +115,8 @@ public class Chess2 extends Game {
 		Render.camera = new OrthographicCamera(Render.SCREEN_WIDTH, Render.SCREEN_HEIGHT);
 		Render.app = this;
 		Render.inputs = new IOS();
+		Render.menuBG = new Background();
+		
 		Gdx.input.setInputProcessor(Render.inputs);
 		manager = new AssetManager();
 
@@ -144,9 +147,8 @@ public class Chess2 extends Game {
 
 		 Render.GameScreen = new GameScreen();
 		 Render.hosting=true;
-		 //this.setScreen(Render.GameScreen);
-		//this.setScreen(Render.DRAFTSCREEN);
-		this.setScreen(Render.CREATEMATCHSCREEN);
+
+		 this.setScreen(Render.MAINSCREEN);
 
 	}
 

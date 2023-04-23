@@ -194,6 +194,7 @@ public class ConfigScreen extends AbstractScreen {
      * M�todo que a�ade los actores a la escena
      */
     private void addActors() {
+    	stage.addActor(Render.menuBG);
         stage.addActor(rootTable);
         stage.addActor(optionsTable);
     }
