@@ -107,6 +107,7 @@ Code/core/build/
 Code/desktop/build/
 Code/html/build/
 Code/ios/build/
+Code/desktop/out/
 
 ## OS Specific
 .DS_Store
