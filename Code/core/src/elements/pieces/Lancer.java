@@ -132,6 +132,6 @@ public class Lancer extends Piece{
 	@Override
 	public String toString() {
 		String str = super.toString();
-		return str.replace("X","Lancer");
+		return str.replace("X","Joker");
 	}
 }

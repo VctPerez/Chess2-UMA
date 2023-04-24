@@ -58,6 +58,9 @@ public class Parser {
 		case Resources.MINER_PATH:
 			piece = new Miner(color, x, y, board);
 			break;
+		case Resources.CATAPULT_PATH:
+			piece = new Catapult(color, x, y, board);
+			break;
 		
 		}
 		return piece;

@@ -170,6 +170,10 @@ public abstract class Piece extends Actor {
 	public Boolean checkBomber(float next_x, float next_y) {
 		return false;
 	}
+	
+	public Boolean checkCatapultAttack(float next_x, float next_y) {
+		return false;
+	}
 
 	/**
 	 * Filtra todos los posibles movimientos de una pieza y solo permite aquellos

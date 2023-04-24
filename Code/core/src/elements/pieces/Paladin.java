@@ -288,6 +288,6 @@ public class Paladin extends Piece{
 	@Override
 	public String toString() {
 		String str = super.toString();
-		return str.replace("X","Bishop");
+		return str.replace("X","Paladin");
 	}
 }

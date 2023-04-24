@@ -138,6 +138,9 @@ public class GameScreen extends AbstractScreen {
 		addPiecesToStage(whitePieces);
 		addPiecesToStage(blackPieces);
 		addTilesToStage();
+		
+		System.out.println(whitePieces.toString());
+		System.out.println(blackPieces.toString());
 	}
 
 	/**
@@ -413,7 +416,7 @@ public class GameScreen extends AbstractScreen {
 			if (currentTile.getPiece().checkBomber(next_x, next_y)) {
 				Bomber b = (Bomber) currentTile.getPiece();
 				b.explode();
-			} else if (!currentTile.getPiece().checkPaladin(next_x, next_y)) {
+			} else if (!currentTile.getPiece().checkPaladin(next_x, next_y) && !currentTile.getPiece().checkCatapultAttack(next_x, next_y)) {
 
 				checkMidas();
 				checkCastling(next_x);
@@ -631,14 +634,14 @@ public class GameScreen extends AbstractScreen {
 	public void testDrafts() {
 
 		// Para probar la pieza random
-		Render.player1Draft.add(Resources.PALADIN_PATH);
-		Render.player1Draft.add(Resources.BOMBER_PATH);
+		Render.player1Draft.add(Resources.CATAPULT_PATH);
+		Render.player1Draft.add(Resources.KNIGHT_PATH);
 		Render.player1Draft.add(Resources.COLOSUS_PATH);
 		Render.player1Draft.add(Resources.PALADIN_PATH);
 		Render.player1Draft.add(Resources.QUEEN_PATH);
 		Render.player1Draft.add(Resources.KING_PATH);
 
-		Render.player2Draft.add(Resources.BOMBER_PATH);
+		Render.player2Draft.add(Resources.PAWN_PATH);
 		Render.player2Draft.add(Resources.RIDER_PATH);
 		Render.player2Draft.add(Resources.ROOK_PATH);
 		Render.player2Draft.add(Resources.RND_PATH);
@@ -745,6 +748,9 @@ public class GameScreen extends AbstractScreen {
 				tile.addCaptureListener(new InputListener() {
 					@Override
 					public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+						if(tile.getPiece()!=null) {
+							System.out.println(tile.getPiece().toString());
+						}
 						if (!promoting) {
 							update(tile);
 						}

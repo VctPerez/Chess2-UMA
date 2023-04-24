@@ -89,7 +89,7 @@ public class Colosus extends Piece{
 	@Override
 	public String toString() {
 		String str = super.toString();
-		return str.replace("X","Rook");
+		return str.replace("X","Colosus");
 	}
 
 }
