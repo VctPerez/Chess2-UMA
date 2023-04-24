@@ -20,6 +20,7 @@ import interaccionFichero.LectorLineas;
 import utils.Image;
 import utils.Render;
 import utils.Resources;
+import utils.Settings;
 import utils.Text;
 import utils.TextButton;
 	
@@ -42,7 +43,7 @@ public class ClassicManScreen extends AbstractScreen{
 		
 		//Abrir los ficheros de configuracion e idioma
 	    configReader = new LectorLineas("files/config.txt"); //Lector del txt configuracion para sacar el idioma
-	    languageReader = new LectorLineas("files/lang/"+ configReader.leerLinea(1) + "Manual.txt"); //Abrimos el idioma que toca del archivo configuracion
+	    languageReader = new LectorLineas("files/lang/"+ configReader.leerLinea(Settings.language) + "Manual.txt"); //Abrimos el idioma que toca del archivo configuracion
 	    	
 	    //Inicializar los elementos de la escena
     	createTableElements();
@@ -80,9 +81,9 @@ public class ClassicManScreen extends AbstractScreen{
     	String text="";
 		
 	    if(configReader.leerLinea(1).equals("esp/")) {
-				text+=languageReader.leerTramo(6, 187);
+				text+=languageReader.leerTramo(5, 187);
 	    }else {
-				text+=languageReader.leerTramo(6, 184);
+				text+=languageReader.leerTramo(5, 184);
 	    }
 			
 		Label label = new Label(text, new Label.LabelStyle(new BitmapFont(), Color.WHITE));
