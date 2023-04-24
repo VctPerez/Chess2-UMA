@@ -1,7 +1,10 @@
 package game.chess;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -28,11 +31,18 @@ public class PruebaScreen extends AbstractScreen{
 
 	@Override
 	public void show() {
-		if(Render.hosting) Render.host.resetMessage();
-		else Render.guest.resetMessage();
 		
         cuadroTexto = new TextField("prueba");
         cuadroTexto.setPosition(200, 200);
+		cuadroTexto.addListener(new InputListener(){
+			@Override
+			public boolean keyDown(InputEvent event, int keycode) {
+				if(keycode == Input.Keys.ENTER){
+					System.out.println(cuadroTexto.getText());
+				}
+				return true;
+			}
+		});
         
         texto = new TextButton("hola victor");
         texto.setPosition(100, 100);

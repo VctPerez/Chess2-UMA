@@ -139,9 +139,8 @@ public class CreateMatchScreen extends AbstractScreen{
             @Override
             public boolean keyDown(InputEvent event, int keycode) {
                 if(keycode == Input.Keys.ENTER && !textField.getText().equals("")){
-
                     try {
-                        Render.guest.connect(textField.getMessageText());
+                        Render.guest.connect(textField.getText());
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
