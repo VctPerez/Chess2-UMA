@@ -18,6 +18,7 @@ import interaccionFichero.LectorLineas;
 import utils.Image;
 import utils.Render;
 import utils.Resources;
+import utils.Settings;
 import utils.Text;
 import utils.TextButton;
 import utils.TextField;
@@ -40,7 +41,7 @@ public class ManualScreen extends AbstractScreen{
 	    	
 	    	//Abrir los ficheros de configuracion e idioma
 	    	configReader = new LectorLineas("files/config.txt"); //Lector del txt configuracion para sacar el idioma
-	    	languageReader = new LectorLineas("files/lang/"+ configReader.leerLinea(1) + "Manual.txt"); //Abrimos el idioma que toca del archivo configuracion
+	    	languageReader = new LectorLineas("files/lang/"+ configReader.leerLinea(Settings.language) + "Manual.txt"); //Abrimos el idioma que toca del archivo configuracion
 	    	
 	    	//Inicializar los elementos de la escena
 	    	createTableElements();
