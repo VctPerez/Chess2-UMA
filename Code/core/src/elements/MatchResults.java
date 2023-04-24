@@ -1,38 +1,53 @@
 package elements;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import utils.Render;
-import utils.Resources;
-import utils.Text;
 import utils.TextButton;
 
 public class MatchResults extends Actor{
-
-	private Text matchres,goMenuText;
-	private Background fondoRes;
+	
+	private Table table;
+	private Label matchres;
 	private TextButton goMenu;
+	private Stage stage;
 	
-	public MatchResults() {
-		fondoRes = new Background();
-		fondoRes.setColor(new Color(60/255f, 60/255f,60/255f,1f));
-        fondoRes.setPosition(400, 100);
-        fondoRes.setSize(500, 500);
-        
-        matchres = new Text(Resources.FONT_MENU_PATH,30,Color.WHITE,3);
-        matchres.setPosition(450, 400);
-        matchres.setText("-");
-        
-        goMenuText= new Text(Resources.FONT_MENU_PATH,20,Color.WHITE,3);
-        goMenuText.setPosition(500, 250);
-        goMenuText.setText("Volver al Menú Principal");
-        goMenu = new TextButton("Volver al Menú Principal");
-        goMenu.setName("goMenu");
-        
+	public MatchResults(Stage stage) {
+		this.stage=stage;
+		table = new Table();
+		table.setBounds(350, 100, 550, 550);
+
+		Texture texture = new Texture("Black.png");
+		TextureRegionDrawable drawable = new TextureRegionDrawable(texture);
+		table.setBackground(drawable);
+		
+    	createTableElements();
+	    setupTable();
+    	addActors();
 	}
-	
+
+	private void addActors() {
+		stage.addActor(table);
+	}
+
+	private void setupTable() {
+	    table.add(matchres).center();
+	    table.row();
+	    table.add(goMenu).center().padTop(50);
+	}
+
+	private void createTableElements() {
+		matchres = new Label("-", Render.skin, "TitleStyle");
+		matchres.setFontScale(0.35f, 0.35f);
+    	goMenu = new TextButton("Volver al Menú Principal","SingleClickStyle");
+    	goMenu.getLabel().setFontScale(0.35f,0.35f);
+	}
+
 	public void setWinner(String Winner) {
 		matchres.setText("HA GANADO EL " + Winner);
 	}
@@ -41,28 +56,19 @@ public class MatchResults extends Actor{
 		matchres.setText("Empate");
 	}
 	
-	public void draw(Batch batch, float parentAlpha) {
-		fondoRes.draw(batch, parentAlpha);
-		matchres.draw(batch, parentAlpha);
-		
-		
-		//Por algun motivo solo puedo dibujar el boton así, de cualquier otra forma me da errores (Revisable)
-		Render.Batch.begin();
-		goMenu.draw(Render.Batch, parentAlpha); 
-		Render.Batch.end();
-	}
-	
-	public void act(float delta) {
-		super.act(delta);
-	}
-	
 	public void Show() {
-		setVisible(true);
+		table.setVisible(true);
 	}
 	
 	public void Hide() {
-		setVisible(false);
+		table.setVisible(false);
 	}
+	
+	public void toFront() {
+		table.toFront();
+	}
+	
+	
 	
 	public void render() {
 		if(goMenu.isPressed()) {

@@ -30,8 +30,7 @@ public class Timer extends Label{
 	}
 	
 	public void render() {
-			this.timeRemaining-=Gdx.graphics.getDeltaTime();
-		//NO tiempo negativo
+		this.timeRemaining-=Gdx.graphics.getDeltaTime();
 		if(this.timeRemaining<0) {
 			this.timeRemaining=0;
 		}

@@ -12,7 +12,7 @@ import utils.Render;
 import utils.Resources;
 /**
  * Fondo animado con desplazamiento en diagonal. La imagen de fondo se define en un archivo .PNG.
- * El efecto se consigue al generar 4 imágenes idénticas y recolocandolas cuando salen de la pantalla
+ * El efecto se consigue al generar 4 imï¿½genes idï¿½nticas y recolocandolas cuando salen de la pantalla
  */
 public class Background extends Actor{
 	
@@ -22,6 +22,8 @@ public class Background extends Actor{
 	
 	float posX;
 	float posY;
+	
+	float width,height;
 	
 	private int pos3 = 1;
 	private int pos2 = 0;
@@ -33,6 +35,9 @@ public class Background extends Actor{
 		//hasta esquina inferior derecha.
 		speedX = 2.5f;
 		speedY = -1.40625f;
+		
+		width=Render.SCREEN_WIDTH;
+		height=Render.SCREEN_HEIGHT;
 		
 		for(int i  = 0; i < fondo.length ; i++) {
 			fondo[i] = new Image(new Texture(Resources.MENU_BACKGROUND_PATH));
@@ -48,6 +53,13 @@ public class Background extends Actor{
 		
 	}
 	
+	public void setSize(float x,float y) {
+		for(int i  = 0; i < fondo.length ; i++) {
+			fondo[i] = new Image(new Texture(Resources.MENU_BACKGROUND_PATH));
+			fondo[i].setSize(x, y);
+		}
+	}
+	
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		
@@ -58,7 +70,7 @@ public class Background extends Actor{
 		}
 	}
 	/**
-	 * Metodo que recalcula la posición de cada imagen en pantalla. En cada frame las mueve en una direccion X e Y.
+	 * Metodo que recalcula la posiciï¿½n de cada imagen en pantalla. En cada frame las mueve en una direccion X e Y.
 	 * Si alguna imagen deja de verse en pantalla, se vuelve a posicion en las coordenadas adecuadas.
 	 */
 	public void updatePositions() {
@@ -86,13 +98,13 @@ public class Background extends Actor{
 					fondo[1].setPosition(fondo[0].getPosition().x - Render.SCREEN_WIDTH, fondo[0].getPosition().y + Render.SCREEN_HEIGHT);
 					break;
 				case 2:
-					//En cada iteración del loop fondo[2] se tendra que colocar debajo de 0 o de 1
+					//En cada iteraciï¿½n del loop fondo[2] se tendra que colocar debajo de 0 o de 1
 					fondo[2].setPosition(fondo[pos2].getPosition().x, fondo[pos2].getPosition().y - Render.SCREEN_HEIGHT);
 					//XOR para cambiar entre 0 y 1;
 					pos2 ^= 1;
 					break;
 				case 3:
-					//En cada iteración del loop fondo[3] se tendra que colocar debajo de 0 o de 1
+					//En cada iteraciï¿½n del loop fondo[3] se tendra que colocar debajo de 0 o de 1
 					fondo[3].setPosition(fondo[pos3].getPosition().x, fondo[pos3].getPosition().y + Render.SCREEN_HEIGHT);
 					pos3 ^= 1;
 					break;
@@ -102,7 +114,7 @@ public class Background extends Actor{
 	}
 	
 	/**
-	 * Método para actualizar la imagen de fondo
+	 * Mï¿½todo para actualizar la imagen de fondo
 	 * @param path Ruta interna de la imagen
 	 */
 	public void setImage(String path) {

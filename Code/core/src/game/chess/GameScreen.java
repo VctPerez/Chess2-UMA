@@ -117,7 +117,7 @@ public class GameScreen extends AbstractScreen {
 
 		// Crear mensaje emergente tras terminar partida
 		showPopup = false;
-		results = new MatchResults();
+		results = new MatchResults(this.stage);
 		results.Hide();
 
 		// -------------------------------
@@ -175,7 +175,8 @@ public class GameScreen extends AbstractScreen {
 		Render.clearScreen();
 
 		if (showPopup) {
-			Gdx.input.setInputProcessor(Render.inputs);
+			draw.clearListeners();
+			surrender.clearListeners();
 			results.Show();
 			results.toFront();
 			results.render();
