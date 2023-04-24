@@ -21,7 +21,7 @@ public class OnlineGameScreen extends GameScreen {
 		super.update(tile);
 		System.out.println(moved);
 		try {
-			if (Render.hosting == PLAYER) {
+			if (Render.hosting == PLAYER) {//meter estos metodos en las clases host y guest y que se llamen sendMovement
 				if(Render.hosting) {
 					if(moved) {
 						String movement = Parser.parseMovementToString(currentTile, currentTile);
@@ -47,7 +47,7 @@ public class OnlineGameScreen extends GameScreen {
 	}
 	
 	private void updateOnlineBoard(){
-		if(Render.hosting != PLAYER){
+		if(Render.hosting != PLAYER){//meter estos metodos en las clases host y guest y que se llamen recieveMovement?
 			if(!Render.hosting) {
 				if(!Render.guest.getMessage().equals("")){
 					System.out.println("movimiento de blancas: " +Render.guest.getMessage());

@@ -16,6 +16,7 @@ import elements.Piece;
 import elements.Tile;
 import game.chess.GameScreen;
 import interaccionFichero.LectorLineas;
+import utils.AnimationActor;
 import utils.Image;
 import utils.Render;
 import utils.Resources;
@@ -89,6 +90,11 @@ public class Bomber extends Piece{
 			Sound sound = Render.app.getManager().get(Resources.EXPLOSION_SOUND, Sound.class);
 
 			public boolean act(float delta) {
+				AnimationActor explosion= new AnimationActor(0.13f, "explosion.png", 5);
+				explosion.setPosition(getX()-board.getTile(x, y).getWidth(), getY()-board.getTile(x, y).getWidth());
+				explosion.setSize(3*board.getTile(x, y).getWidth(), 3*board.getTile(x, y).getWidth());
+				
+				Render.GameScreen.stage.addActor(explosion);
 				sound.play(0.5f);
 				return true;
 			}
@@ -171,23 +177,7 @@ public class Bomber extends Piece{
 			addNonAtackMovement(x + direction, y - direction, movements);
 			addNonAtackMovement(x - direction, y + direction, movements);
 			addNonAtackMovement(x - direction, y - direction, movements);
-		}
-		
-		/*movimiento de dos en linea recta
-		if(board.getTile(x, y+direction) != null && board.getTile(x, y+direction).getPiece()== null) {
-			addNonAtackMovement(x, y + 2*direction, movements);			
-		}
-		if(board.getTile(x, y-direction) != null && board.getTile(x, y-direction).getPiece()== null) {
-			addNonAtackMovement(x, y - 2*direction, movements);			
-		}
-		if(board.getTile(x + direction, y) != null && board.getTile(x + direction, y).getPiece()== null) {
-			addNonAtackMovement(x + 2*direction, y, movements);			
-		}
-		if(board.getTile(x - direction, y) != null && board.getTile(x - direction, y).getPiece()== null) {
-			addNonAtackMovement(x - 2*direction, y, movements);			
-		}
-		*/
-			
+		}	
 		return movements;
 	}
 	

@@ -631,14 +631,14 @@ public class GameScreen extends AbstractScreen {
 	public void testDrafts() {
 
 		// Para probar la pieza random
-		Render.player1Draft.add(Resources.LANCER_PATH);
+		Render.player1Draft.add(Resources.PALADIN_PATH);
 		Render.player1Draft.add(Resources.BOMBER_PATH);
 		Render.player1Draft.add(Resources.COLOSUS_PATH);
 		Render.player1Draft.add(Resources.PALADIN_PATH);
 		Render.player1Draft.add(Resources.QUEEN_PATH);
 		Render.player1Draft.add(Resources.KING_PATH);
 
-		Render.player2Draft.add(Resources.WARDEN_PATH);
+		Render.player2Draft.add(Resources.BOMBER_PATH);
 		Render.player2Draft.add(Resources.RIDER_PATH);
 		Render.player2Draft.add(Resources.ROOK_PATH);
 		Render.player2Draft.add(Resources.RND_PATH);

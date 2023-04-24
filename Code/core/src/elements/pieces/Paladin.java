@@ -16,6 +16,7 @@ import elements.Piece;
 import elements.Tile;
 import game.chess.GameScreen;
 import interaccionFichero.LectorLineas;
+import utils.AnimationActor;
 import utils.Render;
 import utils.Resources;
 
@@ -90,7 +91,7 @@ public class Paladin extends Piece{
 		swingTile(-i, -j, next_x, next_y);
 		swingTile(0, 0, next_x, next_y);
 		swingTile(+i, +j, next_x, next_y);
-		swingSound();
+		swingSound(next_x, next_y);
 		Render.GameScreen.resetMate();
 	}
 	
@@ -238,11 +239,29 @@ public class Paladin extends Piece{
 		}
 	}
 
-	public void swingSound() {
+	public void swingSound(final float next_x, final float next_y) {
 		Action swingSfx = new Action() {
 			Sound sound = Render.app.getManager().get(Resources.PALADINSWING_SOUND, Sound.class);
 
 			public boolean act(float delta) {
+				AnimationActor swing= new AnimationActor(0.13f, "sword-swing.png", 4);
+				if(next_x == x && next_y == y + 1 && canSwingUp) {
+					swing.rotateBy(0);
+					swing.setPosition(getX()-board.getTile(x, y).getWidth(), getY()+board.getTile(x, y).getWidth());
+				}else if(next_x == x && next_y == y - 1 && canSwingDown) {
+					swing.rotateBy(180);
+					swing.setPosition(getX()+2*board.getTile(x, y).getWidth(), getY());
+				}else if(next_x == x + 1 && next_y == y && canSwingRight) {
+					swing.rotateBy(270);
+					swing.setPosition(getX()+board.getTile(x, y).getWidth(), getY()+2*board.getTile(x, y).getWidth());
+				}else if(next_x == x - 1 && next_y == y && canSwingLeft) {
+					swing.rotateBy(90);
+					swing.setPosition(getX(), getY()-board.getTile(x, y).getWidth());
+				}
+				
+				swing.setSize(3*board.getTile(x, y).getWidth(), board.getTile(x, y).getWidth());
+				Render.GameScreen.stage.addActor(swing);
+				
 				sound.play(0.5f);
 				return true;
 			}
