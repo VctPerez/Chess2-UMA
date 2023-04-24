@@ -55,6 +55,9 @@ public class Parser {
 		case Resources.COLOSUS_PATH:
 			piece = new Colosus(color,x,y,board);
 			break;	
+		case Resources.MINER_PATH:
+			piece = new Miner(color, x, y, board);
+			break;
 		
 		}
 		return piece;
