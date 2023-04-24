@@ -23,8 +23,6 @@ public class Background extends Actor{
 	float posX;
 	float posY;
 	
-	float width,height;
-	
 	private int pos3 = 1;
 	private int pos2 = 0;
 
@@ -35,9 +33,6 @@ public class Background extends Actor{
 		//hasta esquina inferior derecha.
 		speedX = 2.5f;
 		speedY = -1.40625f;
-		
-		width=Render.SCREEN_WIDTH;
-		height=Render.SCREEN_HEIGHT;
 		
 		for(int i  = 0; i < fondo.length ; i++) {
 			fondo[i] = new Image(new Texture(Resources.MENU_BACKGROUND_PATH));
