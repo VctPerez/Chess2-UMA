@@ -53,20 +53,29 @@ public class Miner extends Piece {
 			}
 			
 			
+		}else {
+			
+			addMovement(x + 2, y , board, movements);
+			addMovement(x - 2, y , board, movements);
+			addMovement(x , y + 2, board, movements);
+			addMovement(x , y - 2, board, movements);
+			
+			
 		}
 		
-		addMovement(x + 2, y , board, movements);
-		addMovement(x - 2, y , board, movements);
-		addMovement(x , y + 2, board, movements);
-		addMovement(x , y - 2, board, movements);
+		
 		
 		return movements;
 	}
 
 	public void addMovement(float x, float y, Board board, ArrayList<Vector2> movements) {
-		if (board.getTile(x, y) != null && !sameColor(board.getTile(x, y).getPiece())) {
+		
+		if (!hasBeenMoved && board.getTile(x, y) != null && !sameColor(board.getTile(x, y).getPiece()) && board.getTile(x, y).getPiece()==null ) {
+			movements.add(new Vector2(x,y) );
+		}else if (board.getTile(x, y) != null && !sameColor(board.getTile(x, y).getPiece()) && hasBeenMoved){
 			movements.add(new Vector2(x, y));
 		}
+			
 	}
 	
 	public String getInfo() {
