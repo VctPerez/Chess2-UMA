@@ -24,18 +24,19 @@ public class OnlineGameScreen extends GameScreen {
 			if (Render.hosting == PLAYER) {//meter estos metodos en las clases host y guest y que se llamen sendMovement
 				if(Render.hosting) {
 					if(moved) {
-						String movement = Parser.parseMovementToString(currentTile, currentTile);
+						String movement = Parser.parseMovementToString(currentTile, nextTile);
 						Render.host.sendMessage(movement);
 						System.out.println("mensaje enviado from host");
+						System.out.println("mensaje enviado con: "+ movement);
 						PLAYER = false;
 						moved = false;
 					}
 				}else{
 					if(moved){
-						String movement = Parser.parseMovementToString(currentTile, currentTile);
+						String movement = Parser.parseMovementToString(currentTile, nextTile);
 						Render.guest.sendMessage(movement);
-						System.out.println("mensaje enviado con: "+ movement);
 						System.out.println("mensaje enviado from guest");
+						System.out.println("mensaje enviado con: "+ movement);
 						PLAYER = true;
 						moved = false;
 					}
