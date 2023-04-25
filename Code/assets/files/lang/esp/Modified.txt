@@ -44,3 +44,10 @@
  Mezcla al caballo y al alfil, puede
  saltar igual que el caballo y moverse
  en la misma dirección a la que puede saltar.
+ 
+ Minero:
+ Su primer movimiento es un tanto ofensivo 
+ puesto que se posiciona muy cerca del conjunto 
+ de piezas del enemigo. Despues mantiene una 
+ serie de movimientos que le permiten saltar 
+ y conquistar piezas a lo largo del tablero.
