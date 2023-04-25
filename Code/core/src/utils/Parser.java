@@ -6,6 +6,7 @@ import elements.Board;
 import elements.Piece;
 import elements.Tile;
 import elements.pieces.*;
+import game.chess.GameScreen;
 
 public class Parser {
 	
@@ -82,8 +83,8 @@ public class Parser {
 		String[] ogTile = params[0].split(",");
 		String[] nxtTile = params[1].split(",");
 
-		Render.GameScreen.makeMove(Render.GameScreen.board.getTile(Float.parseFloat(ogTile[0]), Float.parseFloat(ogTile[1])),
-				Render.GameScreen.board.getTile(Float.parseFloat(nxtTile[0]), Float.parseFloat(nxtTile[1])));
+		Render.GameScreen.makeMove(GameScreen.board.getTile(Float.parseFloat(ogTile[0]), Float.parseFloat(ogTile[1])),
+				GameScreen.board.getTile(Float.parseFloat(nxtTile[0]), Float.parseFloat(nxtTile[1])));
 		System.out.println("movimiento parseado");
 	}
 }

@@ -72,7 +72,7 @@ public class PruebaScreen extends AbstractScreen{
         if(texto.isPressed()) {
         	Render.app.setScreen(Render.MAINSCREEN);
         }
-      
+
 	}
 
 	@Override

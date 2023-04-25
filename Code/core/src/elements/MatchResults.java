@@ -72,6 +72,13 @@ public class MatchResults extends Actor{
 	
 	public void render() {
 		if(goMenu.isPressed()) {
+			if(Render.hosting){
+				Render.host.setReceiving(false);
+				Render.host = null;
+			}else{
+				Render.guest.setReceiving(false);
+				Render.guest = null;
+			}
 			Render.app.setScreen(Render.MAINSCREEN);
 		}
 	}
