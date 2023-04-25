@@ -21,11 +21,10 @@ public class MainScreen extends AbstractScreen {
     LectorLineas languageReader, configReader;
 
     
-    
     @Override
     public void show() {
     	
-    	stage = new Stage(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
+    	stage = new Stage(new FitViewport(1280, 720));
     	table = new Table();
     	
    	    //table.debug();
@@ -59,6 +58,10 @@ public class MainScreen extends AbstractScreen {
         //---------------
         stage.act();
         stage.draw();
+        
+//        System.out.println("VIEWPORT: " + stage.getViewport().getScreenHeight() + " " + stage.getViewport().getScreenWidth());
+//        System.out.println("REAL: " + stage.getViewport().getScreenX() + " " + stage.getViewport().getScreenY());
+//        System.out.println("VIRTUAL: " + stage.getViewport().getWorldWidth() + " " +stage.getViewport().getWorldHeight());
         
         if(textButton[0].isPressed()){
             Render.bgMusic.stop();
@@ -115,10 +118,12 @@ public class MainScreen extends AbstractScreen {
 
     @Override
     public void resize(int width, int height) {
-        Render.SCREEN_WIDTH = width;
-        Render.SCREEN_HEIGHT = height;
         
         stage.getViewport().update(width, height);
+        
+        Render.SCREEN_WIDTH = stage.getViewport().getScreenWidth();
+        Render.SCREEN_HEIGHT = stage.getViewport().getScreenHeight();
+
     }
 
     @Override
