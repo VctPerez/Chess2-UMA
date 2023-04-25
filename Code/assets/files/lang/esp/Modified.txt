@@ -39,3 +39,8 @@
  cada direccion y al comer 2 piezas mas
  consigue su forma final ampliando su
  rango
+
+ Valkyria:
+ Mezcla al caballo y al alfil, puede
+ saltar igual que el caballo y moverse
+ en la misma dirección a la que puede saltar.

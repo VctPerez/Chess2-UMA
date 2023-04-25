@@ -40,3 +40,9 @@
  each direction and when eating 2 more
  pieces gets its final form by expanding 
  its range.
+
+Valkyrie:
+The Valkyrie mixes the Knight and the 
+Bishop, she can jump as a Knight and 
+can also move in the same direction 
+that she jumps.

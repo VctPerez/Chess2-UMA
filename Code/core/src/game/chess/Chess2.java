@@ -59,6 +59,7 @@ public class Chess2 extends Game {
 		manager.load(Resources.COLOSUS_PATH, Texture.class);
 		manager.load(Resources.MINER_PATH, Texture.class);
 		manager.load(Resources.CATAPULT_PATH, Texture.class);
+		manager.load(Resources.VALKYRIE_PATH,Texture.class);
 
 		// RANDOM PIECES
 		manager.load(Resources.RND_PATH, Texture.class);
@@ -150,7 +151,7 @@ public class Chess2 extends Game {
 //		Render.GameScreen = new GameScreen();
 //		Render.hosting=false;
 
-		this.setScreen(Render.MAINSCREEN);
+		this.setScreen(Render.DRAFTSCREEN);
 
 	}
 

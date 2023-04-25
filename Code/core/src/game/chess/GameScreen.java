@@ -115,7 +115,7 @@ public class GameScreen extends AbstractScreen {
 
 		// Crear mensaje emergente tras terminar partida
 		showPopup = false;
-		results = new MatchResults(this.stage);
+		results = new MatchResults(stage);
 		results.Hide();
 
 		// -------------------------------
@@ -172,8 +172,10 @@ public class GameScreen extends AbstractScreen {
 		Render.clearScreen();
 
 		if (showPopup) {
+			//Para que no se pueda interaccionar con nada despues de que se muestre el popup
 			draw.clearListeners();
 			surrender.clearListeners();
+			//------------------------------------------------------------------------------
 			results.Show();
 			results.toFront();
 			results.render();
@@ -632,7 +634,7 @@ public class GameScreen extends AbstractScreen {
 	public void testDrafts() {
 
 		// Para probar la pieza random
-		Render.player1Draft.add(Resources.CATAPULT_PATH);
+		Render.player1Draft.add(Resources.VALKYRIE_PATH);
 		Render.player1Draft.add(Resources.KNIGHT_PATH);
 		Render.player1Draft.add(Resources.COLOSUS_PATH);
 		Render.player1Draft.add(Resources.PALADIN_PATH);

@@ -61,6 +61,9 @@ public class Parser {
 		case Resources.CATAPULT_PATH:
 			piece = new Catapult(color, x, y, board);
 			break;
+		case Resources.VALKYRIE_PATH:
+			piece = new Valkyrie(color,x,y,board);
+			break;
 		
 		}
 		return piece;
