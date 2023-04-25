@@ -49,7 +49,10 @@ public class Tile extends Actor{
 	public void draw(Batch batch, float parentAlpha) {
 		batch.end();
 		tile.begin(ShapeType.Filled);
+		tile.setProjectionMatrix(batch.getProjectionMatrix());
+		tile.setTransformMatrix(batch.getTransformMatrix());
 		tile.rect(getX(), getY(), getWidth(), getHeight());
+		
 		
 		if(highlight) {
 			tile.setColor(0.97f, 0.9f, 0.33f, 1f);

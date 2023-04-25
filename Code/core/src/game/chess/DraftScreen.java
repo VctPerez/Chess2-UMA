@@ -23,7 +23,6 @@ public class DraftScreen extends AbstractScreen {
 	private ArrayList<String> pawns, knights, rooks, bishops, queens, kings;
 	private String currentPieceSelection;
 
-	private Background background;
 	private PieceInfo info;
 	private TextButton next, back;
 	private Image arrow;
@@ -39,19 +38,14 @@ public class DraftScreen extends AbstractScreen {
 		System.out.println("El modo de draft es " + Render.DraftController);
 		stage = new Stage(new FitViewport(1280, 720));
 		Gdx.input.setInputProcessor(stage);
-		stage.clear();
 
 		configReader = new LectorLineas("files/config.txt"); // Lector del txt configuracion para sacar el idioma
 		languageReader = new LectorLineas("files/lang/" + configReader.leerLinea(Settings.language) + "Draft-Game.txt");
 
-		background = new Background();
-		background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-
 		info = new PieceInfo();
 
 		// -------------------------------
-
-		stage.addActor(background);
+		stage.addActor(Render.menuBG);
 		stage.addActor(info);
 
 		initPieceClasses();

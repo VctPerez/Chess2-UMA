@@ -61,7 +61,6 @@ public abstract class Piece extends Actor {
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		this.toFront();
-
 		sprite.setPosition(getX(), getY());
 		if (alive) {
 			sprite.setSize(board.getTile(x, y).getWidth(), board.getTile(x, y).getHeight());
