@@ -431,9 +431,9 @@ public class GameScreen extends AbstractScreen {
 
 				if (nextTile.getPiece() instanceof Pawn || nextTile.getPiece() instanceof Lancer
 						|| nextTile.getPiece() instanceof Guardian) {
-					checkPassant(next_x, next_y);
-
+					if(lastPawn!=null) checkPassant(next_x, next_y);
 					checkPromotion(next_x, next_y);
+					updateLastPawn(next_x, next_y);
 				} else if (lastPawn != null) {
 					lastPawn.isPassantable = false;
 				}
@@ -547,7 +547,6 @@ public class GameScreen extends AbstractScreen {
 		if (isEnPassant(next_x, next_y, nextTile.getPiece())) {
 			board.getTile(lastPawn.getPos().x, lastPawn.getPos().y).sendPieceToGraveyard();
 		}
-		updateLastPawn(next_x, next_y);
 	}
 
 	/**

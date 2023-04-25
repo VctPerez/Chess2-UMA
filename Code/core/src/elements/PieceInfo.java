@@ -1,6 +1,8 @@
 package elements;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
@@ -10,15 +12,12 @@ import utils.*;
 public class PieceInfo extends Actor{
 	
 	private Text info;
-	private Background background;
+	private ShapeRenderer background;
 	public Board board;
 	
 	public PieceInfo() {
-		background = new Background();
-		background.setColor(new Color(90/255f, 90/255f,90/255f,1f));
-		background.setPosition(750, 50);
-		background.setSize(500, 625);
-		board=new Board(70,825,75, 5);
+		background = new ShapeRenderer();
+		board=new Board(84,790,75, 5);
         
         
 	}
@@ -36,7 +35,7 @@ public class PieceInfo extends Actor{
 		highlight(piece);
         
         info = new Text(Resources.FONT_MENU_PATH,20,Color.WHITE,3);
-        info.setPosition(760, 665);
+        info.setPosition(760, 685);
         info.setText(piece.getInfo());
 	}
 	
@@ -71,7 +70,14 @@ public class PieceInfo extends Actor{
 
 	
 	public void draw(Batch batch, float parentAlpha) {
-		background.draw(batch, parentAlpha);
+		batch.end();
+		background.begin(ShapeType.Filled);
+		background.setProjectionMatrix(batch.getProjectionMatrix());
+		background.setTransformMatrix(batch.getTransformMatrix());
+		background.rect(750, 40, 500, 665);
+		background.setColor(90/255f, 90/255f,90/255f,1f);
+		background.end();
+		batch.begin();
 		info.draw(batch, parentAlpha);
 		board.draw(batch, parentAlpha);
 

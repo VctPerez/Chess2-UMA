@@ -79,6 +79,8 @@ public class Graveyard extends Actor {
 	public void draw(Batch batch, float parentAlpha) {
 		batch.end();
 		frame.begin(ShapeType.Line);
+		frame.setProjectionMatrix(batch.getProjectionMatrix());
+		frame.setTransformMatrix(batch.getTransformMatrix());
 		frame.rect(getX(), getY(), getWidth(), getHeight());
 		frame.setColor(getColor());
 		
