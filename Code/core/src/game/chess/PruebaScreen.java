@@ -31,6 +31,8 @@ public class PruebaScreen extends AbstractScreen{
 
 	@Override
 	public void show() {
+//		if(Render.hosting) Render.host.resetMessage();
+//		else Render.guest.resetMessage();
 		
         cuadroTexto = new TextField("prueba");
         cuadroTexto.setPosition(200, 200);
@@ -48,7 +50,7 @@ public class PruebaScreen extends AbstractScreen{
         texto.setPosition(100, 100);
 //        texto.getStyle().font.getData().setScale(1.5f);
         
-        //Por algun motivo solo deja escalar el tamaño correctamenete con setBounds
+        //Por algun motivo solo deja escalar el tamaï¿½o correctamenete con setBounds
         cuadroTexto.setBounds(500, 200, 300, 100);
         background = new Background();
         
