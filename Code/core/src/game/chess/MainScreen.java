@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
 import elements.Background;
 import utils.*;
@@ -25,7 +26,7 @@ public class MainScreen extends AbstractScreen {
     @Override
     public void show() {
     	
-    	stage = new Stage(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
+    	stage = new Stage(new FitViewport(1280, 720));
     	table = new Table();
     	
    	    //table.debug();
@@ -125,6 +126,10 @@ public class MainScreen extends AbstractScreen {
     public void dispose() {
        super.dispose();
        stage.dispose();
+    }
+    
+    public Viewport getViewPort() {
+    	return stage.getViewport();
     }
     
 }

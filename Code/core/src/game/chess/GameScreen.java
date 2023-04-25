@@ -88,8 +88,8 @@ public class GameScreen extends AbstractScreen {
 
 	@Override
 	public void show() {
-		stage = new Stage(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
-		stage.clear();
+		stage = new Stage(new FitViewport(1280, 720));
+		stage.addActor(Render.menuBG);
 		
 		table = new Table();
 		table.setFillParent(true);
@@ -110,9 +110,7 @@ public class GameScreen extends AbstractScreen {
 		whitePieces = new ArrayList<>();
 		blackPieces = new ArrayList<>();
 		graveyardWhite = new Graveyard(21, 21);
-		graveyardBlack = new Graveyard(Gdx.graphics.getWidth() - 63, 21);
-		background = new Background();
-		background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		graveyardBlack = new Graveyard(1280 - 63, 21);
 		
 
 		// Crear mensaje emergente tras terminar partida
@@ -122,7 +120,6 @@ public class GameScreen extends AbstractScreen {
 
 		// -------------------------------
 		stage.addActor(results);
-		stage.addActor(background);
 		stage.addActor(board);
 		stage.addActor(graveyardWhite);
 		stage.addActor(graveyardBlack);

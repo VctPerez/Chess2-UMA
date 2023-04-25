@@ -56,6 +56,8 @@ public class TileButton extends Actor{
 	public void draw(Batch batch, float parentAlpha) {
 		batch.end();
 		tile.begin(ShapeType.Filled);
+		tile.setProjectionMatrix(batch.getProjectionMatrix());
+		tile.setTransformMatrix(batch.getTransformMatrix());
 		tile.rect(getX(), getY(), getWidth(), getHeight());
 		tile.end();
 		batch.begin();
