@@ -2,6 +2,6 @@ eng/
 esp/
 0
 //SETTINGS
-0.0
+74.0
 60.0
 2
