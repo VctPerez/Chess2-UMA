@@ -53,6 +53,7 @@ public class ModeScreen extends AbstractScreen{
         
         if(textButton[0].isPressed()) {
         //	Render.app.setScreen(Render.CREATEMATCHSCREEN);
+        	Render.DraftController=1;
         	Render.app.setScreen(Render.DRAFTSCREEN);
         }else if(textButton[1].isPressed()) {
         	Render.app.setScreen(new GameScreen());

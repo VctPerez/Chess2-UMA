@@ -35,10 +35,12 @@ public class DraftScreen extends AbstractScreen {
 
 	@Override
 	public void show() {
-		if(Render.hosting){
-			Render.host.resetMessage();
-		}else{
-			Render.guest.resetMessage();
+		if(Render.DraftController==3) {
+			if(Render.hosting){
+				Render.host.resetMessage();
+			}else{
+				Render.guest.resetMessage();
+			}
 		}
 
 		System.out.println("El modo de draft es " + Render.DraftController);
@@ -318,7 +320,7 @@ public class DraftScreen extends AbstractScreen {
 		stage.draw();
 		stage.act();
 
-		checkEnd();
+		if(Render.DraftController==3)checkEnd();
 		//System.out.println("Player1 : " + p1Finished + "\t Player2: " + p2Finished);
 		Render.Batch.end();
 	}
