@@ -23,7 +23,7 @@ import utils.Resources;
 public class DropDownMenu extends Actor{
 	
 	private final float Y_OFFSET = 24;
-	private final float Tile_Size = (Gdx.graphics.getHeight()-2*Y_OFFSET)/8;
+	private final float Tile_Size = 84;
 	
 	private Tile tile;
 	private ShapeRenderer menu;
@@ -111,6 +111,8 @@ public class DropDownMenu extends Actor{
 
 		batch.end();
 		menu.begin(ShapeType.Filled);
+		menu.setProjectionMatrix(batch.getProjectionMatrix());
+		menu.setTransformMatrix(batch.getTransformMatrix());
 		menu.rect(getX(), getY(), getWidth(), getHeight());
 		menu.setColor(getColor());
 		menu.end();

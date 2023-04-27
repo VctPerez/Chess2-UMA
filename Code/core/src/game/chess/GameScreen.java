@@ -89,8 +89,8 @@ public class GameScreen extends AbstractScreen {
 
 	@Override
 	public void show() {
-		stage = new Stage(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
-		stage.clear();
+		stage = new Stage(new FitViewport(1280, 720));
+		stage.addActor(Render.menuBG);
 		
 		table = new Table();
 		table.setFillParent(true);
@@ -111,19 +111,16 @@ public class GameScreen extends AbstractScreen {
 		whitePieces = new ArrayList<>();
 		blackPieces = new ArrayList<>();
 		graveyardWhite = new Graveyard(21, 21);
-		graveyardBlack = new Graveyard(Gdx.graphics.getWidth() - 63, 21);
-		background = new Background();
-		background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		graveyardBlack = new Graveyard(1280 - 63, 21);
 		
 
 		// Crear mensaje emergente tras terminar partida
 		showPopup = false;
-		results = new MatchResults(this.stage);
+		results = new MatchResults(stage);
 		results.Hide();
 
 		// -------------------------------
 		stage.addActor(results);
-		stage.addActor(background);
 		stage.addActor(board);
 		stage.addActor(graveyardWhite);
 		stage.addActor(graveyardBlack);
@@ -189,8 +186,10 @@ public class GameScreen extends AbstractScreen {
 	public void render(float delta) {
 		Render.clearScreen();
 		if (showPopup) {
+			//Para que no se pueda interaccionar con nada despues de que se muestre el popup
 			draw.clearListeners();
 			surrender.clearListeners();
+			//------------------------------------------------------------------------------
 			results.Show();
 			results.toFront();
 			results.render();
@@ -445,9 +444,9 @@ public class GameScreen extends AbstractScreen {
 
 				if (nextTile.getPiece() instanceof Pawn || nextTile.getPiece() instanceof Lancer
 						|| nextTile.getPiece() instanceof Guardian) {
-					checkPassant(next_x, next_y);
-
+					if(lastPawn!=null) checkPassant(next_x, next_y);
 					checkPromotion(next_x, next_y);
+					updateLastPawn(next_x, next_y);
 				} else if (lastPawn != null) {
 					lastPawn.isPassantable = false;
 				}
@@ -561,7 +560,6 @@ public class GameScreen extends AbstractScreen {
 		if (isEnPassant(next_x, next_y, nextTile.getPiece())) {
 			board.getTile(lastPawn.getPos().x, lastPawn.getPos().y).sendPieceToGraveyard();
 		}
-		updateLastPawn(next_x, next_y);
 	}
 
 	/**
@@ -648,7 +646,7 @@ public class GameScreen extends AbstractScreen {
 	public void testDrafts() {
 
 		// Para probar la pieza random
-		Render.player1Draft.add(Resources.CATAPULT_PATH);
+		Render.player1Draft.add(Resources.VALKYRIE_PATH);
 		Render.player1Draft.add(Resources.KNIGHT_PATH);
 		Render.player1Draft.add(Resources.COLOSUS_PATH);
 		Render.player1Draft.add(Resources.PALADIN_PATH);

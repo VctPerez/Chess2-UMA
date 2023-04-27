@@ -23,7 +23,6 @@ public class DraftScreen extends AbstractScreen {
 	private ArrayList<String> pawns, knights, rooks, bishops, queens, kings;
 	private String currentPieceSelection;
 
-	private Background background;
 	private PieceInfo info;
 	private TextButton next, back;
 	private Image arrow;
@@ -32,26 +31,27 @@ public class DraftScreen extends AbstractScreen {
 
 	TileButton tile1, tile2;
 	private boolean draftCompleted = false; // controla que ya se han enviado ambos los drafts
-	private boolean msgSent = false; //controla para no enviar el mensaje 2 veces
+	private boolean p1Finished = false, p2Finished = false, msgSent = false; //controla para el inicio de la partida y para no enviar el mensaje 2 veces
 
 	@Override
 	public void show() {
+		if(Render.hosting){
+			Render.host.resetMessage();
+		}else{
+			Render.guest.resetMessage();
+		}
+
 		System.out.println("El modo de draft es " + Render.DraftController);
 		stage = new Stage(new FitViewport(1280, 720));
 		Gdx.input.setInputProcessor(stage);
-		stage.clear();
 
 		configReader = new LectorLineas("files/config.txt"); // Lector del txt configuracion para sacar el idioma
 		languageReader = new LectorLineas("files/lang/" + configReader.leerLinea(Settings.language) + "Draft-Game.txt");
 
-		background = new Background();
-		background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-
 		info = new PieceInfo();
 
 		// -------------------------------
-
-		stage.addActor(background);
+		stage.addActor(Render.menuBG);
 		stage.addActor(info);
 
 		initPieceClasses();
@@ -114,26 +114,22 @@ public class DraftScreen extends AbstractScreen {
 		knights.add(Resources.BOMBER_PATH);
 		Collections.shuffle(knights);
 
-		//rooks.add(Resources.ROOK_PATH);
+		rooks.add(Resources.ROOK_PATH);
 		rooks.add(Resources.COLOSUS_PATH);
-		//rooks.add(Resources.ROOK_PATH);
 		rooks.add(Resources.MINER_PATH);
 		Collections.shuffle(rooks);
 
 		bishops.add(Resources.BISHOP_PATH);
 		bishops.add(Resources.RND_PATH);
 		bishops.add(Resources.PALADIN_PATH);
-		bishops.add(Resources.PALADIN_PATH);
 		Collections.shuffle(bishops);
 
 		queens.add(Resources.QUEEN_PATH);
-		queens.add(Resources.QUEEN_PATH);
-		queens.add(Resources.QUEEN_PATH);
+		queens.add(Resources.VALKYRIE_PATH);
 		Collections.shuffle(queens);
 
 		kings.add(Resources.KING_PATH);
 		kings.add(Resources.MIDAS_PATH);
-		kings.add(Resources.KING_PATH);
 		Collections.shuffle(kings);
 	}
 
@@ -215,27 +211,16 @@ public class DraftScreen extends AbstractScreen {
 									Render.player1Draft.addAll(draft.values());
 									Render.host.sendMessage(draftMessage());
 									msgSent = true;
-								}
-								if (!Render.host.getMessage().equals("")) {
-									saveOpponentDraft(Render.host.getMessage());
-									Render.host.resetMessage();
-									draftCompleted = true;
+									p1Finished = true;
 								}
 							} else {
 								if(!msgSent){
 									Render.player2Draft.addAll(draft.values());
 									Render.guest.sendMessage(draftMessage());
 									msgSent = true;
+									p2Finished = true;
 								}
-								if (!Render.guest.getMessage().equals("")) {
-									saveOpponentDraft(Render.guest.getMessage());
-									Render.guest.resetMessage();
-									draftCompleted = true;
-								}
-							}
-							if (draftCompleted) {
-								Render.GameScreen = new OnlineGameScreen();
-								Render.app.setScreen(Render.GameScreen);
+
 							}
 						} catch (IOException e) {
 							throw new RuntimeException(e);
@@ -319,9 +304,9 @@ public class DraftScreen extends AbstractScreen {
 
 	private void saveOpponentDraft(String draft) {
 		if (Render.hosting) {
-			Render.player2Draft.addAll(Arrays.stream(draft.split("#")).toList());
+			Render.player2Draft.addAll(Arrays.asList(draft.split("#")));
 		} else {
-			Render.player1Draft.addAll(Arrays.stream(draft.split("#")).toList());
+			Render.player1Draft.addAll(Arrays.asList(draft.split("#")));
 		}
 	}
 
@@ -333,7 +318,30 @@ public class DraftScreen extends AbstractScreen {
 		stage.draw();
 		stage.act();
 
+		checkEnd();
+		//System.out.println("Player1 : " + p1Finished + "\t Player2: " + p2Finished);
 		Render.Batch.end();
+	}
+
+	private void checkEnd() {
+		checkMessage();
+		if(p1Finished && p2Finished){
+			Render.GameScreen = new OnlineGameScreen();
+			Render.app.setScreen(Render.GameScreen);
+		}
+	}
+
+	private void checkMessage() {
+		if (!Render.hosting && !Render.guest.getMessage().equals("")) {
+			saveOpponentDraft(Render.guest.getMessage());
+			Render.guest.resetMessage();
+			p1Finished = true;
+		}else if(Render.hosting && !Render.host.getMessage().equals("")){
+			System.out.println("Mensaje: " +Render.host.getMessage());
+			saveOpponentDraft(Render.host.getMessage());
+			Render.host.resetMessage();
+			p2Finished = true;
+		}
 	}
 
 	@Override

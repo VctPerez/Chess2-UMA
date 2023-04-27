@@ -44,7 +44,7 @@ public class LobbyScreen extends AbstractScreen{
         if(Render.hosting) {
             p1 = new Text(languageReader.leerLinea(2) + player1.getName(), Resources.FONT_MENU_PATH, 30, Color.WHITE, 3);
             try {
-                Text invCode = new Text(languageReader.leerLinea(3) + Inet4Address.getLocalHost().getHostAddress(),
+                Text invCode = new Text(languageReader.leerLinea(3) + obfuscateIP(Inet4Address.getLocalHost().getHostAddress()),
                         Resources.FONT_MENU_PATH, 20, Color.WHITE,2);
                 invCode.setPosition(300,500);
                 stage.addActor(invCode);
@@ -180,5 +180,46 @@ public class LobbyScreen extends AbstractScreen{
     @Override
     public void dispose() {
         stage.dispose();
+    }
+
+    /**
+     * Devuelve la dirección codificada de forma que cada dos cifras representan un numero en base 16
+     * y su valor es su distancia a A, por ejemplo, AAAAAAAA es 0.0.0.0
+     * <p>ip debe ser valida</p>
+     * @param ip String de la ip que codificar
+     * @return String que representa la ip
+     */
+    public static String obfuscateIP(String ip){
+        StringBuilder res = new StringBuilder();
+        int[] valores = new int[4],cifras = new int[8]; //Valores guarda los valores de cada parte
+        String[] partes = ip.split("\\."); //Dividimos la ip en cuatro partes
+        assert partes.length == 4: "Bruh";
+        for (int i = 0; i < 4; i++) {
+            valores[i] = Integer.parseInt(partes[i]);
+            cifras[2*i] = (byte) (valores[i]>>4); //Una cifra en base 16 son 4 en base 2
+            cifras[2*i+1] = (byte) (valores[i]&15); //Los cuatro primeros bits son los cuatro primeros bits
+        }
+        for (int i = 0; i < 8; i++) {
+            res.append((char) ('A' + cifras[i]));
+        }
+        return res.toString();
+    }
+
+    /**
+     * Decodifica direcciones ip encriptadas por obfuscarIP
+     * @param cod ip codificada
+     * @return String de la ip valida
+     */
+    public static String decodeIP(String cod){
+        StringBuilder res = new StringBuilder();
+        int[] valores = new int[4];
+        int cifra1,cifra2;
+        for (int i = 0; i < 4; i++) {
+            cifra1 = cod.charAt(2*i) - 'A';
+            cifra2 = cod.charAt(2*i+1) - 'A';
+            res.append((cifra1<<4) + cifra2);
+            if (i < 3) res.append('.');
+        }
+        return res.toString();
     }
 }

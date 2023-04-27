@@ -59,6 +59,9 @@ public class Host extends Thread {
      * @throws IOException
      */
     public void stopFind() throws IOException {
+        disconnect();
+    }
+    public void disconnect() throws IOException {
         gameServer.close();
     }
 

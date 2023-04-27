@@ -59,6 +59,10 @@ public class Miner extends Piece {
 			addMovement(x - 2, y , board, movements);
 			addMovement(x , y + 2, board, movements);
 			addMovement(x , y - 2, board, movements);
+			addMovement(x + 2 , y - 2, board, movements);
+			addMovement(x + 2, y + 2, board, movements);
+			addMovement(x - 2, y - 2, board, movements);
+			addMovement(x - 2, y + 2, board, movements);
 			
 			
 		}
@@ -82,12 +86,12 @@ public class Miner extends Piece {
 		 LectorLineas Reader, configReader;
 		 configReader = new LectorLineas("files/config.txt");
 		String config = configReader.leerLinea(1);
-		Reader = new LectorLineas("files/lang/"+ config + "Clasicas.txt");
+		Reader = new LectorLineas("files/lang/"+ config + "Modified.txt");
 		switch (config){
 			case "esp/":
-				return Reader.leerTramo(12, 21);
+				return Reader.leerTramo(48, 53);
 			case "eng/":
-				return Reader.leerTramo(10,17);
+				return Reader.leerTramo(50,55);
 			default:
 				throw new IllegalArgumentException("Configuración errónea");
 		}

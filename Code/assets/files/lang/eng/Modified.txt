@@ -40,3 +40,16 @@
  each direction and when eating 2 more
  pieces gets its final form by expanding 
  its range.
+
+Valkyrie:
+The Valkyrie mixes the Knight and the 
+Bishop, she can jump as a Knight and 
+can also move in the same direction 
+that she jumps.
+
+Miner:
+His first move is somewhat offensive
+since it is positioned very close to the set
+of enemy pieces. Then he maintains a
+series of moves that allow you to jump
+and conquer pieces along the board.

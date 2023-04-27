@@ -137,4 +137,7 @@ public class Guest extends Thread{
     public void setReceiving(boolean receiving) {
         this.receiving = receiving;
     }
+    public void disconnect() throws IOException {
+        gameConnection.close();
+    }
 }

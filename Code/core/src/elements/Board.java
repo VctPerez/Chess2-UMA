@@ -10,11 +10,15 @@ import utils.Render;
 public class Board extends Actor {
 	public int dim;
 	public static Tile[][] board;
-	// private final float X_OFFSET = 128;
-	// private final float Tile_Size = (Gdx.graphics.getWidth() - 2*X_OFFSET)/8;
+	
+//	private float Y_OFFSET = 24;
+//	private float Tile_Size = (Gdx.graphics.getHeight() - 2 * Y_OFFSET) / 8;
+//	private float X_OFFSET = Y_OFFSET + (Gdx.graphics.getWidth() - Gdx.graphics.getHeight()) / 2;
+	
 	private float Y_OFFSET = 24;
-	private float Tile_Size = (Gdx.graphics.getHeight() - 2 * Y_OFFSET) / 8;
-	private float X_OFFSET = Y_OFFSET + (Gdx.graphics.getWidth() - Gdx.graphics.getHeight()) / 2;
+	private float Tile_Size = 84;
+	private float X_OFFSET = 304;
+	
 
 	public void createFromDim(int dim, float size, float x_offset, float y_offset) {
 		int color = 1;
