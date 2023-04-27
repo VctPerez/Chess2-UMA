@@ -57,6 +57,10 @@ public abstract class Piece extends Actor {
 	public Piece(Texture texture) {
 		this.sprite = new Image(texture);
 	}
+	
+	public Image getImage() {
+		return sprite;
+	}
 
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
@@ -78,6 +82,10 @@ public abstract class Piece extends Actor {
 	 */
 	public Boolean color() {
 		return color;
+	}
+	
+	public void setColor(Boolean color) {
+		this.color=color;
 	}
 
 	/**
@@ -140,7 +148,9 @@ public abstract class Piece extends Actor {
 		return same;
 	}
 	public void dispose() {
+		//Se borra memoria de la imagen y se pone su referencia a null
 		sprite.dispose();
+		sprite=null;
 	}
 	
 

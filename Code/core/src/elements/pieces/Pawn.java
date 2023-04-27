@@ -22,10 +22,7 @@ public class Pawn extends Piece{
 	public Pawn(Boolean color, int x, int y,Board board) {
 		super(color, Render.app.getManager().get(Resources.PAWN_PATH, Texture.class), x ,y,board);
 	}
-	
 
-	
-	
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		super.draw(batch, parentAlpha);
