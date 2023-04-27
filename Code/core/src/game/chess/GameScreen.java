@@ -44,7 +44,8 @@ public class GameScreen extends AbstractScreen {
 
 	//UI partida
 	private Table table;
-	private TextButton surrender, draw;
+	protected TextButton surrender;
+	private TextButton draw;
 	private LectorLineas languageReader, configReader;
 	private Timer TimerW, TimerB;
 
@@ -80,8 +81,8 @@ public class GameScreen extends AbstractScreen {
 	public static Graveyard graveyardBlack;
 
 	// Pantalla ganador
-	private static boolean showPopup;
-	private static MatchResults results;
+	protected static boolean showPopup;
+	protected static MatchResults results;
 
 	// Modo depuracion
 	private boolean debugMode = false;
@@ -169,11 +170,24 @@ public class GameScreen extends AbstractScreen {
 		draw = new TextButton(languageReader.leerLinea(5), "SingleClickStyle");
 		surrender = new TextButton(languageReader.leerLinea(4), "SingleClickStyle");
 	}
+	
+	public void checkSurrender() {
+		if(surrender.isPressed()) {
+			if (PLAYER) {
+				System.out.println("RENDICION BLANCA");
+				results.setWinner("NEGRO");
+				showPopup = true;
+			} else {
+				System.out.println("RENDICION NEGRA");
+				results.setWinner("BLANCO");
+				showPopup = true;
+			}
+		}
+	}
 
 	@Override
 	public void render(float delta) {
 		Render.clearScreen();
-
 		if (showPopup) {
 			draw.clearListeners();
 			surrender.clearListeners();
@@ -184,7 +198,7 @@ public class GameScreen extends AbstractScreen {
 			timersRender();
 			checkTimerEnd();
 		}
-
+		
 		stage.draw();
 		stage.act();
 	}
@@ -404,7 +418,6 @@ public class GameScreen extends AbstractScreen {
 	public void makeMove(Tile currentTile, Tile nextTile) {
 		current_x = (int)currentTile.getPos().x;
 		current_y = (int)currentTile.getPos().y;
-
 		if(Render.DraftController == 3){
 			this.currentTile = currentTile;
 			GameScreen.nextTile = nextTile;

@@ -17,6 +17,22 @@ public class OnlineGameScreen extends GameScreen {
 	}
 	
 	@Override
+	public void checkSurrender() {
+		if(super.surrender.isPressed()) {
+			if (Render.hosting) {
+				System.out.println("JAQUE MATE AL REY BLANCO");
+				super.results.setWinner("NEGRO");
+				super.showPopup = true;
+			} else {
+				System.out.println("JAQUE MATE AL REY NEGRO");
+				super.results.setWinner("BLANCO");
+				super.showPopup = true;
+			}
+		}
+	}
+	
+	
+	@Override
 	public void update(Tile tile) {
 		super.update(tile);
 		System.out.println(moved);
