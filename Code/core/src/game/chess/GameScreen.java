@@ -40,8 +40,8 @@ public class GameScreen extends AbstractScreen {
 	protected boolean isPieceSelected = false;
 	protected ArrayList<Vector2> currentTile_validMovements = new ArrayList<>();
 	private int current_x, current_y;
-	protected Tile currentTile = null;
-	protected static Tile nextTile = null;
+	public Tile currentTile = null;
+	public static Tile nextTile = null;
 
 	//UI partida
 	private Table table;
@@ -69,10 +69,10 @@ public class GameScreen extends AbstractScreen {
 	private Piece lastPawn;
 
 	// Control turno
-	protected boolean PLAYER;
+	public boolean PLAYER;
 
 	//CONTROL MOVIMIENTO (ONLINE)
-	protected boolean moved =false;
+	public boolean moved =false;
 
 	// Control promocion
 	public static boolean promoting = false;
@@ -545,11 +545,10 @@ public class GameScreen extends AbstractScreen {
 	 * @param next_x
 	 * @param next_y
 	 */
-	private void checkPromotion(float next_x, float next_y) {
+	protected void checkPromotion(float next_x, float next_y) {
 		if ((next_y == 8.0 && nextTile.getPiece().color()) || (next_y == 1.0 && !nextTile.getPiece().color())) {
-			System.out.println("Ascensión");
 			promoting = true;
-			DropDownMenu menu = new DropDownMenu(nextTile);
+			DropDownMenu menu = new DropDownMenu(nextTile, PLAYER, false);
 			stage.addActor(menu);
 		}
 	}

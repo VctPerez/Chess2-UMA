@@ -1,5 +1,6 @@
 package game.chess;
 
+import elements.DropDownMenu;
 import elements.Tile;
 import utils.Parser;
 import utils.Render;
@@ -16,6 +17,24 @@ public class OnlineGameScreen extends GameScreen {
 		updateOnlineBoard();
 	}
 
+	@Override
+	protected void checkPromotion(float next_x, float next_y) {
+		if(next_y==8 && nextTile.getPiece().color()) {
+			if(Render.hosting) {
+				promoting = true;
+				DropDownMenu menu = new DropDownMenu(nextTile, Render.hosting, true);
+				stage.addActor(menu);	
+			}
+		}else if(next_y==1 && !nextTile.getPiece().color()) {
+			if(!Render.hosting) {
+				promoting = true;
+				DropDownMenu menu = new DropDownMenu(nextTile, Render.hosting, true);
+				stage.addActor(menu);
+			}
+		}
+		
+	}
+	
 	@Override
 	public void checkSurrender() {
 		try {
@@ -50,34 +69,34 @@ public class OnlineGameScreen extends GameScreen {
 	@Override
 	public void update(Tile tile) {
 		super.update(tile);
-		System.out.println(moved);
-		try {
-			if (Render.hosting == PLAYER) {// meter estos metodos en las clases host y guest y que se llamen
-											// sendMovement
-				if (Render.hosting) {
-					if (moved) {
-						String movement = Parser.parseMovementToString(currentTile, nextTile);
-						Render.host.sendMessage(movement);
-						System.out.println("mensaje enviado from host");
-						System.out.println("mensaje enviado con: " + movement);
-						PLAYER = false;
-						moved = false;
-					}
-				} else {
-					if (moved) {
-						String movement = Parser.parseMovementToString(currentTile, nextTile);
-						Render.guest.sendMessage(movement);
-						System.out.println("mensaje enviado from guest");
-						System.out.println("mensaje enviado con: " + movement);
-						PLAYER = true;
-						moved = false;
+		if(!promoting) {
+			try {
+				String movement = Parser.parseMovementToString(currentTile, nextTile);
+				if (Render.hosting == PLAYER) {//meter estos metodos en las clases host y guest y que se llamen sendMovement
+					if(Render.hosting) {
+						if(moved) {
+							Render.host.sendMessage(movement);
+//							System.out.println("mensaje enviado from host");
+//							System.out.println("mensaje enviado con: "+ movement);
+							PLAYER = false;
+							moved = false;
+						}
+					}else{
+						if(moved){
+							Render.guest.sendMessage(movement);
+//							System.out.println("mensaje enviado from guest");
+//							System.out.println("mensaje enviado con: "+ movement);
+							PLAYER = true;
+							moved = false;
+						}
 					}
 				}
+			} catch (IOException e) {
+				throw new RuntimeException(e);
 			}
-		} catch (IOException e) {
-			throw new RuntimeException(e);
 		}
 	}
+
 
 	private void updateOnlineBoard() {
 		if (Render.hosting != PLAYER) {// meter estos metodos en las clases host y guest y que se llamen
@@ -113,6 +132,7 @@ public class OnlineGameScreen extends GameScreen {
 						PLAYER = true;
 						Render.host.resetMessage();
 					}
+
 				}
 			}
 		} else {

@@ -210,7 +210,7 @@ public class DraftScreen extends AbstractScreen {
 						Render.app.setScreen(Render.GameScreen);
 					} else if (Render.DraftController == 3) {
 						try {
-							if (Render.hosting) {//metodos en host y guest. Añadir una pantalla de espera al otro jugador, ambos deben empezar al mismo tiempo
+							if (Render.hosting) {//metodos en host y guest
 								if(!msgSent){
 									Render.player1Draft.addAll(draft.values());
 									Render.host.sendMessage(draftMessage());
@@ -224,12 +224,10 @@ public class DraftScreen extends AbstractScreen {
 									msgSent = true;
 									p2Finished = true;
 								}
-
 							}
 						} catch (IOException e) {
 							throw new RuntimeException(e);
 						}
-						// app.setScreen(new GameScreen());
 					}
 
 				}
@@ -321,9 +319,8 @@ public class DraftScreen extends AbstractScreen {
 
 		stage.draw();
 		stage.act();
-
+		
 		if(Render.DraftController==3)checkEnd();
-		//System.out.println("Player1 : " + p1Finished + "\t Player2: " + p2Finished);
 		Render.Batch.end();
 	}
 
