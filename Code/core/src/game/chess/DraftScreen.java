@@ -128,6 +128,8 @@ public class DraftScreen extends AbstractScreen {
 
 		queens.add(Resources.QUEEN_PATH);
 		queens.add(Resources.VALKYRIE_PATH);
+		queens.add(Resources.CATAPULT_PATH);
+
 		Collections.shuffle(queens);
 
 		kings.add(Resources.KING_PATH);

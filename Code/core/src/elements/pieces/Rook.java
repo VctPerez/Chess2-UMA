@@ -10,6 +10,7 @@ import elements.Board;
 import elements.Piece;
 import game.chess.GameScreen;
 import interaccionFichero.LectorLineas;
+import utils.Image;
 import utils.Render;
 import utils.Resources;
 
@@ -20,7 +21,11 @@ public class Rook extends Piece{
 		super(color, Render.app.getManager().get(Resources.ROOK_PATH, Texture.class), x, y,board);
 	}
 	
-
+	//Constructor destinado única y exclusivamente para el testing de la clase piece
+	public Rook(Boolean color,int x,int y, Board board,Texture texture) {
+		super(color,texture,x,y,board);
+	}
+	//Testing-----------------------------------------------------------------------
 	
 	public void draw(Batch batch, float parentAlpha) {
 		super.draw(batch, parentAlpha);

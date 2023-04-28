@@ -23,8 +23,7 @@ public class Settings {
 		if(value > 99 || value < 0){
 			throw new SettingsException("El volumen que desea establecer no esta permitido.");
 		}
-		sfxVolume = value;
-
+		sfxVolume = (float) Math.pow((value/100),2);
 	}
 	
 	public static void setMusicVolume(Float value) {
@@ -32,9 +31,12 @@ public class Settings {
 		if(value > 99 || value < 0){
 			throw new SettingsException("El volumen que desea establecer no esta permitido.");
 		}
-		musicVolume = value;
+		musicVolume = (float) Math.pow((value/100),2);
 		if(Render.bgMusic != null)Render.bgMusic.setVolume(musicVolume/100);
-
+	}
+	
+	public static float reconvertAudioToText(float value) {
+		return (float) Math.sqrt((double) value) * 100;
 	}
 	
 	public static void updateSettings(float musicVolume, float sfxVolume, int language) {

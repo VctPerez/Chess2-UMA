@@ -76,7 +76,8 @@ public class ConfigScreen extends AbstractScreen {
 				writeSettings(1);
 			}
 		});*/
-
+    	
+    	//APPLY BUTTON
     	textButton[0].addListener(new ClickListener() {
     		@Override
     		public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -89,7 +90,8 @@ public class ConfigScreen extends AbstractScreen {
     			return true;
     		}
     	});
-
+    	
+    	//RESET BUTTON
 		textButton[2].addListener(new ClickListener(){
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -97,21 +99,12 @@ public class ConfigScreen extends AbstractScreen {
 				return true;
 			}
 		});
-		selectBox.getList().addListener(new ClickListener(){
-			@Override
-			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				return super.touchDown(event, x, y, pointer, button);
-			}
-
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				System.out.println("activao");
-			}
-		});
+		//BACK BUTTON
     	textButton[1].addListener(new ClickListener() {
     		@Override
     		public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
     			//Volver al menu
+    			readSettings();
     			Render.app.setScreen(new MainScreen());
     			return true;
     		}
@@ -242,8 +235,8 @@ public class ConfigScreen extends AbstractScreen {
      * en el archivo de configuraci�n "config.txt"
      */
     private void writeSettings() {
-		configWriter.escribirLinea(5, String.valueOf(Settings.musicVolume));
-		configWriter.escribirLinea(6, String.valueOf(Settings.sfxVolume));
+		configWriter.escribirLinea(5, String.valueOf(Settings.reconvertAudioToText(Settings.musicVolume)));
+		configWriter.escribirLinea(6, String.valueOf(Settings.reconvertAudioToText(Settings.sfxVolume)));
 		configWriter.escribirLinea(7, Integer.toString(selectBox.getSelectedIndex() + 1));
 	}
     	// + 1 porque en el archivo de configuracion los idiomas se representan desde la fila 1
