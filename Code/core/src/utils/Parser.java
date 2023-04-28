@@ -1,6 +1,11 @@
 package utils;
 
+import java.util.ArrayList;
+
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.Action;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 
 import elements.Board;
 import elements.Piece;
@@ -10,7 +15,7 @@ import game.chess.GameScreen;
 
 public class Parser {
 	
-	public static Piece getPieceFromPath(String piecePath, boolean color, int x, int y, Board board) {
+	public static Piece getPieceFromPath(String piecePath, Boolean color, int x, int y, Board board) {
 		Piece piece = null;
 			
 		switch (piecePath) {
@@ -65,7 +70,6 @@ public class Parser {
 		case Resources.VALKYRIE_PATH:
 			piece = new Valkyrie(color,x,y,board);
 			break;
-		
 		}
 		return piece;
 	}
@@ -79,12 +83,47 @@ public class Parser {
 	}
 	
 	public static void parseStringToMovement(String movement){
-		String[] params = movement.split("-");
+		final String[] params = movement.split("-");
 		String[] ogTile = params[0].split(",");
 		String[] nxtTile = params[1].split(",");
+		
+		float current_x = Float.parseFloat(ogTile[0]);
+		float current_y = Float.parseFloat(ogTile[1]);
+		float next_x = Float.parseFloat(nxtTile[0]);
+		float next_y = Float.parseFloat(nxtTile[1]);
+		Tile currentTile = Render.GameScreen.board.getTile(current_x, current_y);
+		final Tile nextTile = Render.GameScreen.board.getTile(next_x, next_y);
 
-		Render.GameScreen.makeMove(GameScreen.board.getTile(Float.parseFloat(ogTile[0]), Float.parseFloat(ogTile[1])),
-				GameScreen.board.getTile(Float.parseFloat(nxtTile[0]), Float.parseFloat(nxtTile[1])));
-		System.out.println("movimiento parseado");
+		Render.GameScreen.makeMove(currentTile, nextTile);
+
+		
+		if(params.length==3) {
+			Action promote = new Action() {
+				public boolean act(float delta) {
+					promotePiece(nextTile, params[2]);
+					return true;
+				}
+			};
+			nextTile.addAction(Actions.delay(0.5f, promote));
+		}
+	}
+	
+	private static void promotePiece(Tile tile, String newPiecePath) {
+		ArrayList<Piece> pieces;
+		Piece formerPiece = tile.getPiece();
+        Piece newPiece = Parser.getPieceFromPath(newPiecePath, formerPiece.color(), (int)tile.getPos().x, (int)tile.getPos().y, Render.GameScreen.board);
+        
+        if(formerPiece.color()) {
+        	pieces = Render.GameScreen.whitePieces;
+        }else {
+        	pieces = Render.GameScreen.blackPieces;
+        }
+        pieces.remove(formerPiece);
+        formerPiece.remove();
+		tile.setPiece(newPiece);
+		pieces.add(newPiece);            	
+        Render.GameScreen.stage.addActor(newPiece);
+        Render.GameScreen.promoting = false;
+        Render.GameScreen.mateControl(tile.getPos().x, tile.getPos().y);
 	}
 }

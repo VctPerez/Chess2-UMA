@@ -1,5 +1,6 @@
 package elements;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
@@ -17,6 +18,7 @@ import elements.pieces.Knight;
 import elements.pieces.Queen;
 import elements.pieces.Rook;
 import utils.Image;
+import utils.Parser;
 import utils.Render;
 import utils.Resources;
 
@@ -29,11 +31,15 @@ public class DropDownMenu extends Actor{
 	private ShapeRenderer menu;
 	private ArrayList<Image> pieces;
 	public boolean promoted = false;
+	public boolean online = false;
+	public boolean player;
 	
 	//private ArrayList<Tile> menu;
 	
-	public DropDownMenu(Tile tile) {
+	public DropDownMenu(Tile tile, final boolean player, boolean online) {
 		this.tile = tile;
+		this.online = online;
+		this.player = player;
 		
 		if(!(((tile.getPiece().color() || Render.hosting)) && !(tile.getPiece().color() && Render.hosting))) {
 			setPosition(tile.getX(), tile.getY() - 4 * tile.getWidth());
@@ -57,8 +63,11 @@ public class DropDownMenu extends Actor{
 		addCaptureListener(new InputListener() { 
 			@Override
 			    public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-						
-					update(y);
+					if(player) {						
+						update(y, Render.player1Draft);
+					}else {
+						update(y, Render.player2Draft);
+					}
 				
 			    return true;
 			    }
@@ -67,11 +76,12 @@ public class DropDownMenu extends Actor{
 	
 	}
 	
-	private void update(float y) {
+	private void update(float y, ArrayList<String> draft) {
             int current_y = (int) Math.ceil(y  / 84);
             ArrayList<Piece> pieces;
             Piece formerPiece = tile.getPiece();
             Piece newPiece = null;
+            String newPiecePath = "";
             
             if(formerPiece.color()) {
             	pieces = Render.GameScreen.whitePieces;
@@ -83,16 +93,20 @@ public class DropDownMenu extends Actor{
             
             switch (current_y) {
 			case 4:
-				newPiece = new Queen(formerPiece.color(), (int)tile.getPos().x, (int)tile.getPos().y,Render.GameScreen.board);
+				newPiece = Parser.getPieceFromPath(draft.get(4), formerPiece.color(), (int)tile.getPos().x, (int)tile.getPos().y,Render.GameScreen.board);
+				newPiecePath = draft.get(4);
 				break;
 			case 3:
-				newPiece = new Knight(formerPiece.color(), (int)tile.getPos().x, (int)tile.getPos().y,Render.GameScreen.board);
+				newPiece = Parser.getPieceFromPath(draft.get(1), formerPiece.color(), (int)tile.getPos().x, (int)tile.getPos().y,Render.GameScreen.board);
+				newPiecePath = draft.get(1);
 				break;
 			case 2:
-				newPiece = new Rook(formerPiece.color(), (int)tile.getPos().x, (int)tile.getPos().y,Render.GameScreen.board);
+				newPiece = Parser.getPieceFromPath(draft.get(2), formerPiece.color(), (int)tile.getPos().x, (int)tile.getPos().y,Render.GameScreen.board);
+				newPiecePath = draft.get(2);
 				break;
 			case 1:
-				newPiece = new Bishop(formerPiece.color(), (int)tile.getPos().x, (int)tile.getPos().y,Render.GameScreen.board);
+				newPiece = Parser.getPieceFromPath(draft.get(3), formerPiece.color(), (int)tile.getPos().x, (int)tile.getPos().y,Render.GameScreen.board);
+				newPiecePath = draft.get(3);
 				break;
 			default:
 				break;
@@ -102,8 +116,35 @@ public class DropDownMenu extends Actor{
             Render.GameScreen.stage.addActor(newPiece);
             Render.GameScreen.promoting = false;
             Render.GameScreen.mateControl(tile.getPos().x, tile.getPos().y);
-            remove();
-		
+            
+            if(online) {
+            	sendPiece(newPiecePath);
+            }
+            remove();	
+	}
+	
+	private void sendPiece(String path) {
+		try {//meter este metodo en host y guest y que se llame sendPromotion
+			String movement = Parser.parseMovementToString(Render.GameScreen.currentTile, Render.GameScreen.nextTile);
+			movement += "-";
+			movement += path;
+			if(player) {
+				Render.host.sendMessage(movement);				
+//				System.out.println("mensaje DE PROMOCION enviado from host");
+				Render.GameScreen.PLAYER = false;
+				Render.GameScreen.moved=false;
+			}else {
+				Render.guest.sendMessage(movement);
+//				System.out.println("mensaje DE PROMOCION enviado from guest");
+				Render.GameScreen.PLAYER = true;
+				Render.GameScreen.moved=false;
+
+			}
+			String[] params = movement.split("-");
+//			System.out.println("mensaje enviado con: "+ movement + " | tamaño: "+params.length);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 	}
 	@Override
 	public void draw(Batch batch, float parentAlpha) {

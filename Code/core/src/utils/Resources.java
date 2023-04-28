@@ -36,29 +36,29 @@ public class Resources {
     public static final String SKIN_PATH = "Skin Composer/UIStyle.json";
 
     // RECURSOS PARTIDA
-    public static final String PAWN_PATH = "sprites/Testing-Pieces/Pieces Base Form/White_Pawn.png";
-    public static final String KNIGHT_PATH = "sprites/Testing-Pieces/Pieces Base Form/White_Knight.png";
-    public static final String BISHOP_PATH = "sprites/Testing-Pieces/Pieces Base Form/White_Bishop.png";
-    public static final String ROOK_PATH = "sprites/Testing-Pieces/Pieces Base Form/White_Rook.png";
-    public static final String QUEEN_PATH = "sprites/Testing-Pieces/Pieces Base Form/White_Queen.png";
-    public static final String KING_PATH = "sprites/Testing-Pieces/Pieces Base Form/White_King.png";
+    public static final String PAWN_PATH = "sprites/Pieces/Pieces Base Form/White_Pawn.png";
+    public static final String KNIGHT_PATH = "sprites/Pieces/Pieces Base Form/White_Knight.png";
+    public static final String BISHOP_PATH = "sprites/Pieces/Pieces Base Form/White_Bishop.png";
+    public static final String ROOK_PATH = "sprites/Pieces/Pieces Base Form/White_Rook.png";
+    public static final String QUEEN_PATH = "sprites/Pieces/Pieces Base Form/White_Queen.png";
+    public static final String KING_PATH = "sprites/Pieces/Pieces Base Form/White_King.png";
     
-    public static final String LANCER_PATH = "sprites/Testing-Pieces/Pieces Modified/White_Lancer.png";
-    public static final String RIDER_PATH = "sprites/Testing-Pieces/Pieces Modified/White_Rider.png";
-    public static final String BOMBER_PATH = "sprites/Testing-Pieces/Pieces Modified/White_Bomber.png";
-    public static final String WARDEN_PATH = "sprites/Testing-Pieces/Pieces Modified/White_Warden.png";
-    public static final String PALADIN_PATH = "sprites/Testing-Pieces/Pieces Modified/White_Paladin.png";
-    public static final String RND_PATH = "sprites/Testing-Pieces/Pieces Modified/White_Joker.png";
-    public static final String MIDAS_PATH = "sprites/Testing-Pieces/Pieces Modified/White_Midas.png";
-    public static final String COLOSUS_PATH = "sprites/Testing-Pieces/Pieces Modified/White_Colosus.png";
-    public static final String MINER_PATH = "sprites/Testing-Pieces/Pieces Modified/White_Miner.png";
-    public static final String CATAPULT_PATH = "sprites/Testing-Pieces/Pieces Modified/White_Catapult.png";
-    public static final String VALKYRIE_PATH = "sprites/Testing-Pieces/Pieces Modified/White_Valkyrie.png";
+    public static final String LANCER_PATH = "sprites/Pieces/Pieces Modified/White_Lancer.png";
+    public static final String RIDER_PATH = "sprites/Pieces/Pieces Modified/White_Rider.png";
+    public static final String BOMBER_PATH = "sprites/Pieces/Pieces Modified/White_Bomber.png";
+    public static final String WARDEN_PATH = "sprites/Pieces/Pieces Modified/White_Warden.png";
+    public static final String PALADIN_PATH = "sprites/Pieces/Pieces Modified/White_Paladin.png";
+    public static final String RND_PATH = "sprites/Pieces/Pieces Modified/White_Joker.png";
+    public static final String MIDAS_PATH = "sprites/Pieces/Pieces Modified/White_Midas.png";
+    public static final String COLOSUS_PATH = "sprites/Pieces/Pieces Modified/White_Colosus.png";
+    public static final String MINER_PATH = "sprites/Pieces/Pieces Modified/White_Miner.png";
+    public static final String CATAPULT_PATH = "sprites/Pieces/Pieces Modified/White_Catapult.png";
+    public static final String VALKYRIE_PATH = "sprites/Pieces/Pieces Modified/White_Valkyrie.png";
     
-    public static final String RND_KNIGHT_PATH = "sprites/Testing-Pieces/Pieces Rnd Form/RndWhite_Knight.png";
-    public static final String RND_ROOK_PATH = "sprites/Testing-Pieces/Pieces Rnd Form/RndWhite_Rook.png";
-    public static final String RND_QUEEN_PATH = "sprites/Testing-Pieces/Pieces Rnd Form/RndWhite_Queen.png";
-    public static final String RND_PAWN_PATH = "sprites/Testing-Pieces/Pieces Rnd Form/RndWhite_Pawn.png";
+    public static final String RND_KNIGHT_PATH = "sprites/Pieces/Pieces Rnd Form/RndWhite_Knight.png";
+    public static final String RND_ROOK_PATH = "sprites/Pieces/Pieces Rnd Form/RndWhite_Rook.png";
+    public static final String RND_QUEEN_PATH = "sprites/Pieces/Pieces Rnd Form/RndWhite_Queen.png";
+    public static final String RND_PAWN_PATH = "sprites/Pieces/Pieces Rnd Form/RndWhite_Pawn.png";
     
     
     
