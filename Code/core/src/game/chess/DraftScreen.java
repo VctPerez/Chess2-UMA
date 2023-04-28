@@ -24,7 +24,7 @@ public class DraftScreen extends AbstractScreen {
 
 	private PieceInfo info;
 	private TextButton next, back;
-	private Image arrow;
+	private Image arrow,pieceDisposer;
 	private int cont = 0;
 	private LectorLineas languageReader, configReader;
 
@@ -54,6 +54,10 @@ public class DraftScreen extends AbstractScreen {
 		// -------------------------------
 		stage.addActor(Render.menuBG);
 		stage.addActor(info);
+		
+		pieceDisposer = new Image(Render.app.getManager().get(Resources.PIECE_DISPOSER_PATH,Texture.class));
+		pieceDisposer.setPosition(-50, 35);
+		stage.addActor(pieceDisposer);
 
 		initPieceClasses();
 		initTileButtons();
@@ -158,6 +162,7 @@ public class DraftScreen extends AbstractScreen {
 		}
 
 		arrow = new Image(Render.app.getManager().get(Resources.ARROW_PATH, Texture.class));
+		arrow.setSize(100, 100);
 		stage.addActor(arrow);
 		changePiece();
 	}
@@ -269,7 +274,7 @@ public class DraftScreen extends AbstractScreen {
 		currentPieceSelection = tile1.getPiece();
 		info.getInfoFrom(currentPieceSelection);
 		updateDraft();
-		arrow.setPosition(80, 100 + 100 * (5 - cont));
+		arrow.setPosition(80, 70 + 100 * (5 - cont));
 
 	}
 

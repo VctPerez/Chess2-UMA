@@ -75,7 +75,7 @@ public class PieceInfo extends Actor{
 		background.setProjectionMatrix(batch.getProjectionMatrix());
 		background.setTransformMatrix(batch.getTransformMatrix());
 		background.rect(750, 40, 500, 665);
-		background.setColor(90/255f, 90/255f,90/255f,1f);
+		background.setColor(212/255f,202/255f,182/255f,1f);
 		background.end();
 		batch.begin();
 		info.draw(batch, parentAlpha);

@@ -49,6 +49,7 @@ public class Chess2 extends Game {
 		manager.load(Resources.KNIGHT_PATH, Texture.class);
 		manager.load(Resources.RIDER_PATH, Texture.class);
 		manager.load(Resources.ARROW_PATH, Texture.class);
+		manager.load(Resources.PIECE_DISPOSER_PATH,Texture.class);
 		manager.load(Resources.BOMBER_PATH, Texture.class);
 		manager.load(Resources.WARDEN_PATH, Texture.class);
 		manager.load(Resources.PALADIN_PATH, Texture.class);
@@ -60,13 +61,7 @@ public class Chess2 extends Game {
 		manager.load(Resources.VALKYRIE_PATH, Texture.class);
 		manager.load(Resources.MAGE_PATH,Texture.class);
 		manager.load(Resources.MAGE_PATH2,Texture.class);
-
-		// RANDOM PIECES
-		manager.load(Resources.RND_PATH, Texture.class);
-		manager.load(Resources.RND_PAWN_PATH, Texture.class);
-		manager.load(Resources.RND_ROOK_PATH, Texture.class);
-		manager.load(Resources.RND_QUEEN_PATH, Texture.class);
-		manager.load(Resources.RND_KNIGHT_PATH, Texture.class);
+		manager.load(Resources.RND_PATH,Texture.class);
 
 		manager.load(Resources.FRAME_PATH, Texture.class);
 
@@ -88,6 +83,8 @@ public class Chess2 extends Game {
 
 		// ETC
 		manager.load(Resources.LOGO_PATH, Texture.class);
+		manager.load(Resources.RESULTS_BACKGROUND_PATH,Texture.class);
+		manager.load(Resources.BLACK_OPACITY_PATH,Texture.class);
 
 		/*
 		 * manager.load(Resources.MENU_BACKGROUND_PATH, Texture.class);

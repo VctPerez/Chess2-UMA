@@ -180,7 +180,6 @@ public class GameScreen extends AbstractScreen {
 			surrender.clearListeners();
 			//------------------------------------------------------------------------------
 			results.Show();
-			results.toFront();
 			results.render();
 		} else {
 			timersRender();

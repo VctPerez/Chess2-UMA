@@ -31,6 +31,7 @@ public class ClassicManScreen extends AbstractScreen{
 	TextButton textButton;
 	Label title;
 	Table table;
+	Image fondo;
 	LectorLineas languageReader, configReader;
 	ScrollPane scrollPane;
 	
@@ -50,9 +51,15 @@ public class ClassicManScreen extends AbstractScreen{
 	    	
 	    //Introducir los elementos en la table
 	    setupTable();
-	    //Añadir todos los actores a la escena;
-    	addActors();
 		     
+    	fondo = new Image(Render.app.getManager().get(Resources.BLACK_OPACITY_PATH, Texture.class));
+		fondo.setPosition(scrollPane.getX()-60, scrollPane.getY()-20);
+		fondo.setSize(657f, 405f);
+		fondo.setTransparency(0.4f);
+		
+		 //Añadir todos los actores a la escena;
+    	addActors();
+    	
 		//Para tener dos inputs:
 		InputMultiplexer inputMultiplexer = new InputMultiplexer();
 		inputMultiplexer.addProcessor(stage);
@@ -63,6 +70,7 @@ public class ClassicManScreen extends AbstractScreen{
 		
 	private void addActors() {
 		stage.addActor(Render.menuBG);
+		stage.addActor(fondo);
 		stage.addActor(table);
 	}
 
@@ -100,6 +108,7 @@ public class ClassicManScreen extends AbstractScreen{
 		//style.vScroll = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("White.png"))));
 		style.vScrollKnob = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("White.png"))));
 		scrollPane.setStyle(style);
+		
 	}
 
 	@Override
