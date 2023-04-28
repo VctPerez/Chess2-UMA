@@ -13,15 +13,16 @@ public class Settings {
 	}
 	
 	public static void setSfxVolume(float value) {
-//		sfxVolume = (float) Math.pow((value/10),2);
-		sfxVolume = value;
+		sfxVolume = (float) Math.pow((value/100),2);
 	}
 	
 	public static void setMusicVolume(Float value) {
-//		musicVolume = (float) Math.pow((value/10),2);
-		musicVolume = value;
-		if(Render.bgMusic != null)Render.bgMusic.setVolume(musicVolume/100);
-		System.out.println("Volumen = " + value);
+		musicVolume = (float) Math.pow((value/100),2);
+		if(Render.bgMusic != null)Render.bgMusic.setVolume(musicVolume);
+	}
+	
+	public static float reconvertAudioToText(float value) {
+		return (float) Math.sqrt((double) value) * 100;
 	}
 	
 	public static void updateSettings(float musicVolume, float sfxVolume, int language) {

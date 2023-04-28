@@ -10,6 +10,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.actions.MoveByAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -33,6 +34,9 @@ public class Render {
     public static Viewport viewport;
     public static Background menuBG;
     public static Skin skin;
+    
+    public static final MoveByAction enterAction = new MoveByAction();
+    public static final MoveByAction exitAction = new MoveByAction();
 
     public static Chess2 app;
 
