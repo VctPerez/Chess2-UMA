@@ -27,6 +27,7 @@ import utils.Resources;
 import utils.Settings;
 import utils.TextButton;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class GameScreen extends AbstractScreen {
@@ -45,7 +46,7 @@ public class GameScreen extends AbstractScreen {
 	//UI partida
 	private Table table;
 	protected TextButton surrender;
-	private TextButton draw;
+	protected TextButton draw;
 	private LectorLineas languageReader, configReader;
 	private Timer TimerW, TimerB;
 
@@ -172,12 +173,12 @@ public class GameScreen extends AbstractScreen {
 		if(surrender.isPressed()) {
 			if (PLAYER) {
 				System.out.println("RENDICION BLANCA");
-				results.setWinner("NEGRO");
+				results.setWinnerSurrender("NEGRO");
 				showPopup = true;
 				whiteCheckMate=true;
 			} else {
 				System.out.println("RENDICION NEGRA");
-				results.setWinner("BLANCO");
+				results.setWinnerSurrender("BLANCO");
 				showPopup = true;
 				blackCheckMate=true;
 			}
@@ -185,7 +186,7 @@ public class GameScreen extends AbstractScreen {
 	}
 
 	@Override
-	public void render(float delta) {
+	public void render(float delta){
 		Render.clearScreen();
 		checkSurrender();
 		if (showPopup) {

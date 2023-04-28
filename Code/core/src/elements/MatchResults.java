@@ -51,6 +51,10 @@ public class MatchResults extends Actor{
 	public void setWinner(String Winner) {
 		matchres.setText("HA GANADO EL " + Winner);
 	}
+	
+	public void setWinnerSurrender(String Winner) {
+		matchres.setText("HA GANADO EL " + Winner+" \n    POR RENDICION");
+	}
 
 	public void setDraw() {
 		matchres.setText("Empate");

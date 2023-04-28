@@ -15,46 +15,60 @@ public class OnlineGameScreen extends GameScreen {
 
 		updateOnlineBoard();
 	}
-	
+
 	@Override
 	public void checkSurrender() {
-		if(super.surrender.isPressed()) {
-			if (Render.hosting) {
-				System.out.println("JAQUE MATE AL REY BLANCO");
-				super.results.setWinner("NEGRO");
-				super.showPopup = true;
-				super.whiteCheckMate=true;
-			} else {
-				System.out.println("JAQUE MATE AL REY NEGRO");
-				super.results.setWinner("BLANCO");
-				super.showPopup = true;
-				super.blackCheckMate=true;
+		try {
+			if (super.surrender.isPressed()) {
+				if (Render.hosting) {
+					Render.host.sendMessage("RENDICION");
+					System.out.println("Rendicion Blanca");
+					super.results.setWinnerSurrender("NEGRO");
+					super.showPopup = true;
+					super.whiteCheckMate = true;
+
+				} else {
+					Render.guest.sendMessage("RENDICION");
+					System.out.println("Rendicion Negra");
+					super.results.setWinnerSurrender("BLANCO");
+					super.showPopup = true;
+					super.blackCheckMate = true;
+
+				}
 			}
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
-	
-	
+
+	public void checkDraw() {
+		if (super.draw.isPressed()) {
+
+		}
+	}
+
 	@Override
 	public void update(Tile tile) {
 		super.update(tile);
 		System.out.println(moved);
 		try {
-			if (Render.hosting == PLAYER) {//meter estos metodos en las clases host y guest y que se llamen sendMovement
-				if(Render.hosting) {
-					if(moved) {
+			if (Render.hosting == PLAYER) {// meter estos metodos en las clases host y guest y que se llamen
+											// sendMovement
+				if (Render.hosting) {
+					if (moved) {
 						String movement = Parser.parseMovementToString(currentTile, nextTile);
 						Render.host.sendMessage(movement);
 						System.out.println("mensaje enviado from host");
-						System.out.println("mensaje enviado con: "+ movement);
+						System.out.println("mensaje enviado con: " + movement);
 						PLAYER = false;
 						moved = false;
 					}
-				}else{
-					if(moved){
+				} else {
+					if (moved) {
 						String movement = Parser.parseMovementToString(currentTile, nextTile);
 						Render.guest.sendMessage(movement);
 						System.out.println("mensaje enviado from guest");
-						System.out.println("mensaje enviado con: "+ movement);
+						System.out.println("mensaje enviado con: " + movement);
 						PLAYER = true;
 						moved = false;
 					}
@@ -64,27 +78,61 @@ public class OnlineGameScreen extends GameScreen {
 			throw new RuntimeException(e);
 		}
 	}
-	
-	private void updateOnlineBoard(){
-		if(Render.hosting != PLAYER){//meter estos metodos en las clases host y guest y que se llamen recieveMovement?
-			if(!Render.hosting) {
-				if(!Render.guest.getMessage().equals("")){
-					System.out.println("movimiento de blancas: " +Render.guest.getMessage());
-					Parser.parseStringToMovement(Render.guest.getMessage());
-					PLAYER = false;
-					Render.guest.resetMessage();
+
+	private void updateOnlineBoard() {
+		if (Render.hosting != PLAYER) {// meter estos metodos en las clases host y guest y que se llamen
+										// recieveMovement?
+			if (!Render.hosting) {
+				if (!Render.guest.getMessage().equals("")) {
+					if (Render.guest.getMessage().equals("RENDICION")) { // La rendicion funciona bien cuando te rindes
+																			// en tu turno, si no es así sale la
+																			// notificacion de rendicion al rival cuando
+																			// el haya termiando su turno
+						System.out.println("Rendicion Blanca");
+						super.results.setWinnerSurrender("NEGRO");
+						super.showPopup = true;
+						super.whiteCheckMate = true;
+					} else {
+						System.out.println("movimiento de blancas: " + Render.guest.getMessage());
+						Parser.parseStringToMovement(Render.guest.getMessage());
+						PLAYER = false;
+						Render.guest.resetMessage();
+					}
+
 				}
-			}else{
-				if(!Render.host.getMessage().equals("")){
-					System.out.println("movimiento de negras: " + Render.host.getMessage());
-					Parser.parseStringToMovement(Render.host.getMessage());
-					PLAYER = true;
-					Render.host.resetMessage();
+			} else {
+				if (!Render.host.getMessage().equals("")) {
+					if (Render.host.getMessage().equals("RENDICION")) {
+						System.out.println("Rendicion Negra");
+						super.results.setWinnerSurrender("BLANCO");
+						super.showPopup = true;
+						super.blackCheckMate = true;
+					} else {
+						System.out.println("movimiento de negras: " + Render.host.getMessage());
+						Parser.parseStringToMovement(Render.host.getMessage());
+						PLAYER = true;
+						Render.host.resetMessage();
+					}
 				}
 			}
+		} else {
+			/*
+			 * if (!Render.hosting) { if (!Render.host.getMessage().equals("")) { if
+			 * (Render.host.getMessage().equals("RENDICION")) {
+			 * System.out.println("Rendicion Negra");
+			 * super.results.setWinnerSurrender("BLANCO"); super.showPopup = true;
+			 * super.blackCheckMate = true; } } } else { if
+			 * (!Render.guest.getMessage().equals("")) { if
+			 * (Render.guest.getMessage().equals("RENDICION")) {
+			 * System.out.println("Rendicion Blanca");
+			 * super.results.setWinnerSurrender("NEGRO"); super.showPopup = true;
+			 * super.whiteCheckMate = true; } }
+			 * 
+			 * }
+			 */
 		}
 	}
-	
+
 	@Override
 	protected void select(Tile tile) {
 		if (tile.getPiece() != null && tile.getPiece().color() == Render.hosting && Render.hosting == PLAYER) {
