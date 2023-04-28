@@ -23,10 +23,12 @@ public class OnlineGameScreen extends GameScreen {
 				System.out.println("JAQUE MATE AL REY BLANCO");
 				super.results.setWinner("NEGRO");
 				super.showPopup = true;
+				super.whiteCheckMate=true;
 			} else {
 				System.out.println("JAQUE MATE AL REY NEGRO");
 				super.results.setWinner("BLANCO");
 				super.showPopup = true;
+				super.blackCheckMate=true;
 			}
 		}
 	}

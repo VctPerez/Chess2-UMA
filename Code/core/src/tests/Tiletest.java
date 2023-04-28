@@ -1,4 +1,4 @@
-
+package tests;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class TileTest {
+public class Tiletest {
 	Tile tile;
 	
 	@BeforeEach
@@ -46,16 +46,10 @@ public class TileTest {
 	
 	@Test
 	public void equalsTest(){
-		Tile tile2=mock(Tile.class);
+		Tile tile2=mock(Tile.class,Mockito.CALLS_REAL_METHODS);
 		Vector2 pos = new Vector2(0, 0);
 		when(tile2.getPos()).thenReturn(pos);
 		when(tile.getPos()).thenReturn(pos);
-		
-		System.out.println(tile2 instanceof Tile);
-		System.out.println(tile2.getPos().equals(tile.getPos()));
-		System.out.println(tile2.equals(tile));
-		
-		
 		assertEquals(tile.equals(tile2),true,"Deben ser iguales por sus posiciones");
 	
 	}

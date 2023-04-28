@@ -56,8 +56,8 @@ public class GameScreen extends AbstractScreen {
 	public static Vector2 blackKing = new Vector2(5, 8);
 	private static boolean whiteCheck;
 	private static boolean blackCheck;
-	private static boolean whiteCheckMate;
-	private static boolean blackCheckMate;
+	protected static boolean whiteCheckMate;
+	protected static boolean blackCheckMate;
 	public static ArrayList<Piece> whitePieces;
 	public static ArrayList<Piece> blackPieces;
 	// ----------------------------
@@ -174,10 +174,12 @@ public class GameScreen extends AbstractScreen {
 				System.out.println("RENDICION BLANCA");
 				results.setWinner("NEGRO");
 				showPopup = true;
+				whiteCheckMate=true;
 			} else {
 				System.out.println("RENDICION NEGRA");
 				results.setWinner("BLANCO");
 				showPopup = true;
+				blackCheckMate=true;
 			}
 		}
 	}
@@ -185,6 +187,7 @@ public class GameScreen extends AbstractScreen {
 	@Override
 	public void render(float delta) {
 		Render.clearScreen();
+		checkSurrender();
 		if (showPopup) {
 			//Para que no se pueda interaccionar con nada despues de que se muestre el popup
 			draw.clearListeners();
