@@ -78,12 +78,15 @@ public class Tile extends Actor{
 	}
 	
 	public void simulateMoveTo(Tile nextTile) {
-		if(nextTile.getPiece()!=null) {
+		boolean mismaCasilla = this.equals(nextTile);
+		if(nextTile.getPiece()!=null && !mismaCasilla) {
 			nextTile.simulateSendPieceToGraveyard();
 		}
 		
 		nextTile.setPiece(this.piece);
-		this.piece = null;
+		if (!mismaCasilla){
+			this.piece = null;
+		}
 	}
 	
 	public void moveTo(Tile nextTile) { //Se necesita comprobar el ki charge para no matarlo

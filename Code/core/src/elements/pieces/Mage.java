@@ -53,9 +53,9 @@ public class Mage extends Piece {
      */
     public void updateSprite(int kiCharge) {
         if (kiCharge > 0){
-            sprite = new Image(Render.app.getManager().get(Resources.MAGE_PATH,Texture.class));
-        } else {
             sprite = new Image(Render.app.getManager().get(Resources.MAGE_PATH2,Texture.class));
+        } else {
+            sprite = new Image(Render.app.getManager().get(Resources.MAGE_PATH,Texture.class));
         }
     }
 
