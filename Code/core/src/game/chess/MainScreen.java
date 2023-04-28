@@ -2,10 +2,15 @@ package game.chess;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.MoveByAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -27,6 +32,7 @@ public class MainScreen extends AbstractScreen {
     	
     	stage = new Stage(new FitViewport(1280, 720));
     	table = new Table();
+    	
     	
    	    //table.debug();
     	
@@ -51,6 +57,7 @@ public class MainScreen extends AbstractScreen {
         Render.bgMusic.setLooping(true);
         Render.bgMusic.setVolume(Settings.musicVolume);
         Render.bgMusic.play();
+        
     }
 
     @Override
@@ -60,10 +67,23 @@ public class MainScreen extends AbstractScreen {
         stage.act();
         stage.draw();
         
+    	MoveByAction enterAction = new MoveByAction();
+    	enterAction.setAmountX(5);
+    	enterAction.setTime(1f);
+    	
+    	MoveByAction exitAction = new MoveByAction();
+    	enterAction.setAmountX(-25);
+    	enterAction.setTime(1f);
+        
 //        System.out.println("VIEWPORT: " + stage.getViewport().getScreenHeight() + " " + stage.getViewport().getScreenWidth());
 //        System.out.println("REAL: " + stage.getViewport().getScreenX() + " " + stage.getViewport().getScreenY());
 //        System.out.println("VIRTUAL: " + stage.getViewport().getWorldWidth() + " " +stage.getViewport().getWorldHeight());
         
+//    	if(textButton[0].isOver()) {
+//    		textButton[0].addAction(enterAction);
+//    	}
+    	
+    	
         if(textButton[0].isPressed()){
             Render.bgMusic.stop();
             Render.app.setScreen(Render.MATCHMAKINGSCREEN);
@@ -92,7 +112,11 @@ public class MainScreen extends AbstractScreen {
     	textButton[0] = new TextButton(languageReader.leerLinea(1));//Jugar = Linea 1
     	textButton[1] = new TextButton(languageReader.leerLinea(4));//Configuracion = Linea 4
     	textButton[2] = new TextButton(languageReader.leerLinea(7));//Reglas = Linea 7
-    	textButton[3] = new TextButton(languageReader.leerLinea(3));//Salir = Linea 3; 
+    	textButton[3] = new TextButton(languageReader.leerLinea(3));//Salir = Linea 3;
+    	
+    	for(int i = 0; i < textButton.length; i++) {
+    		textButton[i].addAnimation();
+    	}
     }
     
     private void setupTable() {

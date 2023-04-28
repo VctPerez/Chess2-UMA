@@ -163,14 +163,10 @@ public class Tile extends Actor{
 	/**
 	 * Mira si los Tiles están en el mismo sitio
 	 */
-	@Override
-	public boolean equals(Object obj) {
-		boolean res = false;
-		if (obj instanceof Tile){
-			Tile aux = (Tile) obj;
-			res = aux.pos.equals(pos);
-		}
-		return res;
+
+	public boolean equals(Tile obj) {
+		
+		return(((Tile) obj).getPos().equals(this.getPos())) ;
 	}
 
 	@Override
