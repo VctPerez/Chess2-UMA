@@ -1,5 +1,3 @@
-package tests;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import utils.Settings;
@@ -19,25 +17,25 @@ public class SettingsTest {
     @Test
     public void subirEfectos(){
         Settings.setSfxVolume(sfx+1);
-        assertEquals(sfx+1, Settings.sfxVolume, " El volumen de efectos deberia haber subido.");
+        assertEquals(sfx+1, Settings.reconvertAudioToText(Settings.sfxVolume), " El volumen de efectos deberia haber subido.");
     }
 
     @Test
     public void bajarEfectos(){
         Settings.setSfxVolume(sfx-1);
-        assertEquals(sfx-1, Settings.sfxVolume, " El volumen de efectos deberia haber bajado.");
+        assertEquals(sfx-1, Settings.reconvertAudioToText(Settings.sfxVolume), " El volumen de efectos deberia haber bajado.");
     }
 
     @Test
     public void subirMusica(){
         Settings.setMusicVolume(music + 1);
-        assertEquals(music + 1, Settings.musicVolume, "El volumen de la musica deberia haber subido.");
+        assertEquals(music + 1, Settings.reconvertAudioToText(Settings.musicVolume), "El volumen de la musica deberia haber subido.");
     }
 
     @Test
     public void bajarMusica(){
         Settings.setMusicVolume(sfx-1);
-        assertEquals(sfx-1, Settings.musicVolume, " El volumen de la musica deberia haber bajado.");
+        assertEquals(sfx-1, Settings.reconvertAudioToText(Settings.musicVolume), " El volumen de la musica deberia haber bajado.");
     }
 
     @Test

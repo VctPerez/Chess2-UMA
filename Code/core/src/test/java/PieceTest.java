@@ -1,5 +1,3 @@
-package tests;
-
 import com.badlogic.gdx.graphics.Texture;
 import elements.Board;
 import elements.Piece;
@@ -11,9 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
+import static org.mockito.Mockito.*;
 public class PieceTest {
    	Piece pieza;
 
