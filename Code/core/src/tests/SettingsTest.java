@@ -1,10 +1,7 @@
 package tests;
 
-import elements.Tile;
-import exceptions.SettingsException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import utils.Button;
 import utils.Settings;
 
 import static org.junit.jupiter.api.Assertions.*;
