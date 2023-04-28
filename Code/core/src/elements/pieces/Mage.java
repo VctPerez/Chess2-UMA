@@ -124,9 +124,9 @@ public class Mage extends Piece {
         Reader = new LectorLineas("files/lang/" + config + "Modified.txt");
         switch (config) {
             case "esp/":
-                return Reader.leerTramo(34, 41);
+                return Reader.leerTramo(55, 60);
             case "eng/":
-                return Reader.leerTramo(35, 42);
+                return Reader.leerTramo(57, 62);
             default:
                 throw new IllegalArgumentException("Configuración errónea");
         }

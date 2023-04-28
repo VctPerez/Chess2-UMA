@@ -278,7 +278,7 @@ public class GameScreen extends AbstractScreen {
 
 		for (Vector2 vector : currentTile_validMovements) {
 			Tile tile = board.getTile(vector.x, vector.y);
-			if (tile.getPiece() != null && !kiCharge()) {
+			if (tile.getPiece() != null && !vector.equals(currentTile.getPos())) {
 				tile.attacked = false;
 			} else {
 				tile.highlight = false;

@@ -1,7 +1,7 @@
  Joker:
   Inicialmente tiene los movimientos
  de un Alfil y cada vez que se mueve
- copias �nicamente los movimientos de una 
+ copias únicamente los movimientos de una
  pieza aleatoria de entre las piezas clásicas
  a excepción del rey.
 
@@ -14,7 +14,7 @@
  Bombardero:
   Se mueve solo a casillas adyacentes sin movimiento
  diagonal, si captura otra pieza explotar� 
- eliminandose a si mismo y a las piezas de alrededor.
+ eliminándose a si mismo y a las piezas de alrededor.
 
 
  Guardian:
@@ -36,7 +36,7 @@
  forma de cruz, pudiendo moverse 1 sola
  casilla, al comer 1 pieza "evoluciona"
  y adopta el movimiento de 1 casilla en 
- cada direccion y al comer 2 piezas mas
+ cada dirección y al comer 2 piezas mas
  consigue su forma final ampliando su
  rango
 
@@ -51,3 +51,10 @@
  de piezas del enemigo. Despues mantiene una 
  serie de movimientos que le permiten saltar 
  y conquistar piezas a lo largo del tablero.
+
+ Mago:
+  Se mueve como un rey pero no delante ni atrás
+ Se puede mover a su propia casilla para cargar
+ su ki.
+ Con su ki cargado puede moverse más lejos.
+ Seguirá cargado 2 turnos o hasta que se mueva.
