@@ -1,23 +1,17 @@
-package tests;
-
-import static org.mockito.Mockito.*;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Vector2;
-
 import elements.Board;
 import elements.Piece;
 import elements.Tile;
 import elements.pieces.Rook;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
 
-import org.junit.jupiter.api.AfterEach;
-
-public class pieceTest {
+public class PieceTest {
    	Piece pieza;
 
    	@BeforeEach
