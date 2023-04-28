@@ -6,28 +6,13 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.utils.viewport.*;
-
-import elements.Background;
-import elements.Board;
-import elements.DropDownMenu;
-import elements.Graveyard;
-import elements.Piece;
-import elements.Tile;
-import elements.Timer;
-import elements.MatchResults;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import elements.*;
 import elements.pieces.*;
 import interaccionFichero.LectorLineas;
-import utils.Parser;
-import utils.Render;
-import utils.Resources;
-import utils.Settings;
-import utils.TextButton;
+import utils.*;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class GameScreen extends AbstractScreen {
@@ -230,7 +215,7 @@ public class GameScreen extends AbstractScreen {
 
 				nextTile = tile;
 
-				if (nextTile.getPiece() != null && currentTile.getPiece().sameColor(nextTile.getPiece())) {
+				if (nextTile.getPiece() != null && currentTile.getPiece().sameColor(nextTile.getPiece()) && !kiCharge()) {
 					currentTile = nextTile;
 
 					lowlight();
@@ -293,7 +278,7 @@ public class GameScreen extends AbstractScreen {
 
 		for (Vector2 vector : currentTile_validMovements) {
 			Tile tile = board.getTile(vector.x, vector.y);
-			if (tile.getPiece() != null) {
+			if (tile.getPiece() != null && !kiCharge()) {
 				tile.attacked = false;
 			} else {
 				tile.highlight = false;
@@ -317,6 +302,10 @@ public class GameScreen extends AbstractScreen {
 			isPieceSelected = true;
 		}
 		
+	}
+
+	private boolean kiCharge() {
+		return currentTile.piece instanceof Mage && currentTile.equals(nextTile);
 	}
 
 	/**
@@ -437,6 +426,7 @@ public class GameScreen extends AbstractScreen {
 
 				checkMidas();
 				checkCastling(next_x);
+				updateKiCharge();
 
 				currentTile.move(next_x, next_y);
 
@@ -463,6 +453,22 @@ public class GameScreen extends AbstractScreen {
 		}
 	}
 
+	/**
+	 * Actualiza el valor del ki actual del mago si corresponde
+	 * <p>Solo se hace la parte de reducir en uno el ki porque el resto se hace en su clase</p>
+	 */
+	private void updateKiCharge() {
+		Piece aux;
+		if (PLAYER){ //Se inicializa aux con el rey
+			aux = board.getTile(whiteKing.x, whiteKing.y).piece;
+		} else {
+			aux = board.getTile(blackKing.x, blackKing.y).piece;
+		} //Se le quita una carga de ki al mago
+		if (aux instanceof Mage){
+			aux.kiCharge = Math.max(0,aux.kiCharge-1); //Se baja aunque no sea ki king porque no lo van a usar
+			((Mage) aux).updateSprite(aux.kiCharge);
+		}
+	}
 	/**
 	 * Controla la propiedad especial del Rey Midas
 	 */

@@ -17,11 +17,9 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.Hinting;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
-
 import elements.Background;
 import interaccionFichero.LectorLineas;
 import utils.IOS;
-import utils.Parser;
 import utils.Render;
 import utils.Resources;
 import utils.Settings;
@@ -60,6 +58,8 @@ public class Chess2 extends Game {
 		manager.load(Resources.MINER_PATH, Texture.class);
 		manager.load(Resources.CATAPULT_PATH, Texture.class);
 		manager.load(Resources.VALKYRIE_PATH, Texture.class);
+		manager.load(Resources.MAGE_PATH,Texture.class);
+		manager.load(Resources.MAGE_PATH2,Texture.class);
 
 		// RANDOM PIECES
 		manager.load(Resources.RND_PATH, Texture.class);

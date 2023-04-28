@@ -1,9 +1,5 @@
 package game.chess;
 
-import java.io.IOException;
-import java.util.*;
-
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -11,10 +7,13 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.StringBuilder;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-
-import elements.*;
+import elements.PieceInfo;
+import elements.TileButton;
 import interaccionFichero.LectorLineas;
 import utils.*;
+
+import java.io.IOException;
+import java.util.*;
 
 public class DraftScreen extends AbstractScreen {
 	public static Stage stage;
@@ -134,6 +133,7 @@ public class DraftScreen extends AbstractScreen {
 
 		kings.add(Resources.KING_PATH);
 		kings.add(Resources.MIDAS_PATH);
+		kings.add(Resources.MAGE_PATH);
 		Collections.shuffle(kings);
 	}
 

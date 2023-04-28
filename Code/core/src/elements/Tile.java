@@ -86,13 +86,16 @@ public class Tile extends Actor{
 		this.piece = null;
 	}
 	
-	public void moveTo(Tile nextTile) {
-		if(nextTile.getPiece()!=null) {
+	public void moveTo(Tile nextTile) { //Se necesita comprobar el ki charge para no matarlo
+		boolean sameTile = this.equals(nextTile);
+		if(nextTile.getPiece()!=null && !sameTile) { //El movimiento a si mismo anula la muerte, solo puede el mago
 			nextTile.sendPieceToGraveyard();
 		}
 		
 		nextTile.setPiece(this.piece);
-		this.piece = null;
+		if (!sameTile){ //Necesario para que nextTile tenga pieza en el ki charge
+			this.piece = null;
+		}
 	}
 	
 	public void move(int x, int y) {
@@ -162,11 +165,14 @@ public class Tile extends Actor{
 
 	/**
 	 * Mira si los Tiles están en el mismo sitio
+	 * <p>No lo cambies para que sea entre Tiles que conviene que sea el generico</p>
 	 */
-
-	public boolean equals(Tile obj) {
-		
-		return(((Tile) obj).getPos().equals(this.getPos())) ;
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Tile) {
+			return (((Tile) obj).getPos().equals(this.getPos()));
+		}
+		return false;
 	}
 
 	@Override
