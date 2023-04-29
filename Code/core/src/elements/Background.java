@@ -73,31 +73,31 @@ public class Background extends Actor{
 	public void updatePositions() {
 		for(int i = 0; i < fondo.length ; i++) {
 						
-			if(fondo[i].getPosition().x >= -1280 && fondo[i].getPosition().x <= 1280 && 
-					fondo[i].getPosition().y >= -720 && fondo[i].getPosition().y <= 720) {
+			if(fondo[i].getX() >= -1280 && fondo[i].getX() <= 1280 && 
+					fondo[i].getY() >= -720 && fondo[i].getY() <= 720) {
 				//Imagen visible en pantalla
-				fondo[i].setPosition( fondo[i].getPosition().x + speedX, fondo[i].getPosition().y + speedY);
+				fondo[i].setPosition( fondo[i].getX() + speedX, fondo[i].getY() + speedY);
 				
 			}else {
 				//Imagen no visible en pantalla
 				switch (i) {
 				case 0:
 					//fondo[0] deja de ser visible, se recoloca en funcion de fondo[1]
-					fondo[0].setPosition(fondo[1].getPosition().x - 1280, fondo[1].getPosition().y + 720);
+					fondo[0].setPosition(fondo[1].getX() - 1280, fondo[1].getY() + 720);
 					break;
 				case 1:
 					//fondo[1] deja de ser visible, se recoloca en funcion de fondo[0]
-					fondo[1].setPosition(fondo[0].getPosition().x - 1280, fondo[0].getPosition().y + 720);
+					fondo[1].setPosition(fondo[0].getX() - 1280, fondo[0].getY() + 720);
 					break;
 				case 2:
 					//En cada iteraci�n del loop fondo[2] se tendra que colocar debajo de 0 o de 1
-					fondo[2].setPosition(fondo[pos2].getPosition().x, fondo[pos2].getPosition().y - 720);
+					fondo[2].setPosition(fondo[pos2].getX(), fondo[pos2].getY() - 720);
 					//XOR para cambiar entre 0 y 1;
 					pos2 ^= 1;
 					break;
 				case 3:
 					//En cada iteraci�n del loop fondo[3] se tendra que colocar debajo de 0 o de 1
-					fondo[3].setPosition(fondo[pos3].getPosition().x, fondo[pos3].getPosition().y + 720);
+					fondo[3].setPosition(fondo[pos3].getX(), fondo[pos3].getY() + 720);
 					pos3 ^= 1;
 					break;
 				}
