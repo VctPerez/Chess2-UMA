@@ -41,15 +41,22 @@
  pieces gets its final form by expanding 
  its range.
 
-Valkyrie:
-The Valkyrie mixes the Knight and the 
-Bishop, she can jump as a Knight and 
-can also move in the same direction 
-that she jumps.
+ Valkyrie:
+  The Valkyrie mixes the Knight and the
+ Bishop, she can jump as a Knight and
+ can also move in the same direction
+ that she jumps.
 
-Miner:
-His first move is somewhat offensive
-since it is positioned very close to the set
-of enemy pieces. Then he maintains a
-series of moves that allow you to jump
-and conquer pieces along the board.
+ Miner:
+  His first move is somewhat offensive
+ since it is positioned very close to the set
+ of enemy pieces. Then he maintains a
+ series of moves that allow you to jump
+ and conquer pieces along the board.
+
+ Mage:
+  Moves like the king but not forwards
+ or backwards.
+ He can move to the same tile to charge his ki.
+ When charged he can move further.
+ He will stay charged 2 moves or until he moves.

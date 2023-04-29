@@ -52,7 +52,6 @@ public class OnlineGameScreen extends GameScreen {
 					super.results.setWinnerSurrender("BLANCO");
 					super.showPopup = true;
 					super.blackCheckMate = true;
-
 				}
 			}
 		} catch (IOException e) {

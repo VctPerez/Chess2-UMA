@@ -1,18 +1,16 @@
 package elements.pieces;
 
-import java.util.ArrayList;
-
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
-
 import elements.Board;
 import elements.Piece;
 import elements.Tile;
-import game.chess.GameScreen;
 import interaccionFichero.LectorLineas;
 import utils.Render;
 import utils.Resources;
+
+import java.util.ArrayList;
 
 public class Midas extends Piece {
 

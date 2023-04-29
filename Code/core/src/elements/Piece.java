@@ -1,9 +1,5 @@
 package elements;
 
-import java.util.ArrayList;
-import java.util.Objects;
-import java.util.Vector;
-
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -12,13 +8,13 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-
-import elements.pieces.*;
-import interaccionFichero.LectorLineas;
+import elements.pieces.Colosus;
 import utils.Image;
 import utils.Render;
 import utils.Resources;
-import utils.Text;
+
+import java.util.ArrayList;
+import java.util.Objects;
 
 public abstract class Piece extends Actor {
 	protected Image sprite;
@@ -32,6 +28,7 @@ public abstract class Piece extends Actor {
 	public Boolean isPassantable = false;
 	public Boolean backed;
 	public int ate;
+	public int kiCharge;
 
 	public Piece(Boolean color, Texture texture, int x, int y, Board board) {
 		this.board = board;
@@ -43,6 +40,7 @@ public abstract class Piece extends Actor {
 		this.ate=0;
 		this.x = x;
 		this.y = y;
+		this.kiCharge=0;
 
 		if (color) {
 			setColor(Color.WHITE);

@@ -7,6 +7,9 @@ package utils;
 public class Resources {
     public static final String LOADINGSCREEN_PATH = "sprites/loadingScreen.jpg";
     public static final String MENU_BACKGROUND_PATH = "sprites/BackgroundImageDM.png";
+    public static final String PIECE_DISPOSER_PATH = "sprites/PieceDisposer.png";
+    public static final String BLACK_OPACITY_PATH = "sprites/Black.png";
+    public static final String RESULTS_BACKGROUND_PATH = "sprites/resultBackground.png";
     public static final String FONT_MENU_PATH = "fonts/Arial.ttf";
     public static final String LOGO_PATH="logo_blanco.png";
     public static final String TEXT_BOX_PATH = "";
@@ -54,14 +57,8 @@ public class Resources {
     public static final String MINER_PATH = "sprites/Pieces/Pieces Modified/White_Miner.png";
     public static final String CATAPULT_PATH = "sprites/Pieces/Pieces Modified/White_Catapult.png";
     public static final String VALKYRIE_PATH = "sprites/Pieces/Pieces Modified/White_Valkyrie.png";
-    
-    public static final String RND_KNIGHT_PATH = "sprites/Pieces/Pieces Rnd Form/RndWhite_Knight.png";
-    public static final String RND_ROOK_PATH = "sprites/Pieces/Pieces Rnd Form/RndWhite_Rook.png";
-    public static final String RND_QUEEN_PATH = "sprites/Pieces/Pieces Rnd Form/RndWhite_Queen.png";
-    public static final String RND_PAWN_PATH = "sprites/Pieces/Pieces Rnd Form/RndWhite_Pawn.png";
-    
-    
-    
+    public static final String MAGE_PATH = "sprites/Pieces/Pieces Modified/White_Mage.png";
+    public static final String MAGE_PATH2 = "sprites/Pieces/Pieces Modified/White_Mage2.png";
     
     public static final String FRAME_PATH = "sprites/selectionFrame.png";
     public static final String ARROW_PATH = "sprites/Arrow.png";

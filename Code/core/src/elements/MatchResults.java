@@ -7,7 +7,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
+import utils.Image;
 import utils.Render;
+import utils.Resources;
 import utils.TextButton;
 
 public class MatchResults extends Actor{
@@ -16,15 +18,20 @@ public class MatchResults extends Actor{
 	private Label matchres;
 	private TextButton goMenu;
 	private Stage stage;
+	private Image fondo;
 	
 	public MatchResults(Stage stage) {
 		this.stage=stage;
 		table = new Table();
 		table.setBounds(350, 100, 550, 550);
 
-		Texture texture = new Texture("Black.png");
+		Texture texture = new Texture(Resources.RESULTS_BACKGROUND_PATH);
 		TextureRegionDrawable drawable = new TextureRegionDrawable(texture);
 		table.setBackground(drawable);
+		
+		fondo = new Image(Resources.BLACK_OPACITY_PATH);
+		fondo.setSize(Render.SCREEN_WIDTH,Render.SCREEN_HEIGHT);
+		fondo.setTransparency(0.5f);
 		
     	createTableElements();
 	    setupTable();
@@ -32,6 +39,7 @@ public class MatchResults extends Actor{
 	}
 
 	private void addActors() {
+		stage.addActor(fondo);
 		stage.addActor(table);
 	}
 
@@ -55,24 +63,33 @@ public class MatchResults extends Actor{
 	public void setWinnerSurrender(String Winner) {
 		matchres.setText("HA GANADO EL " + Winner+" \n    POR RENDICION");
 	}
+	
+	public void setWinner() {
+		matchres.setText("HAS GANADO");
+		//Posible inserción de música de victoria
+	}
+	
+	public void setLooser() {
+		matchres.setText("HAS PERDIDO");
+		//Posible inserción de música de derrota
+	}
 
 	public void setDraw() {
 		matchres.setText("Empate");
+		//Posible inserción de Música de Empate
 	}
 	
 	public void Show() {
+		fondo.toFront();
+		table.toFront();
+		fondo.setVisible(true);
 		table.setVisible(true);
 	}
 	
 	public void Hide() {
+		fondo.setVisible(false);
 		table.setVisible(false);
 	}
-	
-	public void toFront() {
-		table.toFront();
-	}
-	
-	
 	
 	public void render() {
 		if(goMenu.isPressed()) {

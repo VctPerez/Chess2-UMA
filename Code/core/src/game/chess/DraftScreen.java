@@ -1,9 +1,5 @@
 package game.chess;
 
-import java.io.IOException;
-import java.util.*;
-
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -11,10 +7,13 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.StringBuilder;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-
-import elements.*;
+import elements.PieceInfo;
+import elements.TileButton;
 import interaccionFichero.LectorLineas;
 import utils.*;
+
+import java.io.IOException;
+import java.util.*;
 
 public class DraftScreen extends AbstractScreen {
 	public static Stage stage;
@@ -25,7 +24,7 @@ public class DraftScreen extends AbstractScreen {
 
 	private PieceInfo info;
 	private TextButton next, back;
-	private Image arrow;
+	private Image arrow,pieceDisposer;
 	private int cont = 0;
 	private LectorLineas languageReader, configReader;
 
@@ -55,6 +54,10 @@ public class DraftScreen extends AbstractScreen {
 		// -------------------------------
 		stage.addActor(Render.menuBG);
 		stage.addActor(info);
+		
+		pieceDisposer = new Image(Render.app.getManager().get(Resources.PIECE_DISPOSER_PATH,Texture.class));
+		pieceDisposer.setPosition(-50, 35);
+		stage.addActor(pieceDisposer);
 
 		initPieceClasses();
 		initTileButtons();
@@ -134,6 +137,7 @@ public class DraftScreen extends AbstractScreen {
 
 		kings.add(Resources.KING_PATH);
 		kings.add(Resources.MIDAS_PATH);
+		kings.add(Resources.MAGE_PATH);
 		Collections.shuffle(kings);
 	}
 
@@ -158,6 +162,7 @@ public class DraftScreen extends AbstractScreen {
 		}
 
 		arrow = new Image(Render.app.getManager().get(Resources.ARROW_PATH, Texture.class));
+		arrow.setSize(100, 100);
 		stage.addActor(arrow);
 		changePiece();
 	}
@@ -269,7 +274,7 @@ public class DraftScreen extends AbstractScreen {
 		currentPieceSelection = tile1.getPiece();
 		info.getInfoFrom(currentPieceSelection);
 		updateDraft();
-		arrow.setPosition(80, 100 + 100 * (5 - cont));
+		arrow.setPosition(80, 70 + 100 * (5 - cont));
 
 	}
 

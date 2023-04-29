@@ -1,17 +1,14 @@
 package utils;
 
-import java.util.ArrayList;
-
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-
 import elements.Board;
 import elements.Piece;
 import elements.Tile;
 import elements.pieces.*;
-import game.chess.GameScreen;
+
+import java.util.ArrayList;
 
 public class Parser {
 	
@@ -69,6 +66,9 @@ public class Parser {
 			break;
 		case Resources.VALKYRIE_PATH:
 			piece = new Valkyrie(color,x,y,board);
+			break;
+		case Resources.MAGE_PATH:
+			piece = new Mage(color,x,y,board);
 			break;
 		}
 		return piece;
