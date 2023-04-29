@@ -1,10 +1,13 @@
 package game.chess;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.StringBuilder;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import elements.PieceInfo;
@@ -19,12 +22,16 @@ public class DraftScreen extends AbstractScreen {
 	public static Stage stage;
 
 	private Map<String, String> draft;
+	private ArrayList<Image> pieces;
 	private ArrayList<String> pawns, knights, rooks, bishops, queens, kings;
 	private String currentPieceSelection;
 
 	private PieceInfo info;
 	private TextButton next, back;
+	
 	private Image arrow,pieceDisposer;
+
+	private int previousCont = 0;
 	private int cont = 0;
 	private LectorLineas languageReader, configReader;
 
@@ -55,7 +62,7 @@ public class DraftScreen extends AbstractScreen {
 		stage.addActor(Render.menuBG);
 		stage.addActor(info);
 		
-		pieceDisposer = new Image(Render.app.getManager().get(Resources.PIECE_DISPOSER_PATH,Texture.class));
+		pieceDisposer = new Image(Render.app.getManager().get(Resources.PIECE_DISPOSER_PATH,Texture.class));//Esto no hace nada porq no tiene un set size (no dibuja nada)
 		pieceDisposer.setPosition(-50, 35);
 		stage.addActor(pieceDisposer);
 
@@ -131,7 +138,7 @@ public class DraftScreen extends AbstractScreen {
 
 		queens.add(Resources.QUEEN_PATH);
 		queens.add(Resources.VALKYRIE_PATH);
-		queens.add(Resources.CATAPULT_PATH);
+		queens.add(Resources.WITCH_PATH);
 
 		Collections.shuffle(queens);
 
@@ -146,7 +153,7 @@ public class DraftScreen extends AbstractScreen {
 		// Podemos hacer que al principio tengan la imagen de la primera pieza de cada
 		// tipo, de las piezas básicas o una nueva que sea una silueta o con una
 		// interrogacion o algo
-
+		pieces = new ArrayList<>();
 		draft = new LinkedHashMap<String, String>();
 		draft.put("Pawn", Resources.PAWN_PATH);
 		draft.put("Knight", Resources.KNIGHT_PATH);
@@ -154,10 +161,26 @@ public class DraftScreen extends AbstractScreen {
 		draft.put("Bishop", Resources.BISHOP_PATH);
 		draft.put("Queen", Resources.QUEEN_PATH);
 		draft.put("King", Resources.KING_PATH);
+		
+		
 
 		int i = 0;
 		for (String key : draft.keySet()) {
-			addDraftPieceToStage(key, i);
+			Image piece = Parser.getImageFromPath(draft.get(key));
+			piece.setName(key);
+			piece.setSize(84, 84);
+			piece.setPosition(-84, 85 + ((5 - i) * 100));
+			
+			if(i==0) {
+//				piece.setPosition(40, 85 + ((5 - i) * 100));				
+				piece.addAction(Actions.moveBy(124, 0, 1f));
+			}else {
+//				piece.setPosition(20, 85 + ((5 - i) * 100));
+				piece.addAction(Actions.moveBy(104, 0, 1f));
+			}
+			pieces.add(piece);
+			stage.addActor(piece);
+
 			i++;
 		}
 
@@ -166,25 +189,18 @@ public class DraftScreen extends AbstractScreen {
 		stage.addActor(arrow);
 		changePiece();
 	}
-
-	private void addDraftPieceToStage(String key, int pos) {
-		Image piece = Parser.getImageFromPath(draft.get(key));
-		piece.setName(key);
-		piece.setSize(84, 84);
-		piece.setPosition(20, 85 + ((5 - pos) * 100));
-		stage.addActor(piece);
+	
+	private void endDraft() {
+		for(Image piece: pieces) {
+			piece.addAction(Actions.moveBy(-150, 0, 1f));;
+		}
 	}
 
 	private void updateDraft() {
 		String key = (String) draft.keySet().toArray()[cont];
-		stage.getRoot().findActor(key).remove();
-
-		// -------¿CAMBIAR? Ahora mismo la pieza del draft no cambia hasta q pulses una
-		// casilla pero entonces hay que controlar que hayas pulsado
-		// al menos una vez todas las casillas para que no te quedes con una pieza en el
-		// draft que no te ha salido para seeleccionar?
 		draft.put(key, currentPieceSelection);
-		addDraftPieceToStage(key, cont);
+		pieces.get(cont).setImage(currentPieceSelection);
+		
 	}
 
 	/**
@@ -201,38 +217,64 @@ public class DraftScreen extends AbstractScreen {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				if (cont < 5) {
+					previousCont=cont;
 					cont++;
 					changePiece();
 				} else {
 					if (Render.DraftController == 1) {
-						Render.hosting = true;
-						Render.player1Draft.addAll(draft.values());
-						Render.DraftController++;
-						Render.app.setScreen(new DraftScreen());
-					} else if (Render.DraftController == 2) {
-						Render.player2Draft.addAll(draft.values());
-						Render.GameScreen = new GameScreen();
-						Render.app.setScreen(Render.GameScreen);
-					} else if (Render.DraftController == 3) {
-						try {
-							if (Render.hosting) {//metodos en host y guest
-								if(!msgSent){
-									Render.player1Draft.addAll(draft.values());
-									Render.host.sendMessage(draftMessage());
-									msgSent = true;
-									p1Finished = true;
-								}
-							} else {
-								if(!msgSent){
-									Render.player2Draft.addAll(draft.values());
-									Render.guest.sendMessage(draftMessage());
-									msgSent = true;
-									p2Finished = true;
-								}
+						Action draftAction = new Action() {
+							public boolean act(float delta) {
+								Render.hosting = true;
+								Render.player1Draft.addAll(draft.values());
+								Render.DraftController++;
+								Render.app.setScreen(new DraftScreen());								
+								return true;
 							}
-						} catch (IOException e) {
-							throw new RuntimeException(e);
-						}
+						};
+						endDraft();
+						stage.addAction(Actions.delay(1f));
+						stage.addAction(Actions.after(draftAction));
+					} else if (Render.DraftController == 2) {
+						Action draftAction = new Action() {
+							public boolean act(float delta) {
+								Render.player2Draft.addAll(draft.values());
+								Render.GameScreen = new GameScreen();								
+								Render.app.setScreen(Render.GameScreen);
+								return true;
+							}
+						};
+						endDraft();
+						stage.addAction(Actions.delay(1f));
+						stage.addAction(Actions.after(draftAction));
+
+					} else if (Render.DraftController == 3) {
+						Action draftAction = new Action() {
+							public boolean act(float delta) {
+								try {
+									if (Render.hosting) {//metodos en host y guest
+										if(!msgSent){
+											Render.player1Draft.addAll(draft.values());
+											Render.host.sendMessage(draftMessage());
+											msgSent = true;
+											p1Finished = true;
+										}
+									} else {
+										if(!msgSent){
+											Render.player2Draft.addAll(draft.values());
+											Render.guest.sendMessage(draftMessage());
+											msgSent = true;
+											p2Finished = true;
+										}
+									}
+								} catch (IOException e) {
+									throw new RuntimeException(e);
+								}								
+								return true;
+							}
+						};
+						endDraft();
+						stage.addAction(Actions.delay(1f));
+						stage.addAction(Actions.after(draftAction));
 					}
 
 				}
@@ -250,6 +292,7 @@ public class DraftScreen extends AbstractScreen {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				if (cont > 0) {
+					previousCont=cont;
 					cont--;
 					changePiece();
 				}
@@ -299,6 +342,9 @@ public class DraftScreen extends AbstractScreen {
 				updateTileButtons(kings);
 				break;
 		}
+		pieces.get(previousCont).addAction(Actions.moveBy(-20f, 0, 0.3f));
+		pieces.get(cont).addAction(Actions.moveBy(20f, 0, 0.3f));
+		
 	}
 
 	private String draftMessage() {

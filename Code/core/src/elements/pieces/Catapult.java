@@ -21,7 +21,7 @@ public class Catapult extends Piece{
 	ArrayList<Vector2> attacks;
 
 	public Catapult(Boolean color, int x, int y,Board board) {
-		super(color, Render.app.getManager().get(Resources.CATAPULT_PATH, Texture.class), x ,y,board);
+		super(color, Render.app.getManager().get(Resources.WITCH_PATH, Texture.class), x ,y,board);
 		attacks = new ArrayList<>();
 		}
 	

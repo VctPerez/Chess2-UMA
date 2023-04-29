@@ -57,7 +57,7 @@ public class Chess2 extends Game {
 		manager.load(Resources.PALADIN_PATH, Texture.class);
 		manager.load(Resources.COLOSUS_PATH, Texture.class);
 		manager.load(Resources.MINER_PATH, Texture.class);
-		manager.load(Resources.CATAPULT_PATH, Texture.class);
+		manager.load(Resources.WITCH_PATH, Texture.class);
 		manager.load(Resources.VALKYRIE_PATH, Texture.class);
 		manager.load(Resources.MAGE_PATH,Texture.class);
 		manager.load(Resources.MAGE_PATH2,Texture.class);
@@ -146,7 +146,7 @@ public class Chess2 extends Game {
 		Render.DRAFTSCREEN = new DraftScreen();
 		
 		
-
+		Render.DraftController=1;
 		Render.GameScreen = new GameScreen();
 		Render.hosting=true;
 

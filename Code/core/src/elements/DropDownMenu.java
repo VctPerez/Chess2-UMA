@@ -55,20 +55,23 @@ public class DropDownMenu extends Actor{
 		menu = new ShapeRenderer();
 		pieces = new ArrayList<>();
 		
-		pieces.add(new Image(Render.app.getManager().get(Resources.BISHOP_PATH, Texture.class)));
-		pieces.add(new Image(Render.app.getManager().get(Resources.ROOK_PATH, Texture.class)));
-		pieces.add(new Image(Render.app.getManager().get(Resources.KNIGHT_PATH, Texture.class)));
-		pieces.add(new Image(Render.app.getManager().get(Resources.QUEEN_PATH, Texture.class)));
+		final ArrayList<String> draft;
+		if(player) {						
+			draft = Render.player1Draft;
+		}else {
+			draft = Render.player2Draft;
+		}
+		
+		
+		pieces.add(new Image(Render.app.getManager().get(draft.get(3), Texture.class)));
+		pieces.add(new Image(Render.app.getManager().get(draft.get(2), Texture.class)));
+		pieces.add(new Image(Render.app.getManager().get(draft.get(1), Texture.class)));
+		pieces.add(new Image(Render.app.getManager().get(draft.get(4), Texture.class)));
 		
 		addCaptureListener(new InputListener() { 
 			@Override
 			    public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-					if(player) {						
-						update(y, Render.player1Draft);
-					}else {
-						update(y, Render.player2Draft);
-					}
-				
+						update(y, draft);
 			    return true;
 			    }
 			} );
@@ -165,5 +168,4 @@ public class DropDownMenu extends Actor{
 			piece.draw(batch, 0);
 		}
 	}
-	
 }

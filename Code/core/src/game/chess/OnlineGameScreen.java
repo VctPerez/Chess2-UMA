@@ -70,25 +70,20 @@ public class OnlineGameScreen extends GameScreen {
 		super.update(tile);
 		if(!promoting) {
 			try {
-				String movement = Parser.parseMovementToString(currentTile, nextTile);
-				if (Render.hosting == PLAYER) {//meter estos metodos en las clases host y guest y que se llamen sendMovement
+				if (Render.hosting == PLAYER && moved) {//meter estos metodos en las clases host y guest y que se llamen sendMovement
+					String movement = Parser.parseMovementToString(currentTile, nextTile);
 					if(Render.hosting) {
-						if(moved) {
-							Render.host.sendMessage(movement);
-//							System.out.println("mensaje enviado from host");
-//							System.out.println("mensaje enviado con: "+ movement);
-							PLAYER = false;
-							moved = false;
-						}
+						Render.host.sendMessage(movement);
+//						System.out.println("mensaje enviado from host");
+//						System.out.println("mensaje enviado con: "+ movement);
+						PLAYER = false;
 					}else{
-						if(moved){
-							Render.guest.sendMessage(movement);
-//							System.out.println("mensaje enviado from guest");
-//							System.out.println("mensaje enviado con: "+ movement);
-							PLAYER = true;
-							moved = false;
-						}
+						Render.guest.sendMessage(movement);
+//						System.out.println("mensaje enviado from guest");
+//						System.out.println("mensaje enviado con: "+ movement);
+						PLAYER = true;
 					}
+					moved = false;
 				}
 			} catch (IOException e) {
 				throw new RuntimeException(e);

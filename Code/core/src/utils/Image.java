@@ -36,7 +36,14 @@ public class Image extends Actor {
      */
     @Override
     public void draw(Batch batch, float parentAlpha){
-        sprt.draw(batch);
+    	sprt.setPosition(getX(),getY());
+    	sprt.setSize(getWidth(), getHeight());
+    	sprt.draw(batch);
+    }
+    
+    @Override
+    public void act(float delta) {
+    	super.act(delta);
     }
 
     /**
@@ -83,9 +90,10 @@ public class Image extends Actor {
      * @param width anchura.
      * @param height altura.
      */
-    public void setSize(float width, float height){
-        sprt.setSize(width, height);
-    }
+//    public void setSize(float width, float height){
+//    	super.setSize(width,height);
+//        sprt.setSize(width, height);
+//    }
     
     public void setImage(String path) {
     	sprt.setTexture(new Texture(path));
@@ -96,9 +104,10 @@ public class Image extends Actor {
      * @param x coordenada x.
      * @param y coordenada y.
      */
-    public void setPosition(float x, float y){
-        sprt.setPosition(x,y);
-    }
+//    public void setPosition(float x, float y){
+//    	super.setPosition(x,y);
+//        sprt.setPosition(x,y);
+//    }
 
     public Vector2 getPosition(){
         return new Vector2(sprt.getX(), sprt.getY());

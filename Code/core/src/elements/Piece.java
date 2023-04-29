@@ -194,10 +194,6 @@ public abstract class Piece extends Actor {
 		ArrayList<Vector2> validMovements = posibleMovements();
 		ArrayList<Vector2> removeMovements = new ArrayList<>();
 		Tile currentTile = board.getTile(x, y);
-
-		if(Render.GameScreen.blackPieces==null) {
-			System.out.println("???????????????????????");
-		}else {
 			
 		
 		for (Vector2 move : validMovements) {
@@ -205,7 +201,7 @@ public abstract class Piece extends Actor {
 
 			simulateMovement(currentTile, move, removeMovements);
 		}
-		}
+		
 		validMovements.removeAll(removeMovements);
 		return validMovements;
 	}

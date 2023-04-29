@@ -282,6 +282,9 @@ public class GameScreen extends AbstractScreen {
 			} else {
 				tile.highlight = false;
 			}
+			if(tile.getPiece() instanceof Mage) {
+				tile.highlight = false;
+			}
 		}
 	}
 
@@ -658,8 +661,8 @@ public class GameScreen extends AbstractScreen {
 		Render.player1Draft.add(Resources.KNIGHT_PATH);
 		Render.player1Draft.add(Resources.COLOSUS_PATH);
 		Render.player1Draft.add(Resources.PALADIN_PATH);
-		Render.player1Draft.add(Resources.QUEEN_PATH);
-		Render.player1Draft.add(Resources.KING_PATH);
+		Render.player1Draft.add(Resources.WITCH_PATH);
+		Render.player1Draft.add(Resources.MAGE_PATH);
 
 		Render.player2Draft.add(Resources.PAWN_PATH);
 		Render.player2Draft.add(Resources.RIDER_PATH);

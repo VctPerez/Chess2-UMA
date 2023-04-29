@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class Tiletest {
+public class TileTest {
 	Tile tile;
 	
 	@BeforeEach
@@ -33,6 +33,17 @@ public class Tiletest {
 		tile.setPiece(mock(Pawn.class));
 		boolean cumple=(tile.piece instanceof Pawn);
 		assertEquals(cumple,true,"Se debe guardar la pieza en los atributos de Tile");
+	
+	}
+	
+	@Test 
+	public void moveToTest(){
+		Piece mockPiece = mock(Pawn.class);
+		Tile mockTile = mock(Tile.class);
+		tile.setPiece(mockPiece);
+		tile.moveTo(mockTile);
+		boolean cumple=(mockTile.getPiece() instanceof Pawn);
+		assertEquals(cumple,true,"Se debe cambiar la pieza de una casilla a otra");
 	
 	}
 	
