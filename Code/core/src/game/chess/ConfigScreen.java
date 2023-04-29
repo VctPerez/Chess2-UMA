@@ -64,19 +64,6 @@ public class ConfigScreen extends AbstractScreen {
     	createTableElements();
 
     	//A�adir las acciones a los botones
-		/*slider[0].addListener(new ClickListener(){
-			@Override
-			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-				writeSettings(0);
-			}
-		});
-		slider[1].addListener(new ClickListener(){
-			@Override
-			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-				writeSettings(1);
-			}
-		});*/
-    	
     	//APPLY BUTTON
     	textButton[0].addListener(new ClickListener() {
     		@Override
@@ -136,15 +123,11 @@ public class ConfigScreen extends AbstractScreen {
         
         //Manage Inputs
         for(int i = 0; i < slider.length ; i++) {
-        	if(slider[i].isDragging() || stage.keyDown(Keys.ANY_KEY)) {
+        	if(slider[i].isDragging()) {
 				setVolume(slider[i].getValue(),i);
-				if(i == 0){
-					Settings.setMusicVolume(slider[i].getValue());
-				}else if(i == 1){
-					Settings.setSfxVolume(slider[i].getValue());
-				}
         	}
         }
+        
         
         checkChanges();
         //---------------

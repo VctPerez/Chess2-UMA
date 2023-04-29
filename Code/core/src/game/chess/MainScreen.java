@@ -67,36 +67,21 @@ public class MainScreen extends AbstractScreen {
         stage.act();
         stage.draw();
         
-    	MoveByAction enterAction = new MoveByAction();
-    	enterAction.setAmountX(5);
-    	enterAction.setTime(1f);
-    	
-    	MoveByAction exitAction = new MoveByAction();
-    	enterAction.setAmountX(-25);
-    	enterAction.setTime(1f);
-        
-//        System.out.println("VIEWPORT: " + stage.getViewport().getScreenHeight() + " " + stage.getViewport().getScreenWidth());
-//        System.out.println("REAL: " + stage.getViewport().getScreenX() + " " + stage.getViewport().getScreenY());
-//        System.out.println("VIRTUAL: " + stage.getViewport().getWorldWidth() + " " +stage.getViewport().getWorldHeight());
-        
-//    	if(textButton[0].isOver()) {
-//    		textButton[0].addAction(enterAction);
-//    	}
-    	
     	
         if(textButton[0].isPressed()){
             Render.bgMusic.stop();
             Render.app.setScreen(Render.MATCHMAKINGSCREEN);
         }
-        if(textButton[1].isPressed()) {
+        if(textButton[1].isChecked()) {
         	Render.app.setScreen(Render.CONFIGSCREEN);
         }
-        if(textButton[2].isPressed()){
+        if(textButton[2].isChecked()){
         	Render.app.setScreen(Render.MANUALSCREEN);
         }
-        if(textButton[3].isPressed()) {
+        if(textButton[3].isChecked()) {
         	Gdx.app.exit();
         }
+        
         
         //-----------------
 //        Render.Batch.end();

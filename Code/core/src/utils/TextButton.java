@@ -20,11 +20,13 @@ public class TextButton extends com.badlogic.gdx.scenes.scene2d.ui.TextButton{
 		textButton.addListener(new ClickListener() {
     		@Override
     		public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+    			super.enter(event, x, y, pointer, fromActor);
     			textButton.addAction(Actions.moveBy(10, 0, 0.1f));
     		}
     		
     		@Override
     		public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+    			super.exit(event, x, y, pointer, toActor);
     			textButton.addAction(Actions.moveBy(-10, 0, 0.1f));
     		}
     	});
