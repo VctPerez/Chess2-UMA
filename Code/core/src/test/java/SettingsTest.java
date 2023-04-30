@@ -1,5 +1,6 @@
 package test.java;
 
+import exceptions.SettingsException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import utils.Settings;
@@ -17,36 +18,36 @@ public class SettingsTest {
     }
 
     @Test
-    public void subirEfectos(){
+    public void turnUpEffects(){
         Settings.setSfxVolume(sfx+1);
         assertEquals(sfx+1, Settings.reconvertAudioToText(Settings.sfxVolume), " El volumen de efectos deberia haber subido.");
     }
 
     @Test
-    public void bajarEfectos(){
+    public void turnDownEffects(){
         Settings.setSfxVolume(sfx-1);
         assertEquals(sfx-1, Settings.reconvertAudioToText(Settings.sfxVolume), " El volumen de efectos deberia haber bajado.");
     }
 
     @Test
-    public void subirMusica(){
+    public void turnUpMusic(){
         Settings.setMusicVolume(music + 1);
         assertEquals(music + 1, Settings.reconvertAudioToText(Settings.musicVolume), "El volumen de la musica deberia haber subido.");
     }
 
     @Test
-    public void bajarMusica(){
+    public void turnDownMusic(){
         Settings.setMusicVolume(sfx-1);
         assertEquals(sfx-1, Settings.reconvertAudioToText(Settings.musicVolume), " El volumen de la musica deberia haber bajado.");
     }
 
     @Test
-    public void cambiarIdioma(){
+    public void changeLanguage(){
         Settings.setLanguage((int) (language+1)%2);
         assertNotEquals(language, Settings.language, "El idioma deberia ser distinto");
     }
 
-    /*
+
     @Test
     public void sfxException(){
         Exception exception = assertThrows(SettingsException.class, () -> Settings.setSfxVolume(-1));
@@ -67,5 +68,5 @@ public class SettingsTest {
         assertEquals("El lenguaje seleccionado no esta disponible.", exception.getMessage());
         Exception exception2 = assertThrows(SettingsException.class, () -> Settings.setLanguage(2));
         assertEquals("El lenguaje seleccionado no esta disponible.", exception2.getMessage());
-    }*/
+    }
 }
