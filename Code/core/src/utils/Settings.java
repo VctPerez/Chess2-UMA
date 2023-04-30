@@ -12,7 +12,7 @@ public class Settings {
 	public static int language;
 	
 	public static void setLanguage(int value) {
-		if(value < 0 || value > 1){
+		if(value < 1 || value > 2){
 			throw new SettingsException("El lenguaje seleccionado no esta disponible.");
 		}
 		language = value;

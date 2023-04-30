@@ -140,7 +140,7 @@ public class CreateMatchScreen extends AbstractScreen{
             public boolean keyDown(InputEvent event, int keycode) {
                 if(keycode == Input.Keys.ENTER && !textField.getText().equals("")){
                     try {
-                        Render.guest.connect(LobbyScreen.decodeIP(textField.getText()));
+                        Render.guest.connect(LobbyScreen.decodeIP(textField.getText().toUpperCase()));
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
