@@ -28,7 +28,7 @@ public class TileButton extends Actor{
 		
 		frame = new Image(Render.app.getManager().get(Resources.FRAME_PATH, Texture.class));
 		frame.setSize(getWidth(), getWidth());
-		frame.setPosition(getX(), getY());
+		//frame.setPosition(getX(), getY());
 		frame.setColor(1f, 0.87f, 0.09f, 1f);
 		showFrame = false;
 	}
@@ -37,7 +37,7 @@ public class TileButton extends Actor{
 		this.piecePath=piecePath;
 		this.piece = new Image(Render.app.getManager().get(piecePath, Texture.class)); 
 		this.piece.setSize(getWidth(), getHeight());
-		this.piece.setPosition(getX(), getY());
+		//this.piece.setPosition(getX(), getY());
 	}
 	
 	public String getPiece() {
@@ -61,11 +61,15 @@ public class TileButton extends Actor{
 		tile.rect(getX(), getY(), getWidth(), getHeight());
 		tile.end();
 		batch.begin();
+		
+		frame.setPosition(getX(), getY());
+		
 		if(showFrame) {
 			frame.draw(batch, parentAlpha);
 		}
 		
 		if(piece!=null) {			
+			piece.setPosition(getX(), getY());
 			piece.draw(batch, parentAlpha);
 		}
 	}

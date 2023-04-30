@@ -35,7 +35,7 @@ public class PieceInfo extends Actor{
 		highlight(piece);
         
         info = new Text(Resources.FONT_MENU_PATH,20,Color.WHITE,3);
-        info.setPosition(760, 685);
+        
         info.setText(piece.getInfo());
 	}
 	
@@ -74,11 +74,13 @@ public class PieceInfo extends Actor{
 		background.begin(ShapeType.Filled);
 		background.setProjectionMatrix(batch.getProjectionMatrix());
 		background.setTransformMatrix(batch.getTransformMatrix());
-		background.rect(750, 40, 500, 665);
+		background.rect(getX(), getY(), 500, 665);
 		background.setColor(212/255f,202/255f,182/255f,1f);
 		background.end();
 		batch.begin();
+		info.setPosition(getX() + 10 , getY() + 645);
 		info.draw(batch, parentAlpha);
+		board.setPosition(getX() + 40, getY() + 35);
 		board.draw(batch, parentAlpha);
 
 	}

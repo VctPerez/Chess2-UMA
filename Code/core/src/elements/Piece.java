@@ -47,10 +47,7 @@ public abstract class Piece extends Actor {
 		} else {
 			setColor(0.25f, 0.25f, 0.25f, 1f);
 		}
-		
 		setPosition(board.getTile(x, y).getX(), board.getTile(x, y).getY());
-		
-
 	}
 
 	public Piece(Texture texture) {
@@ -64,11 +61,12 @@ public abstract class Piece extends Actor {
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		this.toFront();
-		sprite.setPosition(getX(), getY());
-		if (alive) {
-			//sprite.setSize(board.getTile(x, y).getWidth(), board.getTile(x, y).getHeight());
-		} else {
+		if(board.boardAnimation) {
+			setPosition(board.getTile(x, y).getX(), board.getTile(x, y).getY());
 		}
+		
+		sprite.setPosition(getX(), getY());			
+		
 		sprite.setSize(getWidth(), getHeight());
 		sprite.setScale(getScaleX());
 		sprite.sprt.setColor(getColor());

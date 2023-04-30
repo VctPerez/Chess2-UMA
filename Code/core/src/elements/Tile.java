@@ -64,6 +64,7 @@ public class Tile extends Actor{
 		tile.end();
 		batch.begin();
 		
+		frame.setPosition(getX(), getY());
 		if(highlight) {
 			frame.sprt.setColor(Color.YELLOW);
 			frame.draw(batch, 0);
@@ -72,7 +73,7 @@ public class Tile extends Actor{
 			frame.draw(batch, 0);
 		}
 		
-		if(piece != null) {
+		if(piece != null) {//borrar esto? lass piezas ya se dibujan porque son actores en el stage
 			piece.draw(batch, parentAlpha);
 		}
 	}

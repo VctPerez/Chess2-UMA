@@ -57,14 +57,16 @@ public class DraftScreen extends AbstractScreen {
 		languageReader = new LectorLineas("files/lang/" + configReader.leerLinea(Settings.language) + "Draft-Game.txt");
 
 		info = new PieceInfo();
+		info.setPosition(1280, 40);
+		info.addAction(Actions.moveTo(750, 40, 0.5f));
 
 		// -------------------------------
 		stage.addActor(Render.menuBG);
 		stage.addActor(info);
 		
-		pieceDisposer = new Image(Render.app.getManager().get(Resources.PIECE_DISPOSER_PATH,Texture.class));//Esto no hace nada porq no tiene un set size (no dibuja nada)
+		pieceDisposer = new Image(Render.app.getManager().get(Resources.PIECE_DISPOSER_PATH,Texture.class));
 		pieceDisposer.setSize(600, 700);
-		pieceDisposer.setPosition(-35, 40);
+		pieceDisposer.setPosition(-119, 40);
 		stage.addActor(pieceDisposer);
 
 		initPieceClasses();
@@ -74,8 +76,11 @@ public class DraftScreen extends AbstractScreen {
 	}
 
 	private void initTileButtons() {
-		tile1 = new TileButton(325f, 450f, 168f);
-		tile2 = new TileButton(325f, 150f, 168f);
+		tile1 = new TileButton(325f, 720f, 168f);
+		tile2 = new TileButton(325f, -168f, 168f);
+		
+		tile1.addAction(Actions.moveTo(325f, 450f, 0.5f));
+		tile2.addAction(Actions.moveTo(325f, 150f, 0.5f));
 
 		tile1.addCaptureListener(new InputListener() {
 			@Override
@@ -171,19 +176,24 @@ public class DraftScreen extends AbstractScreen {
 			piece.setName(key);
 			piece.setSize(84, 84);
 			piece.setPosition(-84, 85 + ((5 - i) * 100));
-			
-			if(i==0) {
-//				piece.setPosition(40, 85 + ((5 - i) * 100));				
-				piece.addAction(Actions.moveBy(124, 0, 1f));
-			}else {
-//				piece.setPosition(20, 85 + ((5 - i) * 100));
-				piece.addAction(Actions.moveBy(104, 0, 1f));
-			}
+			piece.addAction(Actions.moveBy(104, 0, 0.5f));
+
 			pieces.add(piece);
 			stage.addActor(piece);
 
 			i++;
 		}
+		
+		pieceDisposer.addAction(Actions.moveBy(84, 0, 0.5f));
+		
+		Action action = new Action() {
+			public boolean act(float delta) {
+				pieces.get(cont).addAction(Actions.moveBy(20, 0, 0.3f));
+				return true;
+			}
+		};
+
+		stage.addAction(Actions.sequence(Actions.delay(0.6f), action));
 
 		arrow = new Image(Render.app.getManager().get(Resources.ARROW_PATH, Texture.class));
 		arrow.setSize(100, 100);
@@ -193,8 +203,15 @@ public class DraftScreen extends AbstractScreen {
 	
 	private void endDraft() {
 		for(Image piece: pieces) {
-			piece.addAction(Actions.moveBy(-150, 0, 1f));;
+			piece.addAction(Actions.moveBy(-150, 0, 0.5f));
 		}
+		pieceDisposer.addAction(Actions.moveBy(-150, 0, 0.5f));
+		
+		tile1.addAction(Actions.moveTo(325f, 720f, 0.5f));
+		tile2.addAction(Actions.moveTo(325f, -168f, 0.5f));
+		next.addAction(Actions.moveTo(480, -50, 0.5f));
+		back.addAction(Actions.moveTo(175, -50, 0.5f));
+		info.addAction(Actions.moveTo(1280, 40, 0.5f));
 	}
 
 	private void updateDraft() {
@@ -213,7 +230,8 @@ public class DraftScreen extends AbstractScreen {
 		// idiomas
 
 		next = new TextButton(languageReader.leerLinea(2), "SingleClickStyle");
-		next.setPosition(480, 50);
+		next.setPosition(480, -50);
+		next.addAction(Actions.moveTo(480, 50, 0.5f));
 		next.addCaptureListener(new InputListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -288,7 +306,8 @@ public class DraftScreen extends AbstractScreen {
 		});
 
 		back = new TextButton(languageReader.leerLinea(1), "SingleClickStyle");
-		back.setPosition(175, 50);
+		back.setPosition(175, -50);
+		back.addAction(Actions.moveTo(175, 50, 0.5f));
 		back.addCaptureListener(new InputListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {

@@ -98,6 +98,10 @@ public class GameScreen extends AbstractScreen {
 		blackCheckMate = false;
 
 		board = new Board();
+		board.setPosition(board.getX(), board.getY() + (-84*8));
+		board.animationMovement(board.getX(), 24, 0.5f);
+		
+		
 		whitePieces = new ArrayList<>();
 		blackPieces = new ArrayList<>();
 		graveyardWhite = new Graveyard(21, 21);
@@ -767,15 +771,14 @@ public class GameScreen extends AbstractScreen {
 				public boolean act(float delta) {
 					piece.setSize(0, 0);
 					piece.setTouchable(Touchable.disabled);	
-					piece.addAction(Actions.sizeTo(84, 84, 2f));
-					piece.addAction(Actions.delay(3f));
+					piece.addAction(Actions.sizeTo(84, 84, 1.5f));
 					stage.addActor(piece);
 					return true;
 				}
 			};
 			sequence.addAction(action);
 		}
-		stage.addAction(sequence);
+		stage.addAction(Actions.after(sequence));
 	}
 
 	/**
