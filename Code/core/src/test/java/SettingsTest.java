@@ -1,4 +1,4 @@
-package test.java;
+//package test.java;
 
 import exceptions.SettingsException;
 import org.junit.jupiter.api.BeforeEach;

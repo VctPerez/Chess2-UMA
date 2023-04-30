@@ -14,7 +14,7 @@ public class OnlineGameScreen extends GameScreen {
 	public void render(float delta) {
 		super.render(delta);
 
-		updateOnlineBoard();
+		if(!whiteCheckMate && !blackCheckMate)updateOnlineBoard();
 	}
 
 	@Override
