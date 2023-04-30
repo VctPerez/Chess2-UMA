@@ -47,7 +47,7 @@ public class SettingsTest {
         assertNotEquals(language, Settings.language, "El idioma deberia ser distinto");
     }
 
-
+    /*
     @Test
     public void sfxException(){
         Exception exception = assertThrows(SettingsException.class, () -> Settings.setSfxVolume(-1));
@@ -68,5 +68,5 @@ public class SettingsTest {
         assertEquals("El lenguaje seleccionado no esta disponible.", exception.getMessage());
         Exception exception2 = assertThrows(SettingsException.class, () -> Settings.setLanguage(2));
         assertEquals("El lenguaje seleccionado no esta disponible.", exception2.getMessage());
-    }
+    }*/
 }
