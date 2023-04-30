@@ -48,7 +48,9 @@ public class SettingsTest {
     }
 
 
-  /*  @Test
+    /*
+    @Test
+
     public void sfxException(){
         Exception exception = assertThrows(SettingsException.class, () -> Settings.setSfxVolume(-1));
         assertEquals("El volumen que desea establecer no esta permitido.", exception.getMessage());
