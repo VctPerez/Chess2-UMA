@@ -39,11 +39,10 @@ public class TileTest {
 	@Test 
 	public void moveToTest(){
 		Piece mockPiece = mock(Pawn.class);
-		Tile mockTile = mock(Tile.class);
+		Tile mockTile = mock(Tile.class, Mockito.CALLS_REAL_METHODS);
 		tile.setPiece(mockPiece);
 		tile.moveTo(mockTile);
-		boolean cumple=(mockTile.getPiece() instanceof Pawn);
-		assertEquals(cumple,true,"Se debe cambiar la pieza de una casilla a otra");
+		assertEquals(mockTile.getPiece() instanceof Pawn,true,"Se debe cambiar la pieza de una casilla a otra");
 	
 	}
 	

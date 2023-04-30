@@ -29,7 +29,7 @@ public class PieceInfo extends Actor{
 	public void infoFrom(Piece piece) {
 		clearBoard(board.getTile(3, 3).getPiece());
 		
-		
+		piece.setSize(board.getTile(3, 3).getWidth(), board.getTile(3, 3).getHeight());
 		board.getTile(3, 3).setPiece(piece);
 		
 		highlight(piece);

@@ -3,9 +3,13 @@ package game.chess;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import elements.*;
@@ -756,9 +760,22 @@ public class GameScreen extends AbstractScreen {
 	 * @param pieces
 	 */
 	public void addPiecesToStage(ArrayList<Piece> pieces) {
-		for (Piece piece : pieces) {
-			stage.addActor(piece);
+		 SequenceAction sequence = new SequenceAction();
+		
+		for (final Piece piece : pieces) {
+			Action action = new Action(){
+				public boolean act(float delta) {
+					piece.setSize(0, 0);
+					piece.setTouchable(Touchable.disabled);	
+					piece.addAction(Actions.sizeTo(84, 84, 2f));
+					piece.addAction(Actions.delay(3f));
+					stage.addActor(piece);
+					return true;
+				}
+			};
+			sequence.addAction(action);
 		}
+		stage.addAction(sequence);
 	}
 
 	/**
