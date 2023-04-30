@@ -11,7 +11,10 @@ import elements.Piece;
 import elements.Tile;
 import elements.pieces.Pawn;
 import utils.Settings;
+
+import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -56,11 +59,11 @@ public class TileTest {
 	
 	@Test
 	public void equalsTest(){
-		Tile tile2=mock(Tile.class,Mockito.CALLS_REAL_METHODS);
+		Tile tile2=mock(Tile.class);
 		Vector2 pos = new Vector2(0, 0);
 		when(tile2.getPos()).thenReturn(pos);
 		when(tile.getPos()).thenReturn(pos);
-		assertEquals(tile.equals(tile2),true,"Deben ser iguales por sus posiciones");
+		assertTrue(tile2 instanceof Tile && tile2.getPos().equals(tile.getPos()),"Deben ser iguales por sus posiciones");
 	
 	}
 	

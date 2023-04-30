@@ -170,12 +170,12 @@ public class Tile extends Actor{
 	 * Mira si los Tiles están en el mismo sitio
 	 * <p>No lo cambies para que sea entre Tiles que conviene que sea el generico</p>
 	 */
+	
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof Tile) {
-			return (((Tile) obj).getPos().equals(this.getPos()));
-		}
-		return false;
+		System.out.println(obj instanceof Tile);
+		return (obj instanceof Tile && (this.getPos().equals(((Tile) obj).getPos())));
+		
 	}
 
 	@Override
