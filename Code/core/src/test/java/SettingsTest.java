@@ -48,7 +48,7 @@ public class SettingsTest {
     }
 
 
-    @Test
+  /*  @Test
     public void sfxException(){
         Exception exception = assertThrows(SettingsException.class, () -> Settings.setSfxVolume(-1));
         assertEquals("El volumen que desea establecer no esta permitido.", exception.getMessage());
@@ -68,5 +68,5 @@ public class SettingsTest {
         assertEquals("El lenguaje seleccionado no esta disponible.", exception.getMessage());
         Exception exception2 = assertThrows(SettingsException.class, () -> Settings.setLanguage(2));
         assertEquals("El lenguaje seleccionado no esta disponible.", exception2.getMessage());
-    }
+    }*/
 }

@@ -19,22 +19,22 @@ public class OnlineGameScreen extends GameScreen {
 
 	@Override
 	protected void checkPromotion(float next_x, float next_y) {
-		if(next_y==8 && nextTile.getPiece().color()) {
-			if(Render.hosting) {
+		if (next_y == 8 && nextTile.getPiece().color()) {
+			if (Render.hosting) {
 				promoting = true;
 				DropDownMenu menu = new DropDownMenu(nextTile, Render.hosting, true);
-				stage.addActor(menu);	
+				stage.addActor(menu);
 			}
-		}else if(next_y==1 && !nextTile.getPiece().color()) {
-			if(!Render.hosting) {
+		} else if (next_y == 1 && !nextTile.getPiece().color()) {
+			if (!Render.hosting) {
 				promoting = true;
 				DropDownMenu menu = new DropDownMenu(nextTile, Render.hosting, true);
 				stage.addActor(menu);
 			}
 		}
-		
+
 	}
-	
+
 	@Override
 	public void checkSurrender() {
 		try {
@@ -68,16 +68,17 @@ public class OnlineGameScreen extends GameScreen {
 	@Override
 	public void update(Tile tile) {
 		super.update(tile);
-		if(!promoting) {
+		if (!promoting) {
 			try {
-				if (Render.hosting == PLAYER && moved) {//meter estos metodos en las clases host y guest y que se llamen sendMovement
+				if (Render.hosting == PLAYER && moved) {// meter estos metodos en las clases host y guest y que se
+														// llamen sendMovement
 					String movement = Parser.parseMovementToString(currentTile, nextTile);
-					if(Render.hosting) {
+					if (Render.hosting) {
 						Render.host.sendMessage(movement);
 //						System.out.println("mensaje enviado from host");
 //						System.out.println("mensaje enviado con: "+ movement);
 						PLAYER = false;
-					}else{
+					} else {
 						Render.guest.sendMessage(movement);
 //						System.out.println("mensaje enviado from guest");
 //						System.out.println("mensaje enviado con: "+ movement);
@@ -90,7 +91,6 @@ public class OnlineGameScreen extends GameScreen {
 			}
 		}
 	}
-
 
 	private void updateOnlineBoard() {
 		if (Render.hosting != PLAYER) {// meter estos metodos en las clases host y guest y que se llamen
@@ -130,20 +130,28 @@ public class OnlineGameScreen extends GameScreen {
 				}
 			}
 		} else {
-			/*
-			 * if (!Render.hosting) { if (!Render.host.getMessage().equals("")) { if
-			 * (Render.host.getMessage().equals("RENDICION")) {
-			 * System.out.println("Rendicion Negra");
-			 * super.results.setWinnerSurrender("BLANCO"); super.showPopup = true;
-			 * super.blackCheckMate = true; } } } else { if
-			 * (!Render.guest.getMessage().equals("")) { if
-			 * (Render.guest.getMessage().equals("RENDICION")) {
-			 * System.out.println("Rendicion Blanca");
-			 * super.results.setWinnerSurrender("NEGRO"); super.showPopup = true;
-			 * super.whiteCheckMate = true; } }
-			 * 
-			 * }
-			 */
+
+			if (!Render.hosting) {
+				if (!Render.guest.getMessage().equals("")) {
+					if (Render.guest.getMessage().equals("RENDICION")) {
+						System.out.println("Rendicion Blanca");
+						super.results.setWinnerSurrender("NEGRO");
+						super.showPopup = true;
+						super.blackCheckMate = true;
+					}
+				}
+			} else {
+				if (!Render.host.getMessage().equals("")) {
+					if (Render.host.getMessage().equals("RENDICION")) {
+						System.out.println("Rendicion Negra");
+						super.results.setWinnerSurrender("Blanco");
+						super.showPopup = true;
+						super.whiteCheckMate = true;
+					}
+				}
+
+			}
+
 		}
 	}
 
