@@ -10,6 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 public class PieceTest {
@@ -36,6 +37,50 @@ public class PieceTest {
     	pieza = new Rook(true,0,0,boardMock, mock(Texture.class));
     	
     	assertEquals(pieza.color(),true,"Si se construye una pieza que deriva de Piece se describe el atributo color correctamente");
+    }
+    
+    @Test 
+    public void SameColor() {
+    	Tile tileMock = mock(Tile.class);
+    	Board boardMock = mock(Board.class);
+    	when(boardMock.getTile(0, 0)).thenReturn(tileMock);
+    	when(boardMock.getTile(0, 0)).thenReturn(tileMock);
+    	when(tileMock.getX()).thenReturn(0f);
+    	when(tileMock.getY()).thenReturn(0f);
+    	
+    	Piece auxT = new Rook(true,0,0,boardMock,mock(Texture.class));
+    	Piece auxF = new Rook(false,0,0,boardMock,mock(Texture.class));
+    	pieza = new Rook(true,0,0,boardMock,mock(Texture.class));
+    	
+    	assertEquals(pieza.sameColor(auxT),true);
+    	assertEquals(pieza.sameColor(auxF),false);
+    } 	
+    
+    public void correctDispose() {
+    	Tile tileMock = mock(Tile.class);
+    	Board boardMock = mock(Board.class);
+    	
+    	when(boardMock.getTile(0, 0)).thenReturn(tileMock);
+    	when(boardMock.getTile(0, 0)).thenReturn(tileMock);
+    	when(tileMock.getX()).thenReturn(0f);
+    	when(tileMock.getY()).thenReturn(0f); 
+    	
+    	pieza = new Rook(true,0,0,boardMock,mock(Texture.class));
+    	pieza.dispose();
+    	assertNull(pieza.getImage());
+    }
+    
+    @Test
+    public void String() {
+        Tile tileMock = mock(Tile.class);
+        Board boardMock = mock(Board.class);
+        when(boardMock.getTile(1, 1)).thenReturn(tileMock);
+        when(tileMock.getX()).thenReturn(0f);
+        when(tileMock.getY()).thenReturn(0f);
+
+        pieza = new Rook(true,1,1,boardMock, mock(Texture.class));
+        assertEquals(pieza.toString().equalsIgnoreCase("{Rook,(1,1)}"),true,"La salida en consola de la posicion de la pieza es correcta");
+
     }
     
     @Test
