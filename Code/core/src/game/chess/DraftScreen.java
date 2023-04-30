@@ -63,7 +63,8 @@ public class DraftScreen extends AbstractScreen {
 		stage.addActor(info);
 		
 		pieceDisposer = new Image(Render.app.getManager().get(Resources.PIECE_DISPOSER_PATH,Texture.class));//Esto no hace nada porq no tiene un set size (no dibuja nada)
-		pieceDisposer.setPosition(-50, 35);
+		pieceDisposer.setSize(600, 700);
+		pieceDisposer.setPosition(-35, 40);
 		stage.addActor(pieceDisposer);
 
 		initPieceClasses();
@@ -317,7 +318,7 @@ public class DraftScreen extends AbstractScreen {
 		currentPieceSelection = tile1.getPiece();
 		info.getInfoFrom(currentPieceSelection);
 		updateDraft();
-		arrow.setPosition(80, 70 + 100 * (5 - cont));
+		arrow.setPosition(90, 70 + 100 * (5 - cont));
 
 	}
 

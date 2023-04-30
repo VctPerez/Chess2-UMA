@@ -152,7 +152,7 @@ public class GameScreen extends AbstractScreen {
 	 * crea los elementos de la tabla de GameScreen
 	 */
 	private void createTableElements() {
-		TimerW = new Timer(1, "blanco", Render.skin, "default");
+		TimerW = new Timer(300, "blanco", Render.skin, "default");
 		TimerB = new Timer(300, "negro", Render.skin, "default");
 		draw = new TextButton(languageReader.leerLinea(5), "SingleClickStyle");
 		surrender = new TextButton(languageReader.leerLinea(4), "SingleClickStyle");
