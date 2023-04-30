@@ -12,6 +12,7 @@ import org.mockito.Mockito;
 
 import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 public class PieceTest {
    	Piece pieza;
@@ -95,6 +96,21 @@ public class PieceTest {
     	pieza = new Rook(true,0,0,boardMock, mock(Texture.class));
     	
     	assertEquals(pieza.alive,true,"En un principio debe estar viva");
+    }
+    
+    @Test
+    public void equals() {
+        Tile tileMock = mock(Tile.class);
+        Board boardMock = mock(Board.class);
+        when(boardMock.getTile(1, 1)).thenReturn(tileMock);
+        when(tileMock.getX()).thenReturn(0f);
+        when(tileMock.getY()).thenReturn(0f);
+
+        pieza = new Rook(true,1,1,boardMock, mock(Texture.class));
+        Piece aux = new Rook(true,1,1,boardMock,mock(Texture.class));
+
+        assertTrue(pieza.equals(aux),"Las piezas son iguales");
+
     }
     
     @Test
