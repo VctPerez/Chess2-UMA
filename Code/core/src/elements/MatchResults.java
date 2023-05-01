@@ -12,6 +12,9 @@ import utils.Render;
 import utils.Resources;
 import utils.TextButton;
 
+import java.io.IOException;
+import java.util.ArrayList;
+
 public class MatchResults extends Actor{
 	
 	private Table table;
@@ -94,12 +97,18 @@ public class MatchResults extends Actor{
 	public void render() {
 		if(goMenu.isPressed()) {
 			if(Render.hosting){
-				Render.host.setReceiving(false);
-				Render.host = null;
+				if(Render.DraftController == 3) {
+					try{Render.host.stopHosting();}catch (IOException e){e.printStackTrace();}
+					Render.host = null;
+				}
 			}else{
-				Render.guest.setReceiving(false);
-				Render.guest = null;
+				if(Render.DraftController == 3) {
+					try{Render.guest.disconnect();}catch (IOException e){e.printStackTrace();}
+					Render.guest = null;
+				}
 			}
+//			Render.player1Draft = new ArrayList<>();
+//			Render.player2Draft = new ArrayList<>();
 			Render.app.setScreen(Render.MAINSCREEN);
 		}
 	}
