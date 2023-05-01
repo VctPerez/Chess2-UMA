@@ -65,8 +65,8 @@ public class DraftScreen extends AbstractScreen {
 		stage.addActor(info);
 		
 		pieceDisposer = new Image(Render.app.getManager().get(Resources.PIECE_DISPOSER_PATH,Texture.class));
-		pieceDisposer.setSize(600, 700);
-		pieceDisposer.setPosition(-119, 40);
+		pieceDisposer.setSize(150, 700);
+		pieceDisposer.setPosition(-114, 20);
 		stage.addActor(pieceDisposer);
 
 		initPieceClasses();
@@ -184,7 +184,7 @@ public class DraftScreen extends AbstractScreen {
 			i++;
 		}
 		
-		pieceDisposer.addAction(Actions.moveBy(84, 0, 0.5f));
+		pieceDisposer.addAction(Actions.moveBy(104, 0, 0.5f));
 		
 		Action action = new Action() {
 			public boolean act(float delta) {
