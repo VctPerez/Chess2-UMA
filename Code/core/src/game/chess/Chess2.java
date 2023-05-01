@@ -58,10 +58,14 @@ public class Chess2 extends Game {
 		manager.load(Resources.COLOSUS_PATH, Texture.class);
 		manager.load(Resources.MINER_PATH, Texture.class);
 		manager.load(Resources.WITCH_PATH, Texture.class);
-		manager.load(Resources.VALKYRIE_PATH, Texture.class);
 		manager.load(Resources.MAGE_PATH,Texture.class);
 		manager.load(Resources.MAGE_PATH2,Texture.class);
 		manager.load(Resources.RND_PATH,Texture.class);
+		
+		manager.load(Resources.VALKYRIE_PATH, Texture.class);
+		manager.load(Resources.VALKYRIE_ANIMATION1_PATH, Texture.class);
+		manager.load(Resources.VALKYRIE_ANIMATION2_PATH, Texture.class);
+
 
 		manager.load(Resources.FRAME_PATH, Texture.class);
 
@@ -78,6 +82,8 @@ public class Chess2 extends Game {
 		manager.load(Resources.PIECEMOVE_SOUND, Sound.class);
 		manager.load(Resources.EXPLOSION_SOUND, Sound.class);
 		manager.load(Resources.PALADINSWING_SOUND, Sound.class);
+		manager.load(Resources.VALKYRIEFLY_SOUND, Sound.class);
+		manager.load(Resources.MINER_SOUND, Sound.class);
 		manager.load(Resources.TEXTBUTTON_HOVERSOUND, Sound.class);
 		manager.load(Resources.TEXTBUTTON_CLICKSOUND, Sound.class);
 

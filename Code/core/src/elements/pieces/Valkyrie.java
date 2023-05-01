@@ -2,12 +2,17 @@ package elements.pieces;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Action;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 
 import elements.Board;
 import elements.Piece;
+import elements.Tile;
 import interaccionFichero.LectorLineas;
 import utils.Render;
 import utils.Resources;
@@ -20,6 +25,61 @@ public class Valkyrie extends Piece {
 		super(color, Render.app.getManager().get(Resources.VALKYRIE_PATH, Texture.class), x, y,board);
 	}
 	
+	@Override
+	protected void updateXY(int x, int y) {
+		this.x = x;
+		this.y = y;
+		Tile tile = Render.GameScreen.board.getTile(x, y);
+		
+		Action stance = new Action() {
+			public boolean act(float delta) {
+				sprite.setImage(Resources.VALKYRIE_PATH);
+				return true;
+			}
+		};
+		
+		Action animation_1= new Action() {
+			public boolean act(float delta) {
+				sprite.setImage(Resources.VALKYRIE_ANIMATION1_PATH);
+				return true;
+			}
+		};
+		
+		Action animation_2= new Action() {
+			public boolean act(float delta) {
+				sprite.setImage(Resources.VALKYRIE_ANIMATION2_PATH);
+				return true;
+			}
+		};
+		Action flySfx = new Action() {
+			Sound sound = Render.app.getManager().get(Resources.VALKYRIEFLY_SOUND, Sound.class);
+			public boolean act(float delta) {
+				sound.play(0.5f);
+				return true;
+			}
+		};
+		
+		Action moveSfx = new Action() {
+			Sound sound = Render.app.getManager().get(Resources.PIECEMOVE_SOUND, Sound.class);
+			public boolean act(float delta) {
+				sound.play();
+				return true;
+			}
+		};
+		SequenceAction sequence = new SequenceAction();
+		
+		sequence.addAction(animation_1);
+		sequence.addAction(Actions.delay(0.2f));
+		sequence.addAction(animation_2);
+		sequence.addAction(Actions.delay(0.8f));
+		sequence.addAction(animation_1);
+		sequence.addAction(Actions.delay(0.2f));
+		sequence.addAction(stance);
+		
+		addAction(flySfx);
+		addAction(Actions.parallel(Actions.moveTo(tile.getX(), tile.getY(), 1.2f), sequence));
+		addAction(Actions.after(moveSfx));
+	}
 	
 
 	@Override

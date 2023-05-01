@@ -20,7 +20,9 @@ public class Resources {
     public static final String TEXTBUTTON_CLICKSOUND = "sound/buttonClickedSound.mp3";
     public static final String PIECEMOVE_SOUND = "sound/pieceMove.mp3";
     public static final String PALADINSWING_SOUND = "sound/paladinSwing.mp3";
+    public static final String VALKYRIEFLY_SOUND = "sound/Valkyrie_flap.mp3";
     public static final String EXPLOSION_SOUND = "sound/bomberExplosion.mp3";
+    public static final String MINER_SOUND = "sound/MinerMovement.mp3";
     public static final String LODINGSOUND1 = "sound/LoadingScreen/loading1.mp3";
     public static final String LODINGSOUND2 = "sound/LoadingScreen/loading2.mp3";
     public static final String LODINGSOUND3 = "sound/LoadingScreen/loading3.mp3";
@@ -56,7 +58,9 @@ public class Resources {
     public static final String COLOSUS_PATH = "sprites/Pieces/Pieces Modified/White_Colosus.png";
     public static final String MINER_PATH = "sprites/Pieces/Pieces Modified/White_Miner.png";
     public static final String WITCH_PATH = "sprites/Pieces/Pieces Modified/White_Witch.png";
-    public static final String VALKYRIE_PATH = "sprites/Pieces/Pieces Modified/White_Valkyrie.png";
+    public static final String VALKYRIE_PATH = "sprites/Pieces/Pieces Modified/White_Valkyrie1.png";
+    public static final String VALKYRIE_ANIMATION1_PATH = "sprites/Pieces/Pieces Modified/White_Valkyrie2.png";
+    public static final String VALKYRIE_ANIMATION2_PATH = "sprites/Pieces/Pieces Modified/White_Valkyrie3.png";
     public static final String MAGE_PATH = "sprites/Pieces/Pieces Modified/White_Mage.png";
     public static final String MAGE_PATH2 = "sprites/Pieces/Pieces Modified/White_Mage2.png";
     

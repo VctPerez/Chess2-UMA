@@ -12,6 +12,8 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 
 import elements.pieces.Bishop;
 import elements.pieces.Knight;
@@ -115,7 +117,9 @@ public class DropDownMenu extends Actor{
 				break;
 			}
             tile.setPiece(newPiece);
-            pieces.add(newPiece);            	
+            pieces.add(newPiece);
+            newPiece.setTouchable(Touchable.disabled);	
+			newPiece.setSize(84, 84);
             Render.GameScreen.stage.addActor(newPiece);
             Render.GameScreen.promoting = false;
             Render.GameScreen.mateControl(tile.getPos().x, tile.getPos().y);

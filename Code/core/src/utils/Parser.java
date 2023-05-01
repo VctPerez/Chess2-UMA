@@ -2,6 +2,7 @@ package utils;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Action;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import elements.Board;
 import elements.Piece;
@@ -120,6 +121,8 @@ public class Parser {
         }
         pieces.remove(formerPiece);
         formerPiece.remove();
+        newPiece.setTouchable(Touchable.disabled);	
+		newPiece.setSize(84, 84);
 		tile.setPiece(newPiece);
 		pieces.add(newPiece);            	
         Render.GameScreen.stage.addActor(newPiece);

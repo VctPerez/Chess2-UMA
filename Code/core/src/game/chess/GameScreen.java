@@ -667,7 +667,7 @@ public class GameScreen extends AbstractScreen {
 		// Para probar la pieza random
 		Render.player1Draft.add(Resources.VALKYRIE_PATH);
 		Render.player1Draft.add(Resources.KNIGHT_PATH);
-		Render.player1Draft.add(Resources.COLOSUS_PATH);
+		Render.player1Draft.add(Resources.MINER_PATH);
 		Render.player1Draft.add(Resources.PALADIN_PATH);
 		Render.player1Draft.add(Resources.WITCH_PATH);
 		Render.player1Draft.add(Resources.MAGE_PATH);
