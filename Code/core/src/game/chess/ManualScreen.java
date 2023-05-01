@@ -1,128 +1,54 @@
 package game.chess;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Slider;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 
-import elements.Background;
 import interaccionFichero.LectorLineas;
-import utils.Image;
 import utils.Render;
-import utils.Resources;
 import utils.Settings;
-import utils.Text;
 import utils.TextButton;
-import utils.TextField;
 
-public class ManualScreen extends AbstractScreen{
+public class ManualScreen extends AbstractMenuScreen{
 
-		public static Stage stage;
-	
-		TextButton[] textButton;
-		Label title;
-		Table table;
 	    LectorLineas languageReader, configReader;
 	    
 	    @Override
 	    public void show() {
-	    	stage = new Stage(new FitViewport(1280, 720));
-	    	
-	    	table = new Table();
-	    	table.setFillParent(true);
 	    	
 	    	//Abrir los ficheros de configuracion e idioma
 	    	configReader = new LectorLineas("files/config.txt"); //Lector del txt configuracion para sacar el idioma
 	    	languageReader = new LectorLineas("files/lang/"+ configReader.leerLinea(Settings.language) + "Manual.txt"); //Abrimos el idioma que toca del archivo configuracion
 	    	
-	    	//Inicializar los elementos de la escena
-	    	createTableElements();
-		    	
-		    //Introducir los elementos en la table
-		    setupTable();
-		    //Añadir todos los actores a la escena;
-	    	addActors();
-	        
-	        Gdx.input.setInputProcessor(stage);
+	    	super.show();
+	    	
 	    }
 
-	    private void addActors() {
-	    	stage.addActor(Render.menuBG);
-	        stage.addActor(table);
-		}
-
-		private void setupTable() {
-	    	table.left().pad(50);
-	    	table.defaults().left().space(40);
-	    	table.add(title);
-	    	table.row();
-	    	for (int i = 0 ; i < textButton.length ; i++) {
-	    		table.add(textButton[i]);
-	        	table.row();
-	    	}
-		}
-
-		private void createTableElements() {
+	    @Override
+		protected void createTableElements() {
 	    	
 	    	textButton = new TextButton[3];
 	    	
-	    	title = new Label("Manual", Render.skin, "TitleStyle");
+	    	title = new Label("Manual", Render.skin, "TitleStyle");//Manual
 	    	
-	    	textButton[0] = new TextButton(languageReader.leerLinea(2));
-	    	textButton[1] = new TextButton(languageReader.leerLinea(3));
-	    	textButton[2] = new TextButton(languageReader.leerLinea(1));
+	    	textButton[0] = new TextButton(languageReader.leerLinea(2));//Classic
+	    	textButton[1] = new TextButton(languageReader.leerLinea(3));//Modified
+	    	textButton[2] = new TextButton(languageReader.leerLinea(1));//Back
+	    	
+	    	for(int i = 0; i < textButton.length; i++) {
+	    		textButton[i].addAnimation();
+	    	}
 	    }
 
 		@Override
-	    public void render(float delta) {
-	        Render.clearScreen();
+		protected void selectScreen(int button) {
+	    	if(button == 0) {
+	    		Render.app.setScreen(Render.CLASSICMANSCREEN);
+	    	}else if(button == 1) {
+	    		Render.app.setScreen(Render.MODIFIEDMANSCREEN);
+	    	}else if(button == 2) {
+	    		Render.app.setScreen(Render.MAINSCREEN);
+	    	}
+		}
 
-	        Render.camera.update();
-	        Render.Batch.setProjectionMatrix(Render.camera.combined);
 
-	        Render.Batch.begin();
-	        //---------------
-	        
-	        stage.act();
-	        stage.draw();
-	        
-	        if(textButton[0].isPressed()){
-	            Render.bgMusic.stop();
-	            Render.app.setScreen(new ClassicManScreen());
-	        }
-	        if(textButton[1].isPressed()) {
-	        	//TO DO
-//	        	Render.app.setScreen(Render.MODIFIEDMANSCREEN);
-	        }
-	        if(textButton[2].isPressed()){
-	        	Render.app.setScreen(Render.MAINSCREEN);
-	        }
-	        
-	        //-----------------
-	        Render.Batch.end();
-	    }
-
-	    @Override
-	    public void resize(int width, int height) {
-	        Render.SCREEN_WIDTH = width;
-	        Render.SCREEN_HEIGHT = height;
-	        Render.camera.setToOrtho(false, width, height);
-	        
-	        stage.getViewport().update(width, height);
-	        
-	    }
-
-	    @Override
-	    public void dispose() {
-	        stage.dispose();
-	    }
 	}
 

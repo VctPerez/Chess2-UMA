@@ -1,94 +1,39 @@
 package game.chess;
 
+
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.actions.MoveByAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 
-import elements.Background;
 import utils.*;
 import interaccionFichero.*;
 
-public class MainScreen extends AbstractScreen {
-	public static Stage stage;	
+public class MainScreen extends AbstractMenuScreen {
 	
-    TextButton[] textButton;
-    Table table;
-    Label title;
     LectorLineas languageReader, configReader;
-
     
     @Override
     public void show() {
     	
-    	stage = new Stage(new FitViewport(1280, 720));
-    	table = new Table();
-    	
-    	
-   	    //table.debug();
-    	
-    	
-    	//Abrir los ficheros de configuracion e idioma
     	configReader = new LectorLineas("files/config.txt"); //Lector del txt configuracion para sacar el idioma
     	languageReader = new LectorLineas("files/lang/"+ configReader.leerLinea(Settings.language) + "main.txt"); //Abrimos el idioma que toca del archivo configuracion
-//    	languageReader = new LectorLineas("files/lang/esp/main.txt"); //Abrimos el idioma que toca del archivo configuracion
-     
-    	createTableElements();
-        setupTable();
-        addActors();
-       
-        //TODO scroll con imagenes estilo "noticias del juego"
-        //news = new Image(Resources.LOGO_PATH);
-        //news.setPosition(800,-30);
-        //news.setSize(500, 500);
-        //news.setTransparency(0.25f);
+    	
+    	super.show();
         
-        Gdx.input.setInputProcessor(stage);
         Render.bgMusic = Render.app.getManager().get(Resources.MENU_THEME);
         Render.bgMusic.setLooping(true);
         Render.bgMusic.setVolume(Settings.musicVolume);
         Render.bgMusic.play();
         
     }
-
     @Override
-    public void render(float delta) {
-        Render.clearScreen();
-        //---------------
-        stage.act();
-        stage.draw();
-        
-    	
-        if(textButton[0].isPressed()){
-            Render.bgMusic.stop();
-            Render.app.setScreen(Render.MATCHMAKINGSCREEN);
-        }
-        if(textButton[1].isChecked()) {
-        	Render.app.setScreen(Render.CONFIGSCREEN);
-        }
-        if(textButton[2].isChecked()){
-        	Render.app.setScreen(Render.MANUALSCREEN);
-        }
-        if(textButton[3].isChecked()) {
-        	Gdx.app.exit();
-        }
-        
-        
-        //-----------------
-//        Render.Batch.end();
-    }
-    
-    
-    private void createTableElements() {
+    protected void createTableElements() {
     	
     	textButton = new TextButton[4];
     	
@@ -98,52 +43,29 @@ public class MainScreen extends AbstractScreen {
     	textButton[1] = new TextButton(languageReader.leerLinea(4));//Configuracion = Linea 4
     	textButton[2] = new TextButton(languageReader.leerLinea(7));//Reglas = Linea 7
     	textButton[3] = new TextButton(languageReader.leerLinea(3));//Salir = Linea 3;
+    	    	
     	
     	for(int i = 0; i < textButton.length; i++) {
     		textButton[i].addAnimation();
     	}
     }
     
-    private void setupTable() {
-    	table.setFillParent(true);
-    	table.left().pad(50);
-    	table.defaults().left().space(40);
-    	table.add(title);
-    	table.row();
-    	for (int i = 0 ; i < textButton.length ; i++) {
-    		table.add(textButton[i]);
-        	table.row();
+    /**
+     * Dado el indice de un TextButton, realiza su accion correspondiente
+     * @param button
+     */
+    @Override
+    protected void selectScreen(int button) {
+    	if(button == 0) {
+    		Render.app.setScreen(Render.MATCHMAKINGSCREEN);
+    	}else if(button == 1) {
+    		Render.app.setScreen(Render.CONFIGSCREEN);
+    	}else if(button == 2) {
+    		Render.app.setScreen(Render.MANUALSCREEN);
+    	}else if(button == 3) {
+    		Gdx.app.exit();
     	}
     }
-    
-    private void addActors() {
-    	stage.addActor(Render.menuBG);
-    	stage.addActor(table);
-    }
 
-    @Override
-    public void hide() {
-        super.hide();
-    }
-
-    @Override
-    public void resize(int width, int height) {
-        
-        stage.getViewport().update(width, height);
-        
-        Render.SCREEN_WIDTH = stage.getViewport().getScreenWidth();
-        Render.SCREEN_HEIGHT = stage.getViewport().getScreenHeight();
-
-    }
-
-    @Override
-    public void dispose() {
-       super.dispose();
-       stage.dispose();
-    }
-    
-    public Viewport getViewPort() {
-    	return stage.getViewport();
-    }
     
 }

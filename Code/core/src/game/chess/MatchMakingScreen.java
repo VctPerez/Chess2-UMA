@@ -1,73 +1,46 @@
 package game.chess;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
-import elements.Background;
 import interaccionFichero.LectorLineas;
 import utils.Render;
-import utils.Resources;
 import utils.Settings;
 import utils.TextButton;
 
-public class MatchMakingScreen extends AbstractScreen{
-	public static Stage stage;
-	private Table table;
-
-    private TextButton[] textButton;
-    private Label title;
+public class MatchMakingScreen extends AbstractMenuScreen{
+	
     private LectorLineas languageReader, configReader;
+
     
     @Override
     public void show() {
-    	stage = new Stage(new FitViewport(1280, 720));
-    	table = new Table();
-    	table.setFillParent(true);
-//    	table.debug();
-    	
-    	//Abrir los ficheros de configuracion e idioma
     	configReader = new LectorLineas("files/config.txt"); //Lector del txt configuracion para sacar el idioma
     	languageReader = new LectorLineas("files/lang/"+ configReader.leerLinea(Settings.language) + "matchmaking.txt"); //Abrimos el idioma que toca del archivo configuracion
     	
-    	createTableElements();
-        setupTable();
-        addActors();
+    	super.show();
         
-        Gdx.input.setInputProcessor(stage);
-    }
-
-    @Override
-    public void render(float delta) {
-        Render.clearScreen();
-
-        Render.camera.update();
-        Render.Batch.setProjectionMatrix(Render.camera.combined);
-
-        //---------------
-        
-        stage.act();
-        stage.draw();
-        
-        if(textButton[0].isPressed()) {
-            Render.DraftController = 3;
-        	Render.app.setScreen(Render.CREATEMATCHSCREEN);
-        }else if(textButton[1].isPressed()) {
-            Render.DraftController = 1;
-        	Render.app.setScreen(Render.MODESCREEN);
-        }else if(textButton[2].isPressed()) {
-        	Render.app.setScreen(Render.MAINSCREEN);
+        //Inputs de los botones
+        for(int i = 0 ; i < textButton.length ; i++) {
+        	textButton[i].addListener(new ClickListener() {
+        		@Override
+        		public void clicked(InputEvent event, float x, float y) {
+        			super.clicked(event, x, y);	
+        			if(activatedTextButton == 0) {
+        				Render.DraftController = 3;
+        			}else if(activatedTextButton == 1) {
+        				Render.DraftController = 1;
+        			}
+        		}
+        	});
         }
         
-        //-----------------
-
     }
-    
-    private void createTableElements() {
+
+
+    @Override
+    protected void createTableElements() {
     	
     	textButton = new TextButton[3];
     	
@@ -76,23 +49,27 @@ public class MatchMakingScreen extends AbstractScreen{
     	textButton[0] = new TextButton(languageReader.leerLinea(2));//Online
     	textButton[1] = new TextButton(languageReader.leerLinea(3));//Local
     	textButton[2] = new TextButton(languageReader.leerLinea(4));//Return
-    }
-    
-    private void addActors() {
-    	stage.addActor(Render.menuBG);
-    	stage.addActor(table);
-    }
-    
-    private void setupTable() {
-    	table.left().pad(50);
-    	table.defaults().left().space(40);
-    	table.add(title);
-    	table.row();
-    	for (int i = 0 ; i < textButton.length ; i++) {
-    		table.add(textButton[i]);
-        	table.row();
+    	
+    	for(int i = 0; i < textButton.length; i++) {
+    		textButton[i].addAnimation();
     	}
     }
+    
+    /**
+     * Dado el indice de un TextButton, realiza su accion correspondiente
+     * @param button
+     */
+    @Override
+    protected void selectScreen(int button) {
+    	if(button == 0) {
+    		Render.app.setScreen(Render.CREATEMATCHSCREEN);
+    	}else if(button == 1) {
+    		Render.app.setScreen(Render.MODESCREEN);
+    	}else if(button == 2) {
+    		Render.app.setScreen(Render.MAINSCREEN);
+    	}
+    }
+    
     
     @Override
     public void resize(int width, int height) {
@@ -102,8 +79,4 @@ public class MatchMakingScreen extends AbstractScreen{
         stage.getViewport().update(width, height);
     }
 
-    @Override
-    public void dispose() {
-        stage.dispose();
-    }
 }
