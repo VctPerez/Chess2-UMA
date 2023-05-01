@@ -25,7 +25,7 @@ public class CreateMatchScreen extends AbstractScreen{
     private Label titulo;
     private Table table;
     private LectorLineas languageReader, configReader;
-    private boolean finding = false;
+    private boolean found = false;
     @Override
     public void show() {
         stage = new Stage(new FitViewport(Render.SCREEN_WIDTH, Render.SCREEN_HEIGHT));
@@ -81,11 +81,12 @@ public class CreateMatchScreen extends AbstractScreen{
         if(join.isPressed()){
             System.out.println(Render.guest.getStatus());
         }*/
-        if(finding) {
+        if(found) {
             if (Render.guest.isConnected()) {
                 Render.guest.setReceiving(true);
                 Render.guest.start();
                 Render.LOBBYSCREEN.create(Render.guest.getPlayer2().getName(), false);
+                found = false;
                 Render.app.setScreen(Render.LOBBYSCREEN);
             }
         }
@@ -123,7 +124,6 @@ public class CreateMatchScreen extends AbstractScreen{
         });textbuttons[1].addListener(new ClickListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                finding = true;
                 Render.guest = new Guest("Vega");
                 textField.setVisible(!textField.isVisible());
                 return true;
@@ -141,6 +141,7 @@ public class CreateMatchScreen extends AbstractScreen{
                 if(keycode == Input.Keys.ENTER && !textField.getText().equals("")){
                     try {
                         Render.guest.connect(LobbyScreen.decodeIP(textField.getText().toUpperCase()));
+                        found = true;
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }

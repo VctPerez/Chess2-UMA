@@ -49,8 +49,7 @@ public class Host extends Thread {
                 receiveMessage();
             }
         } catch (Exception e) {
-            System.err.println("Server closed - " + e.getClass().getName());
-            e.printStackTrace();
+            System.err.println("Player2 disconnected");
         }
     }
 
@@ -81,6 +80,12 @@ public class Host extends Thread {
      */
     public void kickPlayer2() throws IOException {
         player2.close();
+    }
+
+    public void stopHosting() throws IOException {
+        setReceiving(false);
+        gameServer.close();
+
     }
 
     /**

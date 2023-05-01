@@ -49,7 +49,7 @@ public class Guest extends Thread{
                 receiveMessage();
             }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+                System.err.println("Player1 disconnected");
         }
     }
 
@@ -138,6 +138,7 @@ public class Guest extends Thread{
         this.receiving = receiving;
     }
     public void disconnect() throws IOException {
+        setReceiving(false);
         gameConnection.close();
     }
 }

@@ -10,11 +10,27 @@ import java.io.IOException;
 import com.badlogic.gdx.Gdx;
 
 public class OnlineGameScreen extends GameScreen {
+	private boolean finished = false;
 	@Override
 	public void render(float delta) {
 		super.render(delta);
-
-		if(!whiteCheckMate && !blackCheckMate)updateOnlineBoard();
+		try{
+			if(!finished){
+				if (!whiteCheckMate && !blackCheckMate)
+					updateOnlineBoard();
+//				} else {
+//					finished = true;
+//					if (Render.hosting) {
+//						Render.host.stopHosting();
+//					} else {
+//						Render.guest.disconnect();
+//					}
+//				}
+			}
+		}
+		catch (IOException e){
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -42,16 +58,15 @@ public class OnlineGameScreen extends GameScreen {
 				if (Render.hosting) {
 					Render.host.sendMessage("RENDICION");
 					System.out.println("Rendicion Blanca");
-					super.results.setWinnerSurrender("NEGRO");
-					super.showPopup = true;
-					super.whiteCheckMate = true;
-
+					results.setWinnerSurrender("NEGRO");
+					showPopup = true;
+					whiteCheckMate = true;
 				} else {
 					Render.guest.sendMessage("RENDICION");
 					System.out.println("Rendicion Negra");
-					super.results.setWinnerSurrender("BLANCO");
-					super.showPopup = true;
-					super.blackCheckMate = true;
+					results.setWinnerSurrender("BLANCO");
+					showPopup = true;
+					blackCheckMate = true;
 				}
 			}
 		} catch (IOException e) {
@@ -92,7 +107,7 @@ public class OnlineGameScreen extends GameScreen {
 		}
 	}
 
-	private void updateOnlineBoard() {
+	private void updateOnlineBoard() throws IOException {
 		if (Render.hosting != PLAYER) {// meter estos metodos en las clases host y guest y que se llamen
 										// recieveMovement?
 			if (!Render.hosting) {
@@ -101,10 +116,11 @@ public class OnlineGameScreen extends GameScreen {
 																			// en tu turno, si no es así sale la
 																			// notificacion de rendicion al rival cuando
 																			// el haya termiando su turno
+						;
 						System.out.println("Rendicion Blanca");
-						super.results.setWinnerSurrender("NEGRO");
-						super.showPopup = true;
-						super.whiteCheckMate = true;
+						results.setWinnerSurrender("NEGRO");
+						showPopup = true;
+						whiteCheckMate = true;
 					} else {
 						System.out.println("movimiento de blancas: " + Render.guest.getMessage());
 						Parser.parseStringToMovement(Render.guest.getMessage());
@@ -117,9 +133,10 @@ public class OnlineGameScreen extends GameScreen {
 				if (!Render.host.getMessage().equals("")) {
 					if (Render.host.getMessage().equals("RENDICION")) {
 						System.out.println("Rendicion Negra");
-						super.results.setWinnerSurrender("BLANCO");
-						super.showPopup = true;
-						super.blackCheckMate = true;
+
+						results.setWinnerSurrender("BLANCO");
+						showPopup = true;
+						blackCheckMate = true;
 					} else {
 						System.out.println("movimiento de negras: " + Render.host.getMessage());
 						Parser.parseStringToMovement(Render.host.getMessage());
@@ -130,23 +147,22 @@ public class OnlineGameScreen extends GameScreen {
 				}
 			}
 		} else {
-
 			if (!Render.hosting) {
 				if (!Render.guest.getMessage().equals("")) {
 					if (Render.guest.getMessage().equals("RENDICION")) {
 						System.out.println("Rendicion Blanca");
-						super.results.setWinnerSurrender("NEGRO");
-						super.showPopup = true;
-						super.blackCheckMate = true;
+						results.setWinnerSurrender("NEGRO");
+						showPopup = true;
+						blackCheckMate = true;
 					}
 				}
 			} else {
 				if (!Render.host.getMessage().equals("")) {
 					if (Render.host.getMessage().equals("RENDICION")) {
 						System.out.println("Rendicion Negra");
-						super.results.setWinnerSurrender("Blanco");
-						super.showPopup = true;
-						super.whiteCheckMate = true;
+						results.setWinnerSurrender("Blanco");
+						showPopup = true;
+						whiteCheckMate = true;
 					}
 				}
 
