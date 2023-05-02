@@ -7,6 +7,7 @@ import elements.Board;
 import elements.Piece;
 import elements.Tile;
 import interaccionFichero.LectorLineas;
+import utils.Image;
 import utils.Render;
 import utils.Resources;
 
@@ -26,7 +27,8 @@ public class Midas extends Piece {
 	@Override
 	protected void updateXY(int x, int y) {
 		board.getTile(this.x, this.y).attacked = false;
-
+		
+		updateSprite(super.ate);
 		super.updateXY(x, y);
 		
 		
@@ -37,6 +39,20 @@ public class Midas extends Piece {
 			Render.GameScreen.blackKing.set(x, y);
 		}
 	}
+	public void updateSprite(int ate) {
+        if (ate > 0 ){
+        	if(ate<3) {
+            sprite = new Image(Render.app.getManager().get(Resources.MIDAS_PATH2,Texture.class));
+        	}
+            if(ate>=3) {
+                sprite = new Image(Render.app.getManager().get(Resources.MIDAS_PATH3,Texture.class));
+            }
+        }
+        	else {
+            sprite = new Image(Render.app.getManager().get(Resources.MIDAS_PATH,Texture.class));
+        }
+	}
+    
 	
 	protected void simulateMovement(Tile currentTile, Vector2 move, ArrayList<Vector2> removeMovements) {
 		Tile nextTile = board.getTile((int)move.x,(int) move.y);
@@ -77,6 +93,7 @@ public class Midas extends Piece {
 			addMovement(x - direction, y - direction, board, movements);
 			addMovement(x + direction, y - direction, board, movements);
 			addMovement(x - direction, y + direction, board, movements);
+			
 		}
 		if (super.ate >= 3) {
 			addMovement(x, y + 2*direction, board, movements);
@@ -87,6 +104,7 @@ public class Midas extends Piece {
 			addMovement(x - 2*direction, y - 2*direction, board, movements);
 			addMovement(x + 2*direction, y - 2*direction, board, movements);
 			addMovement(x - 2*direction, y + 2*direction, board, movements);
+			
 		}
 
 		return movements;
