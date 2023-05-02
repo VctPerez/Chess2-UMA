@@ -130,6 +130,11 @@ public class Miner extends Piece {
 			addMovement(x + 2, y + 2, board, movements);
 			addMovement(x - 2, y - 2, board, movements);
 			addMovement(x - 2, y + 2, board, movements);
+			addMovement(x , y + 1, board, movements);
+			addMovement(x , y - 1, board, movements);
+			addMovement(x - 1, y , board, movements);
+			addMovement(x + 1, y , board, movements);
+			
 			
 			
 		}
