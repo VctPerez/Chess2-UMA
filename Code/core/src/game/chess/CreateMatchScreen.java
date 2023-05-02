@@ -116,9 +116,12 @@ public class CreateMatchScreen extends AbstractMenuScreen{
                 , Render.skin, "TitleStyle");
         for(int i =  0; i < textButton.length-1; i++){
         	textButton[i] = new TextButton(languageReader.leerLinea(8+i));
+        	textButton[i].addAnimation();
         }
         
         textButton[2] = new TextButton(languageReader.leerLinea(4));
+        textButton[2].addAnimation();
+        
         
         //POPUP TABLE
         popUpButtons[0] = new TextButton("Buscar");

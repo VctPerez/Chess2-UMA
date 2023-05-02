@@ -20,12 +20,12 @@ public class TextField extends com.badlogic.gdx.scenes.scene2d.ui.TextField{
 		this.addListener(new ClickListener() {
 			@Override
 			public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-				System.out.println("entre");
+//				System.out.println("entre");
 			}
 			
 			@Override
 			public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
-				System.out.println("salgo");
+//				System.out.println("salgo");
 			}
 		});
 		
