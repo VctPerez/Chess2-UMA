@@ -31,25 +31,11 @@ public abstract class AbstractMenuScreen extends AbstractScreen{
     	stage = new Stage(new FitViewport(1280, 720));
     	table = new Table();
     	
-//    	table.debug();
-    	
     	createTableElements();
         setupTable();
         addActors();
         
-    	//Inputs de los botones
-        for(int i = 0 ; i < textButton.length ; i++) {
-        	final int index = i;
-        	textButton[i].addListener(new ClickListener() {
-        		@Override
-        		public void clicked(InputEvent event, float x, float y) {
-        			super.clicked(event, x, y);
-        			activatedTextButton = index;
-        			addExitAnimation(800f,0.25f,0.5f);
-        			animationStarted = true;
-        		}
-        	});
-        }
+        addListeners();
         
         animationStarted = false;
         
@@ -143,6 +129,24 @@ public abstract class AbstractMenuScreen extends AbstractScreen{
     	
     	return finished;
     }
+    
+    /**
+     * Inputs de los botones con animacion de salida
+     */
+    protected void addListeners() {
+        for(int i = 0 ; i < textButton.length ; i++) {
+        	final int index = i;
+        	textButton[i].addListener(new ClickListener() {
+        		@Override
+        		public void clicked(InputEvent event, float x, float y) {
+        			super.clicked(event, x, y);
+        			activatedTextButton = index;
+        			addExitAnimation(800f,0.25f,0.5f);
+        			animationStarted = true;
+        		}
+        	});
+        }
+	}
 
 	@Override
 	public void resize(int width, int height) {
