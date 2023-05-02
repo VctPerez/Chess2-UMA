@@ -8,14 +8,28 @@ import utils.Render;
 import java.io.IOException;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 
 public class OnlineGameScreen extends GameScreen {
 	private boolean finished = false;
+	
+	@Override
+	public void show() {
+		super.show();
+		InputMultiplexer inputMultiplexer = new InputMultiplexer();
+		inputMultiplexer.addProcessor(stage);
+		inputMultiplexer.addProcessor(Render.inputs);
+		     
+		Gdx.input.setInputProcessor(inputMultiplexer);
+	}
+
 	@Override
 	public void render(float delta) {
 		super.render(delta);
-		try{
-			if(!finished){
+		checkDraw();
+		try {
+			if (!finished) {
 				if (!whiteCheckMate && !blackCheckMate)
 					updateOnlineBoard();
 //				} else {
@@ -27,10 +41,14 @@ public class OnlineGameScreen extends GameScreen {
 //					}
 //				}
 			}
-		}
-		catch (IOException e){
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void checkDraw() {
+		
+		
 	}
 
 	@Override
@@ -50,8 +68,6 @@ public class OnlineGameScreen extends GameScreen {
 		}
 
 	}
-	
-	
 
 	@Override
 	public void checkSurrender() {
@@ -73,12 +89,6 @@ public class OnlineGameScreen extends GameScreen {
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
-	}
-
-	public void checkDraw() {
-		if (super.draw.isPressed()) {
-			
 		}
 	}
 
@@ -114,21 +124,29 @@ public class OnlineGameScreen extends GameScreen {
 										// recieveMovement?
 			if (!Render.hosting) {
 				if (!Render.guest.getMessage().equals("")) {
-					if (Render.guest.getMessage().equals("RENDICION")) { // La rendicion funciona bien cuando te rindes
-																			// en tu turno, si no es así sale la
-																			// notificacion de rendicion al rival cuando
-																			// el haya termiando su turno
-						;
+					if (Render.guest.getMessage().equals("RENDICION")) {
 						System.out.println("Rendicion Blanca");
 						results.setWinnerSurrender("NEGRO");
 						showPopup = true;
 						whiteCheckMate = true;
-					} else {
+					} else if (Render.guest.getMessage().equals("EMPATE")) {
+						System.out.println("GUEST RECIBE EMPATE");
+						dbox.toFront();
+						draw.setTouchable(Touchable.disabled);
+						stage.addActor(dbox.getCheck()); 
+						stage.addActor(dbox.getCross());
+					} else if(Render.guest.getMessage().equals("ACEPTAR")) {
+						results.setDraw();
+						showPopup = true;	
+						blackCheckMate=true;
+					}else if(Render.guest.getMessage().equals("RECHAZAR")){
+						draw.setTouchable(Touchable.enabled);
+					}else {
 						System.out.println("movimiento de blancas: " + Render.guest.getMessage());
 						Parser.parseStringToMovement(Render.guest.getMessage());
 						PLAYER = false;
-						Render.guest.resetMessage();
 					}
+					Render.guest.resetMessage();
 
 				}
 			} else {
@@ -139,12 +157,24 @@ public class OnlineGameScreen extends GameScreen {
 						results.setWinnerSurrender("BLANCO");
 						showPopup = true;
 						blackCheckMate = true;
-					} else {
+					} else if(Render.host.getMessage().equals("EMPATE")) {
+						System.out.println("HOST RECIBE EMPATE");
+						dbox.toFront();
+						draw.setTouchable(Touchable.disabled);
+						stage.addActor(dbox.getCheck()); 
+						stage.addActor(dbox.getCross());
+					}else if(Render.host.getMessage().equals("ACEPTAR")) {
+						results.setDraw();
+						showPopup = true;
+						blackCheckMate = true;
+					}else if(Render.host.getMessage().equals("RECHAZAR")){
+						
+					}else {
 						System.out.println("movimiento de negras: " + Render.host.getMessage());
 						Parser.parseStringToMovement(Render.host.getMessage());
 						PLAYER = true;
-						Render.host.resetMessage();
 					}
+					Render.host.resetMessage();
 
 				}
 			}
@@ -156,8 +186,19 @@ public class OnlineGameScreen extends GameScreen {
 						results.setWinnerSurrender("NEGRO");
 						showPopup = true;
 						blackCheckMate = true;
+					}else if(Render.guest.getMessage().equals("EMPATE")) {
+						System.out.println("GUEST RECIBE EMPATE");
+						dbox.toFront();
+						draw.setTouchable(Touchable.disabled);
+						stage.addActor(dbox.getCheck()); 
+						stage.addActor(dbox.getCross());
+					}else if(Render.guest.getMessage().equals("ACEPTAR")) {
+						results.setDraw();
+						showPopup = true;
+						blackCheckMate = true;
 					}
 				}
+				Render.guest.resetMessage();
 			} else {
 				if (!Render.host.getMessage().equals("")) {
 					if (Render.host.getMessage().equals("RENDICION")) {
@@ -165,8 +206,19 @@ public class OnlineGameScreen extends GameScreen {
 						results.setWinnerSurrender("Blanco");
 						showPopup = true;
 						whiteCheckMate = true;
+					}else if(Render.host.getMessage().equals("EMPATE")) {
+						System.out.println("GUEST RECIBE EMPATE");
+						dbox.toFront();
+						draw.setTouchable(Touchable.disabled);
+						stage.addActor(dbox.getCheck()); 
+						stage.addActor(dbox.getCross());
+					}else if(Render.host.getMessage().equals("ACEPTAR")) {
+						results.setDraw();
+						showPopup = true;
+						blackCheckMate = true;
 					}
 				}
+				Render.host.resetMessage();
 
 			}
 
