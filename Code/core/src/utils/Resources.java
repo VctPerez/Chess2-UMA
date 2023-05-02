@@ -66,6 +66,8 @@ public class Resources {
     
     public static final String FRAME_PATH = "sprites/selectionFrame.png";
     public static final String ARROW_PATH = "sprites/Arrow.png";
+    public static final String CROSS_PATH = "Cross.png";
+    public static final String TICK_PATH = "Tick.png";
     
     
 }

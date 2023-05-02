@@ -1,4 +1,4 @@
-
+package test.java;
 import com.badlogic.gdx.graphics.Texture;
 import elements.Board;
 import elements.Piece;

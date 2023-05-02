@@ -50,6 +50,8 @@ public class OnlineGameScreen extends GameScreen {
 		}
 
 	}
+	
+	
 
 	@Override
 	public void checkSurrender() {
@@ -76,7 +78,7 @@ public class OnlineGameScreen extends GameScreen {
 
 	public void checkDraw() {
 		if (super.draw.isPressed()) {
-
+			
 		}
 	}
 

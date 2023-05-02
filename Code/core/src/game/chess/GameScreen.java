@@ -177,11 +177,19 @@ public class GameScreen extends AbstractScreen {
 			}
 		}
 	}
+	public void checkDraw() {
+		if(draw.isPressed()) {
+			DrawBox draw=new DrawBox();
+			
+			
+		}
+	}
 
 	@Override
 	public void render(float delta){
 		Render.clearScreen();
 		checkSurrender();
+		checkDraw();
 		if (showPopup) {
 			//Para que no se pueda interaccionar con nada despues de que se muestre el popup
 			draw.clearListeners();
