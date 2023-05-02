@@ -1,5 +1,5 @@
 package game.chess;
-	
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Color;
@@ -9,20 +9,12 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane.ScrollPaneStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-
-import elements.Background;
 import interaccionFichero.LectorLineas;
-import utils.Image;
-import utils.Render;
-import utils.Resources;
-import utils.Settings;
-import utils.Text;
-import utils.TextButton;
+import utils.*;
 	
 	
 public class ClassicManScreen extends AbstractScreen{
@@ -113,22 +105,22 @@ public class ClassicManScreen extends AbstractScreen{
 
 	@Override
 	public void render(float delta) {
-			Render.clearScreen();
+		Render.clearScreen();
 		
-			Render.camera.update();
-			Render.Batch.setProjectionMatrix(Render.camera.combined);
-			
-			Render.Batch.begin();
-			      
-		    // Actualiza y dibuja el Stage
-		    stage.act();
-		    stage.draw();
+		Render.camera.update();
+		Render.Batch.setProjectionMatrix(Render.camera.combined);
+
+		Render.Batch.begin();
+
+		// Actualiza y dibuja el Stage
+		stage.act();
+		stage.draw();
 		          
-		    if(textButton.isPressed()){
-		    	stage.dispose();
-		         Render.app.setScreen(Render.MANUALSCREEN);
-		    }
-		        
-		    Render.Batch.end();
-		    }
+		if(textButton.isPressed()){
+			stage.dispose();
+			Render.app.setScreen(Render.MANUALSCREEN);
 		}
+
+		Render.Batch.end();
+	}
+}

@@ -1,27 +1,20 @@
 package game.chess;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import interaccionFichero.LectorLineas;
 import multiplayer.Guest;
-import utils.*;
-
-import static org.mockito.ArgumentMatchers.intThat;
+import utils.Render;
+import utils.Settings;
+import utils.TextButton;
+import utils.TextField;
 
 import java.io.IOException;
-import java.util.Objects;
 
 public class CreateMatchScreen extends AbstractMenuScreen{
 	
@@ -80,7 +73,7 @@ public class CreateMatchScreen extends AbstractMenuScreen{
     	}
     }
     /**
-     * Método que provoca el cambio de pantalla cuando se conecta correctamente al host
+     * Mï¿½todo que provoca el cambio de pantalla cuando se conecta correctamente al host
      * @throws IOException
      * @throws InterruptedException
      */
@@ -145,7 +138,7 @@ public class CreateMatchScreen extends AbstractMenuScreen{
     }
     
     /**
-     * Añade los listeners a todos los botones de la escena. Los botones normales se llaman en el "super.addListeners()"
+     * Aï¿½ade los listeners a todos los botones de la escena. Los botones normales se llaman en el "super.addListeners()"
      */
     @Override
     protected void addListeners(){
@@ -223,7 +216,7 @@ public class CreateMatchScreen extends AbstractMenuScreen{
     }
     
     /*
-     * Activa la animación de la popUpTable y activa sus inputs
+     * Activa la animaciï¿½n de la popUpTable y activa sus inputs
      */
     private void activatePopUpTable() {
     	animationStarted = false;

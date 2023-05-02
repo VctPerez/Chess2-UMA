@@ -148,7 +148,7 @@ public class Chess2 extends Game {
 		Render.MODESCREEN = new ModeScreen();
 		Render.MANUALSCREEN = new ManualScreen();
 		Render.CLASSICMANSCREEN = new ClassicManScreen();
-		// Render.MODIFIEDMANSCREEN = new ModifiedManScreen();
+		Render.MODIFIEDMANSCREEN = new ModifiedManScreen();
 		Render.LOBBYSCREEN = new LobbyScreen();
 		Render.CREATEMATCHSCREEN = new CreateMatchScreen();
 		Render.DRAFTSCREEN = new DraftScreen();
