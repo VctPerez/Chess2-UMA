@@ -120,9 +120,11 @@ public class Host extends Thread {
      * @throws IOException
      */
     public void receivePlayer2() throws IOException {
+        System.out.println("Recibiendo player 2");
         InputStreamReader in = new InputStreamReader(player2.getInputStream());
         BufferedReader buffer = new BufferedReader(in);
         p2 = new Player(buffer.readLine());
+        System.out.println("player2 recibido");
     }
 
     /**

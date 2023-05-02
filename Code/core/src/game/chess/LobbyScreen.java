@@ -112,6 +112,7 @@ public class LobbyScreen extends AbstractScreen{
                 }else if(Render.host.isP2connected()){
                     try {
                         Render.host.sendMessage("start");
+                        configured = false;
                         Render.app.setScreen(Render.DRAFTSCREEN);
                     } catch (IOException e) {
                         throw new RuntimeException(e);
