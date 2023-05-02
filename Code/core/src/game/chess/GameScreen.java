@@ -11,12 +11,14 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import elements.*;
 import elements.pieces.*;
 import interaccionFichero.LectorLineas;
 import utils.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class GameScreen extends AbstractScreen {
@@ -35,7 +37,8 @@ public class GameScreen extends AbstractScreen {
 	//UI partida
 	private Table table;
 	protected TextButton surrender;
-	protected TextButton draw;
+	public TextButton draw;
+	public DrawBox dbox;
 	private LectorLineas languageReader, configReader;
 	private Timer TimerW, TimerB;
 
@@ -47,7 +50,7 @@ public class GameScreen extends AbstractScreen {
 	private static boolean whiteCheck;
 	private static boolean blackCheck;
 	protected static boolean whiteCheckMate;
-	protected static boolean blackCheckMate;
+	public static boolean blackCheckMate;
 	public static ArrayList<Piece> whitePieces;
 	public static ArrayList<Piece> blackPieces;
 	// ----------------------------
@@ -71,8 +74,8 @@ public class GameScreen extends AbstractScreen {
 	public static Graveyard graveyardBlack;
 
 	// Pantalla ganador
-	protected static boolean showPopup;
-	protected static MatchResults results;
+	public static boolean showPopup;
+	public static MatchResults results;
 
 	// Modo depuracion
 	private boolean debugMode = false;
@@ -91,6 +94,7 @@ public class GameScreen extends AbstractScreen {
 		Gdx.input.setInputProcessor(stage);
 
 		PLAYER = true;
+		
 
 		whiteCheck = false;
 		blackCheck = false;
@@ -118,6 +122,10 @@ public class GameScreen extends AbstractScreen {
 		stage.addActor(board);
 		stage.addActor(graveyardWhite);
 		stage.addActor(graveyardBlack);
+		
+		dbox =new DrawBox();
+		dbox.setVisible(false);
+		stage.addActor(dbox);
 
 
 		createTableElements();
@@ -159,6 +167,25 @@ public class GameScreen extends AbstractScreen {
 		TimerW = new Timer(300, "blanco", Render.skin, "default");
 		TimerB = new Timer(300, "negro", Render.skin, "default");
 		draw = new TextButton(languageReader.leerLinea(5), "SingleClickStyle");
+		draw.addListener(new ClickListener() {
+    		@Override
+    		public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+    			System.out.println("TOCADO");
+    			try {
+    				if (Render.hosting) {
+    					System.out.println("HOST ENVIA EMPATE");
+    					Render.host.sendMessage("EMPATE");
+    				} else {
+    					System.out.println("GUEST ENVIA EMPATE");
+    					Render.guest.sendMessage("EMPATE");
+    				}
+
+    			}catch (IOException e) {
+    				e.printStackTrace();
+    			}
+    			return true;
+    		}
+    	});
 		surrender = new TextButton(languageReader.leerLinea(4), "SingleClickStyle");
 	}
 	
@@ -177,19 +204,12 @@ public class GameScreen extends AbstractScreen {
 			}
 		}
 	}
-	public void checkDraw() {
-		if(draw.isPressed()) {
-			DrawBox draw=new DrawBox();
-			
-			
-		}
-	}
+	
 
 	@Override
 	public void render(float delta){
 		Render.clearScreen();
 		checkSurrender();
-		checkDraw();
 		if (showPopup) {
 			//Para que no se pueda interaccionar con nada despues de que se muestre el popup
 			draw.clearListeners();
