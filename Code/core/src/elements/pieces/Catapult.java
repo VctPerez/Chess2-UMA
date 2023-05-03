@@ -183,9 +183,9 @@ public class Catapult extends Piece{
 		Reader = new LectorLineas("files/lang/"+ config + "Modified.txt");
 		switch (config){
 			case "esp/":
-				return Reader.leerTramo(14, 17);
+				return Reader.leerTramo(75, 79);
 			case "eng/":
-				return Reader.leerTramo(13,18);
+				return Reader.leerTramo(77,81);
 			default:
 				throw new IllegalArgumentException("Configuración errónea");
 		}

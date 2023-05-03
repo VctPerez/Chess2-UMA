@@ -274,12 +274,12 @@ public class Paladin extends Piece{
 		 LectorLineas Reader, configReader;
 		 configReader = new LectorLineas("files/config.txt");
 		String config = configReader.leerLinea(1);
-		Reader = new LectorLineas("files/lang/"+ config + "Clasicas.txt");
+		Reader = new LectorLineas("files/lang/"+ config + "Modified.txt");
 		switch (config){
 			case "esp/":
-				return Reader.leerTramo(7, 10);
+				return Reader.leerTramo(68, 73);
 			case "eng/":
-				return Reader.leerTramo(6,8);
+				return Reader.leerTramo(70,75);
 			default:
 				throw new IllegalArgumentException("Configuración errónea");
 		}

@@ -59,8 +59,23 @@
  Con su ki cargado puede moverse más lejos.
  Seguirá cargado 2 turnos o hasta que se mueva.
  
- Coloso
+ Coloso:
   Se mueve como una torre clasica, pero 
  limitada a 3 casillas, no puede comer
  ni ser comido, salvo por el rey, la 
- u´nica pieza capaz de comerlo.
+ unica pieza capaz de comerlo.
+ 
+ Paladin:
+  Se mueve y come como un alfil,
+ pero con el movimiento mas 
+ limitado, ademas como movimiento
+ especial, si no se ha movido, puede usar
+ su espadon para atacar en area.
+ 
+ Bruja:
+  Se mueve como el rey, clasico, 1 casilla
+ en cada direccion, pero tiene la habilidad
+ de lanzar bolas de fuego a distancia en un
+ area con forma de rombo alrededor suya. 
+ 
+ 

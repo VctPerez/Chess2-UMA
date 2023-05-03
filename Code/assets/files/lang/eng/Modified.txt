@@ -60,3 +60,26 @@
  He can move to the same tile to charge his ki.
  When charged he can move further.
  He will stay charged 2 moves or until he moves.
+ 
+ Colossus:
+  It moves like a classic rook, but
+ limited to 3 cells, cannot eat
+ or be eaten, except for the king, the
+ only piece capable of eating it.
+ 
+ Paladin:
+  It moves and eats like a bishop,
+ but the movement are more
+ limited, also as a special move
+ if it hasn't moved, he can use
+ his sword to attack in area.
+ 
+  Witch:
+  Moves like the clasic king, 1 cell
+ in every direction, but has the ability
+ to throw fireballs at a distance in a
+ diamond-shaped area around her.
+ 
+ 
+ 
+ 

@@ -4,4 +4,82 @@ Modo Modificado
 Manual
 Juego Modificado:
 
-Ahora queda llenar esto
+  Joker:
+  Inicialmente tiene los movimientos
+ de un Alfil y cada vez que se mueve
+ copias únicamente los movimientos de una
+ pieza aleatoria de entre las piezas clásicas
+ a excepción del rey.
+
+ Jinete:
+  El jinete tiene los movimientos del caballo
+ pero con un aspecto m�s ofensivo, en cambio, 
+ pierdes capacidad defensiva con unos movimientos
+ mas acotados.
+   
+ Bombardero:
+  Se mueve solo a casillas adyacentes sin movimiento
+ diagonal, si captura otra pieza explotar� 
+ eliminándose a si mismo y a las piezas de alrededor.
+
+
+ Guardian:
+  El guardian pierde la capacidad de hacer el
+ movimiento doble al salir de su fila inicial
+ que tienen los peones, pero en cambio, tienen 
+ la capacidad de retroceder 1 casilla para 
+ luego estar obligados a saltar 2,come como 
+ un peón.
+
+ Lancero:
+  Movimiento similar e inverso al del peon,
+ se mueve en diagonal y come a la pieza que
+ se encuentre delante, al salir de su fila
+ original puede hacer el doble movimiento
+ 
+ Midas:
+  Comienza con un set de movimientos en
+ forma de cruz, pudiendo moverse 1 sola
+ casilla, al comer 1 pieza "evoluciona"
+ y adopta el movimiento de 1 casilla en 
+ cada dirección y al comer 2 piezas mas
+ consigue su forma final ampliando su
+ rango
+
+ Valkyria:
+ Mezcla al caballo y al alfil, puede
+ saltar igual que el caballo y moverse
+ en la misma dirección a la que puede saltar.
+ 
+ Minero:
+ Su primer movimiento es un tanto ofensivo 
+ puesto que se posiciona muy cerca del conjunto 
+ de piezas del enemigo. Despues mantiene una 
+ serie de movimientos que le permiten saltar 
+ y conquistar piezas a lo largo del tablero.
+
+ Mago:
+  Se mueve como un rey pero no delante ni atrás
+ Se puede mover a su propia casilla para cargar
+ su ki.
+ Con su ki cargado puede moverse más lejos.
+ Seguirá cargado 2 turnos o hasta que se mueva.
+ 
+ Coloso:
+  Se mueve como una torre clasica, pero 
+ limitada a 3 casillas, no puede comer
+ ni ser comido, salvo por el rey, la 
+ unica pieza capaz de comerlo.
+ 
+ Paladin:
+  Se mueve y come como un alfil,
+ pero con el movimiento mas 
+ limitado, ademas como movimiento
+ especial, si no se ha movido, puede usar
+ su espadon para atacar en area.
+ 
+ Bruja:
+  Se mueve como el rey, clasico, 1 casilla
+ en cada direccion, pero tiene la habilidad
+ de lanzar bolas de fuego a distancia en un
+ area con forma de rombo alrededor suya. 

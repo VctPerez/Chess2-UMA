@@ -82,9 +82,9 @@ public class ModifiedManScreen extends AbstractScreen{ //Literalmente copiado de
         String text="";
 
         if(configReader.leerLinea(1).equals("esp/")) {
-            text+=languageReader.leerTramo(5, 187);
+            text+=languageReader.leerTramo(5, 85);
         }else {
-            text+=languageReader.leerTramo(5, 184);
+            text+=languageReader.leerTramo(5, 87);
         }
 
         Label label = new Label(text, new Label.LabelStyle(new BitmapFont(), Color.WHITE));

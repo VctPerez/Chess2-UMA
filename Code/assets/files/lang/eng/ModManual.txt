@@ -3,4 +3,85 @@ classic mode
 modified mode
 Manual
 Modified Mode:
-We gotta fill this now
+
+ Joker:
+  Inicially has the Bishop movements
+ and each time it moves, it copies
+ only the movements of a random piece
+ of the classic ones except for the king.
+   
+ Rider:
+  The rider has the movements of the horse 
+ but more offensive, on the other hand, 
+ he loses the defensive ability with 
+ more limited movements.
+
+ Bomber:
+  Moves only to adyacent tiles without
+ diagonal moves, if it captures an 
+ enemy piece it will explode removing
+ itself and the adyacents pieces from the
+ table.
+
+ Warden:
+  The Warden loses the ability to do the
+ double move when leaving your starting 
+ rowas the pawns have, but instead, 
+ they have the ability to move back 1 tile 
+ to then be forced to jump 2, they can eat
+ other pieces as a pawn can.
+
+ Lancer:
+  Inverse and similar movements as the 
+ pawn,moves diagonally and eats the 
+ piece located is in front of it, 
+ when leaving your row original can 
+ do double movement.
+  
+ Midas:
+  Start with a set of movements in
+ cross shape, being able to move 1 alone
+ square, when eating 1 piece "evolves"
+ and adopts the movement of 1 square in
+ each direction and when eating 2 more
+ pieces gets its final form by expanding 
+ its range.
+
+ Valkyrie:
+  The Valkyrie mixes the Knight and the
+ Bishop, she can jump as a Knight and
+ can also move in the same direction
+ that she jumps.
+
+ Miner:
+  His first move is somewhat offensive
+ since it is positioned very close to the set
+ of enemy pieces. Then he maintains a
+ series of moves that allow you to jump
+ and conquer pieces along the board.
+
+ Mage:
+  Moves like the king but not forwards
+ or backwards.
+ He can move to the same tile to charge his ki.
+ When charged he can move further.
+ He will stay charged 2 moves or until he moves.
+ 
+ Colossus:
+  It moves like a classic rook, but
+ limited to 3 cells, cannot eat
+ or be eaten, except for the king, the
+ only piece capable of eating it.
+ 
+ Paladin:
+  It moves and eats like a bishop,
+ but the movement are more
+ limited, also as a special move
+ if it hasn't moved, he can use
+ his sword to attack in area.
+ 
+  Witch:
+  Moves like the clasic king, 1 cell
+ in every direction, but has the ability
+ to throw fireballs at a distance in a
+ diamond-shaped area around her.
