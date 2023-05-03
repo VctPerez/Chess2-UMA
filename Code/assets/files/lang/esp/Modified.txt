@@ -58,3 +58,9 @@
  su ki.
  Con su ki cargado puede moverse más lejos.
  Seguirá cargado 2 turnos o hasta que se mueva.
+ 
+ Coloso
+  Se mueve como una torre clasica, pero 
+ limitada a 3 casillas, no puede comer
+ ni ser comido, salvo por el rey, la 
+ u´nica pieza capaz de comerlo.
