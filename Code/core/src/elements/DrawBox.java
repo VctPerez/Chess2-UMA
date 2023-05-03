@@ -27,7 +27,6 @@ public class DrawBox extends Actor{
 		check.addListener(new ClickListener() {
     		@Override
     		public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-    			
     			try{
     				if(Render.hosting) {
 	    				Render.host.sendMessage("ACEPTAR");
@@ -56,7 +55,7 @@ public class DrawBox extends Actor{
 	    			}else {
 	    				Render.guest.sendMessage("RECHAZAR");
 	    			}
-    				Render.GameScreen.draw.setTouchable(Touchable.enabled);
+    				Render.ONLINEGAMESCREEN.draw.setTouchable(Touchable.enabled);
     			}catch(IOException e) {
     				e.printStackTrace();
     			}
