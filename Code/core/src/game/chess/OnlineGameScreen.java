@@ -1,5 +1,7 @@
 package game.chess;
 
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import elements.DropDownMenu;
 import elements.Tile;
 import utils.Parser;
@@ -10,46 +12,51 @@ import java.io.IOException;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import utils.TextButton;
 
 public class OnlineGameScreen extends GameScreen {
-	private boolean finished = false;
-	
+	public TextButton draw;
+
 	@Override
 	public void show() {
 		super.show();
-		InputMultiplexer inputMultiplexer = new InputMultiplexer();
-		inputMultiplexer.addProcessor(stage);
-		inputMultiplexer.addProcessor(Render.inputs);
-		     
-		Gdx.input.setInputProcessor(inputMultiplexer);
+		draw = new TextButton(languageReader.leerLinea(5), "SingleClickStyle");
+		draw.addListener(new ClickListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				try {
+					if (Render.hosting) {
+						System.out.println("HOST ENVIA EMPATE");
+						Render.host.sendMessage("EMPATE");
+						draw.setTouchable(Touchable.disabled);
+					} else {
+						System.out.println("GUEST ENVIA EMPATE");
+						Render.guest.sendMessage("EMPATE");
+					}
+
+				}catch (IOException e) {
+					e.printStackTrace();
+				}
+				return true;
+			}
+		});
+		table.add(draw).right().padRight(47).expandX();
+		table.row();
+		stage.addActor(table);
 	}
 
 	@Override
 	public void render(float delta) {
 		super.render(delta);
-		checkDraw();
+		if(showPopup) draw.clearListeners();
 		try {
-			if (!finished) {
-				if (!whiteCheckMate && !blackCheckMate)
-					updateOnlineBoard();
-//				} else {
-//					finished = true;
-//					if (Render.hosting) {
-//						Render.host.stopHosting();
-//					} else {
-//						Render.guest.disconnect();
-//					}
-//				}
-			}
+			if (!whiteCheckMate && !blackCheckMate)
+				updateOnlineBoard();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void checkDraw() {
-		
-		
-	}
 
 	@Override
 	protected void checkPromotion(float next_x, float next_y) {
@@ -131,10 +138,7 @@ public class OnlineGameScreen extends GameScreen {
 						whiteCheckMate = true;
 					} else if (Render.guest.getMessage().equals("EMPATE")) {
 						System.out.println("GUEST RECIBE EMPATE");
-						dbox.toFront();
-						draw.setTouchable(Touchable.disabled);
-						stage.addActor(dbox.getCheck()); 
-						stage.addActor(dbox.getCross());
+						askDraw();
 					} else if(Render.guest.getMessage().equals("ACEPTAR")) {
 						results.setDraw();
 						showPopup = true;	
@@ -159,16 +163,13 @@ public class OnlineGameScreen extends GameScreen {
 						blackCheckMate = true;
 					} else if(Render.host.getMessage().equals("EMPATE")) {
 						System.out.println("HOST RECIBE EMPATE");
-						dbox.toFront();
-						draw.setTouchable(Touchable.disabled);
-						stage.addActor(dbox.getCheck()); 
-						stage.addActor(dbox.getCross());
+						askDraw();
 					}else if(Render.host.getMessage().equals("ACEPTAR")) {
 						results.setDraw();
 						showPopup = true;
 						blackCheckMate = true;
 					}else if(Render.host.getMessage().equals("RECHAZAR")){
-						
+						draw.setTouchable(Touchable.enabled);
 					}else {
 						System.out.println("movimiento de negras: " + Render.host.getMessage());
 						Parser.parseStringToMovement(Render.host.getMessage());
@@ -188,10 +189,7 @@ public class OnlineGameScreen extends GameScreen {
 						blackCheckMate = true;
 					}else if(Render.guest.getMessage().equals("EMPATE")) {
 						System.out.println("GUEST RECIBE EMPATE");
-						dbox.toFront();
-						draw.setTouchable(Touchable.disabled);
-						stage.addActor(dbox.getCheck()); 
-						stage.addActor(dbox.getCross());
+						askDraw();
 					}else if(Render.guest.getMessage().equals("ACEPTAR")) {
 						results.setDraw();
 						showPopup = true;
@@ -208,10 +206,7 @@ public class OnlineGameScreen extends GameScreen {
 						whiteCheckMate = true;
 					}else if(Render.host.getMessage().equals("EMPATE")) {
 						System.out.println("GUEST RECIBE EMPATE");
-						dbox.toFront();
-						draw.setTouchable(Touchable.disabled);
-						stage.addActor(dbox.getCheck()); 
-						stage.addActor(dbox.getCross());
+						askDraw();
 					}else if(Render.host.getMessage().equals("ACEPTAR")) {
 						results.setDraw();
 						showPopup = true;
@@ -236,6 +231,16 @@ public class OnlineGameScreen extends GameScreen {
 			System.out.println(currentTile_validMovements.toString());
 			isPieceSelected = true;
 		}
+	}
+
+	/**
+	 * Establece los botones para apectar o rechazar el empate
+	 */
+	private void askDraw(){
+		dbox.toFront();
+		draw.setTouchable(Touchable.disabled);
+		stage.addActor(dbox.getCheck());
+		stage.addActor(dbox.getCross());
 	}
 
 }
