@@ -64,12 +64,10 @@ public class Mage extends Piece {
         if(nextTile.getPiece()!=null) {
             nextTilePiece = nextTile.getPiece();
         }
-        System.out.println("SIMULATING MAGE MOVE: ["+move.x+", "+move.y+"]");
         currentTile.simulateMoveTo(nextTile);
 
         //check king
         if(color && !isKingSafe(GameScreen.blackPieces, new Vector2(move.x, move.y))) {
-        	System.out.println("MAGE NOT SAFE: ["+move.x+", "+move.y+"]");
             removeMovements.add(move);
         }else if(!color && !isKingSafe(GameScreen.whitePieces, new Vector2(move.x, move.y))) {
             removeMovements.add(move);

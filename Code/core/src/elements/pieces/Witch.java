@@ -17,10 +17,10 @@ import utils.AnimationActor;
 import utils.Render;
 import utils.Resources;
 
-public class Catapult extends Piece{
+public class Witch extends Piece{
 	ArrayList<Vector2> attacks;
 
-	public Catapult(Boolean color, int x, int y,Board board) {
+	public Witch(Boolean color, int x, int y,Board board) {
 		super(color, Render.app.getManager().get(Resources.WITCH_PATH, Texture.class), x ,y,board);
 		attacks = new ArrayList<>();
 		}
@@ -76,25 +76,64 @@ public class Catapult extends Piece{
 	}
 	
 	public void attack(final float next_x, final float next_y) {
-		Action attackSfx = new Action() {
+		Action fireBall = new Action() {
+			public boolean act(float delta) {
+				Tile tile = board.getTile(next_x, next_y);
+				AnimationActor attack= new AnimationActor(0.13f, "fireBall.png", 5);
+				attack.setOrigin(attack.getWidth()/2, attack.getHeight()/2);
+		
+				float rotation = (float) Math.atan((tile.getY() -  getY())/(tile.getX() - getX()));
+				rotation = (float)(180*rotation/Math.PI);
+				
+				if(tile.getX()>=getX() ) {
+					rotation+=180;
+					if(tile.getY() <= getY()) {
+						attack.setPosition(getX()+5*tile.getWidth()/6, getY());
+						attack.addAction(Actions.moveTo(tile.getX()+5*tile.getWidth()/6, tile.getY()+3*tile.getWidth()/4, 0.6f));
+					}else {
+						attack.setPosition(getX()+tile.getWidth()/6, getY()+3*tile.getWidth()/4);
+						attack.addAction(Actions.moveTo(tile.getX()+tile.getWidth()/6, tile.getY()+3*tile.getWidth()/4, 0.6f));
+					}
+				}else {
+					if(tile.getY() <= getY()) {
+						attack.setPosition(getX()+5*tile.getWidth()/6, getY());
+						attack.addAction(Actions.moveTo(tile.getX()+5*tile.getWidth()/6, tile.getY()+tile.getWidth()/4, 0.6f));
+					}else {
+						attack.setPosition(getX()+tile.getWidth()/6, getY()+3*tile.getWidth()/4);
+						attack.addAction(Actions.moveTo(tile.getX()+tile.getWidth()/6, tile.getY()+tile.getWidth()/4, 0.6f));						
+					}
+				}
+				
+				attack.rotateBy(rotation);
+				attack.setSize(8*21, 8*7);
+				Render.GameScreen.stage.addActor(attack);
+				return true;
+			}
+		};
+		
+		Action explosionSfx = new Action() {
 			Sound sound = Render.app.getManager().get(Resources.EXPLOSION_SOUND, Sound.class);
 
 			public boolean act(float delta) {
-				AnimationActor attack= new AnimationActor(0.13f, "explosion.png", 5);
-				attack.setPosition(getX()-board.getTile(x, y).getWidth(), getY()-board.getTile(x, y).getWidth());
-				attack.setSize(3*board.getTile(x, y).getWidth(), 3*board.getTile(x, y).getWidth());
+				Tile tile = board.getTile(next_x, next_y);
+				AnimationActor explosion= new AnimationActor(0.16f, "explosion.png", 5);
+				explosion.setPosition(tile.getX(), tile.getY());
+				explosion.setSize(board.getTile(x, y).getWidth(), board.getTile(x, y).getWidth());
 				
-				Render.GameScreen.stage.addActor(attack);
+				Render.GameScreen.stage.addActor(explosion);
 				sound.play(0.5f);
 				return true;
 			}
-		};Action attackTile = new Action() {
+		};
+		
+		Action attackTile = new Action() {
 			public boolean act(float delta) {
 				board.getTile(next_x, next_y).sendPieceToGraveyard();
 				return true;
 			}
 		};
-		addAction(Actions.after(attackSfx));
+		addAction(Actions.after(fireBall));
+		addAction(Actions.sequence(Actions.delay(1.5f), explosionSfx));
 		addAction(Actions.after(attackTile));
 	}
 	

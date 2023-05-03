@@ -63,7 +63,7 @@ public class Parser {
 			piece = new Miner(color, x, y, board);
 			break;
 		case Resources.WITCH_PATH:
-			piece = new Catapult(color, x, y, board);
+			piece = new Witch(color, x, y, board);
 			break;
 		case Resources.VALKYRIE_PATH:
 			piece = new Valkyrie(color,x,y,board);

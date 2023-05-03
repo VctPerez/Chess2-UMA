@@ -682,7 +682,7 @@ public class GameScreen extends AbstractScreen {
 		Render.player2Draft.add(Resources.RIDER_PATH);
 		Render.player2Draft.add(Resources.ROOK_PATH);
 		Render.player2Draft.add(Resources.RND_PATH);
-		Render.player2Draft.add(Resources.QUEEN_PATH);
+		Render.player2Draft.add(Resources.WITCH_PATH);
 		Render.player2Draft.add(Resources.MIDAS_PATH);
 	}
 	

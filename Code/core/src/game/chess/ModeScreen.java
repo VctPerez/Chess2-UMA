@@ -54,6 +54,7 @@ public class ModeScreen extends AbstractMenuScreen{
 	@Override
 	protected void selectScreen(int button) {
     	if(button == 0) {
+    		Render.DRAFTSCREEN=new DraftScreen();
     		Render.app.setScreen(Render.DRAFTSCREEN);
     	}else if(button == 1) {
     		Render.app.setScreen(new GameScreen());
