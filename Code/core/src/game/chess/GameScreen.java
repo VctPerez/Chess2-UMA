@@ -35,11 +35,10 @@ public class GameScreen extends AbstractScreen {
 	public static Tile nextTile = null;
 
 	//UI partida
-	private Table table;
+	protected Table table;
 	protected TextButton surrender;
-	public TextButton draw;
 	public DrawBox dbox;
-	private LectorLineas languageReader, configReader;
+	protected LectorLineas languageReader, configReader;
 	private Timer TimerW, TimerB;
 
 	// ----------------------------
@@ -130,7 +129,7 @@ public class GameScreen extends AbstractScreen {
 
 		createTableElements();
 		setupTable();
-		stage.addActor(table);
+		if(Render.DraftController != 3)	stage.addActor(table);
 		testDrafts();
 
 		placeWhites(Render.player1Draft);
@@ -155,8 +154,7 @@ public class GameScreen extends AbstractScreen {
 		table.add(TimerB).top().right().pad(20).expandX().expandY();
 		table.row();
 		table.add(surrender).left().padLeft(21).expandX();
-		table.add(draw).right().padRight(47).expandX();
-		table.row();
+		if(Render.DraftController != 3) table.row();
 
 	}
 
@@ -166,26 +164,7 @@ public class GameScreen extends AbstractScreen {
 	private void createTableElements() {
 		TimerW = new Timer(300, "blanco", Render.skin, "default");
 		TimerB = new Timer(300, "negro", Render.skin, "default");
-		draw = new TextButton(languageReader.leerLinea(5), "SingleClickStyle");
-		draw.addListener(new ClickListener() {
-    		@Override
-    		public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-    			System.out.println("TOCADO");
-    			try {
-    				if (Render.hosting) {
-    					System.out.println("HOST ENVIA EMPATE");
-    					Render.host.sendMessage("EMPATE");
-    				} else {
-    					System.out.println("GUEST ENVIA EMPATE");
-    					Render.guest.sendMessage("EMPATE");
-    				}
 
-    			}catch (IOException e) {
-    				e.printStackTrace();
-    			}
-    			return true;
-    		}
-    	});
 		surrender = new TextButton(languageReader.leerLinea(4), "SingleClickStyle");
 	}
 	
@@ -212,7 +191,6 @@ public class GameScreen extends AbstractScreen {
 		checkSurrender();
 		if (showPopup) {
 			//Para que no se pueda interaccionar con nada despues de que se muestre el popup
-			draw.clearListeners();
 			surrender.clearListeners();
 			//------------------------------------------------------------------------------
 			results.Show();
