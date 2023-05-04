@@ -23,7 +23,7 @@ public class Joker extends Piece{
 	private Image mask;
 
 	public Joker(Boolean color, int x, int y,Board board) {
-		super(color, Render.app.getManager().get(Resources.RND_PATH, Texture.class), x, y,board);
+		super(color, Resources.RND_PATH, x, y,board);
 		current = new Bishop(color,x,y,board);
 		if(color) {
 			mask = new Image(Render.player1Draft.get(0));
