@@ -81,6 +81,7 @@ public class Chess2 extends Game {
 
 		// MUSIC & SOUNDS
 		manager.load(Resources.MENU_THEME, Music.class);
+		manager.load(Resources.PIECESELECTION_SOUND, Sound.class);
 		manager.load(Resources.PIECEMOVE_SOUND, Sound.class);
 		manager.load(Resources.EXPLOSION_SOUND, Sound.class);
 		manager.load(Resources.PALADINSWING_SOUND, Sound.class);

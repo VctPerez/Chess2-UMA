@@ -2,6 +2,7 @@ package game.chess;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -797,10 +798,11 @@ public class GameScreen extends AbstractScreen {
 				tile.addCaptureListener(new InputListener() {
 					@Override
 					public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-						if(tile.getPiece()!=null) {
-							System.out.println(tile.getPiece().toString());
-						}
 						if (!promoting) {
+							if(tile.getPiece()!=null && tile.getPiece().color() == PLAYER) {
+								Sound sound = Render.app.getManager().get(Resources.PIECESELECTION_SOUND, Sound.class);
+								sound.play(0.5f);
+							}
 							update(tile);
 						}
 						return true;

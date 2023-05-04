@@ -18,6 +18,7 @@ public class Resources {
     public static final String MENU_THEME = "menuTheme.ogg";
     public static final String TEXTBUTTON_HOVERSOUND = "sound/buttonMouseOverSound.mp3";
     public static final String TEXTBUTTON_CLICKSOUND = "sound/buttonClickedSound.mp3";
+    public static final String PIECESELECTION_SOUND = "sound/SeleccionPieza.mp3";
     public static final String PIECEMOVE_SOUND = "sound/pieceMove.mp3";
     public static final String PALADINSWING_SOUND = "sound/paladinSwing.mp3";
     public static final String VALKYRIEFLY_SOUND = "sound/Valkyrie_flap.mp3";

@@ -48,7 +48,6 @@ public class DrawBox extends Actor{
 		cross.addListener(new ClickListener() {
     		@Override
     		public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-    			System.out.println("TOCADO");
     			try{
     				if(Render.hosting) {
 	    				Render.host.sendMessage("RECHAZAR");
