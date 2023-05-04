@@ -110,7 +110,7 @@ public class GameScreen extends AbstractScreen {
 		whitePieces = new ArrayList<>();
 		blackPieces = new ArrayList<>();
 		graveyardWhite = new Graveyard(21, 21);
-		graveyardBlack = new Graveyard(1280 - 63, 21);
+		graveyardBlack = new Graveyard(1280 -100, 21);
 		
 
 		// Crear mensaje emergente tras terminar partida
@@ -152,10 +152,10 @@ public class GameScreen extends AbstractScreen {
 		table.left().pad(50);
     	table.defaults().left().space(40);
 
-		table.add(TimerW).top().left().pad(20).expandX().expandY();
-		table.add(TimerB).top().right().pad(20).expandX().expandY();
+		table.add(TimerW).top().left().pad(80).expandX().expandY();
+		table.add(TimerB).top().right().pad(80).expandX().expandY();
 		table.row();
-		table.add(surrender).left().padLeft(21).expandX();
+		table.add(surrender).left().padLeft(70).expandX();
 		if(Render.DraftController != 3) table.row();
 
 	}
@@ -168,6 +168,7 @@ public class GameScreen extends AbstractScreen {
 		TimerB = new Timer(300, "negro", Render.skin, "default");
 		draw = new TextButton(languageReader.leerLinea(5), "SingleClickStyle");
 		surrender = new TextButton(languageReader.leerLinea(4), "SingleClickStyle");
+		surrender.getLabel().setFontScale(0.75f);
 	}
 	
 	public void checkSurrender() {
