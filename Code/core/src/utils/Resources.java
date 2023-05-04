@@ -13,10 +13,11 @@ public class Resources {
     public static final String RESULTS_BACKGROUND_PATH = "sprites/resultBackground.png";
     public static final String FONT_MENU_PATH = "fonts/Arial.ttf";
     public static final String LOGO_PATH="logo_blanco.png";
-    public static final String TEXT_BOX_PATH = "";
-    
+    public static final String PIXEL_LOGO_PATH = "sprites/loadingScreen/pixelLogo.png";
+    public static final String LOADINGTITLE_PATH = "sprites/loadingScreen/loadingTitle.png";
+
     //SONIDOS
-    public static final String MENU_THEME = "menuTheme.ogg";
+    public static final String MENU_THEME = "sound/menuTheme.ogg";
     public static final String PIECESELECTION_SOUND = "sound/SeleccionPieza.mp3";
     public static final String PIECEMOVE_SOUND = "sound/pieceMove.mp3";
     public static final String BUTTON_CLICKSOUND = "sound/Hit_D_-30cents.wav";

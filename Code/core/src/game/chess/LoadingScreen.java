@@ -1,68 +1,54 @@
 package game.chess;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import utils.Image;
 import utils.Render;
 import utils.Resources;
+import utils.Settings;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 public class LoadingScreen extends AbstractScreen{
-    Image background;
-    ArrayList<Sound> sounds;
-    int indexSound = new Random().nextInt(4);
-    float wait, increase;
+    private Stage stage;
+    private Table table;
+    private Image title, logo;
     @Override
     public void show() {
-        background = new Image(Render.app.getManager().get(Resources.LOADINGSCREEN_PATH, Texture.class));
-        background.setSize(Render.SCREEN_WIDTH, Render.SCREEN_HEIGHT);
-        sounds = new ArrayList<>();
-        sounds.add(Render.app.getManager().get(Resources.LODINGSOUND1, Sound.class));
-        sounds.add(Render.app.getManager().get(Resources.LODINGSOUND2, Sound.class));
-        sounds.add(Render.app.getManager().get(Resources.LODINGSOUND3, Sound.class));
-        sounds.add(Render.app.getManager().get(Resources.LODINGSOUND4, Sound.class));
-        selectParams();
-        //sounds.get(indexSound).play();
+        stage = new Stage(new FitViewport(Render.SCREEN_WIDTH, Render.SCREEN_HEIGHT));
+        table = new Table();
+        table.setFillParent(true);
+        stage.addActor(Render.menuBG);
+        title = new Image(Resources.LOADINGTITLE_PATH);
+        title.setSize(400* Gdx.graphics.getWidth()/ 1280f,100*Gdx.graphics.getHeight() / 720f);
+        logo = new Image(Resources.PIXEL_LOGO_PATH);
+        logo.setSize(256* Gdx.graphics.getWidth()/ 1280f,256*Gdx.graphics.getHeight() / 720f);
+        table.add(title);
+        table.add(logo);
+        stage.addActor(table);
+
+        Render.bgMusic = Render.app.getManager().get(Resources.MENU_THEME);
+        Render.bgMusic.setLooping(true);
+        Render.bgMusic.setVolume(Settings.musicVolume);
+        Render.bgMusic.play();
     }
 
     @Override
     public void render(float delta) {
         Render.clearScreen();
-        update();
-        Render.Batch.begin();
-        background.draw(Render.Batch, 0);
-        Render.Batch.end();
+        stage.draw();
+        stage.act();
     }
 
     private void update(){
-        if(Render.app.getManager().update() && (background.fader(wait,increase) || Render.inputs.keyDown(Input.Keys.BACKSPACE))){
-            sounds.get(indexSound).stop();
-            Render.app.setScreen(Render.MAINSCREEN);
+        if(Render.app.getManager().update() ){
         }
-    }
-    private void selectParams(){
-        switch (indexSound){
-            case 0:
-                wait = 3;
-                increase = 0.0075f;
-                break;
-            case 1:
-                wait = 2.3f;
-                increase = 0.003f;
-                break;
-            case 2:
-                wait = 2.3f;
-                increase = 0.005f;
-                break;
-            case 3:
-                wait = 5f;
-                increase = 0.005f;
-                break;
-        }
-
     }
 
     @Override
