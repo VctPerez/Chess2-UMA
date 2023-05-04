@@ -174,7 +174,6 @@ public class Tile extends Actor{
 	
 	@Override
 	public boolean equals(Object obj) {
-		System.out.println(obj instanceof Tile);
 		return (obj instanceof Tile && (this.getPos().equals(((Tile) obj).getPos())));
 		
 	}

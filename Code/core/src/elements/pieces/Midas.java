@@ -28,7 +28,7 @@ public class Midas extends Piece {
 	protected void updateXY(int x, int y) {
 		board.getTile(this.x, this.y).attacked = false;
 		
-		updateSprite(super.ate);
+		updateSprite(ate);
 		super.updateXY(x, y);
 		
 		
