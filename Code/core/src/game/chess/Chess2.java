@@ -68,33 +68,31 @@ public class Chess2 extends Game {
 		manager.load(Resources.VALKYRIE_ANIMATION1_PATH, Texture.class);
 		manager.load(Resources.VALKYRIE_ANIMATION2_PATH, Texture.class);
 		//Black pieces
-		manager.load(Resources.PAWN_PATH, Texture.class);
-		manager.load(Resources.LANCER_PATH, Texture.class);
-		manager.load(Resources.BISHOP_PATH, Texture.class);
-		manager.load(Resources.QUEEN_PATH, Texture.class);
-		manager.load(Resources.KING_PATH, Texture.class);
-		manager.load(Resources.ROOK_PATH, Texture.class);
-		manager.load(Resources.KNIGHT_PATH, Texture.class);
-		manager.load(Resources.RIDER_PATH, Texture.class);
-		manager.load(Resources.ARROW_PATH, Texture.class);
-		manager.load(Resources.PIECE_DISPOSER_PATH,Texture.class);
-		manager.load(Resources.BOMBER_PATH, Texture.class);
-		manager.load(Resources.WARDEN_PATH, Texture.class);
-		manager.load(Resources.PALADIN_PATH, Texture.class);
-		manager.load(Resources.MIDAS_PATH, Texture.class);
-		manager.load(Resources.MIDAS_PATH2, Texture.class);
-		manager.load(Resources.MIDAS_PATH3, Texture.class);
-		manager.load(Resources.PALADIN_PATH, Texture.class);
-		manager.load(Resources.COLOSUS_PATH, Texture.class);
-		manager.load(Resources.MINER_PATH, Texture.class);
-		manager.load(Resources.WITCH_PATH, Texture.class);
-		manager.load(Resources.MAGE_PATH,Texture.class);
-		manager.load(Resources.MAGE_PATH2,Texture.class);
-		manager.load(Resources.RND_PATH,Texture.class);
+		manager.load(Resources.BLACK_PAWN_PATH, Texture.class);
+		manager.load(Resources.BLACK_LANCER_PATH, Texture.class);
+		manager.load(Resources.BLACK_BISHOP_PATH, Texture.class);
+		manager.load(Resources.BLACK_QUEEN_PATH, Texture.class);
+		manager.load(Resources.BLACK_KING_PATH, Texture.class);
+		manager.load(Resources.BLACK_ROOK_PATH, Texture.class);
+		manager.load(Resources.BLACK_KNIGHT_PATH, Texture.class);
+		manager.load(Resources.BLACK_RIDER_PATH, Texture.class);
+		manager.load(Resources.BLACK_BOMBER_PATH, Texture.class);
+		manager.load(Resources.BLACK_WARDEN_PATH, Texture.class);
+		manager.load(Resources.BLACK_PALADIN_PATH, Texture.class);
+		manager.load(Resources.BLACK_MIDAS_PATH, Texture.class);
+		manager.load(Resources.BLACK_MIDAS_PATH2, Texture.class);
+		manager.load(Resources.BLACK_MIDAS_PATH3, Texture.class);
+		manager.load(Resources.BLACK_PALADIN_PATH, Texture.class);
+		manager.load(Resources.BLACK_COLOSUS_PATH, Texture.class);
+		manager.load(Resources.BLACK_MINER_PATH, Texture.class);
+		manager.load(Resources.BLACK_WITCH_PATH, Texture.class);
+		manager.load(Resources.BLACK_MAGE_PATH,Texture.class);
+		manager.load(Resources.BLACK_MAGE_PATH2,Texture.class);
+		manager.load(Resources.BLACK_RND_PATH,Texture.class);
 		
-		manager.load(Resources.VALKYRIE_PATH, Texture.class);
-		manager.load(Resources.VALKYRIE_ANIMATION1_PATH, Texture.class);
-		manager.load(Resources.VALKYRIE_ANIMATION2_PATH, Texture.class);
+		manager.load(Resources.BLACK_VALKYRIE_PATH, Texture.class);
+		manager.load(Resources.BLACK_VALKYRIE_ANIMATION1_PATH, Texture.class);
+		manager.load(Resources.BLACK_VALKYRIE_ANIMATION2_PATH, Texture.class);
 
 		manager.load(Resources.FRAME_PATH, Texture.class);
 
