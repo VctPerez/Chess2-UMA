@@ -17,10 +17,10 @@ public class Resources {
     
     //SONIDOS
     public static final String MENU_THEME = "menuTheme.ogg";
-    public static final String TEXTBUTTON_HOVERSOUND = "sound/buttonMouseOverSound.mp3";
-    public static final String TEXTBUTTON_CLICKSOUND = "sound/buttonClickedSound.mp3";
     public static final String PIECESELECTION_SOUND = "sound/SeleccionPieza.mp3";
     public static final String PIECEMOVE_SOUND = "sound/pieceMove.mp3";
+    public static final String BUTTON_CLICKSOUND = "sound/Hit_D_-30cents.wav";
+    public static final String BUTTON_HOVERSOUND = "sound/Hover_A_-30cents.wav";
     public static final String PALADINSWING_SOUND = "sound/paladinSwing.mp3";
     public static final String VALKYRIEFLY_SOUND = "sound/Valkyrie_flap.mp3";
     public static final String EXPLOSION_SOUND = "sound/bomberExplosion.mp3";
@@ -36,8 +36,8 @@ public class Resources {
     public static final String SELECTEDBAR_PATH = "sprites/volumeBar/volumeBar_selected(x2Size).png";
     public static final String UNSELECTEDBAR_PATH = "sprites/volumeBar/volumeBar_unselected(x2Size).png";
 
-    public static final String CHECKBOX_SELECTED = "sprites/checkBox/checkBox_selected.png";
-    public static final String CHECKBOX_UNSELECTED = "sprites/checkBox/checkBox_unselected.png";
+//    public static final String CHECKBOX_SELECTED = "sprites/checkBox/checkBox_selected.png";
+//    public static final String CHECKBOX_UNSELECTED = "sprites/checkBox/checkBox_unselected.png";
     //public static final String CHECK_PATH = "sprites/Testing-Pieces/Testing-Pawn.png";
 
     public static final String SKIN_PATH = "Skin Composer/UIStyle.json";
@@ -68,6 +68,32 @@ public class Resources {
     public static final String VALKYRIE_ANIMATION2_PATH = "sprites/Pieces/Pieces Modified/White_Valkyrie3.png";
     public static final String MAGE_PATH = "sprites/Pieces/Pieces Modified/White_Mage.png";
     public static final String MAGE_PATH2 = "sprites/Pieces/Pieces Modified/White_Mage2.png";
+
+    public static final String BLACK_PAWN_PATH = "sprites/Pieces/Pieces Base Form/Black_Pawn.png";
+    public static final String BLACK_KNIGHT_PATH = "sprites/Pieces/Pieces Base Form/Black_Knight.png";
+    public static final String BLACK_BISHOP_PATH = "sprites/Pieces/Pieces Base Form/Black_Bishop.png";
+    public static final String BLACK_ROOK_PATH = "sprites/Pieces/Pieces Base Form/Black_Rook.png";
+    public static final String BLACK_QUEEN_PATH = "sprites/Pieces/Pieces Base Form/Black_Queen.png";
+    public static final String BLACK_KING_PATH = "sprites/Pieces/Pieces Base Form/Black_King.png";
+
+    public static final String BLACK_LANCER_PATH = "sprites/Pieces/Pieces Modified/Black_Lancer.png";
+    public static final String BLACK_RIDER_PATH = "sprites/Pieces/Pieces Modified/Black_Rider.png";
+    public static final String BLACK_BOMBER_PATH = "sprites/Pieces/Pieces Modified/Black_Bomber.png";
+    public static final String BLACK_WARDEN_PATH = "sprites/Pieces/Pieces Modified/Black_Warden.png";
+    public static final String BLACK_PALADIN_PATH = "sprites/Pieces/Pieces Modified/Black_Paladin.png";
+    public static final String BLACK_RND_PATH = "sprites/Pieces/Pieces Modified/Black_Joker.png";
+    public static final String BLACK_MIDAS_PATH = "sprites/Pieces/Pieces Modified/Black_Midas.png";
+    public static final String BLACK_MIDAS_PATH2= "sprites/Pieces/Pieces Modified/Black_Midas1.png";
+    public static final String BLACK_MIDAS_PATH3= "sprites/Pieces/Pieces Modified/Black_Midas2.png";
+
+    public static final String BLACK_COLOSUS_PATH = "sprites/Pieces/Pieces Modified/Black_Colosus.png";
+    public static final String BLACK_MINER_PATH = "sprites/Pieces/Pieces Modified/Black_Miner.png";
+    public static final String BLACK_WITCH_PATH = "sprites/Pieces/Pieces Modified/Black_Witch.png";
+    public static final String BLACK_VALKYRIE_PATH = "sprites/Pieces/Pieces Modified/Black_Valkyrie1.png";
+    public static final String BLACK_VALKYRIE_ANIMATION1_PATH = "sprites/Pieces/Pieces Modified/Black_Valkyrie2.png";
+    public static final String BLACK_VALKYRIE_ANIMATION2_PATH = "sprites/Pieces/Pieces Modified/Black_Valkyrie3.png";
+    public static final String BLACK_MAGE_PATH = "sprites/Pieces/Pieces Modified/Black_Mage.png";
+    public static final String BLACK_MAGE_PATH2 = "sprites/Pieces/Pieces Modified/Black_Mage2.png";
     
     public static final String FRAME_PATH = "sprites/selectionFrame.png";
     public static final String ARROW_PATH = "sprites/Arrow.png";

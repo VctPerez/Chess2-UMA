@@ -1,11 +1,15 @@
 package game.chess;
 
 
+import java.awt.Graphics;
+
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Graphics.DisplayMode;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -32,6 +36,7 @@ public class ConfigScreen extends AbstractScreen {
     private TextField[] textField;
     private TextButton[] textButton;
     private SelectBox<String> selectBox;
+    private CheckBox checkBox;
     
     private Table rootTable;
     private Table optionsTable;
@@ -139,10 +144,11 @@ public class ConfigScreen extends AbstractScreen {
      */
     private void createTableElements() {
 	
-    	label = new Label[3];
+    	label = new Label[4];
     	slider = new Slider[2];
     	textField = new TextField[2];
     	textButton = new TextButton[3];
+    	
     	
     	//LABELS
     	for(int i = 0; i < label.length ; i++) {
@@ -158,9 +164,14 @@ public class ConfigScreen extends AbstractScreen {
     		textField[i].setDisabled(true);
     		
     		textButton[i] = new TextButton("","SingleClickStyle");
+    		textButton[i].addSounds();
     	}
     	textButton[2] = new TextButton("","SingleClickStyle");
 		textButton[2].setVisible(false);
+		textButton[2].addSounds();
+		
+		checkBox = new CheckBox("", Render.skin);
+		
     	//SELECTBOX
     	selectBox = new SelectBox<String>(Render.skin);
     	selectBox.setItems("","");
@@ -191,6 +202,10 @@ public class ConfigScreen extends AbstractScreen {
     	rootTable.row();
     	
     	rootTable.add(label[2]).left().spaceBottom(50);
+    	rootTable.add(checkBox).space(25).colspan(2).top();
+    	rootTable.row();
+    	
+    	rootTable.add(label[3]).left().spaceBottom(50);
     	rootTable.add(selectBox).space(25).fillX().colspan(2);
     	rootTable.row();
     	
@@ -210,7 +225,10 @@ public class ConfigScreen extends AbstractScreen {
     		setVolume(Float.parseFloat(configReader.leerLinea(5 + i)), i);
     	}
     	
-    	setLanguage(Integer.parseInt(configReader.leerLinea(7)));
+    	//FULLSCREEN
+    	setFullscreen(Boolean.parseBoolean(configReader.leerLinea(7)));
+    	
+    	setLanguage(Integer.parseInt(configReader.leerLinea(8)));
     	
     }
     /**
@@ -220,7 +238,8 @@ public class ConfigScreen extends AbstractScreen {
     private void writeSettings() {
 		configWriter.escribirLinea(5, String.valueOf(Settings.reconvertAudioToText(Settings.musicVolume)));
 		configWriter.escribirLinea(6, String.valueOf(Settings.reconvertAudioToText(Settings.sfxVolume)));
-		configWriter.escribirLinea(7, Integer.toString(selectBox.getSelectedIndex() + 1));
+		configWriter.escribirLinea(7, Boolean.toString(checkBox.isChecked()));
+		configWriter.escribirLinea(8, Integer.toString(selectBox.getSelectedIndex() + 1));
 	}
     	// + 1 porque en el archivo de configuracion los idiomas se representan desde la fila 1
     	// En el archivo config.txt cada valor representa un idioma(1_ENG 2_ESP)
@@ -261,17 +280,25 @@ public class ConfigScreen extends AbstractScreen {
     	}
     	
     	for(int i = 0; i < textButton.length; i++) {
-    		textButton[i].setText(languageReader.leerLinea(i+6));
+    		textButton[i].setText(languageReader.leerLinea(i+7));
     	}
 		System.out.println("se deberia haber cambiado el idioma");
-    	selectBox.setItems(languageReader.leerLinea(4),languageReader.leerLinea(5));
+    	selectBox.setItems(languageReader.leerLinea(5),languageReader.leerLinea(6));
     	selectBox.setSelectedIndex(value-1);
     }
+	
+	private void setFullscreen(boolean value) {
+		
+		checkBox.setChecked(value);
+		Settings.setFullscreen(value);
+		//PONE FULLSCREEN
+	}
 
 	private void checkChanges(){
 		if(slider[0].getValue() != configReader.leerFLOATLinea(5) ||
 			slider[1].getValue() != configReader.leerFLOATLinea(6) ||
-				selectBox.getSelectedIndex() + 1 != configReader.leerINTLinea(7)){
+				selectBox.getSelectedIndex() + 1 != configReader.leerINTLinea(8) ||
+				checkBox.isChecked() != Boolean.parseBoolean(configReader.leerLinea(7))){
 
 			textButton[2].setVisible(true);
 		}else{

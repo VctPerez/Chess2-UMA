@@ -16,7 +16,7 @@ public class Bishop extends Piece{
 	private Boolean validDirection;
 	
 	public Bishop(Boolean color, int x, int y, Board board) {
-		super(color, Render.app.getManager().get(Resources.BISHOP_PATH, Texture.class), x, y, board);
+		super(color, Resources.BISHOP_PATH, x, y, board);
 	}
 	
 	

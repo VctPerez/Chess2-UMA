@@ -6,6 +6,8 @@ import java.util.Set;
 
 import com.badlogic.gdx.Audio;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Graphics.DisplayMode;
+import com.badlogic.gdx.Graphics.Monitor;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -32,6 +34,7 @@ public class Render {
     public static OrthographicCamera camera;
 
     public static Viewport viewport;
+    public static Monitor monitor;
     public static Background menuBG;
     public static Skin skin;
     

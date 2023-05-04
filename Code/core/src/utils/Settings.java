@@ -1,5 +1,8 @@
 package utils;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Graphics.DisplayMode;
+
 import exceptions.SettingsException;
 
 /**
@@ -9,6 +12,7 @@ public class Settings {
 
 	public static float musicVolume;
 	public static float sfxVolume;
+	public static boolean fullscreen;
 	public static int language;
 	
 	public static void setLanguage(int value) {
@@ -35,13 +39,23 @@ public class Settings {
 		if(Render.bgMusic != null)Render.bgMusic.setVolume(musicVolume);
 	}
 	
+	public static void setFullscreen(boolean value) {
+		if(value) {
+			DisplayMode displayMode = Gdx.graphics.getDisplayMode(Render.monitor);
+			Gdx.graphics.setFullscreenMode(displayMode);
+		}else {
+			Gdx.graphics.setWindowedMode(1280, 720);
+		}
+	}
+	
 	public static float reconvertAudioToText(float value) {
 		return (float) Math.sqrt((double) value) * 100;
 	}
 	
-	public static void updateSettings(float musicVolume, float sfxVolume, int language) {
+	public static void updateSettings(float musicVolume, float sfxVolume, boolean fullscreen ,int language) {
 		setMusicVolume(musicVolume);
 		setSfxVolume(sfxVolume);
 		setLanguage(language);
+		setFullscreen(fullscreen);
 	}
 }

@@ -1,5 +1,6 @@
 volumen musica
 volumen sfx
+pantalla completa
 idioma
  ingles
  español

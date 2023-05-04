@@ -1,12 +1,7 @@
 package elements.pieces;
 
-import java.util.ArrayList;
-import java.util.Random;
-
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
-
 import elements.Board;
 import elements.Piece;
 import interaccionFichero.LectorLineas;
@@ -14,6 +9,9 @@ import utils.Image;
 import utils.Parser;
 import utils.Render;
 import utils.Resources;
+
+import java.util.ArrayList;
+import java.util.Random;
 
 public class Joker extends Piece{
 	
@@ -23,14 +21,17 @@ public class Joker extends Piece{
 	private Image mask;
 
 	public Joker(Boolean color, int x, int y,Board board) {
-		super(color, Render.app.getManager().get(Resources.RND_PATH, Texture.class), x, y,board);
+		super(color, Resources.RND_PATH, x, y,board);
 		current = new Bishop(color,x,y,board);
-		if(color) {
-			mask = new Image(Render.player1Draft.get(0));
-		}else {
-			mask = new Image(Render.player2Draft.get(0));
+
+		if (!Render.player1Draft.isEmpty()){
+			if(color) {
+				mask = new Image(Render.player1Draft.get(0));
+			}else {
+				mask = new Image(Render.player2Draft.get(0));
+			}
 		}
-		
+
 		this.setSprite(Resources.RND_PATH);
 		prev = new Vector2 (0,0);
 	}
@@ -57,22 +58,22 @@ public class Joker extends Piece{
 		
 		Piece nueva=null;
 		
-		if(i>=1 && i<=30) {
+		if(i<=30) {
 			nueva = Parser.getPieceFromPath(draft.get(3), color, this.x, this.y, board);
 			mask.setImage(draft.get(3));
 			prev.x=1;
 			prev.y=30;
-		}else if(i>=31 && i<=45){
+		}else if(i<=45){
 			nueva = Parser.getPieceFromPath(draft.get(0), color, this.x, this.y, board);
 			mask.setImage(draft.get(0));
 			prev.x=31;
 			prev.y=45;
-		}else if(i>=46 && i<=65){
+		}else if(i<=65){
 			nueva = Parser.getPieceFromPath(draft.get(1), color, this.x, this.y, board);
 			mask.setImage(draft.get(1));
 			prev.x=46;
 			prev.y=65;
-		}else if(i>=66 && i<=80){
+		}else if(i<=80){
 			nueva = Parser.getPieceFromPath(draft.get(4), color, this.x, this.y, board);
 			mask.setImage(draft.get(4));
 			prev.x=66;
@@ -90,6 +91,7 @@ public class Joker extends Piece{
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		super.draw(batch, parentAlpha);
+		if (mask == null) return;
 		mask.setPosition(getX()+getWidth()/2, getY());
 		mask.setSize(getWidth()/2, getHeight()/2);
 		mask.draw(batch, parentAlpha);
@@ -97,10 +99,7 @@ public class Joker extends Piece{
 	
 	/**
 	 * A�ade a movements todos los movimientos posibles del caballo
-	 * 
-	 * @param x
-	 * @param y
-	 * @return
+	 *
 	 */
 	
 	@Override

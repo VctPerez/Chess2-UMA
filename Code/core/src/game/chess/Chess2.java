@@ -68,14 +68,37 @@ public class Chess2 extends Game {
 		manager.load(Resources.VALKYRIE_PATH, Texture.class);
 		manager.load(Resources.VALKYRIE_ANIMATION1_PATH, Texture.class);
 		manager.load(Resources.VALKYRIE_ANIMATION2_PATH, Texture.class);
-
+		//Black pieces
+		manager.load(Resources.BLACK_PAWN_PATH, Texture.class);
+		manager.load(Resources.BLACK_LANCER_PATH, Texture.class);
+		manager.load(Resources.BLACK_BISHOP_PATH, Texture.class);
+		manager.load(Resources.BLACK_QUEEN_PATH, Texture.class);
+		manager.load(Resources.BLACK_KING_PATH, Texture.class);
+		manager.load(Resources.BLACK_ROOK_PATH, Texture.class);
+		manager.load(Resources.BLACK_KNIGHT_PATH, Texture.class);
+		manager.load(Resources.BLACK_RIDER_PATH, Texture.class);
+		manager.load(Resources.BLACK_BOMBER_PATH, Texture.class);
+		manager.load(Resources.BLACK_WARDEN_PATH, Texture.class);
+		manager.load(Resources.BLACK_PALADIN_PATH, Texture.class);
+		manager.load(Resources.BLACK_MIDAS_PATH, Texture.class);
+		manager.load(Resources.BLACK_MIDAS_PATH2, Texture.class);
+		manager.load(Resources.BLACK_MIDAS_PATH3, Texture.class);
+		manager.load(Resources.BLACK_PALADIN_PATH, Texture.class);
+		manager.load(Resources.BLACK_COLOSUS_PATH, Texture.class);
+		manager.load(Resources.BLACK_MINER_PATH, Texture.class);
+		manager.load(Resources.BLACK_WITCH_PATH, Texture.class);
+		manager.load(Resources.BLACK_MAGE_PATH,Texture.class);
+		manager.load(Resources.BLACK_MAGE_PATH2,Texture.class);
+		manager.load(Resources.BLACK_RND_PATH,Texture.class);
+		
+		manager.load(Resources.BLACK_VALKYRIE_PATH, Texture.class);
+		manager.load(Resources.BLACK_VALKYRIE_ANIMATION1_PATH, Texture.class);
+		manager.load(Resources.BLACK_VALKYRIE_ANIMATION2_PATH, Texture.class);
 
 		manager.load(Resources.FRAME_PATH, Texture.class);
 
 		// CUSTOMS BUTTONS
 		// manager.load(Resources.CHECK_PATH, Texture.class);
-		manager.load(Resources.CHECKBOX_UNSELECTED, Texture.class);
-		manager.load(Resources.CHECKBOX_SELECTED, Texture.class);
 		manager.load(Resources.SLIDER_PATH, Texture.class);
 		manager.load(Resources.SELECTEDBAR_PATH, Texture.class);
 		manager.load(Resources.UNSELECTEDBAR_PATH, Texture.class);
@@ -88,8 +111,8 @@ public class Chess2 extends Game {
 		manager.load(Resources.PALADINSWING_SOUND, Sound.class);
 		manager.load(Resources.VALKYRIEFLY_SOUND, Sound.class);
 		manager.load(Resources.MINER_SOUND, Sound.class);
-		manager.load(Resources.TEXTBUTTON_HOVERSOUND, Sound.class);
-		manager.load(Resources.TEXTBUTTON_CLICKSOUND, Sound.class);
+		manager.load(Resources.BUTTON_HOVERSOUND, Sound.class);
+		manager.load(Resources.BUTTON_CLICKSOUND, Sound.class);
 
 		// ETC
 		manager.load(Resources.LOGO_PATH, Texture.class);
@@ -111,11 +134,13 @@ public class Chess2 extends Game {
 		manager.load(Resources.LODINGSOUND4, Sound.class);
 		manager.load(Resources.LOADINGSCREEN_PATH, Texture.class);
 	}
+	
+
 
 	private void loadSettings() {
 		LectorLineas configReader = new LectorLineas("files/config.txt");
 		Settings.updateSettings(configReader.leerFLOATLinea(5), configReader.leerFLOATLinea(6),
-				configReader.leerINTLinea(7));
+				configReader.leerBOOLEANLinea(7),configReader.leerINTLinea(8));
 	}
 
 	@Override
@@ -125,6 +150,7 @@ public class Chess2 extends Game {
 		Render.camera = new OrthographicCamera(Render.SCREEN_WIDTH, Render.SCREEN_HEIGHT);
 		Render.app = this;
 		Render.inputs = new IOS();
+		Render.monitor = Gdx.graphics.getMonitor();
 		Render.menuBG = new Background();
 		
 		Gdx.input.setInputProcessor(Render.inputs);
@@ -212,6 +238,7 @@ public class Chess2 extends Game {
 			}
 		};
 	}
+	
 
 	@Override
 	public void render() {
