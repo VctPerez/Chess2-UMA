@@ -15,7 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 import utils.TextButton;
 
 public class OnlineGameScreen extends GameScreen {
-	public TextButton draw;
+
 
 	@Override
 	public void show() {
