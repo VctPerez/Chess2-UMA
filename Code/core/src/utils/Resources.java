@@ -55,8 +55,8 @@ public class Resources {
     public static final String WARDEN_PATH = "sprites/Pieces/Pieces Modified/White_Warden.png";
     public static final String PALADIN_PATH = "sprites/Pieces/Pieces Modified/White_Paladin.png";
     public static final String RND_PATH = "sprites/Pieces/Pieces Modified/White_Joker.png";
-    public static final String MIDAS_PATH = "sprites/Pieces/Pieces Modified/White_Midas1.png";
-    public static final String MIDAS_PATH2= "sprites/Pieces/Pieces Modified/White_Midas.png";
+    public static final String MIDAS_PATH = "sprites/Pieces/Pieces Modified/White_Midas.png";
+    public static final String MIDAS_PATH2= "sprites/Pieces/Pieces Modified/White_Midas1.png";
     public static final String MIDAS_PATH3= "sprites/Pieces/Pieces Modified/White_Midas2.png";
 
     public static final String COLOSUS_PATH = "sprites/Pieces/Pieces Modified/White_Colosus.png";

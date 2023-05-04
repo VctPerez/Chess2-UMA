@@ -54,7 +54,7 @@ public class DrawBox extends Actor{
 	    			}else {
 	    				Render.guest.sendMessage("RECHAZAR");
 	    			}
-    				Render.ONLINEGAMESCREEN.draw.setTouchable(Touchable.enabled);
+    				Render.GameScreen.draw.setTouchable(Touchable.enabled);
     			}catch(IOException e) {
     				e.printStackTrace();
     			}

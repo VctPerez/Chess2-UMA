@@ -38,6 +38,7 @@ public class GameScreen extends AbstractScreen {
 	//UI partida
 	protected Table table;
 	protected TextButton surrender;
+	public TextButton draw;
 	public DrawBox dbox;
 	protected LectorLineas languageReader, configReader;
 	private Timer TimerW, TimerB;
@@ -165,7 +166,7 @@ public class GameScreen extends AbstractScreen {
 	private void createTableElements() {
 		TimerW = new Timer(300, "blanco", Render.skin, "default");
 		TimerB = new Timer(300, "negro", Render.skin, "default");
-
+		draw = new TextButton(languageReader.leerLinea(5), "SingleClickStyle");
 		surrender = new TextButton(languageReader.leerLinea(4), "SingleClickStyle");
 	}
 	
