@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class Midas extends Piece {
 
 	public Midas(Boolean color, int x, int y, Board board) {
-		super(color, Render.app.getManager().get(Resources.MIDAS_PATH, Texture.class), x, y, board);
+		super(color, Resources.MIDAS_PATH, x, y, board);
 	}
 
 	@Override
@@ -41,15 +41,15 @@ public class Midas extends Piece {
 	}
 	public void updateSprite(int ate) {
         if (ate > 0 ){
-        	if(ate<3) {
-            sprite = new Image(Render.app.getManager().get(Resources.MIDAS_PATH2,Texture.class));
+        	if(ate<3) { //El replace cambia el . por el numero y el punto
+            sprite = new Image(Render.app.getManager().get(getSpritePath().replace(".","1."),Texture.class));
         	}
             if(ate>=3) {
-                sprite = new Image(Render.app.getManager().get(Resources.MIDAS_PATH3,Texture.class));
+                sprite = new Image(Render.app.getManager().get(getSpritePath().replace(".","2."),Texture.class));
             }
         }
         	else {
-            sprite = new Image(Render.app.getManager().get(Resources.MIDAS_PATH,Texture.class));
+            sprite = new Image(Render.app.getManager().get(getSpritePath(),Texture.class));
         }
 	}
     
@@ -161,7 +161,15 @@ public class Midas extends Piece {
 		}
 		return isSafe;
 	}
-	
+
+	/**
+	 * Devuelve el path de Midas con su color, pero en fase 1
+	 * @return path del sprite
+	 */
+	@Override
+	public String getSpritePath(){
+		return color?Resources.MIDAS_PATH:Resources.BLACK_MIDAS_PATH;
+	}
 	
 	@Override
 	public Boolean sameColor(Piece piece) {

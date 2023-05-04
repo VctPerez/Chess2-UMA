@@ -59,6 +59,7 @@ public abstract class Piece extends Actor {
 		this(color,x,y,board);
 		String blackPath = path.replaceFirst("White", "Black");
 		this.sprite = new Image(Render.app.getManager().get(color?path:blackPath, Texture.class));
+		setPosition(board.getTile(x, y).getX(), board.getTile(x, y).getY());
 	}
 
 	public Piece(Texture texture) {
@@ -285,6 +286,14 @@ public abstract class Piece extends Actor {
 				nextTile.setPiece(Render.GameScreen.graveyardBlack.reviveLastPiece());
 			}
 		}
+	}
+
+	/**
+	 * En las clases no abstractas devolverá su path según su color
+	 * @return null porque esto es el Piece genérico
+	 */
+	public String getSpritePath(){
+		return null;
 	}
 
 	@Override

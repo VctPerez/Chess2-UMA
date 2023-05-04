@@ -1,26 +1,20 @@
 package elements.pieces;
 
-import java.util.ArrayList;
-
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
-
 import elements.Board;
 import elements.Piece;
-import game.chess.GameScreen;
 import interaccionFichero.LectorLineas;
-import utils.Image;
-import utils.Render;
 import utils.Resources;
-import utils.Text;
+
+import java.util.ArrayList;
 
 public class Pawn extends Piece{
 	
 	public Boolean isPassantable = false;
 
 	public Pawn(Boolean color, int x, int y,Board board) {
-		super(color, Render.app.getManager().get(Resources.PAWN_PATH, Texture.class), x ,y,board);
+		super(color, Resources.PAWN_PATH, x ,y,board);
 	}
 
 	@Override

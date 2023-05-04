@@ -1,21 +1,18 @@
 package elements.pieces;
 
-import java.util.ArrayList;
-
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
-
 import elements.Board;
 import elements.Piece;
 import interaccionFichero.LectorLineas;
-import utils.Render;
 import utils.Resources;
+
+import java.util.ArrayList;
 
 public class Guardian extends Piece {
 
 	public Guardian(Boolean color, int x, int y, Board board) {
-		super(color, Render.app.getManager().get(Resources.WARDEN_PATH, Texture.class), x ,y,board);
+		super(color,Resources.WARDEN_PATH, x ,y,board);
 		
 	}
 	

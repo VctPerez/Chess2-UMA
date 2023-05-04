@@ -1,15 +1,11 @@
 package elements.pieces;
 
-import java.util.ArrayList;
-
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
-
 import elements.Board;
 import elements.Piece;
 import elements.Tile;
@@ -18,10 +14,12 @@ import utils.AnimationActor;
 import utils.Render;
 import utils.Resources;
 
+import java.util.ArrayList;
+
 public class Miner extends Piece {
 
 	public Miner(Boolean color, int x, int y,Board board) {
-		super(color, Render.app.getManager().get(Resources.MINER_PATH, Texture.class), x, y,board);
+		super(color, Resources.MINER_PATH, x, y,board);
 	}
 	
 	@Override

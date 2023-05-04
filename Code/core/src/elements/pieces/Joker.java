@@ -32,7 +32,7 @@ public class Joker extends Piece{
 			}
 		}
 
-		this.setSprite(Resources.RND_PATH);
+		this.setSprite(getSpritePath());
 		prev = new Vector2 (0,0);
 	}
 	
@@ -51,12 +51,14 @@ public class Joker extends Piece{
 		//Torre:20
 		
 		//Asegurarme que no se repitan piezas 
-		int i=0;
-		do {
+		int i, tam = (int) (prev.y - prev.x);
+		i = (int)(rnd.nextInt(100-tam) + prev.y + 1) % 100; //Hace que los números no estén en el área del anterior
+		// Hace que empiezen fuera del rango del anterior y con el módulo se asegura que es < 100 y con 100 tam esta no entra en el rango
+		/*do { //Sin ofender, pero esto me dio un infarto y medio
 			i = rnd.nextInt(100) + 1 ;
-		} while (i>=prev.x && i<= prev.y);
-		
-		Piece nueva=null;
+		} while (i>=prev.x && i<= prev.y);*/
+
+		Piece nueva;
 		
 		if(i<=30) {
 			nueva = Parser.getPieceFromPath(draft.get(3), color, this.x, this.y, board);
@@ -141,6 +143,15 @@ public class Joker extends Piece{
 			default:
 				throw new IllegalArgumentException("Configuración errónea");
 		}
+	}
+
+	/**
+	 * Devuelve el path del joker con su color
+	 * @return path del sprite
+	 */
+	@Override
+	public String getSpritePath(){
+		return color?Resources.RND_PATH:Resources.BLACK_RND_PATH;
 	}
 	
 	@Override

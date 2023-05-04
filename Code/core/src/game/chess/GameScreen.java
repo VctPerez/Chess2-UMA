@@ -4,22 +4,16 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Action;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import elements.*;
 import elements.pieces.*;
 import interaccionFichero.LectorLineas;
 import utils.*;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class GameScreen extends AbstractScreen {
@@ -604,7 +598,7 @@ public class GameScreen extends AbstractScreen {
 				res = lastPawn.isPassantable; // Es en passant si se le puede hacer al peón objetivo
 			}
 		}else if (piece instanceof Lancer && next_y == current_y + (piece.color()?1:-1) && (next_x == current_x)){ //Si avanza a una casilla en linea recta sin pieza, está tomando al paso
-			if (!res && board.getTile(next_x + 1, current_y) != null && board.getTile(next_x + 1, current_y).getPiece() instanceof Lancer){
+			if (board.getTile(next_x + 1, current_y) != null && board.getTile(next_x + 1, current_y).getPiece() instanceof Lancer){
 				res = lastPawn.isPassantable; //Es en passant si se le puede hacer al peón objetivo
 			}
 			if(!res && board.getTile(next_x - 1, current_y)!=null && board.getTile(next_x - 1, current_y).getPiece() instanceof Lancer){
