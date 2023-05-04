@@ -16,10 +16,10 @@ public class Resources {
     
     //SONIDOS
     public static final String MENU_THEME = "menuTheme.ogg";
-    public static final String TEXTBUTTON_HOVERSOUND = "sound/buttonMouseOverSound.mp3";
-    public static final String TEXTBUTTON_CLICKSOUND = "sound/buttonClickedSound.mp3";
     public static final String PIECESELECTION_SOUND = "sound/SeleccionPieza.mp3";
     public static final String PIECEMOVE_SOUND = "sound/pieceMove.mp3";
+    public static final String BUTTON_CLICKSOUND = "sound/Hit_D_-30cents.wav";
+    public static final String BUTTON_HOVERSOUND = "sound/Hover_A_-30cents.wav";
     public static final String PALADINSWING_SOUND = "sound/paladinSwing.mp3";
     public static final String VALKYRIEFLY_SOUND = "sound/Valkyrie_flap.mp3";
     public static final String EXPLOSION_SOUND = "sound/bomberExplosion.mp3";
@@ -35,8 +35,8 @@ public class Resources {
     public static final String SELECTEDBAR_PATH = "sprites/volumeBar/volumeBar_selected(x2Size).png";
     public static final String UNSELECTEDBAR_PATH = "sprites/volumeBar/volumeBar_unselected(x2Size).png";
 
-    public static final String CHECKBOX_SELECTED = "sprites/checkBox/checkBox_selected.png";
-    public static final String CHECKBOX_UNSELECTED = "sprites/checkBox/checkBox_unselected.png";
+//    public static final String CHECKBOX_SELECTED = "sprites/checkBox/checkBox_selected.png";
+//    public static final String CHECKBOX_UNSELECTED = "sprites/checkBox/checkBox_unselected.png";
     //public static final String CHECK_PATH = "sprites/Testing-Pieces/Testing-Pawn.png";
 
     public static final String SKIN_PATH = "Skin Composer/UIStyle.json";

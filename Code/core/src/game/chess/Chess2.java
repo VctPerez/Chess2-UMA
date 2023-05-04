@@ -100,8 +100,6 @@ public class Chess2 extends Game {
 
 		// CUSTOMS BUTTONS
 		// manager.load(Resources.CHECK_PATH, Texture.class);
-		manager.load(Resources.CHECKBOX_UNSELECTED, Texture.class);
-		manager.load(Resources.CHECKBOX_SELECTED, Texture.class);
 		manager.load(Resources.SLIDER_PATH, Texture.class);
 		manager.load(Resources.SELECTEDBAR_PATH, Texture.class);
 		manager.load(Resources.UNSELECTEDBAR_PATH, Texture.class);
@@ -114,8 +112,8 @@ public class Chess2 extends Game {
 		manager.load(Resources.PALADINSWING_SOUND, Sound.class);
 		manager.load(Resources.VALKYRIEFLY_SOUND, Sound.class);
 		manager.load(Resources.MINER_SOUND, Sound.class);
-		manager.load(Resources.TEXTBUTTON_HOVERSOUND, Sound.class);
-		manager.load(Resources.TEXTBUTTON_CLICKSOUND, Sound.class);
+		manager.load(Resources.BUTTON_HOVERSOUND, Sound.class);
+		manager.load(Resources.BUTTON_CLICKSOUND, Sound.class);
 
 		// ETC
 		manager.load(Resources.LOGO_PATH, Texture.class);
@@ -137,11 +135,13 @@ public class Chess2 extends Game {
 		manager.load(Resources.LODINGSOUND4, Sound.class);
 		manager.load(Resources.LOADINGSCREEN_PATH, Texture.class);
 	}
+	
+
 
 	private void loadSettings() {
 		LectorLineas configReader = new LectorLineas("files/config.txt");
 		Settings.updateSettings(configReader.leerFLOATLinea(5), configReader.leerFLOATLinea(6),
-				configReader.leerINTLinea(7));
+				configReader.leerBOOLEANLinea(7),configReader.leerINTLinea(8));
 	}
 
 	@Override
@@ -151,6 +151,7 @@ public class Chess2 extends Game {
 		Render.camera = new OrthographicCamera(Render.SCREEN_WIDTH, Render.SCREEN_HEIGHT);
 		Render.app = this;
 		Render.inputs = new IOS();
+		Render.monitor = Gdx.graphics.getMonitor();
 		Render.menuBG = new Background();
 		
 		Gdx.input.setInputProcessor(Render.inputs);
@@ -238,6 +239,7 @@ public class Chess2 extends Game {
 			}
 		};
 	}
+	
 
 	@Override
 	public void render() {
