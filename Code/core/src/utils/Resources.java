@@ -8,6 +8,7 @@ public class Resources {
     public static final String LOADINGSCREEN_PATH = "sprites/loadingScreen.jpg";
     public static final String MENU_BACKGROUND_PATH = "sprites/BackgroundImageDM.png";
     public static final String PIECE_DISPOSER_PATH = "sprites/PieceDisposer.png";
+    public static final String GRAVEYARD_PATH = "sprites/Graveyard.png";
     public static final String BLACK_OPACITY_PATH = "sprites/Black.png";
     public static final String RESULTS_BACKGROUND_PATH = "sprites/resultBackground.png";
     public static final String FONT_MENU_PATH = "fonts/Arial.ttf";
