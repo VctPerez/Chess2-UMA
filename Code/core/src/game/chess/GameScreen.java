@@ -20,7 +20,6 @@ public class GameScreen extends AbstractScreen {
 	public static Stage stage;
 	Background background;
 	public static Board board;
-	
 
 	// Control selección de piezas
 	protected boolean isPieceSelected = false;
@@ -29,7 +28,7 @@ public class GameScreen extends AbstractScreen {
 	public Tile currentTile = null;
 	public static Tile nextTile = null;
 
-	//UI partida
+	// UI partida
 	protected Table table;
 	protected TextButton surrender;
 	public TextButton draw;
@@ -56,10 +55,10 @@ public class GameScreen extends AbstractScreen {
 	private Piece lastPawn;
 
 	// Control turno
-	public boolean PLAYER;
+	public static boolean PLAYER;
 
-	//CONTROL MOVIMIENTO (ONLINE)
-	public boolean moved =false;
+	// CONTROL MOVIMIENTO (ONLINE)
+	public boolean moved = false;
 
 	// Control promocion
 	public static boolean promoting = false;
@@ -79,17 +78,16 @@ public class GameScreen extends AbstractScreen {
 	public void show() {
 		stage = new Stage(new FitViewport(1280, 720));
 		stage.addActor(Render.menuBG);
-		
+
 		table = new Table();
 		table.setFillParent(true);
-		
+
 		configReader = new LectorLineas("files/config.txt"); // Lector del txt configuracion para sacar el idioma
 		languageReader = new LectorLineas("files/lang/" + configReader.leerLinea(Settings.language) + "Draft-Game.txt");
 
 		Gdx.input.setInputProcessor(stage);
 
 		PLAYER = true;
-		
 
 		whiteCheck = false;
 		blackCheck = false;
@@ -97,15 +95,13 @@ public class GameScreen extends AbstractScreen {
 		blackCheckMate = false;
 
 		board = new Board();
-		board.setPosition(board.getX(), board.getY() + (-84*8));
+		board.setPosition(board.getX(), board.getY() + (-84 * 8));
 		board.animationMovement(board.getX(), 24, 0.5f);
-		
-		
+
 		whitePieces = new ArrayList<>();
 		blackPieces = new ArrayList<>();
 		graveyardWhite = new Graveyard(21, 21);
-		graveyardBlack = new Graveyard(1280 -105, 21);
-		
+		graveyardBlack = new Graveyard(1270 - 100, 21);
 
 		// Crear mensaje emergente tras terminar partida
 		showPopup = false;
@@ -117,15 +113,15 @@ public class GameScreen extends AbstractScreen {
 		stage.addActor(board);
 		stage.addActor(graveyardWhite);
 		stage.addActor(graveyardBlack);
-		
-		dbox =new DrawBox();
+
+		dbox = new DrawBox();
 		dbox.setVisible(false);
 		stage.addActor(dbox);
 
-
 		createTableElements();
 		setupTable();
-		if(Render.DraftController != 3)	stage.addActor(table);
+		if (Render.DraftController != 3)
+			stage.addActor(table);
 		testDrafts();
 
 		placeWhites(Render.player1Draft);
@@ -133,7 +129,7 @@ public class GameScreen extends AbstractScreen {
 		addPiecesToStage(whitePieces);
 		addPiecesToStage(blackPieces);
 		addTilesToStage();
-		
+
 		System.out.println(whitePieces.toString());
 		System.out.println(blackPieces.toString());
 	}
@@ -144,13 +140,14 @@ public class GameScreen extends AbstractScreen {
 	private void setupTable() {
 		table.setFillParent(true);
 		table.left().pad(50);
-    	table.defaults().left().space(40);
+		table.defaults().left().space(40);
 
 		table.add(TimerW).top().left().pad(80).expandX().expandY();
 		table.add(TimerB).top().right().pad(80).expandX().expandY();
 		table.row();
 		table.add(surrender).left().padLeft(70).expandX();
-		if(Render.DraftController != 3) table.row();
+		if (Render.DraftController != 3)
+			table.row();
 
 	}
 
@@ -164,58 +161,67 @@ public class GameScreen extends AbstractScreen {
 		surrender = new TextButton(languageReader.leerLinea(4), "SingleClickStyle");
 		surrender.getLabel().setFontScale(0.75f);
 	}
-	
+
 	public void checkSurrender() {
-		if(surrender.isPressed()) {
+		if (surrender.isPressed()) {
 			if (PLAYER) {
 				System.out.println("RENDICION BLANCA");
 				results.setWinnerSurrender("NEGRO");
 				showPopup = true;
-				whiteCheckMate=true;
+				whiteCheckMate = true;
 			} else {
 				System.out.println("RENDICION NEGRA");
 				results.setWinnerSurrender("BLANCO");
 				showPopup = true;
-				blackCheckMate=true;
+				blackCheckMate = true;
 			}
 		}
 	}
 /*
-	public void checkGraveyard() {	
-		for(int i=0;i<graveyardWhite.graveyard.size();i++) {
-			if(graveyardWhite.graveyard.get(i) instanceof King || graveyardWhite.graveyard.get(i) instanceof Midas || graveyardWhite.graveyard.get(i) instanceof Mage) {
+
+	public void checkGraveyard() {
+		for (int i = 0; i < graveyardWhite.graveyard.size(); i++) {
+			if (graveyardWhite.graveyard.get(i) instanceof King || graveyardWhite.graveyard.get(i) instanceof Midas
+					|| graveyardWhite.graveyard.get(i) instanceof Mage) {
+
 				results.setWinnerKingKilled("NEGRO");
 				showPopup = true;
-				whiteCheckMate=true;
+				whiteCheckMate = true;
 			}
 		}
-		for(int i=0;i<graveyardBlack.graveyard.size();i++) {
-			if(graveyardBlack.graveyard.get(i) instanceof King || graveyardWhite.graveyard.get(i) instanceof Midas || graveyardWhite.graveyard.get(i) instanceof Mage) {
+		for (int i = 0; i < graveyardBlack.graveyard.size(); i++) {
+			if (graveyardBlack.graveyard.get(i) instanceof King || graveyardWhite.graveyard.get(i) instanceof Midas
+					|| graveyardWhite.graveyard.get(i) instanceof Mage) {
 				results.setWinnerKingKilled("BLANCO");
 				showPopup = true;
-				blackCheckMate=true;
+				blackCheckMate = true;
 			}
 		}
 
 	}
+
 	
 */
+
+
+
 	@Override
-	public void render(float delta){
+	public void render(float delta) {
 		Render.clearScreen();
 		checkSurrender();
 		checkGraveyard();
 		if (showPopup) {
-			//Para que no se pueda interaccionar con nada despues de que se muestre el popup
+			// Para que no se pueda interaccionar con nada despues de que se muestre el
+			// popup
 			surrender.clearListeners();
-			//------------------------------------------------------------------------------
+			// ------------------------------------------------------------------------------
 			results.Show();
 			results.render();
 		} else {
 			timersRender();
 			checkTimerEnd();
 		}
-		
+
 		stage.draw();
 		stage.act();
 	}
@@ -244,7 +250,8 @@ public class GameScreen extends AbstractScreen {
 
 				nextTile = tile;
 
-				if (nextTile.getPiece() != null && currentTile.getPiece().sameColor(nextTile.getPiece()) && !kiCharge()) {
+				if (nextTile.getPiece() != null && currentTile.getPiece().sameColor(nextTile.getPiece())
+						&& !kiCharge()) {
 					currentTile = nextTile;
 
 					lowlight();
@@ -312,7 +319,7 @@ public class GameScreen extends AbstractScreen {
 			} else {
 				tile.highlight = false;
 			}
-			if(tile.getPiece() instanceof Mage) {
+			if (tile.getPiece() instanceof Mage) {
 				tile.highlight = false;
 			}
 		}
@@ -321,6 +328,7 @@ public class GameScreen extends AbstractScreen {
 	/**
 	 * Selecciona la casilla pasada como parámetro, es decir, si tiene una pieza
 	 * calcula los posibles movimientos y los resalta.
+	 * 
 	 * @param tile
 	 */
 	protected void select(Tile tile) {
@@ -333,7 +341,7 @@ public class GameScreen extends AbstractScreen {
 			System.out.println(currentTile_validMovements.toString());
 			isPieceSelected = true;
 		}
-		
+
 	}
 
 	private boolean kiCharge() {
@@ -353,7 +361,7 @@ public class GameScreen extends AbstractScreen {
 	 */
 	private static boolean updateCheck() {
 		int i = 0;
-		if (nextTile.getPiece().color()) {
+		if (PLAYER) {
 			while (i < whitePieces.size()) {
 				Piece piece = whitePieces.get(i);
 				i++;
@@ -362,7 +370,7 @@ public class GameScreen extends AbstractScreen {
 					board.getTile(blackKing.x, blackKing.y).attacked = true;
 				}
 			}
-		} else if (!nextTile.getPiece().color()) {
+		} else if (!PLAYER) {
 			while (i < blackPieces.size()) {
 				Piece piece = blackPieces.get(i);
 				i++;
@@ -377,6 +385,7 @@ public class GameScreen extends AbstractScreen {
 
 	/**
 	 * comprueba si un jaque es jaque mate
+	 * 
 	 * @param pieces
 	 * @return true si el color que está en mate no tiene movimientos disponibles
 	 *         que hagan que el rey esté a salvo.
@@ -412,11 +421,12 @@ public class GameScreen extends AbstractScreen {
 	}
 
 	/**
-	 * controla el mate al hacer un movimiento 
+	 * controla el mate al hacer un movimiento
+	 * 
 	 * @param next_x
 	 * @param next_y
 	 */
-	public static void mateControl(float next_x, float next_y) {
+	public static void mateControl() {
 		// updateCheck devuelve isCheck al final para no tener que llamarlo
 		if (updateCheck()) {
 			whiteCheckMate = isCheckMate(whiteCheck, whitePieces);
@@ -431,30 +441,34 @@ public class GameScreen extends AbstractScreen {
 				showPopup = true;
 			}
 		}
+		stalemateControl();
 	}
 
 	/**
-	 * Mueve la pieza que está en currentTile a la casilla nextTile, comprueba los casos de movimientos especiales
+	 * Mueve la pieza que está en currentTile a la casilla nextTile, comprueba los
+	 * casos de movimientos especiales
 	 *
 	 * @param currentTile
 	 * @param nextTile
 	 */
 	public void makeMove(Tile currentTile, Tile nextTile) {
-		current_x = (int)currentTile.getPos().x;
-		current_y = (int)currentTile.getPos().y;
-		if(Render.DraftController == 3){
+		current_x = (int) currentTile.getPos().x;
+		current_y = (int) currentTile.getPos().y;
+		if (Render.DraftController == 3) {
 			this.currentTile = currentTile;
 			GameScreen.nextTile = nextTile;
 			currentTile_validMovements = (currentTile.getPiece().getValidMovements());
 		}
 
-		int next_x = (int)nextTile.getPos().x;
-		int next_y = (int)nextTile.getPos().y;
+		int next_x = (int) nextTile.getPos().x;
+		int next_y = (int) nextTile.getPos().y;
 		if (currentTile_validMovements.contains(new Vector2(next_x, next_y)) || debugMode) {
 			if (currentTile.getPiece().checkBomber(next_x, next_y)) {
 				Bomber b = (Bomber) currentTile.getPiece();
 				b.explode();
-			} else if (!currentTile.getPiece().checkPaladin(next_x, next_y) && !currentTile.getPiece().checkCatapultAttack(next_x, next_y)) {
+				resetMate();
+			} else if (!currentTile.getPiece().checkPaladin(next_x, next_y)
+					&& !currentTile.getPiece().checkWitchAttack(next_x, next_y)) {
 
 				checkMidas();
 				checkCastling(next_x);
@@ -470,37 +484,43 @@ public class GameScreen extends AbstractScreen {
 
 				if (nextTile.getPiece() instanceof Pawn || nextTile.getPiece() instanceof Lancer
 						|| nextTile.getPiece() instanceof Guardian) {
-					if(lastPawn!=null) checkPassant(next_x, next_y);
+					if (lastPawn != null)
+						checkPassant(next_x, next_y);
 					checkPromotion(next_x, next_y);
 					updateLastPawn(next_x, next_y);
 				} else if (lastPawn != null) {
 					lastPawn.isPassantable = false;
 				}
-				mateControl(next_x, next_y);
-				stalemateControl();
 			}
 
-			if(Render.DraftController != 3)changeTurn();
-			if(Render.hosting == PLAYER) moved = true;
+			mateControl();
+			if (Render.DraftController != 3)
+				changeTurn();
+			if (Render.hosting == PLAYER)
+				moved = true;
 		}
 	}
 
 	/**
 	 * Actualiza el valor del ki actual del mago si corresponde
-	 * <p>Solo se hace la parte de reducir en uno el ki porque el resto se hace en su clase</p>
+	 * <p>
+	 * Solo se hace la parte de reducir en uno el ki porque el resto se hace en su
+	 * clase
+	 * </p>
 	 */
 	private void updateKiCharge() {
 		Piece aux;
-		if (PLAYER){ //Se inicializa aux con el rey
+		if (PLAYER) { // Se inicializa aux con el rey
 			aux = board.getTile(whiteKing.x, whiteKing.y).piece;
 		} else {
 			aux = board.getTile(blackKing.x, blackKing.y).piece;
-		} //Se le quita una carga de ki al mago
-		if (aux instanceof Mage){
-			aux.kiCharge = Math.max(0,aux.kiCharge-1); //Se baja aunque no sea ki king porque no lo van a usar
+		} // Se le quita una carga de ki al mago
+		if (aux instanceof Mage) {
+			aux.kiCharge = Math.max(0, aux.kiCharge - 1); // Se baja aunque no sea ki king porque no lo van a usar
 			((Mage) aux).updateSprite(aux.kiCharge);
 		}
 	}
+
 	/**
 	 * Controla la propiedad especial del Rey Midas
 	 */
@@ -512,6 +532,7 @@ public class GameScreen extends AbstractScreen {
 
 	/**
 	 * controla el movimiento hacia atras del warden
+	 * 
 	 * @param next_y
 	 */
 	private void checkGuardian(int next_y) {
@@ -531,7 +552,7 @@ public class GameScreen extends AbstractScreen {
 	 * Se llega a empate si no hay movimientos legales pero no es jaque mate
 	 * </p>
 	 */
-	private void stalemateControl() {
+	public static void stalemateControl() {
 		if (!isCheck()) {
 			if (!PLAYER && !hasMoves(whitePieces)) {
 				System.out.println("Las negras han empatado");
@@ -552,7 +573,7 @@ public class GameScreen extends AbstractScreen {
 	 * 
 	 * @param pieces las piezas que se usan para la comprobación
 	 */
-	private boolean hasMoves(ArrayList<Piece> pieces) {
+	private static boolean hasMoves(ArrayList<Piece> pieces) {
 		boolean hasMoves = false;
 		for (int i = 0; i < pieces.size() && !hasMoves; i++) { // Si una pieza tiene movimientos se sale
 			hasMoves = !pieces.get(i).getValidMovements().isEmpty();
@@ -617,12 +638,27 @@ public class GameScreen extends AbstractScreen {
 			if (board.getTile(next_x, current_y).getPiece() instanceof Pawn) {
 				res = lastPawn.isPassantable; // Es en passant si se le puede hacer al peón objetivo
 			}
-		}else if (piece instanceof Lancer && next_y == current_y + (piece.color()?1:-1) && (next_x == current_x)){ //Si avanza a una casilla en linea recta sin pieza, está tomando al paso
-			if (board.getTile(next_x + 1, current_y) != null && board.getTile(next_x + 1, current_y).getPiece() instanceof Lancer){
-				res = lastPawn.isPassantable; //Es en passant si se le puede hacer al peón objetivo
+		} else if (piece instanceof Lancer && next_y == current_y + (piece.color() ? 1 : -1) && (next_x == current_x)) { // Si
+																															// avanza
+																															// a
+																															// una
+																															// casilla
+																															// en
+																															// linea
+																															// recta
+																															// sin
+																															// pieza,
+																															// está
+																															// tomando
+																															// al
+																															// paso
+			if (board.getTile(next_x + 1, current_y) != null
+					&& board.getTile(next_x + 1, current_y).getPiece() instanceof Lancer) {
+				res = lastPawn.isPassantable; // Es en passant si se le puede hacer al peón objetivo
 			}
-			if(!res && board.getTile(next_x - 1, current_y)!=null && board.getTile(next_x - 1, current_y).getPiece() instanceof Lancer){
-				res = lastPawn.isPassantable; //Es en passant si se le puede hacer al peón objetivo
+			if (!res && board.getTile(next_x - 1, current_y) != null
+					&& board.getTile(next_x - 1, current_y).getPiece() instanceof Lancer) {
+				res = lastPawn.isPassantable; // Es en passant si se le puede hacer al peón objetivo
 			}
 		}
 		return res;
@@ -701,9 +737,10 @@ public class GameScreen extends AbstractScreen {
 		Render.player2Draft.add(Resources.WITCH_PATH);
 		Render.player2Draft.add(Resources.MIDAS_PATH);
 	}
-	
+
 	/**
 	 * Coloca las piezas en player1Draft en el lado blanco del tablero
+	 * 
 	 * @param player1Draft
 	 */
 	public void placeWhites(ArrayList<String> player1Draft) {
@@ -741,8 +778,10 @@ public class GameScreen extends AbstractScreen {
 			}
 		}
 	}
+
 	/**
 	 * Coloca las piezas en player2Draft en el lado negro del tablero
+	 * 
 	 * @param player2Draft
 	 */
 	private void placeBlacks(ArrayList<String> player2Draft) {
@@ -783,16 +822,17 @@ public class GameScreen extends AbstractScreen {
 
 	/**
 	 * añade el array de piezas pasado como parametro al stage
+	 * 
 	 * @param pieces
 	 */
 	public void addPiecesToStage(ArrayList<Piece> pieces) {
-		 SequenceAction sequence = new SequenceAction();
-		
+		SequenceAction sequence = new SequenceAction();
+
 		for (final Piece piece : pieces) {
-			Action action = new Action(){
+			Action action = new Action() {
 				public boolean act(float delta) {
 					piece.setSize(0, 0);
-					piece.setTouchable(Touchable.disabled);	
+					piece.setTouchable(Touchable.disabled);
 					piece.addAction(Actions.sizeTo(84, 84, 1.5f));
 					stage.addActor(piece);
 					return true;
@@ -804,7 +844,8 @@ public class GameScreen extends AbstractScreen {
 	}
 
 	/**
-	 * añade todas las casillas del tablero al stage, antes se les añade a cada una un event listener para detectar cuando se interactia con ellas
+	 * añade todas las casillas del tablero al stage, antes se les añade a cada una
+	 * un event listener para detectar cuando se interactia con ellas
 	 */
 	public void addTilesToStage() {
 		for (int i = 1; i <= 8; i++) {
@@ -814,7 +855,7 @@ public class GameScreen extends AbstractScreen {
 					@Override
 					public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 						if (!promoting) {
-							if(tile.getPiece()!=null && tile.getPiece().color() == PLAYER) {
+							if (tile.getPiece() != null && tile.getPiece().color() == PLAYER) {
 								Sound sound = Render.app.getManager().get(Resources.PIECESELECTION_SOUND, Sound.class);
 								sound.play(0.5f);
 							}

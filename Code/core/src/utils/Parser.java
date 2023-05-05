@@ -127,6 +127,6 @@ public class Parser {
 		pieces.add(newPiece);            	
         Render.GameScreen.stage.addActor(newPiece);
         Render.GameScreen.promoting = false;
-        Render.GameScreen.mateControl(tile.getPos().x, tile.getPos().y);
+        Render.GameScreen.mateControl();
 	}
 }

@@ -189,7 +189,7 @@ public abstract class Piece extends Actor {
 		return false;
 	}
 	
-	public Boolean checkCatapultAttack(float next_x, float next_y) {
+	public Boolean checkWitchAttack(float next_x, float next_y) {
 		return false;
 	}
 
