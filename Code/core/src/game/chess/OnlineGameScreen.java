@@ -83,13 +83,13 @@ public class OnlineGameScreen extends GameScreen {
 				if (Render.hosting) {
 					Render.host.sendMessage("RENDICION");
 					System.out.println("Rendicion Blanca");
-					results.setWinnerSurrender("NEGRO");
+					results.setWinnerSurrender(PLAYER);
 					showPopup = true;
 					whiteCheckMate = true;
 				} else {
 					Render.guest.sendMessage("RENDICION");
 					System.out.println("Rendicion Negra");
-					results.setWinnerSurrender("BLANCO");
+					results.setWinnerSurrender(PLAYER);
 					showPopup = true;
 					blackCheckMate = true;
 				}
@@ -133,7 +133,7 @@ public class OnlineGameScreen extends GameScreen {
 				if (!Render.guest.getMessage().equals("")) {
 					if (Render.guest.getMessage().equals("RENDICION")) {
 						System.out.println("Rendicion Blanca");
-						results.setWinnerSurrender("NEGRO");
+						results.setWinnerSurrender(PLAYER);
 						showPopup = true;
 						whiteCheckMate = true;
 					} else if (Render.guest.getMessage().equals("EMPATE")) {
@@ -158,7 +158,7 @@ public class OnlineGameScreen extends GameScreen {
 					if (Render.host.getMessage().equals("RENDICION")) {
 						System.out.println("Rendicion Negra");
 
-						results.setWinnerSurrender("BLANCO");
+						results.setWinnerSurrender(PLAYER);
 						showPopup = true;
 						blackCheckMate = true;
 					} else if(Render.host.getMessage().equals("EMPATE")) {
@@ -184,7 +184,7 @@ public class OnlineGameScreen extends GameScreen {
 				if (!Render.guest.getMessage().equals("")) {
 					if (Render.guest.getMessage().equals("RENDICION")) {
 						System.out.println("Rendicion Blanca");
-						results.setWinnerSurrender("NEGRO");
+						results.setWinnerSurrender(PLAYER);
 						showPopup = true;
 						blackCheckMate = true;
 					}else if(Render.guest.getMessage().equals("EMPATE")) {
@@ -201,7 +201,7 @@ public class OnlineGameScreen extends GameScreen {
 				if (!Render.host.getMessage().equals("")) {
 					if (Render.host.getMessage().equals("RENDICION")) {
 						System.out.println("Rendicion Negra");
-						results.setWinnerSurrender("Blanco");
+						results.setWinnerSurrender(PLAYER);
 						showPopup = true;
 						whiteCheckMate = true;
 					}else if(Render.host.getMessage().equals("EMPATE")) {

@@ -1,0 +1,8 @@
+Nombre de Usuario:
+Victorias:
+Derrotas:
+Partidas Empatadas:
+Partidas Jugadas:
+%Victorias:
+Pieza Favorita:
+Modo de Juego Favorito:

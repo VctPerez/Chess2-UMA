@@ -7,9 +7,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
+import interaccionFichero.EscritorLineas;
+import interaccionFichero.LectorLineas;
 import utils.Image;
 import utils.Render;
 import utils.Resources;
+import utils.Settings;
 import utils.TextButton;
 
 import java.io.IOException;
@@ -17,16 +20,25 @@ import java.util.ArrayList;
 
 public class MatchResults extends Actor{
 	
+	
+	LectorLineas ProfileReader, configReader;	
+	EscritorLineas ProfileWriter;
 	private Table table;
 	private Label matchres;
 	private TextButton goMenu;
 	private Stage stage;
 	private Image fondo;
 	
+	
+	
 	public MatchResults(Stage stage) {
 		this.stage=stage;
 		table = new Table();
 		table.setBounds(350, 100, 550, 550);
+		
+		configReader = new LectorLineas("files/config.txt"); //Lector del txt configuracion para sacar el idioma
+		ProfileWriter = new EscritorLineas("files/Datos.txt");
+		ProfileReader = new LectorLineas("files/Datos.txt");
 
 		Texture texture = new Texture(Resources.RESULTS_BACKGROUND_PATH);
 		TextureRegionDrawable drawable = new TextureRegionDrawable(texture);
@@ -59,12 +71,16 @@ public class MatchResults extends Actor{
     	goMenu.getLabel().setFontScale(0.35f,0.35f);
 	}
 
-	public void setWinner(String Winner) {
-		matchres.setText("HA GANADO EL " + Winner);
+	public void setWinner(Boolean equipo) {
+		equipo=!equipo;
+		String winner = WinnerTraduction(equipo);
+		matchres.setText("HA GANADO EL " + winner);
 	}
 	
-	public void setWinnerSurrender(String Winner) {
-		matchres.setText("HA GANADO EL " + Winner+" \n    POR RENDICION");
+	public void setWinnerSurrender(Boolean equipo) {
+		equipo=!equipo;
+		String winner = WinnerTraduction(equipo);
+		matchres.setText("HA GANADO EL " + winner+" \n    POR RENDICION");
 	}
 	
 	public void setWinner() {
@@ -79,6 +95,13 @@ public class MatchResults extends Actor{
 
 	public void setDraw() {
 		matchres.setText("Empate");
+		
+		int v = ProfileReader.leerINTLinea(4);
+		v++;
+		System.out.println("Escribo " + v);
+		ProfileWriter.escribirLineaINT(4, v);
+		updatePlays();
+		
 		//Posible inserción de Música de Empate
 	}
 	
@@ -111,6 +134,46 @@ public class MatchResults extends Actor{
 //			Render.player2Draft = new ArrayList<>();
 			Render.app.setScreen(Render.MAINSCREEN);
 		}
+	}
+	
+	public String WinnerTraduction(Boolean equipo) {
+		if(equipo) {
+			return "BLANCO";
+		}else {
+			return "NEGRO";
+		}
+	}
+
+	public void updateWinner(boolean b,boolean equipo) {
+			int v;
+			equipo=!equipo;
+			if( b && (equipo || (Render.hosting && equipo))) {
+				v = ProfileReader.leerINTLinea(2);
+				v++;
+				System.out.println("Escribo " + v);
+				ProfileWriter.escribirLineaINT(2, v);
+			}else {
+				v = ProfileReader.leerINTLinea(3);
+				v++;
+				System.out.println("Escribo " + v);
+				ProfileWriter.escribirLineaINT(3, v);
+			}
+			updatePlays();
+	}
+
+	private void updatePlays() {
+		int v,total;
+		float res;
+		total = ProfileReader.leerINTLinea(5);
+		total++;
+		System.out.println("Escribo " + total);
+		ProfileWriter.escribirLineaINT(5, total);
+		
+		v = ProfileReader.leerINTLinea(2);
+		res= (float)v/total*100;
+		ProfileWriter.escribirLinea(6, res + "%");
+		
+		
 	}
 	
 }

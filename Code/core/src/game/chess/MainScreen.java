@@ -35,14 +35,15 @@ public class MainScreen extends AbstractMenuScreen {
     @Override
     protected void createTableElements() {
     	
-    	textButton = new TextButton[4];
+    	textButton = new TextButton[5];
     	
     	title = new Label("chess 2", Render.skin, "TitleStyle");
     	
     	textButton[0] = new TextButton(languageReader.leerLinea(1));//Jugar = Linea 1
     	textButton[1] = new TextButton(languageReader.leerLinea(4));//Configuracion = Linea 4
     	textButton[2] = new TextButton(languageReader.leerLinea(7));//Reglas = Linea 7
-    	textButton[3] = new TextButton(languageReader.leerLinea(3));//Salir = Linea 3;
+    	textButton[3] = new TextButton(languageReader.leerLinea(9));//Perfil = Linea 9
+    	textButton[4] = new TextButton(languageReader.leerLinea(3));//Salir = Linea 3;
     	    	
     	
     	for(int i = 0; i < textButton.length; i++) {
@@ -64,6 +65,8 @@ public class MainScreen extends AbstractMenuScreen {
     	}else if(button == 2) {
     		Render.app.setScreen(Render.MANUALSCREEN);
     	}else if(button == 3) {
+    		Render.app.setScreen(Render.PROFILESCREEN);
+    	}else if (button==4) {
     		Gdx.app.exit();
     	}
     }

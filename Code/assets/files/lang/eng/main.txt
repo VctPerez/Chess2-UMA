@@ -6,3 +6,4 @@ Volume
 Language
 Manual
 Chess2
+Profile

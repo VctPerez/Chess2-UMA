@@ -57,7 +57,7 @@ public class DraftScreen extends AbstractScreen {
 		Gdx.input.setInputProcessor(stage);
 		
 		if(Render.DraftController==1) {
-			title = new Label("P", Render.skin, "TitleStyle");
+			title = new Label("P1", Render.skin, "TitleStyle");
 		}else if(Render.DraftController==2) {
 			title = new Label("P2", Render.skin, "TitleStyle");
 		}
