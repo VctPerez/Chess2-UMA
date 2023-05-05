@@ -96,4 +96,8 @@ public class Graveyard extends Actor {
 		}
 
 	}
+	
+	public void flipImage() {
+		grave.flip(true, false);
+	}
 }

@@ -102,6 +102,7 @@ public class GameScreen extends AbstractScreen {
 		blackPieces = new ArrayList<>();
 		graveyardWhite = new Graveyard(21, 21);
 		graveyardBlack = new Graveyard(1270 - 100, 21);
+		graveyardWhite.flipImage();
 
 		// Crear mensaje emergente tras terminar partida
 		showPopup = false;
@@ -198,9 +199,6 @@ public class GameScreen extends AbstractScreen {
 		}
 	}
 	*/
-
-	
-*/
 
 
 

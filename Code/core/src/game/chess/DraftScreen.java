@@ -81,10 +81,18 @@ public class DraftScreen extends AbstractScreen {
 		title.addAction(Actions.moveTo(600, 650));
 		
 		pieceDisposer = new Image(Render.app.getManager().get(Resources.PIECE_DISPOSER_PATH,Texture.class));
-		pieceDisposer.setSize(150, 700);
-		pieceDisposer.setPosition(-114, 20);
+		pieceDisposer.setSize(125, 700);
+		pieceDisposer.setPosition(-125, 10);
 		stage.addActor(pieceDisposer);
+		
+		arrow = new Image(Render.app.getManager().get(Resources.ARROW_PATH, Texture.class));
+		arrow.setSize(24, 24);
+		arrow.setPosition(-12, 110 + 100 * (5 - cont));
+		arrow.setColor(1f, 0.87f, 0.09f, 1f);
+		
+		stage.addActor(arrow);
 
+		
 		initPieceClasses();
 		initTileButtons();
 		initButtons();
@@ -205,8 +213,8 @@ public class DraftScreen extends AbstractScreen {
 			i++;
 		}
 		
-		pieceDisposer.addAction(Actions.moveBy(104, 0, 0.5f));
-	
+		pieceDisposer.addAction(Actions.moveBy(130, 0, 0.5f));
+		arrow.addAction(Actions.moveTo(135,  110 + 100 * (5 - cont), 0.5f));
 		
 		Action action = new Action() {
 			public boolean act(float delta) {
@@ -214,13 +222,11 @@ public class DraftScreen extends AbstractScreen {
 				return true;
 			}
 		};
+		changePiece();
 
 		stage.addAction(Actions.sequence(Actions.delay(0.6f), action));
 
-		arrow = new Image(Render.app.getManager().get(Resources.ARROW_PATH, Texture.class));
-		arrow.setSize(100, 100);
-		stage.addActor(arrow);
-		changePiece();
+		
 	}
 	
 	private void endDraft() {
@@ -235,7 +241,7 @@ public class DraftScreen extends AbstractScreen {
 		next.addAction(Actions.moveTo(480, -50, 0.5f));
 		back.addAction(Actions.moveTo(175, -50, 0.5f));
 		info.addAction(Actions.moveTo(1280, 40, 0.5f));
-		arrow.addAction(Actions.moveTo(325f, -168f, 0.5f));
+		arrow.addAction(Actions.moveTo(-12f, 110 + 100 * (5 - cont), 0.5f));
 	}
 
 	private void updateDraft() {
@@ -263,6 +269,7 @@ public class DraftScreen extends AbstractScreen {
 					previousCont=cont;
 					cont++;
 					changePiece();
+					arrow.setPosition(130, 110 + 100 * (5 - cont));
 				} else {
 					if (Render.DraftController == 1) {
 						Action draftAction = new Action() {
@@ -338,6 +345,7 @@ public class DraftScreen extends AbstractScreen {
 				if (cont > 0) {
 					previousCont=cont;
 					cont--;
+					arrow.setPosition(130, 110 + 100 * (5 - cont));
 					changePiece();
 				}
 
@@ -361,7 +369,6 @@ public class DraftScreen extends AbstractScreen {
 		currentPieceSelection = tile1.getPiece();
 		info.getInfoFrom(currentPieceSelection);
 		updateDraft();
-		arrow.setPosition(90, 70 + 100 * (5 - cont));
 
 	}
 
