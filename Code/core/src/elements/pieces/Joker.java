@@ -25,11 +25,9 @@ public class Joker extends Piece{
 	public Joker(Boolean color, int x, int y,Board board) {
 		super(color, Render.app.getManager().get(Resources.RND_PATH, Texture.class), x, y,board);
 		current = new Bishop(color,x,y,board);
-		if(color) {
-			mask = new Image(Render.player1Draft.get(0));
-		}else {
-			mask = new Image(Render.player2Draft.get(0));
-		}
+		
+		mask = new Image(Resources.BISHOP_PATH);
+
 		
 		this.setSprite(Resources.RND_PATH);
 		prev = new Vector2 (0,0);
@@ -37,11 +35,6 @@ public class Joker extends Piece{
 	
 	public Piece Swap() {
 		ArrayList<String> draft;
-		if(color) {
-			draft=Render.player1Draft;
-		}else {
-			draft=Render.player2Draft;
-		}
 		//Probabilidades:
 		//Dama:15
 		//Peón:15
@@ -58,28 +51,29 @@ public class Joker extends Piece{
 		Piece nueva=null;
 		
 		if(i>=1 && i<=30) {
-			nueva = Parser.getPieceFromPath(draft.get(3), color, this.x, this.y, board);
-			mask.setImage(draft.get(3));
+			nueva = Parser.getPieceFromPath(Resources.BISHOP_PATH, color, this.x, this.y, board);
+			mask.setImage(Resources.BISHOP_PATH);
 			prev.x=1;
 			prev.y=30;
 		}else if(i>=31 && i<=45){
-			nueva = Parser.getPieceFromPath(draft.get(0), color, this.x, this.y, board);
-			mask.setImage(draft.get(0));
+			nueva = Parser.getPieceFromPath(Resources.PAWN_PATH, color, this.x, this.y, board);
+			nueva.hasBeenMoved=true;
+			mask.setImage(Resources.PAWN_PATH);
 			prev.x=31;
 			prev.y=45;
 		}else if(i>=46 && i<=65){
-			nueva = Parser.getPieceFromPath(draft.get(1), color, this.x, this.y, board);
-			mask.setImage(draft.get(1));
+			nueva = Parser.getPieceFromPath(Resources.KNIGHT_PATH, color, this.x, this.y, board);
+			mask.setImage(Resources.KNIGHT_PATH);
 			prev.x=46;
 			prev.y=65;
 		}else if(i>=66 && i<=80){
-			nueva = Parser.getPieceFromPath(draft.get(4), color, this.x, this.y, board);
-			mask.setImage(draft.get(4));
+			nueva = Parser.getPieceFromPath(Resources.QUEEN_PATH, color, this.x, this.y, board);
+			mask.setImage(Resources.QUEEN_PATH);
 			prev.x=66;
 			prev.y=80;
 		}else {
-			nueva = Parser.getPieceFromPath(draft.get(2), color, this.x, this.y, board);
-			mask.setImage(draft.get(2));
+			nueva = Parser.getPieceFromPath(Resources.ROOK_PATH, color, this.x, this.y, board);
+			mask.setImage(Resources.ROOK_PATH);
 			prev.x=81;
 			prev.y=100;
 		}
