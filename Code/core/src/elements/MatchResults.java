@@ -67,6 +67,10 @@ public class MatchResults extends Actor{
 		matchres.setText("HA GANADO EL " + Winner+" \n    POR RENDICION");
 	}
 	
+	public void setWinnerKingKilled(String Winner) {
+		matchres.setText("HA GANADO EL " + Winner+" \n    POR ASESINATO");
+	}
+	
 	public void setWinner() {
 		matchres.setText("HAS GANADO");
 		//Posible inserción de música de victoria

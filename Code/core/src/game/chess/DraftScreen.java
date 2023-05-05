@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.StringBuilder;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import elements.PieceInfo;
@@ -25,6 +26,8 @@ public class DraftScreen extends AbstractScreen {
 	private ArrayList<Image> pieces;
 	private ArrayList<String> pawns, knights, rooks, bishops, queens, kings;
 	private String currentPieceSelection;
+	
+	protected Label title;
 
 	private PieceInfo info;
 	private TextButton next, back;
@@ -52,7 +55,15 @@ public class DraftScreen extends AbstractScreen {
 		System.out.println("El modo de draft es " + Render.DraftController);
 		stage = new Stage(new FitViewport(1280, 720));
 		Gdx.input.setInputProcessor(stage);
-
+		
+		if(Render.DraftController==1) {
+			title = new Label("P1", Render.skin, "ConfigStyle");
+		}else if(Render.DraftController==2) {
+			title = new Label("P2", Render.skin, "ConfigStyle");
+		}
+		
+		
+		
 		configReader = new LectorLineas("files/config.txt"); // Lector del txt configuracion para sacar el idioma
 		languageReader = new LectorLineas("files/lang/" + configReader.leerLinea(Settings.language) + "Draft-Game.txt");
 
@@ -63,6 +74,9 @@ public class DraftScreen extends AbstractScreen {
 		// -------------------------------
 		stage.addActor(Render.menuBG);
 		stage.addActor(info);
+		stage.addActor(title);
+		
+		title.addAction(Actions.moveTo(600, 650));
 		
 		pieceDisposer = new Image(Render.app.getManager().get(Resources.PIECE_DISPOSER_PATH,Texture.class));
 		pieceDisposer.setSize(150, 700);
@@ -185,6 +199,7 @@ public class DraftScreen extends AbstractScreen {
 		}
 		
 		pieceDisposer.addAction(Actions.moveBy(104, 0, 0.5f));
+	
 		
 		Action action = new Action() {
 			public boolean act(float delta) {
@@ -207,11 +222,13 @@ public class DraftScreen extends AbstractScreen {
 		}
 		pieceDisposer.addAction(Actions.moveBy(-150, 0, 0.5f));
 		
+		title.addAction(Actions.moveTo(325f, 720f, 0.5f));
 		tile1.addAction(Actions.moveTo(325f, 720f, 0.5f));
 		tile2.addAction(Actions.moveTo(325f, -168f, 0.5f));
 		next.addAction(Actions.moveTo(480, -50, 0.5f));
 		back.addAction(Actions.moveTo(175, -50, 0.5f));
 		info.addAction(Actions.moveTo(1280, 40, 0.5f));
+		arrow.addAction(Actions.moveTo(325f, -168f, 0.5f));
 	}
 
 	private void updateDraft() {
