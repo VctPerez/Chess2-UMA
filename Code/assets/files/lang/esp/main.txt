@@ -6,3 +6,4 @@ Volumen
 Idioma
 Manual
 Chess2
+Perfil

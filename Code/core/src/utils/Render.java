@@ -62,6 +62,8 @@ public class Render {
     public static AbstractScreen MODESCREEN;
     public static AbstractScreen CLASSICMANSCREEN;
     public static AbstractScreen MODIFIEDMANSCREEN;
+    public static AbstractScreen PROFILESCREEN;
+    public static AbstractScreen EDITPROFILESCREEN;
 
     public static Host host;
     public static Guest guest;

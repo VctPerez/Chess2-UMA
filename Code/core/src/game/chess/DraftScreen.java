@@ -57,7 +57,7 @@ public class DraftScreen extends AbstractScreen {
 		Gdx.input.setInputProcessor(stage);
 		
 		if(Render.DraftController==1) {
-			title = new Label("P1", Render.skin, "ConfigStyle");
+			title = new Label("P1", Render.skin, "TitleStyle");
 		}else if(Render.DraftController==2) {
 			title = new Label("P2", Render.skin, "ConfigStyle");
 		}else if(Render.DraftController==3) {
@@ -342,6 +342,14 @@ public class DraftScreen extends AbstractScreen {
 		back.addCaptureListener(new InputListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				if(cont==0 && Render.DraftController==1) {
+					stage.dispose();
+					Render.app.setScreen(Render.MODESCREEN);
+				}
+				if(cont==0 && Render.DraftController==2) {
+					Render.DraftController--;
+					Render.app.setScreen(Render.DRAFTSCREEN);
+				}
 				if (cont > 0) {
 					previousCont=cont;
 					cont--;

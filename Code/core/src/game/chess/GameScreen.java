@@ -73,6 +73,8 @@ public class GameScreen extends AbstractScreen {
 
 	// Modo depuracion
 	private boolean debugMode = false;
+	private boolean statsUpdated=false;
+	private static boolean drawMatch=false;
 
 	@Override
 	public void show() {
@@ -167,12 +169,12 @@ public class GameScreen extends AbstractScreen {
 		if (surrender.isPressed()) {
 			if (PLAYER) {
 				System.out.println("RENDICION BLANCA");
-				results.setWinnerSurrender("NEGRO");
+				results.setWinnerSurrender(PLAYER);
 				showPopup = true;
 				whiteCheckMate = true;
 			} else {
 				System.out.println("RENDICION NEGRA");
-				results.setWinnerSurrender("BLANCO");
+				results.setWinnerSurrender(PLAYER);
 				showPopup = true;
 				blackCheckMate = true;
 			}
@@ -214,6 +216,14 @@ public class GameScreen extends AbstractScreen {
 			// ------------------------------------------------------------------------------
 			results.Show();
 			results.render();
+			if(!statsUpdated && !drawMatch) {
+				if(whiteCheckMate) {
+					results.updateLocalWinner(false,PLAYER);
+				}else {
+					results.updateLocalWinner(true,PLAYER);
+				}
+				statsUpdated=true;
+			}
 		} else {
 			timersRender();
 			checkTimerEnd();
@@ -268,10 +278,10 @@ public class GameScreen extends AbstractScreen {
 	 */
 	private void checkTimerEnd() {
 		if (TimerB.getTimeRemaining() == 0) {
-			results.setWinner("BLANCO");
+			results.setWinner(PLAYER);
 			showPopup = true;
 		} else if (TimerW.getTimeRemaining() == 0) {
-			results.setWinner("NEGRO");
+			results.setWinner(PLAYER);
 			showPopup = true;
 		}
 	}
@@ -430,11 +440,11 @@ public class GameScreen extends AbstractScreen {
 			blackCheckMate = isCheckMate(blackCheck, blackPieces);
 			if (whiteCheckMate) {
 				System.out.println("JAQUE MATE AL REY BLANCO");
-				results.setWinner("NEGRO");
+				results.setWinner(PLAYER);
 				showPopup = true;
 			} else if (blackCheckMate) {
 				System.out.println("JAQUE MATE AL REY NEGRO");
-				results.setWinner("BLANCO");
+				results.setWinner(PLAYER);
 				showPopup = true;
 			}
 		}
@@ -555,11 +565,13 @@ public class GameScreen extends AbstractScreen {
 			if (!PLAYER && !hasMoves(whitePieces)) {
 				System.out.println("Las negras han empatado");
 				results.setDraw();
+				drawMatch=true;
 				showPopup = true;
 
 			} else if (PLAYER && !hasMoves(blackPieces)) {
 				System.out.println("Las blancas han empatado");
 				results.setDraw();
+				drawMatch=true;
 				showPopup = true;
 			}
 		}

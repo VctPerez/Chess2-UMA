@@ -180,6 +180,8 @@ public class Chess2 extends Game {
 		Render.LOBBYSCREEN = new LobbyScreen();
 		Render.CREATEMATCHSCREEN = new CreateMatchScreen();
 		Render.DRAFTSCREEN = new DraftScreen();
+		Render.PROFILESCREEN = new ProfileScreen();
+		Render.EDITPROFILESCREEN = new EditProfileScreen();
 		
 		
 		Render.DraftController=1;
@@ -189,7 +191,7 @@ public class Chess2 extends Game {
 
 		this.setScreen(Render.MAINSCREEN);
 //		 this.setScreen(Render.GameScreen);
-		//this.setScreen(Render.DRAFTSCREEN);
+		this.setScreen(Render.MAINSCREEN);
 
 
 
