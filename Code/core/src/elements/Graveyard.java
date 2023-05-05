@@ -21,7 +21,7 @@ import utils.Resources;
 public class Graveyard extends Actor {
 	private ArrayList<Piece> graveyard;
 	private final float Y_OFFSET = 20;
-	private final float X_OFFSET = 130;
+	private final float X_OFFSET = 140;
 	private int index = 0;
 	private Image GraveDisposer;
 
@@ -31,8 +31,9 @@ public class Graveyard extends Actor {
 		setSize(42,42*16);
 		setColor(Color.BLACK);
 		GraveDisposer = new Image(Render.app.getManager().get(Resources.GRAVEYARD_PATH,Texture.class));
-		GraveDisposer.setSize(450, 720);
+		GraveDisposer.setSize(500, 720);
 		GraveDisposer.setPosition(x-X_OFFSET, y-Y_OFFSET);
+		GraveDisposer.setTransparency(0.80f);
 	}
 	
 	public void add(Piece piece) {
@@ -44,7 +45,7 @@ public class Graveyard extends Actor {
 		}
 		
 		ParallelAction par = new ParallelAction();
-		par.addAction(Actions.moveTo(getX()+13, getY()+(38*index)+20, 0.6f));
+		par.addAction(Actions.moveTo(getX()+20, getY()+(38*index)+20, 0.6f));
 		par.addAction(Actions.sizeTo(38, 38, 0.6f));
 		
 		piece.addAction(Actions.sequence(Actions.sizeTo(84, 84), Actions.delay(0.2f) , par));
