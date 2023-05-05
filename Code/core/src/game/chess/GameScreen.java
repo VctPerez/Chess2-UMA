@@ -74,7 +74,7 @@ public class GameScreen extends AbstractScreen {
 	// Modo depuracion
 	private boolean debugMode = false;
 	private boolean statsUpdated=false;
-	private boolean drawMatch=false;
+	private static boolean drawMatch=false;
 
 	@Override
 	public void show() {
@@ -201,8 +201,6 @@ public class GameScreen extends AbstractScreen {
 	}
 	*/
 
-	
-*/
 
 
 
