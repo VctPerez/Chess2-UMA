@@ -78,7 +78,7 @@ public class MatchResults extends Actor{
 	}
 	
 	public void setWinnerSurrender(Boolean equipo) {
-		equipo=!equipo;
+		//equipo=!equipo;
 		String winner = WinnerTraduction(equipo);
 		matchres.setText("HA GANADO EL " + winner+" \n    POR RENDICION");
 	}
@@ -100,6 +100,7 @@ public class MatchResults extends Actor{
 	public void setDraw() {
 		matchres.setText("Empate");
 		
+		//Actualizar empates
 		int v = ProfileReader.leerINTLinea(4);
 		v++;
 		System.out.println("Escribo " + v);
@@ -134,8 +135,8 @@ public class MatchResults extends Actor{
 					Render.guest = null;
 				}
 			}
-//			Render.player1Draft = new ArrayList<>();
-//			Render.player2Draft = new ArrayList<>();
+          //Render.player1Draft = new ArrayList<>();
+		  //Render.player2Draft = new ArrayList<>();
 			Render.app.setScreen(Render.MAINSCREEN);
 		}
 	}
@@ -148,10 +149,10 @@ public class MatchResults extends Actor{
 		}
 	}
 
-	public void updateWinner(boolean b,boolean equipo) {
+	public void updateLocalWinner(boolean b,boolean equipo) {
 			int v;
 			equipo=!equipo;
-			if( b && (equipo || (Render.hosting && equipo))) {
+			if(b && equipo) {
 				v = ProfileReader.leerINTLinea(2);
 				v++;
 				System.out.println("Escribo " + v);
@@ -163,6 +164,10 @@ public class MatchResults extends Actor{
 				ProfileWriter.escribirLineaINT(3, v);
 			}
 			updatePlays();
+	}
+	
+	public void updateOnlineWinner(boolean b, boolean equipo) {
+		
 	}
 
 	private void updatePlays() {
