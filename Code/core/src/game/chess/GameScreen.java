@@ -104,7 +104,7 @@ public class GameScreen extends AbstractScreen {
 		whitePieces = new ArrayList<>();
 		blackPieces = new ArrayList<>();
 		graveyardWhite = new Graveyard(21, 21);
-		graveyardBlack = new Graveyard(1280 -100, 21);
+		graveyardBlack = new Graveyard(1280 -105, 21);
 		
 
 		// Crear mensaje emergente tras terminar partida
