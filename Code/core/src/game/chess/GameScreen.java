@@ -178,7 +178,6 @@ public class GameScreen extends AbstractScreen {
 		}
 	}
 /*
-
 	public void checkGraveyard() {
 		for (int i = 0; i < graveyardWhite.graveyard.size(); i++) {
 			if (graveyardWhite.graveyard.get(i) instanceof King || graveyardWhite.graveyard.get(i) instanceof Midas
@@ -197,8 +196,8 @@ public class GameScreen extends AbstractScreen {
 				blackCheckMate = true;
 			}
 		}
-
 	}
+	*/
 
 	
 */
@@ -209,7 +208,7 @@ public class GameScreen extends AbstractScreen {
 	public void render(float delta) {
 		Render.clearScreen();
 		checkSurrender();
-		checkGraveyard();
+		//checkGraveyard();
 		if (showPopup) {
 			// Para que no se pueda interaccionar con nada despues de que se muestre el
 			// popup
@@ -467,6 +466,7 @@ public class GameScreen extends AbstractScreen {
 				Bomber b = (Bomber) currentTile.getPiece();
 				b.explode();
 				resetMate();
+				mateControl();
 			} else if (!currentTile.getPiece().checkPaladin(next_x, next_y)
 					&& !currentTile.getPiece().checkWitchAttack(next_x, next_y)) {
 
@@ -491,9 +491,9 @@ public class GameScreen extends AbstractScreen {
 				} else if (lastPawn != null) {
 					lastPawn.isPassantable = false;
 				}
+				mateControl();
 			}
 
-			mateControl();
 			if (Render.DraftController != 3)
 				changeTurn();
 			if (Render.hosting == PLAYER)

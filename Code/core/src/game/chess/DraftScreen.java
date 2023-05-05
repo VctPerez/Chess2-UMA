@@ -60,6 +60,8 @@ public class DraftScreen extends AbstractScreen {
 			title = new Label("P1", Render.skin, "ConfigStyle");
 		}else if(Render.DraftController==2) {
 			title = new Label("P2", Render.skin, "ConfigStyle");
+		}else if(Render.DraftController==3) {
+			title = new Label("CAMBIAR POR NOMBRE JUGADOR", Render.skin, "ConfigStyle");
 		}
 		
 		
@@ -159,6 +161,11 @@ public class DraftScreen extends AbstractScreen {
 		queens.add(Resources.QUEEN_PATH);
 		queens.add(Resources.VALKYRIE_PATH);
 		queens.add(Resources.WITCH_PATH);
+		queens.add(Resources.WITCH_PATH);
+		queens.add(Resources.WITCH_PATH);
+		queens.add(Resources.WITCH_PATH);
+		queens.add(Resources.WITCH_PATH);
+		
 
 		Collections.shuffle(queens);
 

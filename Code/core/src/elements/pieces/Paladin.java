@@ -90,7 +90,7 @@ public class Paladin extends Piece{
 		swingTile(0, 0, next_x, next_y);
 		swingTile(+i, +j, next_x, next_y);
 		swingSound(next_x, next_y);
-		Render.GameScreen.resetMate();
+		
 	}
 	
 	private void swingTile(float i, float j, float next_x, float next_y){
@@ -213,7 +213,7 @@ public class Paladin extends Piece{
 		return movements;
 	}
 	
-	private void addSwings(float x, float y, ArrayList<Vector2> movements) {
+	private void addSwings(float x, float y) {
 		if(x == this.x && y == this.y+1) {
 			canSwingUp = true;
 		}
@@ -231,7 +231,7 @@ public class Paladin extends Piece{
 	public void addMovement(float x, float y, ArrayList<Vector2> movements) {
 		if (board.getTile(x, y) != null && !sameColor(board.getTile(x, y).getPiece())) {
 			if(board.getTile(x, y).getPiece()!=null) {
-				addSwings(x, y, movements);
+				addSwings(x, y);
 			}
 			movements.add(new Vector2(x, y));
 		}
@@ -240,27 +240,48 @@ public class Paladin extends Piece{
 	public void swingSound(final float next_x, final float next_y) {
 		Action swingSfx = new Action() {
 			Sound sound = Render.app.getManager().get(Resources.PALADINSWING_SOUND, Sound.class);
-
+			
 			public boolean act(float delta) {
+				Tile tile = board.getTile(next_x, next_y);
 				AnimationActor swing= new AnimationActor(0.13f, "sword-swing.png", 4);
-				if(next_x == x && next_y == y + 1 && canSwingUp) {
-					swing.rotateBy(0);
-					swing.setPosition(getX()-board.getTile(x, y).getWidth(), getY()+board.getTile(x, y).getWidth());
-				}else if(next_x == x && next_y == y - 1 && canSwingDown) {
-					swing.rotateBy(180);
-					swing.setPosition(getX()+2*board.getTile(x, y).getWidth(), getY());
-				}else if(next_x == x + 1 && next_y == y && canSwingRight) {
-					swing.rotateBy(270);
-					swing.setPosition(getX()+board.getTile(x, y).getWidth(), getY()+2*board.getTile(x, y).getWidth());
-				}else if(next_x == x - 1 && next_y == y && canSwingLeft) {
-					swing.rotateBy(90);
-					swing.setPosition(getX(), getY()-board.getTile(x, y).getWidth());
+				
+				
+				if(Render.hosting) {
+					if(next_x == x && next_y == y + 1 && canSwingUp) {
+						swing.setPosition(tile.getX()-tile.getWidth(), tile.getY());
+						swing.rotateBy(0);
+					}else if(next_x == x && next_y == y - 1 && canSwingDown) {
+						swing.setPosition(tile.getX()+2*tile.getWidth(), tile.getY()+tile.getWidth());
+						swing.rotateBy(180);
+					}else if(next_x == x + 1 && next_y == y && canSwingRight) {
+						swing.setPosition(tile.getX(), tile.getY()+2*tile.getWidth());
+						swing.rotateBy(270);
+					}else if(next_x == x - 1 && next_y == y && canSwingLeft) {
+						swing.setPosition(tile.getX()+tile.getWidth(), tile.getY()-tile.getWidth());
+						swing.rotateBy(90);
+					}
+				}else {
+					if(next_x == x && next_y == y + 1 && canSwingUp) {
+						swing.setPosition(tile.getX()+2*tile.getWidth(), tile.getY()+tile.getWidth());
+						swing.rotateBy(180);
+					}else if(next_x == x && next_y == y - 1 && canSwingDown) {
+						swing.setPosition(tile.getX()-tile.getWidth(), tile.getY());
+						swing.rotateBy(0);
+					}else if(next_x == x + 1 && next_y == y && canSwingRight) {
+						swing.setPosition(tile.getX()+tile.getWidth(), tile.getY()-tile.getWidth());
+						swing.rotateBy(90);
+					}else if(next_x == x - 1 && next_y == y && canSwingLeft) {
+						swing.setPosition(tile.getX(), tile.getY()+2*tile.getWidth());
+						swing.rotateBy(270);
+					}
 				}
 				
-				swing.setSize(3*board.getTile(x, y).getWidth(), board.getTile(x, y).getWidth());
+				swing.setSize(3*tile.getWidth(), tile.getWidth());
 				Render.GameScreen.stage.addActor(swing);
 				
 				sound.play(0.5f);
+				Render.GameScreen.resetMate();
+				Render.GameScreen.mateControl();
 				return true;
 			}
 		};
