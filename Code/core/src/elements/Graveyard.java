@@ -19,7 +19,7 @@ import utils.Render;
 import utils.Resources;
 
 public class Graveyard extends Actor {
-	private ArrayList<Piece> graveyard;
+	public ArrayList<Piece> graveyard;
 	private final float Y_OFFSET = 20;
 	private final float X_OFFSET = 140;
 	private int index = 0;

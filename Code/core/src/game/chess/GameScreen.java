@@ -181,11 +181,30 @@ public class GameScreen extends AbstractScreen {
 		}
 	}
 	
+	public void checkGraveyard() {	
+		for(int i=0;i<graveyardWhite.graveyard.size();i++) {
+			if(graveyardWhite.graveyard.get(i) instanceof King || graveyardWhite.graveyard.get(i) instanceof Midas || graveyardWhite.graveyard.get(i) instanceof Mage) {
+				results.setWinnerKingKilled("NEGRO");
+				showPopup = true;
+				whiteCheckMate=true;
+			}
+		}
+		for(int i=0;i<graveyardBlack.graveyard.size();i++) {
+			if(graveyardBlack.graveyard.get(i) instanceof King || graveyardWhite.graveyard.get(i) instanceof Midas || graveyardWhite.graveyard.get(i) instanceof Mage) {
+				results.setWinnerKingKilled("BLANCO");
+				showPopup = true;
+				blackCheckMate=true;
+			}
+		}
+
+	}
+	
 
 	@Override
 	public void render(float delta){
 		Render.clearScreen();
 		checkSurrender();
+		checkGraveyard();
 		if (showPopup) {
 			//Para que no se pueda interaccionar con nada despues de que se muestre el popup
 			surrender.clearListeners();
