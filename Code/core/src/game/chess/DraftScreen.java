@@ -337,7 +337,7 @@ public class DraftScreen extends AbstractScreen {
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				if(cont==0 && Render.DraftController==1) {
 					stage.dispose();
-					Render.app.setScreen(Render.MAINSCREEN);
+					Render.app.setScreen(Render.MODESCREEN);
 				}
 				if(cont==0 && Render.DraftController==2) {
 					Render.DraftController--;
