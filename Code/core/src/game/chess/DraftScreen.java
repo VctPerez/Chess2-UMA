@@ -335,6 +335,14 @@ public class DraftScreen extends AbstractScreen {
 		back.addCaptureListener(new InputListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				if(cont==0 && Render.DraftController==1) {
+					stage.dispose();
+					Render.app.setScreen(Render.MAINSCREEN);
+				}
+				if(cont==0 && Render.DraftController==2) {
+					Render.DraftController--;
+					Render.app.setScreen(Render.DRAFTSCREEN);
+				}
 				if (cont > 0) {
 					previousCont=cont;
 					cont--;
