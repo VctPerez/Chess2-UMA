@@ -57,9 +57,9 @@ public class DraftScreen extends AbstractScreen {
 		Gdx.input.setInputProcessor(stage);
 		
 		if(Render.DraftController==1) {
-			title = new Label("P", Render.skin, "TitleStyle");
+			title = new Label("P1", Render.skin, "ConfigStyle");
 		}else if(Render.DraftController==2) {
-			title = new Label("P2", Render.skin, "TitleStyle");
+			title = new Label("P2", Render.skin, "ConfigStyle");
 		}
 		
 		
@@ -76,7 +76,7 @@ public class DraftScreen extends AbstractScreen {
 		stage.addActor(info);
 		stage.addActor(title);
 		
-		title.addAction(Actions.moveTo(550, 600));
+		title.addAction(Actions.moveTo(600, 650));
 		
 		pieceDisposer = new Image(Render.app.getManager().get(Resources.PIECE_DISPOSER_PATH,Texture.class));
 		pieceDisposer.setSize(150, 700);
@@ -199,6 +199,7 @@ public class DraftScreen extends AbstractScreen {
 		}
 		
 		pieceDisposer.addAction(Actions.moveBy(104, 0, 0.5f));
+	
 		
 		Action action = new Action() {
 			public boolean act(float delta) {
@@ -227,6 +228,7 @@ public class DraftScreen extends AbstractScreen {
 		next.addAction(Actions.moveTo(480, -50, 0.5f));
 		back.addAction(Actions.moveTo(175, -50, 0.5f));
 		info.addAction(Actions.moveTo(1280, 40, 0.5f));
+		arrow.addAction(Actions.moveTo(325f, -168f, 0.5f));
 	}
 
 	private void updateDraft() {
