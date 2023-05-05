@@ -167,18 +167,20 @@ public class CreateMatchScreen extends AbstractMenuScreen{
         	@Override
         	public void clicked(InputEvent event, float x, float y) {
         		super.clicked(event, x, y);
-        		if(!textField.getText().equals("")) {
+        		if(textField.getText().length() == 8) {
         			try {
-        				popUpTable.addAction(Actions.fadeOut(0.5f));
         				searchStarted = true;
         				//-1 para que no cambie de pantalla en selectScreen
         				activatedTextButton = -1;
                         Render.guest.connect(LobbyScreen.decodeIP(textField.getText().toUpperCase()));
-        				found = true;
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
+                        //Solo si no salta excepcion
+                        popUpTable.addAction(Actions.fadeOut(0.5f));
+                        found = true;
+                    } catch (IOException | IllegalArgumentException e) {
+                        textField.setText(languageReader.leerLinea(13));
+                        System.out.println("Error de codigo");
                     }
-        			
+
         		}
         	}
         });

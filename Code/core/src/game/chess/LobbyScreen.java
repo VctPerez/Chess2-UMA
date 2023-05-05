@@ -7,7 +7,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import interaccionFichero.LectorLineas;
-import multiplayer.Guest;
 import multiplayer.Host;
 import multiplayer.Player;
 import utils.*;
@@ -216,6 +215,7 @@ public class LobbyScreen extends AbstractScreen{
         int[] valores = new int[4];
         int cifra1,cifra2;
         for (int i = 0; i < 4; i++) {
+            if (cod.charAt(2*i) > 'P' || cod.charAt(2*i+1) < 'A') throw new IllegalArgumentException();
             cifra1 = cod.charAt(2*i) - 'A';
             cifra2 = cod.charAt(2*i+1) - 'A';
             res.append((cifra1<<4) + cifra2);
