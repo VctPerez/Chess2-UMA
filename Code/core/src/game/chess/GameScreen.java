@@ -2,23 +2,18 @@ package game.chess;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Action;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import elements.*;
 import elements.pieces.*;
 import interaccionFichero.LectorLineas;
 import utils.*;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class GameScreen extends AbstractScreen {
@@ -109,7 +104,7 @@ public class GameScreen extends AbstractScreen {
 		whitePieces = new ArrayList<>();
 		blackPieces = new ArrayList<>();
 		graveyardWhite = new Graveyard(21, 21);
-		graveyardBlack = new Graveyard(1280 - 63, 21);
+		graveyardBlack = new Graveyard(1280 -100, 21);
 		
 
 		// Crear mensaje emergente tras terminar partida
@@ -151,10 +146,10 @@ public class GameScreen extends AbstractScreen {
 		table.left().pad(50);
     	table.defaults().left().space(40);
 
-		table.add(TimerW).top().left().pad(20).expandX().expandY();
-		table.add(TimerB).top().right().pad(20).expandX().expandY();
+		table.add(TimerW).top().left().pad(80).expandX().expandY();
+		table.add(TimerB).top().right().pad(80).expandX().expandY();
 		table.row();
-		table.add(surrender).left().padLeft(21).expandX();
+		table.add(surrender).left().padLeft(70).expandX();
 		if(Render.DraftController != 3) table.row();
 
 	}
@@ -167,6 +162,7 @@ public class GameScreen extends AbstractScreen {
 		TimerB = new Timer(300, "negro", Render.skin, "default");
 		draw = new TextButton(languageReader.leerLinea(5), "SingleClickStyle");
 		surrender = new TextButton(languageReader.leerLinea(4), "SingleClickStyle");
+		surrender.getLabel().setFontScale(0.75f);
 	}
 	
 	public void checkSurrender() {
@@ -603,7 +599,7 @@ public class GameScreen extends AbstractScreen {
 				res = lastPawn.isPassantable; // Es en passant si se le puede hacer al peón objetivo
 			}
 		}else if (piece instanceof Lancer && next_y == current_y + (piece.color()?1:-1) && (next_x == current_x)){ //Si avanza a una casilla en linea recta sin pieza, está tomando al paso
-			if (!res && board.getTile(next_x + 1, current_y) != null && board.getTile(next_x + 1, current_y).getPiece() instanceof Lancer){
+			if (board.getTile(next_x + 1, current_y) != null && board.getTile(next_x + 1, current_y).getPiece() instanceof Lancer){
 				res = lastPawn.isPassantable; //Es en passant si se le puede hacer al peón objetivo
 			}
 			if(!res && board.getTile(next_x - 1, current_y)!=null && board.getTile(next_x - 1, current_y).getPiece() instanceof Lancer){
@@ -798,10 +794,11 @@ public class GameScreen extends AbstractScreen {
 				tile.addCaptureListener(new InputListener() {
 					@Override
 					public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-						if(tile.getPiece()!=null) {
-							System.out.println(tile.getPiece().toString());
-						}
 						if (!promoting) {
+							if(tile.getPiece()!=null && tile.getPiece().color() == PLAYER) {
+								Sound sound = Render.app.getManager().get(Resources.PIECESELECTION_SOUND, Sound.class);
+								sound.play(0.5f);
+							}
 							update(tile);
 						}
 						return true;

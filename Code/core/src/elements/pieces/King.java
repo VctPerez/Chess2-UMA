@@ -1,6 +1,5 @@
 package elements.pieces;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import elements.Board;
@@ -14,7 +13,7 @@ import java.util.ArrayList;
 
 public class King extends Piece{
 	public King(Boolean color, int x, int y,Board board) {
-		super(color, Render.app.getManager().get(Resources.KING_PATH, Texture.class), x, y,board);
+		super(color, Resources.KING_PATH, x, y,board);
 	}
 	
 	public void draw(Batch batch, float parentAlpha) {

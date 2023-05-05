@@ -1,24 +1,20 @@
 package elements.pieces;
 
-import java.util.ArrayList;
-
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
-
 import elements.Board;
 import elements.Piece;
-import game.chess.GameScreen;
 import interaccionFichero.LectorLineas;
-import utils.Image;
-import utils.Render;
 import utils.Resources;
+
+import java.util.ArrayList;
 
 public class Rook extends Piece{
 	private Boolean validDirection;
 	
 	public Rook(Boolean color, int x, int y,Board board) {
-		super(color, Render.app.getManager().get(Resources.ROOK_PATH, Texture.class), x, y,board);
+		super(color, Resources.ROOK_PATH, x, y,board);
 	}
 	
 	//Constructor destinado única y exclusivamente para el testing de la clase piece

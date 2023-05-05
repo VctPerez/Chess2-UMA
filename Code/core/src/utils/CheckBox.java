@@ -21,8 +21,8 @@ public class CheckBox extends Actor implements Button{
     public CheckBox(){
     	tick = new Image(Resources.CHECK_PATH);
     	
-    	unselectedTexture = new Texture(Resources.CHECKBOX_UNSELECTED);
-    	selectedTexture = new Texture(Resources.CHECKBOX_SELECTED);
+//    	unselectedTexture = new Texture(Resources.CHECKBOX_UNSELECTED);
+//    	selectedTexture = new Texture(Resources.CHECKBOX_SELECTED);
     	
     	value = false;
     	

@@ -8,3 +8,5 @@ classic
 create match
 find match
 code
+search
+cancel

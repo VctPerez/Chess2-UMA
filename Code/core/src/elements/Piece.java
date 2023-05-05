@@ -29,10 +29,8 @@ public abstract class Piece extends Actor {
 	public Boolean backed;
 	public int ate;
 	public int kiCharge;
-
-	public Piece(Boolean color, Texture texture, int x, int y, Board board) {
-		this.board = board;
-		this.sprite = new Image(texture);
+	
+	public Piece(boolean color, int x, int y, Board board) {
 		this.hasBeenMoved = false;
 		this.color = color;
 		this.alive = true;
@@ -41,12 +39,26 @@ public abstract class Piece extends Actor {
 		this.x = x;
 		this.y = y;
 		this.kiCharge=0;
+		this.board = board;
+	}
+
+	public Piece(Boolean color, Texture texture, int x, int y, Board board) {
+		this(color,x,y,board);
+		this.sprite = new Image(texture);
+		
 
 		if (color) {
 			setColor(Color.WHITE);
 		} else {
 			setColor(0.25f, 0.25f, 0.25f, 1f);
 		}
+		setPosition(board.getTile(x, y).getX(), board.getTile(x, y).getY());
+	}
+	
+	public Piece(boolean color, String path, int x, int y, Board board){
+		this(color,x,y,board);
+		String blackPath = path.replaceFirst("White", "Black");
+		this.sprite = new Image(Render.app.getManager().get(color?path:blackPath, Texture.class));
 		setPosition(board.getTile(x, y).getX(), board.getTile(x, y).getY());
 	}
 
@@ -274,6 +286,14 @@ public abstract class Piece extends Actor {
 				nextTile.setPiece(Render.GameScreen.graveyardBlack.reviveLastPiece());
 			}
 		}
+	}
+
+	/**
+	 * En las clases no abstractas devolverá su path según su color
+	 * @return null porque esto es el Piece genérico
+	 */
+	public String getSpritePath(){
+		return null;
 	}
 
 	@Override

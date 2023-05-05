@@ -15,7 +15,7 @@ import utils.Resources;
 public class Knight extends Piece {
 
 	public Knight(Boolean color, int x, int y,Board board) {
-		super(color, Render.app.getManager().get(Resources.KNIGHT_PATH, Texture.class), x, y,board);
+		super(color, Resources.KNIGHT_PATH, x, y,board);
 	}
 	
 	

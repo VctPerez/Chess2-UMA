@@ -47,6 +47,7 @@ public class MainScreen extends AbstractMenuScreen {
     	
     	for(int i = 0; i < textButton.length; i++) {
     		textButton[i].addAnimation();
+    		textButton[i].addSounds();
     	}
     }
     

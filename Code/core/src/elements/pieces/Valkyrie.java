@@ -1,15 +1,11 @@
 package elements.pieces;
 
-import java.util.ArrayList;
-
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
-
 import elements.Board;
 import elements.Piece;
 import elements.Tile;
@@ -17,12 +13,14 @@ import interaccionFichero.LectorLineas;
 import utils.Render;
 import utils.Resources;
 
+import java.util.ArrayList;
+
 public class Valkyrie extends Piece {
 	
 	private Boolean validDirection;
 
 	public Valkyrie(Boolean color, int x, int y,Board board) {
-		super(color, Render.app.getManager().get(Resources.VALKYRIE_PATH, Texture.class), x, y,board);
+		super(color, Resources.VALKYRIE_PATH, x, y,board);
 	}
 	
 	@Override
@@ -33,21 +31,21 @@ public class Valkyrie extends Piece {
 		
 		Action stance = new Action() {
 			public boolean act(float delta) {
-				sprite.setImage(Resources.VALKYRIE_PATH);
+				sprite.setImage(getSpritePath());
 				return true;
 			}
 		};
 		
 		Action animation_1= new Action() {
 			public boolean act(float delta) {
-				sprite.setImage(Resources.VALKYRIE_ANIMATION1_PATH);
+				sprite.setImage(getSpritePath().replace("1.","2."));
 				return true;
 			}
 		};
 		
 		Action animation_2= new Action() {
 			public boolean act(float delta) {
-				sprite.setImage(Resources.VALKYRIE_ANIMATION2_PATH);
+				sprite.setImage(getSpritePath().replace("1.","3."));
 				return true;
 			}
 		};
@@ -181,6 +179,15 @@ public class Valkyrie extends Piece {
 			default:
 				throw new IllegalArgumentException("Configuración errónea");
 		}
+	}
+
+	/**
+	 * Devuelve el path de la valkiria
+	 * @return path del sprite
+	 */
+	@Override
+	public String getSpritePath(){
+		return color?Resources.VALKYRIE_PATH:Resources.BLACK_VALKYRIE_PATH;
 	}
 
 	@Override

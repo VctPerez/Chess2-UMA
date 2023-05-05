@@ -1,16 +1,10 @@
 package elements.pieces;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-
 import elements.Board;
 import elements.Piece;
 import elements.Tile;
@@ -20,12 +14,16 @@ import utils.AnimationActor;
 import utils.Render;
 import utils.Resources;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 public class Paladin extends Piece{
 	private Boolean validDirection;
 	public Boolean canSwingUp = false, canSwingDown=false, canSwingRight=false, canSwingLeft=false;
 	
 	public Paladin(Boolean color, int x, int y, Board board) {
-		super(color, Render.app.getManager().get(Resources.PALADIN_PATH, Texture.class), x, y, board);
+		super(color, Resources.PALADIN_PATH, x, y, board);
 	}
 	
 	public void draw(Batch batch, float parentAlpha) {

@@ -78,6 +78,7 @@ public class ClassicManScreen extends AbstractScreen{
 	private void createTableElements() {
     	title = new Label("Manual", Render.skin, "TitleStyle");
     	textButton = new TextButton(languageReader.leerLinea(1));
+    	textButton.addSounds();
     	
     	String text="";
 		

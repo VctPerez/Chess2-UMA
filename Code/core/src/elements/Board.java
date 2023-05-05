@@ -53,7 +53,6 @@ public class Board extends Actor {
 	}
 
 	public Board() {
-		System.out.println(Tile_Size);
 		dim = 8;
 		board = new Tile[dim][dim];
 		setPosition(X_OFFSET, Y_OFFSET);

@@ -1,14 +1,10 @@
 package elements.pieces;
 
-import java.util.ArrayList;
-
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-
 import elements.Board;
 import elements.Piece;
 import elements.Tile;
@@ -17,11 +13,13 @@ import utils.AnimationActor;
 import utils.Render;
 import utils.Resources;
 
+import java.util.ArrayList;
+
 public class Witch extends Piece{
 	ArrayList<Vector2> attacks;
 
 	public Witch(Boolean color, int x, int y,Board board) {
-		super(color, Render.app.getManager().get(Resources.WITCH_PATH, Texture.class), x ,y,board);
+		super(color, Resources.WITCH_PATH, x ,y,board);
 		attacks = new ArrayList<>();
 		}
 	
@@ -153,10 +151,7 @@ public class Witch extends Piece{
 
 	/**
 	 * A�ade a movements todos los movimientos posibles del jinete
-	 * 
-	 * @param x
-	 * @param y
-	 * @return
+	 *
 	 */
 	
 	@Override

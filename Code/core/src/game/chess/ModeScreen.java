@@ -48,15 +48,20 @@ public class ModeScreen extends AbstractMenuScreen{
     	
     	for(int i = 0; i < textButton.length; i++) {
     		textButton[i].addAnimation();
+    		textButton[i].addSounds();
     	}
     }
     
 	@Override
 	protected void selectScreen(int button) {
     	if(button == 0) {
+    		Render.player1Draft.clear();
+    		Render.player2Draft.clear();
     		Render.DRAFTSCREEN=new DraftScreen();
     		Render.app.setScreen(Render.DRAFTSCREEN);
     	}else if(button == 1) {
+    		Render.player1Draft.clear();
+    		Render.player2Draft.clear();
     		Render.app.setScreen(new GameScreen());
     	}else if(button == 2) {
     		Render.app.setScreen(Render.MATCHMAKINGSCREEN);
