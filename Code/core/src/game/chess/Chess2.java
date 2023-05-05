@@ -50,6 +50,7 @@ public class Chess2 extends Game {
 		manager.load(Resources.RIDER_PATH, Texture.class);
 		manager.load(Resources.ARROW_PATH, Texture.class);
 		manager.load(Resources.PIECE_DISPOSER_PATH,Texture.class);
+		manager.load(Resources.GRAVEYARD_PATH,Texture.class);
 		manager.load(Resources.BOMBER_PATH, Texture.class);
 		manager.load(Resources.WARDEN_PATH, Texture.class);
 		manager.load(Resources.PALADIN_PATH, Texture.class);
@@ -186,7 +187,7 @@ public class Chess2 extends Game {
 		Render.hosting=true;
 
 		this.setScreen(Render.MAINSCREEN);
-//		 this.setScreen(Render.GameScreen);
+//		this.setScreen(Render.GameScreen);
 
 	}
 
