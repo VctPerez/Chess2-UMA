@@ -180,7 +180,7 @@ public class GameScreen extends AbstractScreen {
 			}
 		}
 	}
-	
+/*
 	public void checkGraveyard() {	
 		for(int i=0;i<graveyardWhite.graveyard.size();i++) {
 			if(graveyardWhite.graveyard.get(i) instanceof King || graveyardWhite.graveyard.get(i) instanceof Midas || graveyardWhite.graveyard.get(i) instanceof Mage) {
@@ -199,7 +199,7 @@ public class GameScreen extends AbstractScreen {
 
 	}
 	
-
+*/
 	@Override
 	public void render(float delta){
 		Render.clearScreen();
