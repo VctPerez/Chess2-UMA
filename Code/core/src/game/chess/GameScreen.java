@@ -56,7 +56,7 @@ public class GameScreen extends AbstractScreen {
 	private Piece lastPawn;
 
 	// Control turno
-	public boolean PLAYER;
+	public static boolean PLAYER;
 
 	//CONTROL MOVIMIENTO (ONLINE)
 	public boolean moved =false;
@@ -104,7 +104,7 @@ public class GameScreen extends AbstractScreen {
 		whitePieces = new ArrayList<>();
 		blackPieces = new ArrayList<>();
 		graveyardWhite = new Graveyard(21, 21);
-		graveyardBlack = new Graveyard(1280 -100, 21);
+		graveyardBlack = new Graveyard(1270 -100, 21);
 		
 
 		// Crear mensaje emergente tras terminar partida
@@ -334,7 +334,7 @@ public class GameScreen extends AbstractScreen {
 	 */
 	private static boolean updateCheck() {
 		int i = 0;
-		if (nextTile.getPiece().color()) {
+		if (PLAYER) {
 			while (i < whitePieces.size()) {
 				Piece piece = whitePieces.get(i);
 				i++;
@@ -343,7 +343,7 @@ public class GameScreen extends AbstractScreen {
 					board.getTile(blackKing.x, blackKing.y).attacked = true;
 				}
 			}
-		} else if (!nextTile.getPiece().color()) {
+		} else if (!PLAYER) {
 			while (i < blackPieces.size()) {
 				Piece piece = blackPieces.get(i);
 				i++;
@@ -397,7 +397,7 @@ public class GameScreen extends AbstractScreen {
 	 * @param next_x
 	 * @param next_y
 	 */
-	public static void mateControl(float next_x, float next_y) {
+	public static void mateControl() {
 		// updateCheck devuelve isCheck al final para no tener que llamarlo
 		if (updateCheck()) {
 			whiteCheckMate = isCheckMate(whiteCheck, whitePieces);
@@ -412,6 +412,7 @@ public class GameScreen extends AbstractScreen {
 				showPopup = true;
 			}
 		}
+		stalemateControl();
 	}
 
 	/**
@@ -435,7 +436,8 @@ public class GameScreen extends AbstractScreen {
 			if (currentTile.getPiece().checkBomber(next_x, next_y)) {
 				Bomber b = (Bomber) currentTile.getPiece();
 				b.explode();
-			} else if (!currentTile.getPiece().checkPaladin(next_x, next_y) && !currentTile.getPiece().checkCatapultAttack(next_x, next_y)) {
+				resetMate();
+			} else if (!currentTile.getPiece().checkPaladin(next_x, next_y) && !currentTile.getPiece().checkWitchAttack(next_x, next_y)) {
 
 				checkMidas();
 				checkCastling(next_x);
@@ -457,10 +459,9 @@ public class GameScreen extends AbstractScreen {
 				} else if (lastPawn != null) {
 					lastPawn.isPassantable = false;
 				}
-				mateControl(next_x, next_y);
-				stalemateControl();
 			}
 
+			mateControl();
 			if(Render.DraftController != 3)changeTurn();
 			if(Render.hosting == PLAYER) moved = true;
 		}
@@ -512,7 +513,7 @@ public class GameScreen extends AbstractScreen {
 	 * Se llega a empate si no hay movimientos legales pero no es jaque mate
 	 * </p>
 	 */
-	private void stalemateControl() {
+	public static void stalemateControl() {
 		if (!isCheck()) {
 			if (!PLAYER && !hasMoves(whitePieces)) {
 				System.out.println("Las negras han empatado");
@@ -533,7 +534,7 @@ public class GameScreen extends AbstractScreen {
 	 * 
 	 * @param pieces las piezas que se usan para la comprobación
 	 */
-	private boolean hasMoves(ArrayList<Piece> pieces) {
+	private static boolean hasMoves(ArrayList<Piece> pieces) {
 		boolean hasMoves = false;
 		for (int i = 0; i < pieces.size() && !hasMoves; i++) { // Si una pieza tiene movimientos se sale
 			hasMoves = !pieces.get(i).getValidMovements().isEmpty();

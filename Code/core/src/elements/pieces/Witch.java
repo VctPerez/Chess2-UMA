@@ -64,7 +64,7 @@ public class Witch extends Piece{
 	}
 	
 	@Override
-	public Boolean checkCatapultAttack(float next_x, float next_y) {
+	public Boolean checkWitchAttack(float next_x, float next_y) {
 		Boolean attack = false;
 		if(attacks.contains(new Vector2(next_x, next_y))) {
 			attack = true;
@@ -127,12 +127,14 @@ public class Witch extends Piece{
 		Action attackTile = new Action() {
 			public boolean act(float delta) {
 				board.getTile(next_x, next_y).sendPieceToGraveyard();
+				Render.GameScreen.resetMate();
 				return true;
 			}
 		};
 		addAction(Actions.after(fireBall));
 		addAction(Actions.sequence(Actions.delay(1.5f), explosionSfx));
 		addAction(Actions.after(attackTile));
+		
 	}
 	
 	public void simulateAttack(Tile nextTile) {

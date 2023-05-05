@@ -20,32 +20,32 @@ import utils.Resources;
 
 public class Graveyard extends Actor {
 	private ArrayList<Piece> graveyard;
-	private final float Y_OFFSET = 20;
-	private final float X_OFFSET = 130;
+	private final float Y_OFFSET = 10;
+	private final float X_OFFSET = 30;
 	private int index = 0;
-	private Image GraveDisposer;
+	private Image grave;
 
 	public Graveyard(float x, float y) {
 		graveyard = new ArrayList<>();
 		setPosition(x, y);
 		setSize(42,42*16);
 		setColor(Color.BLACK);
-		GraveDisposer = new Image(Render.app.getManager().get(Resources.GRAVEYARD_PATH,Texture.class));
-		GraveDisposer.setSize(450, 720);
-		GraveDisposer.setPosition(x-X_OFFSET, y-Y_OFFSET);
+		grave = new Image(Render.app.getManager().get(Resources.GRAVEYARD_PATH,Texture.class));
+		grave.setSize(grave.getDimensions().x, grave.getDimensions().y);
+		grave.setPosition(x-X_OFFSET, y-Y_OFFSET);
 	}
 	
 	public void add(Piece piece) {
 		piece.alive=false;
-		if(piece.color) {//implementar método que haga esto en gamescreen
+		if(piece.color) {
 			GameScreen.whitePieces.remove(piece);
 		}else {
 			GameScreen.blackPieces.remove(piece);
 		}
 		
 		ParallelAction par = new ParallelAction();
-		par.addAction(Actions.moveTo(getX()+13, getY()+(38*index)+20, 0.6f));
-		par.addAction(Actions.sizeTo(38, 38, 0.6f));
+		par.addAction(Actions.moveTo(getX()+23, getY()+(38*index)+20, 0.6f));
+		par.addAction(Actions.sizeTo(42, 42, 0.6f));
 		
 		piece.addAction(Actions.sequence(Actions.sizeTo(84, 84), Actions.delay(0.2f) , par));
 		
@@ -85,7 +85,7 @@ public class Graveyard extends Actor {
 	public void draw(Batch batch, float parentAlpha) {
 		batch.end();
 		batch.begin();
-		GraveDisposer.draw(batch, parentAlpha);
+		grave.draw(batch, parentAlpha);
 		batch.end();
 		batch.begin();
 		
