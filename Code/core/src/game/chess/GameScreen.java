@@ -218,9 +218,9 @@ public class GameScreen extends AbstractScreen {
 			results.render();
 			if(!statsUpdated && !drawMatch) {
 				if(whiteCheckMate) {
-					results.updateWinner(false,PLAYER);
+					results.updateLocalWinner(false,PLAYER);
 				}else {
-					results.updateWinner(true,PLAYER);
+					results.updateLocalWinner(true,PLAYER);
 				}
 				statsUpdated=true;
 			}
