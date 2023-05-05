@@ -64,11 +64,14 @@ public class Witch extends Piece{
 	}
 	
 	@Override
-	public Boolean checkCatapultAttack(float next_x, float next_y) {
+	public Boolean checkWitchAttack(float next_x, float next_y) {
 		Boolean attack = false;
 		if(attacks.contains(new Vector2(next_x, next_y))) {
+			System.out.println(this.toString() + "  ATACA");
 			attack = true;
 			attack(next_x, next_y);
+		}else {
+			System.out.println(this.toString() + "  NO ATACA?");
 		}
 		return attack;
 	}
@@ -127,12 +130,15 @@ public class Witch extends Piece{
 		Action attackTile = new Action() {
 			public boolean act(float delta) {
 				board.getTile(next_x, next_y).sendPieceToGraveyard();
+				Render.GameScreen.resetMate();
+				Render.GameScreen.mateControl();
 				return true;
 			}
 		};
 		addAction(Actions.after(fireBall));
 		addAction(Actions.sequence(Actions.delay(1.5f), explosionSfx));
 		addAction(Actions.after(attackTile));
+		
 	}
 	
 	public void simulateAttack(Tile nextTile) {
@@ -194,7 +200,7 @@ public class Witch extends Piece{
 	
 
 	public void addAttack(float x, float y, ArrayList<Vector2> movements) {
-		if (board.getTile(x, y) != null && board.getTile(x, y).getPiece() != null &&  !sameColor(board.getTile(x, y).getPiece())) {
+		if (board.getTile(x, y) != null && board.getTile(x, y).getPiece() != null &&  !sameColor(board.getTile(x, y).getPiece()) && !(board.getTile(x, y).getPiece() instanceof Colosus)) {
 			movements.add(new Vector2(x, y));
 		}
 	}

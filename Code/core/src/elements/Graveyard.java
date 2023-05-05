@@ -19,80 +19,81 @@ import utils.Render;
 import utils.Resources;
 
 public class Graveyard extends Actor {
-	private ArrayList<Piece> graveyard;
-	private final float Y_OFFSET = 20;
-	private final float X_OFFSET = 140;
+	public ArrayList<Piece> graveyard;
+	private final float Y_OFFSET = 10;
+	private final float X_OFFSET = 30;
 	private int index = 0;
-	private Image GraveDisposer;
+	private Image grave;
 
 	public Graveyard(float x, float y) {
 		graveyard = new ArrayList<>();
 		setPosition(x, y);
-		setSize(42,42*16);
+		setSize(42, 42 * 16);
 		setColor(Color.BLACK);
-		GraveDisposer = new Image(Render.app.getManager().get(Resources.GRAVEYARD_PATH,Texture.class));
-		GraveDisposer.setSize(500, 720);
-		GraveDisposer.setPosition(x-X_OFFSET, y-Y_OFFSET);
-		GraveDisposer.setTransparency(0.80f);
+		grave = new Image(Render.app.getManager().get(Resources.GRAVEYARD_PATH, Texture.class));
+		grave.setSize(grave.getDimensions().x, grave.getDimensions().y);
+		grave.setPosition(x - X_OFFSET, y - Y_OFFSET);
+
+		grave.setTransparency(0.80f);
 	}
-	
+
 	public void add(Piece piece) {
-		piece.alive=false;
-		if(piece.color) {//implementar método que haga esto en gamescreen
+		piece.alive = false;
+		if (piece.color) {
 			GameScreen.whitePieces.remove(piece);
-		}else {
+		} else {
 			GameScreen.blackPieces.remove(piece);
 		}
-		
+
 		ParallelAction par = new ParallelAction();
-		par.addAction(Actions.moveTo(getX()+20, getY()+(38*index)+20, 0.6f));
-		par.addAction(Actions.sizeTo(38, 38, 0.6f));
-		
-		piece.addAction(Actions.sequence(Actions.sizeTo(84, 84), Actions.delay(0.2f) , par));
-		
+		par.addAction(Actions.moveTo(getX() + 23, getY() + (38 * index) + 20, 0.6f));
+		par.addAction(Actions.sizeTo(42, 42, 0.6f));
+
+		piece.addAction(Actions.sequence(Actions.sizeTo(84, 84), Actions.delay(0.2f), par));
+
 		graveyard.add(piece);
 		index++;
 	}
-	
+
 	public void simulateAdd(Piece piece) {
-		piece.alive=false;
-		if(piece.color) {//implementar método que haga esto en gamescreen
+		piece.alive = false;
+		if (piece.color) {// implementar método que haga esto en gamescreen
 			GameScreen.whitePieces.remove(piece);
-		}else {
+		} else {
 			GameScreen.blackPieces.remove(piece);
 		}
-		
+
 		graveyard.add(piece);
 		index++;
 	}
-	
+
 	public Piece reviveLastPiece() {
 		Piece piece = null;
-		if(!graveyard.isEmpty()) {
-			piece = graveyard.get(graveyard.size()-1);
-			piece.alive=true;
-			graveyard.remove(graveyard.size()-1);
-			
-			if(piece.color) {//implementar método que haga esto en gamescreen
+		if (!graveyard.isEmpty()) {
+			piece = graveyard.get(graveyard.size() - 1);
+			piece.alive = true;
+			graveyard.remove(graveyard.size() - 1);
+
+			if (piece.color) {// implementar método que haga esto en gamescreen
 				GameScreen.whitePieces.add(piece);
-			}else {
+			} else {
 				GameScreen.blackPieces.add(piece);
 			}
 		}
 		index--;
 		return piece;
 	}
-	
+
 	public void draw(Batch batch, float parentAlpha) {
 		batch.end();
 		batch.begin();
-		GraveDisposer.draw(batch, parentAlpha);
+		grave.draw(batch, parentAlpha);
 		batch.end();
 		batch.begin();
-		
-		for(int i = 0; i< graveyard.size(); i++) {
+
+		for (int i = 0; i < graveyard.size(); i++) {
 			graveyard.get(i).draw(batch, parentAlpha);
 		}
-		
+
 	}
 }

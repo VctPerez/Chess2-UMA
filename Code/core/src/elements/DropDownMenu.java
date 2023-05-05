@@ -122,7 +122,7 @@ public class DropDownMenu extends Actor{
 			newPiece.setSize(84, 84);
             Render.GameScreen.stage.addActor(newPiece);
             Render.GameScreen.promoting = false;
-            Render.GameScreen.mateControl(tile.getPos().x, tile.getPos().y);
+            Render.GameScreen.mateControl();
             
             if(online) {
             	sendPiece(newPiecePath);
