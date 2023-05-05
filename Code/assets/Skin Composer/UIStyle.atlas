@@ -6,91 +6,91 @@ filter: Linear, Linear
 repeat: none
 white-pixel
   rotate: false
-  xy: 1536, 880
+  xy: 1536, 912
   size: 1, 1
   orig: 1, 1
   offset: 0, 0
   index: -1
 Default_Label_FONT
   rotate: false
-  xy: 1029, 810
+  xy: 1029, 842
   size: 505, 71
   orig: 505, 71
   offset: 0, 0
   index: -1
 SingleClickStyle_TextButtons_FONT
   rotate: false
-  xy: 1029, 397
+  xy: 1029, 429
   size: 505, 411
   orig: 505, 411
   offset: 0, 0
   index: -1
 TextButtons_FONT_0
   rotate: false
-  xy: 1, 1397
+  xy: 1, 1429
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
   index: -1
 TextButtons_FONT_1
   rotate: false
-  xy: 1, 883
+  xy: 1, 915
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
   index: -1
 TextField_FONT
   rotate: false
-  xy: 1, 63
+  xy: 1, 95
   size: 506, 304
   orig: 506, 304
   offset: 0, 0
   index: -1
 TitleStyle_Label_FONT_0
   rotate: false
-  xy: 515, 1397
+  xy: 515, 1429
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
   index: -1
 TitleStyle_Label_FONT_1
   rotate: false
-  xy: 1, 369
+  xy: 1, 401
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
   index: -1
 TitleStyle_Label_FONT_2
   rotate: false
-  xy: 515, 883
+  xy: 515, 915
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
   index: -1
 TitleStyle_Label_FONT_3
   rotate: false
-  xy: 1029, 1397
+  xy: 1029, 1429
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
   index: -1
 TitleStyle_Label_FONT_4
   rotate: false
-  xy: 515, 369
+  xy: 515, 401
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
   index: -1
 TitleStyle_Label_FONT_5
   rotate: false
-  xy: 1029, 883
+  xy: 1029, 915
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
   index: -1
 Button_BACKGROUND
   rotate: false
-  xy: 1543, 1867
+  xy: 1593, 1899
   size: 42, 42
   split: 15, 15, 15, 15
   pad: 20, 20, 20, 20
@@ -99,7 +99,7 @@ Button_BACKGROUND
   index: -1
 Button_OVER
   rotate: false
-  xy: 1, 19
+  xy: 1, 1
   size: 42, 42
   split: 15, 15, 15, 15
   pad: 20, 20, 20, 20
@@ -108,28 +108,28 @@ Button_OVER
   index: -1
 Knob
   rotate: false
-  xy: 509, 317
+  xy: 1637, 1909
   size: 16, 32
   orig: 16, 32
   offset: 0, 0
   index: -1
 Knob_Before
   rotate: false
-  xy: 1, 1
+  xy: 1543, 1825
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 Knob_Over
   rotate: false
-  xy: 45, 29
+  xy: 1593, 1865
   size: 16, 32
   orig: 16, 32
   offset: 0, 0
   index: -1
 Slider_Background
   rotate: false
-  xy: 1587, 1885
+  xy: 559, 375
   size: 24, 24
   split: 5, 5, 5, 5
   orig: 24, 24
@@ -137,15 +137,47 @@ Slider_Background
   index: -1
 Slider_BackgroundOver
   rotate: false
-  xy: 1543, 1841
+  xy: 509, 325
   size: 24, 24
   split: 5, 5, 5, 5
   orig: 24, 24
   offset: 0, 0
   index: -1
-TextField_SELECTED
+checkBox_Background
+  rotate: false
+  xy: 1543, 1893
+  size: 48, 48
+  split: 12, 12, 12, 12
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+checkBox_BackgroundOver
   rotate: false
   xy: 509, 351
+  size: 48, 48
+  split: 12, 12, 12, 12
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+checkBox_BackgroundOver_CHECKED
+  rotate: false
+  xy: 1543, 1843
+  size: 48, 48
+  split: 12, 12, 12, 12
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+checkBox_Background_CHECKED
+  rotate: false
+  xy: 1, 45
+  size: 48, 48
+  split: 12, 12, 12, 12
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+TextField_SELECTED
+  rotate: false
+  xy: 1029, 411
   size: 32, 16
   split: 6, 6, 6, 6
   orig: 32, 16
@@ -153,7 +185,7 @@ TextField_SELECTED
   index: -1
 TextField_UNSELECTED
   rotate: false
-  xy: 1029, 379
+  xy: 51, 77
   size: 32, 16
   split: 6, 6, 6, 6
   orig: 32, 16

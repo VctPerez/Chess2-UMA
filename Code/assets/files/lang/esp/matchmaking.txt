@@ -8,3 +8,5 @@ clasico
 crear partida
 buscar partida
 codigo
+buscar
+cancelar

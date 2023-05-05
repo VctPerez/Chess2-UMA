@@ -110,6 +110,7 @@ public class CreateMatchScreen extends AbstractMenuScreen{
         for(int i =  0; i < textButton.length-1; i++){
         	textButton[i] = new TextButton(languageReader.leerLinea(8+i));
         	textButton[i].addAnimation();
+        	textButton[i].addSounds();
         }
         
         textButton[2] = new TextButton(languageReader.leerLinea(4));
@@ -117,8 +118,11 @@ public class CreateMatchScreen extends AbstractMenuScreen{
         
         
         //POPUP TABLE
-        popUpButtons[0] = new TextButton("Buscar");
-        popUpButtons[1] = new TextButton("Cancelar");
+        for(int i = 0; i < popUpButtons.length; i++) {
+        	popUpButtons[i] = new TextButton(languageReader.leerLinea(i + 11));
+        	popUpButtons[i].addSounds();
+        }
+        
         textField = new TextField(languageReader.leerLinea(10));
         textField.setAlignment(Align.center);
     }

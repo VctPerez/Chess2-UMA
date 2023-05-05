@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -13,20 +14,25 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.ParallelAction;
 
 import game.chess.GameScreen;
+import utils.Image;
+import utils.Render;
+import utils.Resources;
 
 public class Graveyard extends Actor {
 	private ArrayList<Piece> graveyard;
-	protected ShapeRenderer frame;
-	private final float Y_OFFSET = 24;
-	private final float X_OFFSET = 24;
+	private final float Y_OFFSET = 20;
+	private final float X_OFFSET = 130;
 	private int index = 0;
+	private Image GraveDisposer;
 
 	public Graveyard(float x, float y) {
 		graveyard = new ArrayList<>();
-		frame = new ShapeRenderer();
 		setPosition(x, y);
 		setSize(42,42*16);
 		setColor(Color.BLACK);
+		GraveDisposer = new Image(Render.app.getManager().get(Resources.GRAVEYARD_PATH,Texture.class));
+		GraveDisposer.setSize(450, 720);
+		GraveDisposer.setPosition(x-X_OFFSET, y-Y_OFFSET);
 	}
 	
 	public void add(Piece piece) {
@@ -38,8 +44,8 @@ public class Graveyard extends Actor {
 		}
 		
 		ParallelAction par = new ParallelAction();
-		par.addAction(Actions.moveTo(getX(), getY()+(42*index), 0.6f));
-		par.addAction(Actions.sizeTo(42, 42, 0.6f));
+		par.addAction(Actions.moveTo(getX()+13, getY()+(38*index)+20, 0.6f));
+		par.addAction(Actions.sizeTo(38, 38, 0.6f));
 		
 		piece.addAction(Actions.sequence(Actions.sizeTo(84, 84), Actions.delay(0.2f) , par));
 		
@@ -78,18 +84,12 @@ public class Graveyard extends Actor {
 	
 	public void draw(Batch batch, float parentAlpha) {
 		batch.end();
-		frame.begin(ShapeType.Filled);
-		frame.setProjectionMatrix(batch.getProjectionMatrix());
-		frame.setTransformMatrix(batch.getTransformMatrix());
-		frame.rect(getX(), getY(), getWidth(), getHeight());
-		frame.setColor(212/255f,202/255f,182/255f,1f);
-		
-		frame.end();
+		batch.begin();
+		GraveDisposer.draw(batch, parentAlpha);
+		batch.end();
 		batch.begin();
 		
 		for(int i = 0; i< graveyard.size(); i++) {
-			//graveyard.get(i).setPosition(getX(), getY() + (42 * i));
-			//graveyard.get(i).setSize(42,  42);
 			graveyard.get(i).draw(batch, parentAlpha);
 		}
 		

@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class Mage extends Piece {
 
     public Mage(Boolean color, int x, int y, Board board) {
-        super(color, Render.app.getManager().get(Resources.MAGE_PATH, Texture.class), x, y, board);
+        super(color, Resources.MAGE_PATH, x, y, board);
     }
 
     @Override
@@ -52,9 +52,9 @@ public class Mage extends Piece {
      */
     public void updateSprite(int kiCharge) {
         if (kiCharge > 0){
-            sprite = new Image(Render.app.getManager().get(Resources.MAGE_PATH2,Texture.class));
+            sprite = new Image(Render.app.getManager().get(getSpritePath().replace(".","2."),Texture.class));
         } else {
-            sprite = new Image(Render.app.getManager().get(Resources.MAGE_PATH,Texture.class));
+            sprite = new Image(Render.app.getManager().get(getSpritePath(),Texture.class));
         }
     }
 
@@ -165,6 +165,15 @@ public class Mage extends Piece {
             same=color==piece.color();
         }
         return same;
+    }
+
+    /**
+     * Devuelve el path del mago con su color, pero sin ki
+     * @return path del sprite
+     */
+    @Override
+    public String getSpritePath(){
+        return color?Resources.MAGE_PATH:Resources.BLACK_MAGE_PATH;
     }
 
     @Override

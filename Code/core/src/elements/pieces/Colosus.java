@@ -1,22 +1,19 @@
 package elements.pieces;
 
-import java.util.ArrayList;
-
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
-
 import elements.Board;
 import elements.Piece;
 import interaccionFichero.LectorLineas;
-import utils.Render;
 import utils.Resources;
+
+import java.util.ArrayList;
 
 public class Colosus extends Piece{
 	private Boolean validDirection;
 
 	public Colosus(Boolean color, int x, int y, Board board) {
-		super(color, Render.app.getManager().get(Resources.COLOSUS_PATH, Texture.class), x, y, board);
+		super(color, Resources.COLOSUS_PATH, x, y, board);
 	}
 	
 	public void draw(Batch batch, float parentAlpha) {
