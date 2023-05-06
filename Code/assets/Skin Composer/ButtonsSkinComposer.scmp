@@ -701,6 +701,35 @@ jsonData: {
 		}
 		{
 			class: com.ray3k.skincomposer.data.FreeTypeFontData
+			name: DraftStyle_Label
+			file: C:/Users/adrid/Documents/GitHub/Chess2-UMA/Code/assets/fonts/Retro Gaming.ttf
+			previewTTF: IBMPlexSerif-Medium
+			useCustomSerializer: true
+			size: 21
+			mono: false
+			hinting: Slight
+			color: TEXT_COLOR
+			gamma: 0
+			renderCount: 2
+			borderWidth: 3
+			borderColor: TEXT_BORDER_COLOR
+			borderStraight: false
+			borderGamma: 0.5
+			shadowOffsetX: 0
+			shadowOffsetY: 0
+			shadowColor: null
+			spaceX: 0
+			spaceY: 0
+			characters: ""
+			kerning: true
+			flip: false
+			genMipMaps: false
+			minFilter: Nearest
+			magFilter: Nearest
+			incremental: false
+		}
+		{
+			class: com.ray3k.skincomposer.data.FreeTypeFontData
 			name: SingleClickStyle_TextButton
 			file: C:/Users/adrid/Documents/GitHub/Chess2-UMA/Code/assets/fonts/upheavtt.ttf
 			previewTTF: IBMPlexSerif-Medium
@@ -713,6 +742,35 @@ jsonData: {
 			renderCount: 2
 			borderWidth: 4
 			borderColor: TEXT_BORDER_COLOR
+			borderStraight: false
+			borderGamma: 0
+			shadowOffsetX: 0
+			shadowOffsetY: 0
+			shadowColor: null
+			spaceX: 0
+			spaceY: 0
+			characters: ""
+			kerning: true
+			flip: false
+			genMipMaps: false
+			minFilter: Nearest
+			magFilter: Nearest
+			incremental: false
+		}
+		{
+			class: com.ray3k.skincomposer.data.FreeTypeFontData
+			name: SmallTextStyle_Label
+			file: C:/Users/adrid/Documents/GitHub/Chess2-UMA/Code/assets/fonts/upheavtt.ttf
+			previewTTF: IBMPlexSerif-Medium
+			useCustomSerializer: true
+			size: 36
+			mono: false
+			hinting: AutoMedium
+			color: TEXT_COLOR
+			gamma: 0
+			renderCount: 0
+			borderWidth: 0
+			borderColor: null
 			borderStraight: false
 			borderGamma: 0
 			shadowOffsetX: 0
@@ -2536,6 +2594,60 @@ jsonData: {
 						name: font
 						optional: false
 						value: Default_TextButton
+					}
+					fontColor: {
+						type: com.badlogic.gdx.graphics.Color
+						name: fontColor
+						optional: true
+						value: TEXT_COLOR
+					}
+					background: {
+						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
+						name: background
+						optional: true
+						value: null
+					}
+				}
+				deletable: true
+				parent: null
+			}
+			{
+				class: com.ray3k.skincomposer.data.StyleData
+				name: SmallTextStyle
+				clazz: com.badlogic.gdx.scenes.scene2d.ui.Label
+				properties: {
+					font: {
+						type: com.badlogic.gdx.graphics.g2d.BitmapFont
+						name: font
+						optional: false
+						value: SmallTextStyle_Label
+					}
+					fontColor: {
+						type: com.badlogic.gdx.graphics.Color
+						name: fontColor
+						optional: true
+						value: TEXT_COLOR
+					}
+					background: {
+						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
+						name: background
+						optional: true
+						value: null
+					}
+				}
+				deletable: true
+				parent: null
+			}
+			{
+				class: com.ray3k.skincomposer.data.StyleData
+				name: DraftStyle
+				clazz: com.badlogic.gdx.scenes.scene2d.ui.Label
+				properties: {
+					font: {
+						type: com.badlogic.gdx.graphics.g2d.BitmapFont
+						name: font
+						optional: false
+						value: DraftStyle_Label
 					}
 					fontColor: {
 						type: com.badlogic.gdx.graphics.Color

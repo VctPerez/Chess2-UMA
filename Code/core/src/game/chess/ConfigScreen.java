@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics.DisplayMode;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -97,6 +98,7 @@ public class ConfigScreen extends AbstractScreen {
     		public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
     			//Volver al menu
     			readSettings();
+    			Render.app.getManager().get(Resources.BUTTON_CLICKSOUND,Sound.class).play(Settings.sfxVolume);
     			Render.app.setScreen(new MainScreen());
     			return true;
     		}
