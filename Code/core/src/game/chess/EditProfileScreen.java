@@ -1,15 +1,18 @@
 package game.chess;
 
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
-
+import interaccionFichero.EscritorLineas;
+import interaccionFichero.LectorLineas;
 import utils.*;
-import interaccionFichero.*;
 
 public class EditProfileScreen extends AbstractMenuScreen {
 	
-    LectorLineas languageReader, configReader,dataReader;
+    LectorLineas languageReader, configReader;
+	EscritorLineas dataWriter;
     private SelectBox<String> selectBox;
     private TextField[] textField;
     
@@ -18,7 +21,8 @@ public class EditProfileScreen extends AbstractMenuScreen {
     	
     	configReader = new LectorLineas("files/config.txt"); //Lector del txt configuracion para sacar el idioma
     	languageReader = new LectorLineas("files/lang/"+ configReader.leerLinea(Settings.language) + "Profile.txt"); //Abrimos el idioma que toca del archivo configuracion
-    	
+    	dataWriter = new EscritorLineas("files/Datos.txt"); //Para escribir los datos
+
     	super.show();
         
         Render.bgMusic = Render.app.getManager().get(Resources.MENU_THEME);
@@ -84,5 +88,65 @@ public class EditProfileScreen extends AbstractMenuScreen {
     	table.add(textButton[0]).padTop(100);
     	table.row();
     }
-    
+
+	@Override
+	protected void addListeners() {
+		super.addListeners();
+
+		//Se pone listeners en todos
+		textField[0].addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				super.clicked(event, x, y);
+				if(!textField[0].getText().isBlank() && !textField[0].getText().equals("NOMBRE")
+						&& !textField[0].getText().equals(languageReader.leerLinea(9))
+						&& !textField[0].getText().equals(languageReader.leerLinea(10))) { //No guarda los textos por defecto
+					if (textField[0].getText().length() > 30){
+						textField[0].setText(languageReader.leerLinea(9));
+					} else {
+						dataWriter.escribirLinea(1, textField[0].getText()); //Nombre
+						System.out.println("Se ha modificado el nombre de usuario");
+						textField[0].setText(languageReader.leerLinea(10));
+					}
+				}
+			}
+		});
+
+		textField[1].addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				super.clicked(event, x, y);
+				if(!textField[1].getText().isBlank() && !textField[1].getText().equals("NOMBRE")
+						&& !textField[1].getText().equals(languageReader.leerLinea(9))
+						&& !textField[1].getText().equals(languageReader.leerLinea(10))) { //No guarda los textos por defecto
+
+					if (textField[1].getText().length() > 30){
+						textField[1].setText(languageReader.leerLinea(9));
+					} else {
+						dataWriter.escribirLinea(7, textField[1].getText()); //Pieza favorita
+						System.out.println("Se ha modificado la pieza favorita");
+						textField[1].setText(languageReader.leerLinea(10));
+					}
+				}
+			}
+		});
+
+		textField[2].addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				super.clicked(event, x, y);
+				if(!textField[2].getText().isBlank() && !textField[2].getText().equals("NOMBRE")
+						&& !textField[2].getText().equals(languageReader.leerLinea(9))
+						&& !textField[2].getText().equals(languageReader.leerLinea(10))) { //No guarda los textos por defecto
+					if (textField[2].getText().length() > 30){
+						textField[2].setText(languageReader.leerLinea(9));
+					} else {
+						dataWriter.escribirLinea(8,textField[2].getText()); //Modo favorito
+						System.out.println("Se ha modificado el modo favorito");
+						textField[2].setText(languageReader.leerLinea(10));
+					}
+				}
+			}
+		});
+	}
 }

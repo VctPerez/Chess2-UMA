@@ -6,3 +6,6 @@ Partidas Jugadas:
 %Victorias:
 Pieza Favorita:
 Modo de Juego Favorito:
+Texto demasiado largo
+Guardado exitosamente
+
