@@ -1,7 +1,6 @@
 package game.chess;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.*;
@@ -11,83 +10,62 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import elements.*;
 import elements.pieces.*;
-import interaccionFichero.LectorLineas;
+import interaccionFichero.LineReader;
 import utils.*;
 
 import java.util.ArrayList;
 
 public class GameScreen extends AbstractScreen {
 	public static Stage stage;
-	Background background;
 	public static Board board;
 
 	// Control selección de piezas
 	protected boolean isPieceSelected = false;
 	protected ArrayList<Vector2> currentTile_validMovements = new ArrayList<>();
 	private int current_x, current_y;
-	public Tile currentTile = null;
-	public static Tile nextTile = null;
+	public static Tile currentTile = null, nextTile = null;
 
 	// UI partida
 	protected Table table;
-	protected TextButton surrender;
-	public TextButton draw;
-	public DrawBox dbox;
-	protected LectorLineas languageReader, configReader;
-	private Timer TimerW, TimerB;
+	public TextButton surrenderButton, drawButton;
+	public DrawBox drawButtonBox;
+	protected LineReader languageReader, configReader;
+	private Timer timerW, timerB;
 
-	// ----------------------------
 	// CONTROL JAQUE
-	// ----------------------------
-	public static Vector2 whiteKing = new Vector2(5, 1);
-	public static Vector2 blackKing = new Vector2(5, 8);
-	private static boolean whiteCheck;
-	private static boolean blackCheck;
-	protected static boolean whiteCheckMate;
-	public static boolean blackCheckMate;
-	public static ArrayList<Piece> whitePieces;
-	public static ArrayList<Piece> blackPieces;
-	// ----------------------------
-	// FIN CONTROL JAQUE
-	// ----------------------------
+	public static Vector2 whiteKing = new Vector2(5, 1), blackKing = new Vector2(5, 8);
+	protected static boolean whiteCheck, blackCheck, whiteCheckMate, blackCheckMate;
+	public static ArrayList<Piece> whitePieces, blackPieces;
 
 	// Control captura al paso
 	private Piece lastPawn;
 
 	// Control turno
 	public static boolean PLAYER;
-
-	// CONTROL MOVIMIENTO (ONLINE)
-	public boolean moved = false;
+	public boolean moved = false;// CONTROL MOVIMIENTO (ONLINE)
 
 	// Control promocion
 	public static boolean promoting = false;
 
 	// Cementerios
-	public static Graveyard graveyardWhite;
-	public static Graveyard graveyardBlack;
+	public static Graveyard graveyardWhite, graveyardBlack;
 
 	// Pantalla ganador
 	public static boolean showPopup;
 	public static MatchResults results;
-
-	// Modo depuracion
-	private boolean debugMode = false;
 	private boolean statsUpdated=false;
-	private static boolean drawMatch=false;
+	public static boolean drawMatch=false;
 
 	@Override
 	public void show() {
 		stage = new Stage(new FitViewport(1280, 720));
 		stage.addActor(Render.menuBG);
-
+		Gdx.input.setInputProcessor(stage);
 		table = new Table();
 		table.setFillParent(true);
 
-		configReader = new LectorLineas("files/config.txt"); // Lector del txt configuracion para sacar el idioma
-		languageReader = new LectorLineas("files/lang/" + configReader.leerLinea(Settings.language) + "Draft-Game.txt");
-
-		Gdx.input.setInputProcessor(stage);
+		configReader = new LineReader("files/config.txt"); // Lector del txt configuracion para sacar el idioma
+		languageReader = new LineReader("files/lang/" + configReader.readLine(Settings.language) + "Draft-Game.txt");
 
 		PLAYER = true;
 
@@ -102,83 +80,82 @@ public class GameScreen extends AbstractScreen {
 
 		whitePieces = new ArrayList<>();
 		blackPieces = new ArrayList<>();
+		
+		//separar en método que añada sus animaciones tambien
 		graveyardWhite = new Graveyard(21, 21);
 		graveyardBlack = new Graveyard(1270 - 100, 21);
 		graveyardWhite.flipImage();
 
-		// Crear mensaje emergente tras terminar partida
+		// Crear mensaje emergente tras terminar partida -> porque se añade al principio? mas eficiente crear cuando vaya a verse
 		showPopup = false;
 		results = new MatchResults(stage);
 		results.Hide();
+		stage.addActor(results);
 
 		// -------------------------------
-		stage.addActor(results);
 		stage.addActor(board);
 		stage.addActor(graveyardWhite);
 		stage.addActor(graveyardBlack);
 
-		dbox = new DrawBox();
-		dbox.setVisible(false);
-		stage.addActor(dbox);
-
 		createTableElements();
-		setupTable();
-		if (Render.DraftController != 3)
-			stage.addActor(table);
-		testDrafts();
+		setUpTable();
+		stage.addActor(table);
+		
+		
+		testDrafts();//mover a cuando se selecciona modo clásico
 
-		placeWhites(Render.player1Draft);
-		placeBlacks(Render.player2Draft);
+		placePieces(Render.player1Draft, true);
+		placePieces(Render.player2Draft, false);
 		addPiecesToStage(whitePieces);
 		addPiecesToStage(blackPieces);
 		addTilesToStage();
-
-		System.out.println(whitePieces.toString());
-		System.out.println(blackPieces.toString());
 	}
 
 	/**
 	 * configura la tabla de GameScreen
 	 */
-	private void setupTable() {
+	protected void setUpTable() {
 		table.setFillParent(true);
 		table.left().pad(50);
 		table.defaults().left().space(40);
 
-		table.add(TimerW).top().left().pad(80).expandX().expandY();
-		table.add(TimerB).top().right().pad(80).expandX().expandY();
+		table.add(timerW).top().left().pad(80).expandX().expandY();
+		table.add(timerB).top().right().pad(80).expandX().expandY();
 		table.row();
-		table.add(surrender).left().padLeft(70).expandX();
-		if (Render.DraftController != 3)
-			table.row();
+		table.add(surrenderButton).left().padLeft(70).expandX();
+		
 
 	}
 
 	/**
 	 * crea los elementos de la tabla de GameScreen
 	 */
-	private void createTableElements() {
-		TimerW = new Timer(300, "blanco", Render.skin, "default");
-		TimerB = new Timer(300, "negro", Render.skin, "default");
-		draw = new TextButton(languageReader.leerLinea(5), "SingleClickStyle");
-		surrender = new TextButton(languageReader.leerLinea(4), "SingleClickStyle");
-		surrender.getLabel().setFontScale(0.75f);
+	protected void createTableElements() {
+		timerW = new Timer(300, "blanco", Render.skin, "default");
+		timerB = new Timer(300, "negro", Render.skin, "default");
+		setUpSurrenderButton();
 	}
-
-	public void checkSurrender() {
-		if (surrender.isPressed()) {
-			if (PLAYER) {
-				System.out.println("RENDICION BLANCA");
-				results.setWinnerSurrender(PLAYER);
-				showPopup = true;
-				whiteCheckMate = true;
-			} else {
-				System.out.println("RENDICION NEGRA");
-				results.setWinnerSurrender(PLAYER);
-				showPopup = true;
-				blackCheckMate = true;
+	
+	protected void setUpSurrenderButton() {
+		surrenderButton = new TextButton(languageReader.readLine(4), "SingleClickStyle");
+		surrenderButton.getLabel().setFontScale(0.75f);
+		surrenderButton.addCaptureListener(new InputListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				if (PLAYER) {
+					System.out.println("RENDICION BLANCA");
+					results.setWinnerSurrender(PLAYER);
+					showPopup = true;
+					whiteCheckMate = true;
+				} else {
+					System.out.println("RENDICION NEGRA");
+					results.setWinnerSurrender(PLAYER);
+					showPopup = true;
+					blackCheckMate = true;
+				}
+				return true;
 			}
-		}
+		});
 	}
 /*
 	public void checkGraveyard() {
@@ -207,12 +184,9 @@ public class GameScreen extends AbstractScreen {
 	@Override
 	public void render(float delta) {
 		Render.clearScreen();
-		checkSurrender();
 		//checkGraveyard();
 		if (showPopup) {
-			// Para que no se pueda interaccionar con nada despues de que se muestre el
-			// popup
-			surrender.clearListeners();
+			surrenderButton.clearListeners();
 			// ------------------------------------------------------------------------------
 			results.Show();
 			results.render();
@@ -234,36 +208,16 @@ public class GameScreen extends AbstractScreen {
 	}
 
 	public void update(Tile tile) {
-
-		// Escape para volver al menÃº principal (Prueba)
-		if (Render.inputs.justPressed(Keys.ESCAPE)) {
-			Render.app.setScreen(Render.MAINSCREEN);
-			// R para reiniciar la partida (Pruebas) -> no funciona
-		} else if (Gdx.input.isKeyJustPressed(Keys.R)) {
-			Render.app.setScreen(new GameScreen());
-			debugMode = false;
-			// G para modo debug, permite hacer movimientos ilegales
-		} else if (Gdx.input.isKeyJustPressed(Keys.G)) {
-			debugMode = !debugMode;
-			System.out.println("Debug mode toggled");
-
-		} else if (!whiteCheckMate && !blackCheckMate) {
+		if (!whiteCheckMate && !blackCheckMate) {
 			if (!isPieceSelected) {
 				currentTile = tile;
-
 				select(currentTile);
-
 			} else {
-
 				nextTile = tile;
-
-				if (nextTile.getPiece() != null && currentTile.getPiece().sameColor(nextTile.getPiece())
-						&& !kiCharge()) {
+				if (nextTile.getPiece() != null && currentTile.getPiece().sameColor(nextTile.getPiece()) && !kiCharge()) {
 					currentTile = nextTile;
-
 					lowlight();
 					select(currentTile);
-
 				} else {
 					lowlight();
 					makeMove(currentTile, nextTile);
@@ -277,10 +231,10 @@ public class GameScreen extends AbstractScreen {
 	 * Comprueba si hay timers a 0
 	 */
 	private void checkTimerEnd() {
-		if (TimerB.getTimeRemaining() == 0) {
+		if (timerB.getTimeRemaining() == 0) {
 			results.setWinner(PLAYER);
 			showPopup = true;
-		} else if (TimerW.getTimeRemaining() == 0) {
+		} else if (timerW.getTimeRemaining() == 0) {
 			results.setWinner(PLAYER);
 			showPopup = true;
 		}
@@ -291,9 +245,9 @@ public class GameScreen extends AbstractScreen {
 	 */
 	private void timersRender() {
 		if (PLAYER)
-			TimerW.render();
+			timerW.render();
 		else
-			TimerB.render();
+			timerB.render();
 	}
 
 	/**
@@ -304,7 +258,6 @@ public class GameScreen extends AbstractScreen {
 	protected void highlight(Boolean color) {
 		for (Vector2 vector : currentTile_validMovements) {
 			Tile tile = board.getTile(vector.x, vector.y);
-			// En caso de que haya una pieza enemiga la resalta en rojo
 			if (tile.getPiece() != null && tile.getPiece().color() != color) {
 				tile.attacked = true;
 			} else {
@@ -318,7 +271,6 @@ public class GameScreen extends AbstractScreen {
 	 * válidos.
 	 */
 	protected void lowlight() {
-
 		for (Vector2 vector : currentTile_validMovements) {
 			Tile tile = board.getTile(vector.x, vector.y);
 			if (tile.getPiece() != null && !vector.equals(currentTile.getPos())) {
@@ -340,15 +292,10 @@ public class GameScreen extends AbstractScreen {
 	 */
 	protected void select(Tile tile) {
 		if (tile.getPiece() != null && tile.getPiece().color() == PLAYER) {
-
-			currentTile_validMovements = (tile.getPiece().getValidMovements());
-
+			currentTile_validMovements = tile.getPiece().getValidMovements();
 			highlight(tile.getPiece().color());
-
-			System.out.println(currentTile_validMovements.toString());
 			isPieceSelected = true;
 		}
-
 	}
 
 	private boolean kiCharge() {
@@ -397,17 +344,15 @@ public class GameScreen extends AbstractScreen {
 	 * @return true si el color que está en mate no tiene movimientos disponibles
 	 *         que hagan que el rey esté a salvo.
 	 */
-	private static boolean isCheckMate(boolean Mate, ArrayList<Piece> pieces) {
+	private static boolean isCheckMate(boolean mate, ArrayList<Piece> pieces) {
 		boolean isCheckMate = false;
-		if (Mate) {
+		if (mate) {
 			ArrayList<Vector2> validMovements = new ArrayList<>();
 			int i = 0;
 			while (i < pieces.size()) {
 				validMovements.addAll(pieces.get(i).getValidMovements());
 				i++;
 			}
-
-			System.out.println("LISTA DE MOVIMIMIENTOS LEGALES -> " + validMovements);
 			if (validMovements.isEmpty()) {
 				isCheckMate = true;
 			}
@@ -434,7 +379,6 @@ public class GameScreen extends AbstractScreen {
 	 * @param next_y
 	 */
 	public static void mateControl() {
-		// updateCheck devuelve isCheck al final para no tener que llamarlo
 		if (updateCheck()) {
 			whiteCheckMate = isCheckMate(whiteCheck, whitePieces);
 			blackCheckMate = isCheckMate(blackCheck, blackPieces);
@@ -461,23 +405,15 @@ public class GameScreen extends AbstractScreen {
 	public void makeMove(Tile currentTile, Tile nextTile) {
 		current_x = (int) currentTile.getPos().x;
 		current_y = (int) currentTile.getPos().y;
-		if (Render.DraftController == 3) {
-			this.currentTile = currentTile;
-			GameScreen.nextTile = nextTile;
-			currentTile_validMovements = (currentTile.getPiece().getValidMovements());
-		}
-
 		int next_x = (int) nextTile.getPos().x;
 		int next_y = (int) nextTile.getPos().y;
-		if (currentTile_validMovements.contains(new Vector2(next_x, next_y)) || debugMode) {
+		if (currentTile_validMovements.contains(new Vector2(next_x, next_y))) {
 			if (currentTile.getPiece().checkBomber(next_x, next_y)) {
 				Bomber b = (Bomber) currentTile.getPiece();
 				b.explode();
 				resetMate();
 				mateControl();
-			} else if (!currentTile.getPiece().checkPaladin(next_x, next_y)
-					&& !currentTile.getPiece().checkWitchAttack(next_x, next_y)) {
-
+			} else if (!currentTile.getPiece().checkPaladin(next_x, next_y) && !currentTile.getPiece().checkWitchAttack(next_x, next_y)) {
 				checkMidas();
 				checkCastling(next_x);
 				updateKiCharge();
@@ -501,11 +437,8 @@ public class GameScreen extends AbstractScreen {
 				}
 				mateControl();
 			}
-
-			if (Render.DraftController != 3)
+			if(Render.DraftController!=3)	
 				changeTurn();
-			if (Render.hosting == PLAYER)
-				moved = true;
 		}
 	}
 
@@ -561,19 +494,10 @@ public class GameScreen extends AbstractScreen {
 	 * </p>
 	 */
 	public static void stalemateControl() {
-		if (!isCheck()) {
-			if (!PLAYER && !hasMoves(whitePieces)) {
-				System.out.println("Las negras han empatado");
+		if (!isCheck() && ((!PLAYER && !hasMoves(whitePieces)) || (PLAYER && !hasMoves(blackPieces)))) {
 				results.setDraw();
 				drawMatch=true;
 				showPopup = true;
-
-			} else if (PLAYER && !hasMoves(blackPieces)) {
-				System.out.println("Las blancas han empatado");
-				results.setDraw();
-				drawMatch=true;
-				showPopup = true;
-			}
 		}
 	}
 
@@ -648,20 +572,7 @@ public class GameScreen extends AbstractScreen {
 			if (board.getTile(next_x, current_y).getPiece() instanceof Pawn) {
 				res = lastPawn.isPassantable; // Es en passant si se le puede hacer al peón objetivo
 			}
-		} else if (piece instanceof Lancer && next_y == current_y + (piece.color() ? 1 : -1) && (next_x == current_x)) { // Si
-																															// avanza
-																															// a
-																															// una
-																															// casilla
-																															// en
-																															// linea
-																															// recta
-																															// sin
-																															// pieza,
-																															// está
-																															// tomando
-																															// al
-																															// paso
+		} else if (piece instanceof Lancer && next_y == current_y + (piece.color() ? 1 : -1) && (next_x == current_x)) {
 			if (board.getTile(next_x + 1, current_y) != null
 					&& board.getTile(next_x + 1, current_y).getPiece() instanceof Lancer) {
 				res = lastPawn.isPassantable; // Es en passant si se le puede hacer al peón objetivo
@@ -705,24 +616,6 @@ public class GameScreen extends AbstractScreen {
 	}
 
 	@Override
-	public void pause() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void resume() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void hide() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public void dispose() {
 		stage.dispose();
 
@@ -730,9 +623,8 @@ public class GameScreen extends AbstractScreen {
 
 	// -------------- METODO TEMPORAL PARA PROBAR LOS CONSTRUCTORES (el draft se
 	// rellena en DraftScreen) -------------------
-	public void testDrafts() {
+	public void testDrafts() {//HACER QUE ESTO SE HAGA AL SELECCIONAR MODO CLASICO -> menos codigo innecesario en GameScreen
 
-		// Para probar la pieza random
 		Render.player1Draft.add(Resources.VALKYRIE_PATH);
 		Render.player1Draft.add(Resources.KNIGHT_PATH);
 		Render.player1Draft.add(Resources.MINER_PATH);
@@ -749,84 +641,53 @@ public class GameScreen extends AbstractScreen {
 	}
 
 	/**
-	 * Coloca las piezas en player1Draft en el lado blanco del tablero
+	 * Coloca las piezas en playerDraft en el lado del jugador correspondiente
 	 * 
 	 * @param player1Draft
 	 */
-	public void placeWhites(ArrayList<String> player1Draft) {
-		Piece piece;
-		for (int i = 1; i < 9; i++) {
-			piece = Parser.getPieceFromPath(player1Draft.get(0), true, i, 2, board);
-			whitePieces.add(piece);
-			board.getTile(i, 2).setPiece(piece);
+	public void placePieces(ArrayList<String> playerDraft, Boolean player) {
+		ArrayList<Piece> pieces = new ArrayList<>();
+		Piece piece = null;
+		int pos;
+		if(player) {
+			pos = 1;
+		}else {
+			pos = 8;
 		}
 		for (int i = 1; i < 9; i++) {
 			if (i == 1 || i == 8) {
-				piece = Parser.getPieceFromPath(player1Draft.get(2), true, i, 1, board);
-				whitePieces.add(piece);
-				board.getTile(i, 1).setPiece(piece);
+				piece = Parser.getPieceFromPath(playerDraft.get(2), player, i, pos, board);
 			}
 			if (i == 2 || i == 7) {
-				piece = Parser.getPieceFromPath(player1Draft.get(1), true, i, 1, board);
-				whitePieces.add(piece);
-				board.getTile(i, 1).setPiece(piece);
+				piece = Parser.getPieceFromPath(playerDraft.get(1), player, i, pos, board);
 			}
 			if (i == 3 || i == 6) {
-				piece = Parser.getPieceFromPath(player1Draft.get(3), true, i, 1, board);
-				whitePieces.add(piece);
-				board.getTile(i, 1).setPiece(piece);
+				piece = Parser.getPieceFromPath(playerDraft.get(3), player, i, pos, board);
 			}
 			if (i == 4) {
-				piece = Parser.getPieceFromPath(player1Draft.get(4), true, i, 1, board);
-				whitePieces.add(piece);
-				board.getTile(i, 1).setPiece(piece);
+				piece = Parser.getPieceFromPath(playerDraft.get(4), player, i, pos, board);
 			}
 			if (i == 5) {
-				piece = Parser.getPieceFromPath(player1Draft.get(5), true, i, 1, board);
-				whitePieces.add(piece);
-				board.getTile(i, 1).setPiece(piece);
+				piece = Parser.getPieceFromPath(playerDraft.get(5), player, i, pos, board);
 			}
+			
+			pieces.add(piece);
+			board.getTile(i, pos).setPiece(piece);
 		}
-	}
-
-	/**
-	 * Coloca las piezas en player2Draft en el lado negro del tablero
-	 * 
-	 * @param player2Draft
-	 */
-	private void placeBlacks(ArrayList<String> player2Draft) {
-		Piece piece;
-		for (int i = 1; i < 9; i++) {
-			piece = Parser.getPieceFromPath(player2Draft.get(0), false, i, 7, board);
-			blackPieces.add(piece);
-			board.getTile(i, 7).setPiece(piece);
+		if(player) {
+			pos++;
+		}else {
+			pos--;
 		}
 		for (int i = 1; i < 9; i++) {
-			if (i == 1 || i == 8) {
-				piece = Parser.getPieceFromPath(player2Draft.get(2), false, i, 8, board);
-				blackPieces.add(piece);
-				board.getTile(i, 8).setPiece(piece);
-			}
-			if (i == 2 || i == 7) {
-				piece = Parser.getPieceFromPath(player2Draft.get(1), false, i, 8, board);
-				blackPieces.add(piece);
-				board.getTile(i, 8).setPiece(piece);
-			}
-			if (i == 3 || i == 6) {
-				piece = Parser.getPieceFromPath(player2Draft.get(3), false, i, 8, board);
-				blackPieces.add(piece);
-				board.getTile(i, 8).setPiece(piece);
-			}
-			if (i == 4) {
-				piece = Parser.getPieceFromPath(player2Draft.get(4), false, i, 8, board);
-				blackPieces.add(piece);
-				board.getTile(i, 8).setPiece(piece);
-			}
-			if (i == 5) {
-				piece = Parser.getPieceFromPath(player2Draft.get(5), false, i, 8, board);
-				blackPieces.add(piece);
-				board.getTile(i, 8).setPiece(piece);
-			}
+			piece = Parser.getPieceFromPath(playerDraft.get(0), player, i, pos, board);
+			pieces.add(piece);
+			board.getTile(i, pos).setPiece(piece);
+		}
+		if(player) {
+			whitePieces = pieces;;
+		}else {
+			blackPieces = pieces;
 		}
 	}
 

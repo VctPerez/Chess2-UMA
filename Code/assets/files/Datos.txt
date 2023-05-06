@@ -1,8 +1,8 @@
 Maskuhead
 0
-2
-0
-2
+6
+5
+10
 0.0%
-|/||/||/|_
+null
 veinticinco

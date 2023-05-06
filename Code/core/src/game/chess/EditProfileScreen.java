@@ -5,23 +5,23 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
-import interaccionFichero.EscritorLineas;
-import interaccionFichero.LectorLineas;
+import interaccionFichero.LineWriter;
+import interaccionFichero.LineReader;
 import utils.*;
 
 public class EditProfileScreen extends AbstractMenuScreen {
 	
-    LectorLineas languageReader, configReader;
-	EscritorLineas dataWriter;
+    LineReader languageReader, configReader;
+	LineWriter dataWriter;
     private SelectBox<String> selectBox;
     private TextField[] textField;
     
     @Override
     public void show() {
     	
-    	configReader = new LectorLineas("files/config.txt"); //Lector del txt configuracion para sacar el idioma
-    	languageReader = new LectorLineas("files/lang/"+ configReader.leerLinea(Settings.language) + "Profile.txt"); //Abrimos el idioma que toca del archivo configuracion
-    	dataWriter = new EscritorLineas("files/Datos.txt"); //Para escribir los datos
+    	configReader = new LineReader("files/config.txt"); //Lector del txt configuracion para sacar el idioma
+    	languageReader = new LineReader("files/lang/"+ configReader.readLine(Settings.language) + "Profile.txt"); //Abrimos el idioma que toca del archivo configuracion
+    	dataWriter = new LineWriter("files/Datos.txt"); //Para escribir los datos
 
     	super.show();
         
@@ -38,9 +38,9 @@ public class EditProfileScreen extends AbstractMenuScreen {
     	textField = new TextField[3];
     	title = new Label("chess 2", Render.skin, "TitleStyle");
     	
-    	Text[0] = new Label(languageReader.leerLinea(1) ,Render.skin,"default");
-    	Text[1] = new Label(languageReader.leerLinea(7) ,Render.skin,"default");
-    	Text[2] = new Label(languageReader.leerLinea(8) ,Render.skin,"default");
+    	Text[0] = new Label(languageReader.readLine(1) ,Render.skin,"default");
+    	Text[1] = new Label(languageReader.readLine(7) ,Render.skin,"default");
+    	Text[2] = new Label(languageReader.readLine(8) ,Render.skin,"default");
     	
     	textButton = new TextButton[1];
     	
@@ -99,14 +99,14 @@ public class EditProfileScreen extends AbstractMenuScreen {
 			public void clicked(InputEvent event, float x, float y) {
 				super.clicked(event, x, y);
 				if(!textField[0].getText().isBlank() && !textField[0].getText().equals("NOMBRE")
-						&& !textField[0].getText().equals(languageReader.leerLinea(9))
-						&& !textField[0].getText().equals(languageReader.leerLinea(10))) { //No guarda los textos por defecto
+						&& !textField[0].getText().equals(languageReader.readLine(9))
+						&& !textField[0].getText().equals(languageReader.readLine(10))) { //No guarda los textos por defecto
 					if (textField[0].getText().length() > 30){
-						textField[0].setText(languageReader.leerLinea(9));
+						textField[0].setText(languageReader.readLine(9));
 					} else {
 						dataWriter.escribirLinea(1, textField[0].getText()); //Nombre
 						System.out.println("Se ha modificado el nombre de usuario");
-						textField[0].setText(languageReader.leerLinea(10));
+						textField[0].setText(languageReader.readLine(10));
 					}
 				}
 			}
@@ -117,15 +117,15 @@ public class EditProfileScreen extends AbstractMenuScreen {
 			public void clicked(InputEvent event, float x, float y) {
 				super.clicked(event, x, y);
 				if(!textField[1].getText().isBlank() && !textField[1].getText().equals("NOMBRE")
-						&& !textField[1].getText().equals(languageReader.leerLinea(9))
-						&& !textField[1].getText().equals(languageReader.leerLinea(10))) { //No guarda los textos por defecto
+						&& !textField[1].getText().equals(languageReader.readLine(9))
+						&& !textField[1].getText().equals(languageReader.readLine(10))) { //No guarda los textos por defecto
 
 					if (textField[1].getText().length() > 30){
-						textField[1].setText(languageReader.leerLinea(9));
+						textField[1].setText(languageReader.readLine(9));
 					} else {
 						dataWriter.escribirLinea(7, textField[1].getText()); //Pieza favorita
 						System.out.println("Se ha modificado la pieza favorita");
-						textField[1].setText(languageReader.leerLinea(10));
+						textField[1].setText(languageReader.readLine(10));
 					}
 				}
 			}
@@ -136,14 +136,14 @@ public class EditProfileScreen extends AbstractMenuScreen {
 			public void clicked(InputEvent event, float x, float y) {
 				super.clicked(event, x, y);
 				if(!textField[2].getText().isBlank() && !textField[2].getText().equals("NOMBRE")
-						&& !textField[2].getText().equals(languageReader.leerLinea(9))
-						&& !textField[2].getText().equals(languageReader.leerLinea(10))) { //No guarda los textos por defecto
+						&& !textField[2].getText().equals(languageReader.readLine(9))
+						&& !textField[2].getText().equals(languageReader.readLine(10))) { //No guarda los textos por defecto
 					if (textField[2].getText().length() > 30){
-						textField[2].setText(languageReader.leerLinea(9));
+						textField[2].setText(languageReader.readLine(9));
 					} else {
 						dataWriter.escribirLinea(8,textField[2].getText()); //Modo favorito
 						System.out.println("Se ha modificado el modo favorito");
-						textField[2].setText(languageReader.leerLinea(10));
+						textField[2].setText(languageReader.readLine(10));
 					}
 				}
 			}

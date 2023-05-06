@@ -16,8 +16,8 @@ public class LanguageScreen extends AbstractScreen {
     TextButton back;
     Text backText,Language;
     Image Logo;
-    LectorLineas languageReader, configReader, languageConfigReader;
-    EscritorLineas languageSettingWriter;
+    LineReader languageReader, configReader, languageConfigReader;
+    LineWriter languageSettingWriter;
     
     Text spanishText,englishText;
     TextButton spanish,english;
@@ -30,31 +30,31 @@ public class LanguageScreen extends AbstractScreen {
     	background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     	
     	//Abrir los ficheros de configuracion e idioma
-    	configReader = new LectorLineas("files/config.txt"); //Lector del txt configuracion para sacar el idioma
-    	languageConfigReader = new LectorLineas("files/languages.txt"); //Lector del txt donde vienen todos los idiomas implementados
-    	languageReader = new LectorLineas("files/lang/"+ configReader.leerLinea(1) + "main.txt"); //Abrimos el idioma que toca del archivo configuracion
-    	languageSettingWriter = new EscritorLineas("files/config.txt"); //Para actualizar la configuracion abrimos el escritor en el config.txt 
+    	configReader = new LineReader("files/config.txt"); //Lector del txt configuracion para sacar el idioma
+    	languageConfigReader = new LineReader("files/languages.txt"); //Lector del txt donde vienen todos los idiomas implementados
+    	languageReader = new LineReader("files/lang/"+ configReader.readLine(1) + "main.txt"); //Abrimos el idioma que toca del archivo configuracion
+    	languageSettingWriter = new LineWriter("files/config.txt"); //Para actualizar la configuracion abrimos el escritor en el config.txt 
     	
     	//Fuente Arial para probar
     	Language = new Text(Resources.FONT_MENU_PATH,100,Color.WHITE,3);
-    	Language.setText(languageReader.leerLinea(6)); //Idioma = Linea 6
+    	Language.setText(languageReader.readLine(6)); //Idioma = Linea 6
     	
     	//Menu idiomas
     	spanishText = new Text(Resources.FONT_MENU_PATH,50,Color.WHITE,3);
-    	spanishText.setText(languageConfigReader.leerLinea(1)); //Espa�ol = Linea 1 
+    	spanishText.setText(languageConfigReader.readLine(1)); //Espa�ol = Linea 1 
     	englishText = new Text(Resources.FONT_MENU_PATH,50,Color.WHITE,3);
-    	englishText.setText(languageConfigReader.leerLinea(2)); //Ingles = Linea 2 
+    	englishText.setText(languageConfigReader.readLine(2)); //Ingles = Linea 2 
     	
     	//Menu inferior
     	backText = new Text(Resources.FONT_MENU_PATH,28,Color.WHITE,3);
-    	backText.setText(languageReader.leerLinea(2)); //Inicio = Linea 2
+    	backText.setText(languageReader.readLine(2)); //Inicio = Linea 2
     	Language.setPosition(100,600);
     	spanishText.setPosition(100, 400);
     	englishText.setPosition(100, 300);
         backText.setPosition(100,100);
-        back = new TextButton(languageReader.leerLinea(2));
-        spanish = new TextButton(languageConfigReader.leerLinea(1));
-        english = new TextButton(languageConfigReader.leerLinea(2));
+        back = new TextButton(languageReader.readLine(2));
+        spanish = new TextButton(languageConfigReader.readLine(1));
+        english = new TextButton(languageConfigReader.readLine(2));
         Logo = new Image("Logo_Blanco.png");
         Logo.setPosition(800,-50);
         Logo.setSize(500, 500);

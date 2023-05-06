@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import elements.Board;
 import elements.Piece;
-import interaccionFichero.LectorLineas;
+import interaccionFichero.LineReader;
 import utils.Resources;
 
 import java.util.ArrayList;
@@ -52,35 +52,24 @@ public class Guardian extends Piece {
 		if(!color) {
 			direction = -1;
 		}
-		
-		for(int i = -1; i<=1; i++) {
-			mov = new Vector2(x + i, y + direction);
-			if(checkBoard(board, i, mov.x, mov.y)) {
-				movements.add(mov);
-			}
-		}
-		mov = new Vector2(x , y - direction); 
-		if(checkBoard(board, 0, mov.x, mov.y)) {
-			movements.add(mov);
-		}
-
-		
 
 		if(backed) {
-			movements.clear();
+			mov = new Vector2(x, y + 2*direction);
+			if(checkBoard(board, 0, mov.x, mov.y) && board.getTile(x, y+direction).getPiece()==null) {
+				movements.add(mov);
+			}
+		}else {
 			for(int i = -1; i<=1; i++) {
-				if(i==0) {
-					mov = new Vector2(x + i, y + 2*direction);
-					if(checkBoard(board, i, mov.x, mov.y) && board.getTile(x, y+direction).getPiece()==null) {
-						movements.add(mov);
-					}
-				}else {
-					mov = new Vector2(x + i, y + direction);
-					if(checkBoard(board, i, mov.x, mov.y)) {
-						movements.add(mov);
-					}
+				mov = new Vector2(x + i, y + direction);
+				if(checkBoard(board, i, mov.x, mov.y)) {
+					movements.add(mov);
 				}
 			}
+			mov = new Vector2(x , y - direction); 
+			if(checkBoard(board, 0, mov.x, mov.y)) {
+				movements.add(mov);
+			}
+			
 		}
 
 		return movements;
@@ -92,15 +81,15 @@ public class Guardian extends Piece {
 	
 	@Override
 	public String getInfo() {
-		 LectorLineas Reader, configReader;
-		 configReader = new LectorLineas("files/config.txt");
-		 String config = configReader.leerLinea(1);
-	     Reader = new LectorLineas("files/lang/"+ config + "Modified.txt");
+		 LineReader Reader, configReader;
+		 configReader = new LineReader("files/config.txt");
+		 String config = configReader.readLine(1);
+	     Reader = new LineReader("files/lang/"+ config + "Modified.txt");
 		 switch (config){
 			 case "esp/":
-				 return Reader.leerTramo(20, 26);
+				 return Reader.readSection(20, 26);
 			 case "eng/":
-				 return Reader.leerTramo(20,26);
+				 return Reader.readSection(20,26);
 			 default:
 				 throw new IllegalArgumentException("Configuración errónea");
 		 }

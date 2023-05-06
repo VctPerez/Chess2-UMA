@@ -7,7 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
-import interaccionFichero.LectorLineas;
+import interaccionFichero.LineReader;
 import multiplayer.Guest;
 import utils.Render;
 import utils.Settings;
@@ -19,7 +19,7 @@ import java.io.IOException;
 public class CreateMatchScreen extends AbstractMenuScreen{
 	
     private TextField textField;
-    private LectorLineas languageReader, configReader;
+    private LineReader languageReader, configReader;
     
     private Table popUpTable;
     private TextButton[] popUpButtons;
@@ -29,8 +29,8 @@ public class CreateMatchScreen extends AbstractMenuScreen{
     
     @Override
     public void show() {
-    	configReader = new LectorLineas("files/config.txt"); //Lector del txt configuracion para sacar el idioma
-    	languageReader = new LectorLineas("files/lang/"+ configReader.leerLinea(Settings.language) + "matchmaking.txt"); //Abrimos el idioma que toca del archivo configuracion
+    	configReader = new LineReader("files/config.txt"); //Lector del txt configuracion para sacar el idioma
+    	languageReader = new LineReader("files/lang/"+ configReader.readLine(Settings.language) + "matchmaking.txt"); //Abrimos el idioma que toca del archivo configuracion
     	
     	//Nueva tabla para el PopUp
     	popUpTable = new Table();
@@ -105,25 +105,25 @@ public class CreateMatchScreen extends AbstractMenuScreen{
         textButton = new TextButton[3];
         popUpButtons = new TextButton[2];
         
-        title = new Label(languageReader.leerLinea(1)
+        title = new Label(languageReader.readLine(1)
                 , Render.skin, "TitleStyle");
         for(int i =  0; i < textButton.length-1; i++){
-        	textButton[i] = new TextButton(languageReader.leerLinea(8+i));
+        	textButton[i] = new TextButton(languageReader.readLine(8+i));
         	textButton[i].addAnimation();
         	textButton[i].addSounds();
         }
         
-        textButton[2] = new TextButton(languageReader.leerLinea(4));
+        textButton[2] = new TextButton(languageReader.readLine(4));
         textButton[2].addAnimation();
         
         
         //POPUP TABLE
         for(int i = 0; i < popUpButtons.length; i++) {
-        	popUpButtons[i] = new TextButton(languageReader.leerLinea(i + 11));
+        	popUpButtons[i] = new TextButton(languageReader.readLine(i + 11));
         	popUpButtons[i].addSounds();
         }
         
-        textField = new TextField(languageReader.leerLinea(10));
+        textField = new TextField(languageReader.readLine(10));
         textField.setAlignment(Align.center);
     }
     
@@ -177,7 +177,7 @@ public class CreateMatchScreen extends AbstractMenuScreen{
                         popUpTable.addAction(Actions.fadeOut(0.5f));
                         found = true;
                     } catch (IOException | IllegalArgumentException e) {
-                        textField.setText(languageReader.leerLinea(13));
+                        textField.setText(languageReader.readLine(13));
                         System.out.println("Error de codigo");
                     }
 

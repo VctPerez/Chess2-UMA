@@ -2,14 +2,10 @@ package elements;
 
 import java.io.IOException;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import utils.Image;
@@ -38,7 +34,7 @@ public class DrawBox extends Actor{
     			}
     			Render.GameScreen.results.setDraw();
     			Render.GameScreen.showPopup = true;
-    			Render.GameScreen.blackCheckMate = true;
+				Render.GameScreen.drawMatch=true;
     			return true;
     		}
     	});
@@ -54,7 +50,7 @@ public class DrawBox extends Actor{
 	    			}else {
 	    				Render.guest.sendMessage("RECHAZAR");
 	    			}
-    				Render.GameScreen.draw.setTouchable(Touchable.enabled);
+    				Render.GameScreen.drawButton.setTouchable(Touchable.enabled);
     			}catch(IOException e) {
     				e.printStackTrace();
     			}

@@ -8,14 +8,14 @@ import interaccionFichero.*;
 
 public class ProfileScreen extends AbstractMenuScreen {
 	
-    LectorLineas languageReader, configReader,dataReader;
+    LineReader languageReader, configReader,dataReader;
     
     @Override
     public void show() {
     	
-    	configReader = new LectorLineas("files/config.txt"); //Lector del txt configuracion para sacar el idioma
-    	languageReader = new LectorLineas("files/lang/"+ configReader.leerLinea(Settings.language) + "Profile.txt"); //Abrimos el idioma que toca del archivo configuracion
-    	dataReader = new LectorLineas("files/Datos.txt"); //Abrimos los datos
+    	configReader = new LineReader("files/config.txt"); //Lector del txt configuracion para sacar el idioma
+    	languageReader = new LineReader("files/lang/"+ configReader.readLine(Settings.language) + "Profile.txt"); //Abrimos el idioma que toca del archivo configuracion
+    	dataReader = new LineReader("files/Datos.txt"); //Abrimos los datos
 
     	
     	super.show();
@@ -33,7 +33,7 @@ public class ProfileScreen extends AbstractMenuScreen {
     	title = new Label("chess 2", Render.skin, "TitleStyle");
     	
     	for(int i=0;i<Text.length;i++) {
-    		String aux = languageReader.leerLinea(i+1) + " " + dataReader.leerLinea(i+1);
+    		String aux = languageReader.readLine(i+1) + " " + dataReader.readLine(i+1);
     		Text[i] = new Label(aux ,Render.skin,"default");
     	}
     	

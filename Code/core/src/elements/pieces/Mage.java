@@ -7,7 +7,7 @@ import elements.Board;
 import elements.Piece;
 import elements.Tile;
 import game.chess.GameScreen;
-import interaccionFichero.LectorLineas;
+import interaccionFichero.LineReader;
 import utils.Image;
 import utils.Render;
 import utils.Resources;
@@ -117,15 +117,15 @@ public class Mage extends Piece {
 
     @Override
     public String getInfo() {
-        LectorLineas Reader, configReader;
-        configReader = new LectorLineas("files/config.txt");
-        String config = configReader.leerLinea(1);
-        Reader = new LectorLineas("files/lang/" + config + "Modified.txt");
+        LineReader Reader, configReader;
+        configReader = new LineReader("files/config.txt");
+        String config = configReader.readLine(1);
+        Reader = new LineReader("files/lang/" + config + "Modified.txt");
         switch (config) {
             case "esp/":
-                return Reader.leerTramo(55, 60);
+                return Reader.readSection(55, 60);
             case "eng/":
-                return Reader.leerTramo(57, 62);
+                return Reader.readSection(57, 62);
             default:
                 throw new IllegalArgumentException("Configuración errónea");
         }

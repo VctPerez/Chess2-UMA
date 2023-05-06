@@ -7,8 +7,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
-import interaccionFichero.EscritorLineas;
-import interaccionFichero.LectorLineas;
+import interaccionFichero.LineWriter;
+import interaccionFichero.LineReader;
 import utils.Image;
 import utils.Render;
 import utils.Resources;
@@ -21,8 +21,8 @@ import java.util.ArrayList;
 public class MatchResults extends Actor{
 	
 	
-	LectorLineas ProfileReader, configReader;	
-	EscritorLineas ProfileWriter;
+	LineReader ProfileReader, configReader;	
+	LineWriter ProfileWriter;
 	private Table table;
 	private Label matchres;
 	private TextButton goMenu;
@@ -36,9 +36,9 @@ public class MatchResults extends Actor{
 		table = new Table();
 		table.setBounds(350, 100, 550, 550);
 		
-		configReader = new LectorLineas("files/config.txt"); //Lector del txt configuracion para sacar el idioma
-		ProfileWriter = new EscritorLineas("files/Datos.txt");
-		ProfileReader = new LectorLineas("files/Datos.txt");
+		configReader = new LineReader("files/config.txt"); //Lector del txt configuracion para sacar el idioma
+		ProfileWriter = new LineWriter("files/Datos.txt");
+		ProfileReader = new LineReader("files/Datos.txt");
 
 		Texture texture = new Texture(Resources.RESULTS_BACKGROUND_PATH);
 		TextureRegionDrawable drawable = new TextureRegionDrawable(texture);

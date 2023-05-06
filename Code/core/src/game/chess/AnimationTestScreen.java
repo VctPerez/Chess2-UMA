@@ -23,7 +23,7 @@ import elements.Tile;
 import elements.Timer;
 import elements.MatchResults;
 import elements.pieces.*;
-import interaccionFichero.LectorLineas;
+import interaccionFichero.LineReader;
 import utils.AnimationActor;
 import utils.Parser;
 import utils.Render;

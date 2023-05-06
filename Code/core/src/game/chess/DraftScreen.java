@@ -13,7 +13,7 @@ import com.badlogic.gdx.utils.StringBuilder;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import elements.PieceInfo;
 import elements.TileButton;
-import interaccionFichero.LectorLineas;
+import interaccionFichero.LineReader;
 import utils.*;
 
 import java.io.IOException;
@@ -36,7 +36,7 @@ public class DraftScreen extends AbstractScreen {
 
 	private int previousCont = 0;
 	private int cont = 0;
-	private LectorLineas languageReader, configReader;
+	private LineReader languageReader, configReader;
 
 	TileButton tile1, tile2;
 	private boolean draftCompleted = false; // controla que ya se han enviado ambos los drafts
@@ -66,8 +66,8 @@ public class DraftScreen extends AbstractScreen {
 		
 		
 		
-		configReader = new LectorLineas("files/config.txt"); // Lector del txt configuracion para sacar el idioma
-		languageReader = new LectorLineas("files/lang/" + configReader.leerLinea(Settings.language) + "Draft-Game.txt");
+		configReader = new LineReader("files/config.txt"); // Lector del txt configuracion para sacar el idioma
+		languageReader = new LineReader("files/lang/" + configReader.readLine(Settings.language) + "Draft-Game.txt");
 
 		info = new PieceInfo();
 		info.setPosition(1280, 40);
@@ -259,7 +259,7 @@ public class DraftScreen extends AbstractScreen {
 		// Botones con nombre momentaneos, se cambiara y se a�adira a los ficheros de
 		// idiomas
 
-		next = new TextButton(languageReader.leerLinea(2), "SingleClickStyle");
+		next = new TextButton(languageReader.readLine(2), "SingleClickStyle");
 		next.setPosition(480, -50);
 		next.addAction(Actions.moveTo(480, 50, 0.5f));
 		next.addCaptureListener(new InputListener() {
@@ -330,13 +330,13 @@ public class DraftScreen extends AbstractScreen {
 				}
 
 				if (cont == 5) {
-					next.setText(languageReader.leerLinea(3));
+					next.setText(languageReader.readLine(3));
 				}
 				return true;
 			}
 		});
 
-		back = new TextButton(languageReader.leerLinea(1), "SingleClickStyle");
+		back = new TextButton(languageReader.readLine(1), "SingleClickStyle");
 		back.setPosition(175, -50);
 		back.addAction(Actions.moveTo(175, 50, 0.5f));
 		back.addCaptureListener(new InputListener() {

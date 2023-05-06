@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import elements.Board;
 import elements.Piece;
-import interaccionFichero.LectorLineas;
+import interaccionFichero.LineReader;
 import utils.Resources;
 
 import java.util.ArrayList;
@@ -79,15 +79,15 @@ public class Queen extends Piece{
 	}
 	
 	public String getInfo() {
-		 LectorLineas Reader, configReader;
-		 configReader = new LectorLineas("files/config.txt");
-		String config = configReader.leerLinea(1);
-		Reader = new LectorLineas("files/lang/"+ config + "Clasicas.txt");
+		 LineReader Reader, configReader;
+		 configReader = new LineReader("files/config.txt");
+		String config = configReader.readLine(1);
+		Reader = new LineReader("files/lang/"+ config + "Clasicas.txt");
 		switch (config){
 			case "esp/":
-				return Reader.leerTramo(34, 38);
+				return Reader.readSection(34, 38);
 			case "eng/":
-				return Reader.leerTramo(27,31);
+				return Reader.readSection(27,31);
 			default:
 				throw new IllegalArgumentException("Configuración errónea");
 		}

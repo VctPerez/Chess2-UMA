@@ -16,13 +16,13 @@ import interaccionFichero.*;
 
 public class MainScreen extends AbstractMenuScreen {
 	
-    LectorLineas languageReader, configReader;
+    LineReader languageReader, configReader;
     
     @Override
     public void show() {
     	
-    	configReader = new LectorLineas("files/config.txt"); //Lector del txt configuracion para sacar el idioma
-    	languageReader = new LectorLineas("files/lang/"+ configReader.leerLinea(Settings.language) + "main.txt"); //Abrimos el idioma que toca del archivo configuracion
+    	configReader = new LineReader("files/config.txt"); //Lector del txt configuracion para sacar el idioma
+    	languageReader = new LineReader("files/lang/"+ configReader.readLine(Settings.language) + "main.txt"); //Abrimos el idioma que toca del archivo configuracion
     	
     	super.show();
         
@@ -39,11 +39,11 @@ public class MainScreen extends AbstractMenuScreen {
     	
     	title = new Label("chess 2", Render.skin, "TitleStyle");
     	
-    	textButton[0] = new TextButton(languageReader.leerLinea(1));//Jugar = Linea 1
-    	textButton[1] = new TextButton(languageReader.leerLinea(4));//Configuracion = Linea 4
-    	textButton[2] = new TextButton(languageReader.leerLinea(7));//Reglas = Linea 7
-    	textButton[3] = new TextButton(languageReader.leerLinea(9));//Perfil = Linea 9
-    	textButton[4] = new TextButton(languageReader.leerLinea(3));//Salir = Linea 3;
+    	textButton[0] = new TextButton(languageReader.readLine(1));//Jugar = Linea 1
+    	textButton[1] = new TextButton(languageReader.readLine(4));//Configuracion = Linea 4
+    	textButton[2] = new TextButton(languageReader.readLine(7));//Reglas = Linea 7
+    	textButton[3] = new TextButton(languageReader.readLine(9));//Perfil = Linea 9
+    	textButton[4] = new TextButton(languageReader.readLine(3));//Salir = Linea 3;
     	    	
     	
     	for(int i = 0; i < textButton.length; i++) {

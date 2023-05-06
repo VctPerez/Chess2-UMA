@@ -4,20 +4,20 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
-import interaccionFichero.LectorLineas;
+import interaccionFichero.LineReader;
 import utils.Render;
 import utils.Settings;
 import utils.TextButton;
 
 public class MatchMakingScreen extends AbstractMenuScreen{
 	
-    private LectorLineas languageReader, configReader;
+    private LineReader languageReader, configReader;
 
     
     @Override
     public void show() {
-    	configReader = new LectorLineas("files/config.txt"); //Lector del txt configuracion para sacar el idioma
-    	languageReader = new LectorLineas("files/lang/"+ configReader.leerLinea(Settings.language) + "matchmaking.txt"); //Abrimos el idioma que toca del archivo configuracion
+    	configReader = new LineReader("files/config.txt"); //Lector del txt configuracion para sacar el idioma
+    	languageReader = new LineReader("files/lang/"+ configReader.readLine(Settings.language) + "matchmaking.txt"); //Abrimos el idioma que toca del archivo configuracion
     	
     	super.show();
         
@@ -44,11 +44,11 @@ public class MatchMakingScreen extends AbstractMenuScreen{
     	
     	textButton = new TextButton[3];
     	
-    	title = new Label(languageReader.leerLinea(1), Render.skin, "TitleStyle");//Manual
+    	title = new Label(languageReader.readLine(1), Render.skin, "TitleStyle");//Manual
     	
-    	textButton[0] = new TextButton(languageReader.leerLinea(2));//Online
-    	textButton[1] = new TextButton(languageReader.leerLinea(3));//Local
-    	textButton[2] = new TextButton(languageReader.leerLinea(4));//Return
+    	textButton[0] = new TextButton(languageReader.readLine(2));//Online
+    	textButton[1] = new TextButton(languageReader.readLine(3));//Local
+    	textButton[2] = new TextButton(languageReader.readLine(4));//Return
     	
     	for(int i = 0; i < textButton.length; i++) {
     		textButton[i].addAnimation();

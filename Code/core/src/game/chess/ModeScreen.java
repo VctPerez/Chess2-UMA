@@ -4,19 +4,19 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
-import interaccionFichero.LectorLineas;
+import interaccionFichero.LineReader;
 import utils.Render;
 import utils.Settings;
 import utils.TextButton;
 
 public class ModeScreen extends AbstractMenuScreen{
-    private LectorLineas languageReader, configReader;
+    private LineReader languageReader, configReader;
     
     @Override
     public void show() {
     	//Abrir los ficheros de configuracion e idioma
-    	configReader = new LectorLineas("files/config.txt"); //Lector del txt configuracion para sacar el idioma
-    	languageReader = new LectorLineas("files/lang/"+ configReader.leerLinea(Settings.language) + "matchmaking.txt"); //Abrimos el idioma que toca del archivo configuracion
+    	configReader = new LineReader("files/config.txt"); //Lector del txt configuracion para sacar el idioma
+    	languageReader = new LineReader("files/lang/"+ configReader.readLine(Settings.language) + "matchmaking.txt"); //Abrimos el idioma que toca del archivo configuracion
     	
     	super.show();
     	
@@ -40,11 +40,11 @@ public class ModeScreen extends AbstractMenuScreen{
     	
     	textButton = new TextButton[3];
     	
-    	title = new Label(languageReader.leerLinea(5), Render.skin, "TitleStyle");//Manual
+    	title = new Label(languageReader.readLine(5), Render.skin, "TitleStyle");//Manual
     	
-    	textButton[0] = new TextButton(languageReader.leerLinea(6));//Modified
-    	textButton[1] = new TextButton(languageReader.leerLinea(7));//Classic
-    	textButton[2] = new TextButton(languageReader.leerLinea(4));//Return
+    	textButton[0] = new TextButton(languageReader.readLine(6));//Modified
+    	textButton[1] = new TextButton(languageReader.readLine(7));//Classic
+    	textButton[2] = new TextButton(languageReader.readLine(4));//Return
     	
     	for(int i = 0; i < textButton.length; i++) {
     		textButton[i].addAnimation();

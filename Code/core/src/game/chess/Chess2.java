@@ -18,7 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 import elements.Background;
-import interaccionFichero.LectorLineas;
+import interaccionFichero.LineReader;
 import utils.IOS;
 import utils.Render;
 import utils.Resources;
@@ -138,7 +138,7 @@ public class Chess2 extends Game {
 
 
 	private void loadSettings() {
-		LectorLineas configReader = new LectorLineas("files/config.txt");
+		LineReader configReader = new LineReader("files/config.txt");
 		Settings.updateSettings(configReader.leerFLOATLinea(5), configReader.leerFLOATLinea(6),
 				configReader.leerBOOLEANLinea(7),configReader.leerINTLinea(8));
 	}

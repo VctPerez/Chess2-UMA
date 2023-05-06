@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import elements.Board;
 import elements.Piece;
 import elements.Tile;
-import interaccionFichero.LectorLineas;
+import interaccionFichero.LineReader;
 import utils.Image;
 import utils.Render;
 import utils.Resources;
@@ -122,15 +122,15 @@ public class Midas extends Piece {
 
 	@Override
 	public String getInfo() {
-		LectorLineas Reader, configReader;
-		configReader = new LectorLineas("files/config.txt");
-		String config = configReader.leerLinea(1);
-		Reader = new LectorLineas("files/lang/" + config + "Modified.txt");
+		LineReader Reader, configReader;
+		configReader = new LineReader("files/config.txt");
+		String config = configReader.readLine(1);
+		Reader = new LineReader("files/lang/" + config + "Modified.txt");
 		switch (config) {
 		case "esp/":
-			return Reader.leerTramo(34, 41);
+			return Reader.readSection(34, 41);
 		case "eng/":
-			return Reader.leerTramo(35, 42);
+			return Reader.readSection(35, 42);
 		default:
 			throw new IllegalArgumentException("Configuración errónea");
 		}

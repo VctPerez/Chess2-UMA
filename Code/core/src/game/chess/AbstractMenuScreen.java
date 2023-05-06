@@ -9,7 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
-import interaccionFichero.LectorLineas;
+import interaccionFichero.LineReader;
 import utils.Render;
 import utils.TextButton;
 
@@ -22,7 +22,7 @@ public abstract class AbstractMenuScreen extends AbstractScreen{
 	protected TextButton[] textButton;
     protected Label title;
     
-    protected LectorLineas configReader;
+    protected LineReader configReader;
     
     protected int activatedTextButton;
     protected boolean animationStarted;
