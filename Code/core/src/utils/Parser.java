@@ -4,6 +4,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.utils.StringBuilder;
+
 import elements.Board;
 import elements.Piece;
 import elements.Tile;
@@ -73,6 +75,14 @@ public class Parser {
 			break;
 		}
 		return piece;
+	}
+	
+	public static String parseDraftToString(ArrayList<String> draft) {
+		StringBuilder sb = new StringBuilder();
+		for (String piece : draft) {
+			sb.append(piece).append("#");
+		}
+		return sb.toString();
 	}
 	
 	public static Image getImageFromPath(String piecePath) {

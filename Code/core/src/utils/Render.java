@@ -20,6 +20,7 @@ import elements.Background;
 import game.chess.*;
 import multiplayer.Guest;
 import multiplayer.Host;
+import multiplayer.OnlinePlayer;
 
 /**
  * Esta clase principalmente es usada para declarar aquellas variables relacionadas con la ejecución
@@ -67,6 +68,7 @@ public class Render {
 
     public static Host host;
     public static Guest guest;
+    public static OnlinePlayer player;
     public static boolean hosting;
     
     public static Parser parser;

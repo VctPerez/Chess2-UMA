@@ -47,7 +47,9 @@ public class LobbyScreen extends AbstractScreen{
                         Resources.FONT_MENU_PATH, 20, Color.WHITE,2);
                 invCode.setPosition(300,500);
                 stage.addActor(invCode);
+                
                 Render.host = new Host(player1);
+                Render.player = Render.host;
             } catch (IOException e) {
                 throw new RuntimeException(e.getMessage());
             }
@@ -57,6 +59,8 @@ public class LobbyScreen extends AbstractScreen{
             p1 = new Text(languageReader.readLine(2) + Render.guest.getPlayer1().getName(), Resources.FONT_MENU_PATH, 30, Color.WHITE, 3);
             p2 = new Text(languageReader.readLine(4) + player2.getName(), Resources.FONT_MENU_PATH, 30, Color.WHITE, 3);
             statusP2 = new Text(languageReader.readLine(5), Resources.FONT_MENU_PATH, 30, Color.GREEN, 3);
+            
+            Render.player = Render.guest;
 
         }
         Text statusP1 = new Text(languageReader.readLine(5), Resources.FONT_MENU_PATH, 30, Color.GREEN, 3);

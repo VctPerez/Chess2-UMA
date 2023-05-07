@@ -6,12 +6,10 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class Host extends Thread {
-    private Socket player2;
+public class Host extends OnlinePlayer {
     private boolean accepting;
     private ServerSocket gameServer;
     private Player p2, p1;
-    private String message = "";
 
     private boolean receiving;
 
@@ -70,7 +68,7 @@ public class Host extends Thread {
      */
     public void waitConnection() throws IOException {
         accepting = true;
-        player2 = gameServer.accept();
+        playerConnection = gameServer.accept();
         //System.out.println("jugador2 aceptado -> " + player2.isConnected());
     }
 
@@ -79,7 +77,7 @@ public class Host extends Thread {
      * @throws IOException
      */
     public void kickPlayer2() throws IOException {
-        player2.close();
+        playerConnection.close();
     }
 
     public void stopHosting() throws IOException {
@@ -93,7 +91,7 @@ public class Host extends Thread {
      * @return
      */
     public boolean isP2connected() {
-        if(player2 != null) return player2.isConnected();
+        if(playerConnection != null) return playerConnection.isConnected();
         else return false;
     }
 
@@ -110,7 +108,7 @@ public class Host extends Thread {
      * @throws IOException
      */
     public void sendPlayer1() throws IOException {
-        PrintWriter pw = new PrintWriter(player2.getOutputStream());
+        PrintWriter pw = new PrintWriter(playerConnection.getOutputStream());
         pw.println(p1.getName());
         pw.flush();
     }
@@ -121,7 +119,7 @@ public class Host extends Thread {
      */
     public void receivePlayer2() throws IOException {
         System.out.println("Recibiendo player 2");
-        InputStreamReader in = new InputStreamReader(player2.getInputStream());
+        InputStreamReader in = new InputStreamReader(playerConnection.getInputStream());
         BufferedReader buffer = new BufferedReader(in);
         p2 = new Player(buffer.readLine());
         System.out.println("player2 recibido");
@@ -134,31 +132,4 @@ public class Host extends Thread {
     public Player getPlayer2(){
         return p2;
     }
-
-    public void sendMessage(String message) throws IOException {
-        PrintWriter pw = new PrintWriter(player2.getOutputStream());
-        pw.println(message);
-        pw.flush();
-    }
-    public void receiveMessage() throws IOException {
-        InputStreamReader in = new InputStreamReader(player2.getInputStream());
-        BufferedReader buffer = new BufferedReader(in);
-        message = buffer.readLine();
-    }
-
-    /**
-     * Devuelve el mensaje recibido
-     * @return
-     */
-    public String getMessage() {
-        return message;
-    }
-
-    /**
-     * Resetea el valor del mensaje
-     */
-    public void resetMessage() {
-        this.message = "";
-    }
-
 }

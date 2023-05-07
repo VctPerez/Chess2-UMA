@@ -24,14 +24,12 @@ public class DrawBox extends Actor{
     		@Override
     		public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
     			try{
-    				if(Render.hosting) {
-	    				Render.host.sendMessage("ACEPTAR");
-	    			}else {
-	    				Render.guest.sendMessage("ACEPTAR");
-	    			}
+    				Render.player.sendMessage("ACEPTAR");
     			}catch(IOException e) {
     				e.printStackTrace();
     			}
+    			cross.remove();
+    			check.remove();
     			Render.GameScreen.results.setDraw();
     			Render.GameScreen.showPopup = true;
 				Render.GameScreen.drawMatch=true;
@@ -45,17 +43,13 @@ public class DrawBox extends Actor{
     		@Override
     		public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
     			try{
-    				if(Render.hosting) {
-	    				Render.host.sendMessage("RECHAZAR");
-	    			}else {
-	    				Render.guest.sendMessage("RECHAZAR");
-	    			}
+	    			Render.player.sendMessage("RECHAZAR");
     				Render.GameScreen.drawButton.setTouchable(Touchable.enabled);
     			}catch(IOException e) {
     				e.printStackTrace();
     			}
-    			cross.remove();
     			check.remove();
+    			cross.remove();
     			return true;
     		}
     	});

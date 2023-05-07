@@ -40,7 +40,7 @@ public class DraftScreen extends AbstractScreen {
 
 	TileButton tile1, tile2;
 	private boolean draftCompleted = false; // controla que ya se han enviado ambos los drafts
-	private boolean p1Finished = false, p2Finished = false, msgSent = false; //controla para el inicio de la partida y para no enviar el mensaje 2 veces
+	private boolean p1Finished = false, p2Finished = false; //controla para el inicio de la partida y para no enviar el mensaje 2 veces
 
 	@Override
 	public void show() {
@@ -301,20 +301,15 @@ public class DraftScreen extends AbstractScreen {
 						Action draftAction = new Action() {
 							public boolean act(float delta) {
 								try {
-									if (Render.hosting) {//metodos en host y guest
-										if(!msgSent){
+									if(!Render.player.draftSent){
+										if(Render.hosting) {
 											Render.player1Draft.addAll(draft.values());
-											Render.host.sendMessage(draftMessage());
-											msgSent = true;
 											p1Finished = true;
-										}
-									} else {
-										if(!msgSent){
+										}else {
 											Render.player2Draft.addAll(draft.values());
-											Render.guest.sendMessage(draftMessage());
-											msgSent = true;
 											p2Finished = true;
 										}
+										Render.player.sendDraft(draft.values());	
 									}
 								} catch (IOException e) {
 									throw new RuntimeException(e);
@@ -406,21 +401,6 @@ public class DraftScreen extends AbstractScreen {
 		
 	}
 
-	private String draftMessage() {
-		StringBuilder sb = new StringBuilder();
-		for (String piece : draft.values()) {
-			sb.append(piece).append("#");
-		}
-		return sb.toString();
-	}
-
-	private void saveOpponentDraft(String draft) {
-		if (Render.hosting) {
-			Render.player2Draft.addAll(Arrays.asList(draft.split("#")));
-		} else {
-			Render.player1Draft.addAll(Arrays.asList(draft.split("#")));
-		}
-	}
 
 	@Override
 	public void render(float delta) {
@@ -443,15 +423,18 @@ public class DraftScreen extends AbstractScreen {
 	}
 
 	private void checkMessage() {
-		if (!Render.hosting && !Render.guest.getMessage().equals("")) {
-			saveOpponentDraft(Render.guest.getMessage());
-			Render.guest.resetMessage();
-			p1Finished = true;
-		}else if(Render.hosting && !Render.host.getMessage().equals("")){
-			System.out.println("Mensaje: " +Render.host.getMessage());
-			saveOpponentDraft(Render.host.getMessage());
-			Render.host.resetMessage();
+		if(!Render.player.getMessage().equals("")) {
+			saveOpponentDraft(Render.player.getMessage());
+			Render.player.resetMessage();	
+		}
+	}
+	private void saveOpponentDraft(String draft) {
+		if (Render.hosting) {
+			Render.player2Draft.addAll(Arrays.asList(draft.split("#")));
 			p2Finished = true;
+		} else {
+			Render.player1Draft.addAll(Arrays.asList(draft.split("#")));
+			p1Finished = true;
 		}
 	}
 

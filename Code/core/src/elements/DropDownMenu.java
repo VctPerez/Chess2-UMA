@@ -125,33 +125,9 @@ public class DropDownMenu extends Actor{
             Render.GameScreen.mateControl();
             
             if(online) {
-            	sendPiece(newPiecePath);
+            	Render.player.sendPromotion(newPiecePath);
             }
             remove();	
-	}
-	
-	private void sendPiece(String path) {
-		try {//meter este metodo en host y guest y que se llame sendPromotion
-			String movement = Parser.parseMovementToString(Render.GameScreen.currentTile, Render.GameScreen.nextTile);
-			movement += "-";
-			movement += path;
-			if(player) {
-				Render.host.sendMessage(movement);				
-//				System.out.println("mensaje DE PROMOCION enviado from host");
-				Render.GameScreen.PLAYER = false;
-				Render.GameScreen.moved=false;
-			}else {
-				Render.guest.sendMessage(movement);
-//				System.out.println("mensaje DE PROMOCION enviado from guest");
-				Render.GameScreen.PLAYER = true;
-				Render.GameScreen.moved=false;
-
-			}
-			String[] params = movement.split("-");
-//			System.out.println("mensaje enviado con: "+ movement + " | tamaño: "+params.length);
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
 	}
 	@Override
 	public void draw(Batch batch, float parentAlpha) {

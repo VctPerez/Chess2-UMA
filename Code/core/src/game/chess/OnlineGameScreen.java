@@ -29,15 +29,8 @@ public class OnlineGameScreen extends GameScreen {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				try {
-					if (Render.hosting) {
-						System.out.println("HOST ENVIA EMPATE");
-						Render.host.sendMessage("EMPATE");
-						drawButton.setTouchable(Touchable.disabled);
-					} else {
-						System.out.println("GUEST ENVIA EMPATE");
-						Render.guest.sendMessage("EMPATE");
-					}
-
+					Render.player.sendMessage("EMPATE");
+					drawButton.setTouchable(Touchable.disabled);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -45,7 +38,7 @@ public class OnlineGameScreen extends GameScreen {
 			}
 		});
 	}
-	
+
 	@Override
 	protected void setUpTable() {
 		super.setUpTable();
@@ -56,11 +49,10 @@ public class OnlineGameScreen extends GameScreen {
 	public void render(float delta) {
 		super.render(delta);
 		checkGraveyard();
-		if (showPopup)
-			draw.clearListeners();
 		try {
-			if (!whiteCheckMate && !blackCheckMate)
+			if (!whiteCheckMate && !blackCheckMate && !Render.player.getMessage().equals("")) {
 				updateOnlineBoard();
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -102,23 +94,18 @@ public class OnlineGameScreen extends GameScreen {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				try {
+					Render.player.sendMessage("RENDICION");
+					results.setWinnerSurrender(!Render.hosting);
+					showPopup = true;
 					if (Render.hosting) {
-						Render.host.sendMessage("RENDICION");
-						System.out.println("Rendicion Blanca");
-						results.setWinnerSurrender(PLAYER);
-						showPopup = true;
 						whiteCheckMate = true;
 					} else {
-						Render.guest.sendMessage("RENDICION");
-						System.out.println("Rendicion Negra");
-						results.setWinnerSurrender(PLAYER);
-						showPopup = true;
 						blackCheckMate = true;
 					}
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-				
+
 				return true;
 			}
 		});
@@ -132,9 +119,9 @@ public class OnlineGameScreen extends GameScreen {
 					if (graveyardWhite.graveyard.get(i) instanceof King
 							|| graveyardWhite.graveyard.get(i) instanceof Midas
 							|| graveyardWhite.graveyard.get(i) instanceof Mage) {
-						
+
 						Render.host.sendMessage("SUICIDIO");
-						results.setWinnerKingKilled("BLANCO");
+						results.setWinnerKingKilled(Render.hosting);
 						showPopup = true;
 						blackCheckMate = true;
 					}
@@ -145,9 +132,9 @@ public class OnlineGameScreen extends GameScreen {
 					if (graveyardBlack.graveyard.get(i) instanceof King
 							|| graveyardWhite.graveyard.get(i) instanceof Midas
 							|| graveyardWhite.graveyard.get(i) instanceof Mage) {
-						
+
 						Render.guest.sendMessage("SUICIDIO");
-						results.setWinnerKingKilled("NEGRO");
+						results.setWinnerKingKilled(Render.hosting);
 						showPopup = true;
 						whiteCheckMate = true;
 					}
@@ -164,16 +151,10 @@ public class OnlineGameScreen extends GameScreen {
 		super.update(tile);
 		if (!promoting) {
 			try {
-				if (Render.hosting == PLAYER && moved) {// meter estos metodos en las clases host y guest y que se
-														// llamen sendMovement
+				if (Render.hosting == PLAYER && moved) {
 					String movement = Parser.parseMovementToString(currentTile, nextTile);
-					if (Render.hosting) {
-						Render.host.sendMessage(movement);
-						PLAYER = false;
-					} else {
-						Render.guest.sendMessage(movement);
-						PLAYER = true;
-					}
+					Render.player.sendMessage(movement);
+					PLAYER = !PLAYER;
 					moved = false;
 				}
 			} catch (IOException e) {
@@ -183,115 +164,34 @@ public class OnlineGameScreen extends GameScreen {
 	}
 
 	private void updateOnlineBoard() throws IOException {
-		if (Render.hosting != PLAYER) {// meter estos metodos en las clases host y guest y que se llamen
-										// recieveMovement?
+		if (Render.player.getMessage().equals("RENDICION")) {
+			System.out.println("Rendicion Blanca");
+			results.setWinnerSurrender(Render.hosting);
+			showPopup = true;
 			if (!Render.hosting) {
-				if (!Render.guest.getMessage().equals("")) {
-					if (Render.guest.getMessage().equals("RENDICION")) {
-						System.out.println("Rendicion Blanca");
-						results.setWinnerSurrender(!PLAYER);
-						showPopup = true;
-						whiteCheckMate = true;
-					} else if (Render.guest.getMessage().equals("EMPATE")) {
-						System.out.println("GUEST RECIBE EMPATE");
-						askDraw();
-					} else if (Render.guest.getMessage().equals("ACEPTAR")) {
-						results.setDraw();
-						showPopup = true;
-						blackCheckMate = true;
-					} else if (Render.guest.getMessage().equals("RECHAZAR")) {
-						drawButton.setTouchable(Touchable.enabled);
-					} else if(Render.guest.getMessage().equals("SUICIDIO")){
-						results.setWinnerKingKilled("NEGRO");
-						showPopup = true;
-						whiteCheckMate = true;
-					}else {
-						System.out.println("movimiento de blancas: " + Render.guest.getMessage());
-						Parser.parseStringToMovement(Render.guest.getMessage());
-						PLAYER = false;
-					}
-					Render.guest.resetMessage();
-
-				}
+				whiteCheckMate = true;
 			} else {
-				if (!Render.host.getMessage().equals("")) {
-					if (Render.host.getMessage().equals("RENDICION")) {
-						System.out.println("Rendicion Negra");
-
-						results.setWinnerSurrender(!PLAYER);
-						showPopup = true;
-						blackCheckMate = true;
-					} else if (Render.host.getMessage().equals("EMPATE")) {
-						System.out.println("HOST RECIBE EMPATE");
-						askDraw();
-					} else if (Render.host.getMessage().equals("ACEPTAR")) {
-						results.setDraw();
-						showPopup = true;
-						blackCheckMate = true;
-					} else if (Render.host.getMessage().equals("RECHAZAR")) {
-						drawButton.setTouchable(Touchable.enabled);
-					} else if (Render.host.getMessage().equals("SUICIDIO")) {
-						results.setWinnerKingKilled("BLANCO");
-						showPopup = true;
-						blackCheckMate = true;
-					}else {
-						System.out.println("movimiento de negras: " + Render.host.getMessage());
-						Parser.parseStringToMovement(Render.host.getMessage());
-						PLAYER = true;
-					}
-					Render.host.resetMessage();
-
-				}
+				blackCheckMate = true;
 			}
-		} else {
-			if (!Render.hosting) {
-				if (!Render.guest.getMessage().equals("")) {
-					if (Render.guest.getMessage().equals("RENDICION")) {
-						System.out.println("Rendicion Blanca");
-						results.setWinnerSurrender(!PLAYER);
-						showPopup = true;
-						blackCheckMate = true;
-					} else if (Render.guest.getMessage().equals("EMPATE")) {
-						System.out.println("GUEST RECIBE EMPATE");
-						askDraw();
-					} else if (Render.guest.getMessage().equals("ACEPTAR")) {
-						results.setDraw();
-						showPopup = true;
-						blackCheckMate = true;
-						drawButton.clearListeners();
-					}else if(Render.guest.getMessage().equals("SUICIDIO")){
-						results.setWinnerKingKilled("NEGRO");
-						showPopup = true;
-						whiteCheckMate = true;
-					}
-				}
-				Render.guest.resetMessage();
-			} else {
-				if (!Render.host.getMessage().equals("")) {
-					if (Render.host.getMessage().equals("RENDICION")) {
-						System.out.println("Rendicion Negra");
-						results.setWinnerSurrender(!PLAYER);
-						showPopup = true;
-						whiteCheckMate = true;
-					} else if (Render.host.getMessage().equals("EMPATE")) {
-						System.out.println("GUEST RECIBE EMPATE");
-						askDraw();
-					} else if (Render.host.getMessage().equals("ACEPTAR")) {
-						results.setDraw();
-						showPopup = true;
-						blackCheckMate = true;
-						drawButton.clearListeners();
-					}else if (Render.host.getMessage().equals("SUICIDIO")) {
-						results.setWinnerKingKilled("BLANCO");
-						showPopup = true;
-						blackCheckMate = true;
-					}
-				}
-				Render.host.resetMessage();
-
-			}
-
+		} else if (Render.player.getMessage().equals("EMPATE")) {
+			askDraw();
+		} else if (Render.player.getMessage().equals("ACEPTAR")) {
+			results.setDraw();
+			showPopup = true;
+			blackCheckMate = true;
+			drawButton.clearListeners();
+		} else if (Render.player.getMessage().equals("RECHAZAR")) {
+			drawButton.setTouchable(Touchable.enabled);
+		} else if (Render.player.getMessage().equals("SUICIDIO")) {
+			results.setWinnerKingKilled(Render.hosting);
+			showPopup = true;
+			blackCheckMate = true;
+		} else if (Render.hosting != PLAYER) {
+			System.out.println("movimiento de blancas: " + Render.player.getMessage());
+			Parser.parseStringToMovement(Render.player.getMessage());
+			PLAYER = !PLAYER;
 		}
+		Render.player.resetMessage();
 	}
 
 	@Override
@@ -310,12 +210,14 @@ public class OnlineGameScreen extends GameScreen {
 	/**
 	 * Establece los botones para apectar o rechazar el empate
 	 */
-	private void askDraw(){
+	private void askDraw() {
 		drawButtonBox = new DrawBox();
+		drawButtonBox.toFront();
 		stage.addActor(drawButtonBox);
 		drawButton.setTouchable(Touchable.disabled);
 		stage.addActor(drawButtonBox.getCheck());
 		stage.addActor(drawButtonBox.getCross());
+		drawButtonBox.remove();
 	}
 
 }

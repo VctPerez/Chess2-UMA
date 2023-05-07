@@ -83,8 +83,8 @@ public class MatchResults extends Actor{
 		matchres.setText("HA GANADO EL " + winner+" \n    POR RENDICION");
 	}
 	
-	public void setWinnerKingKilled(String Winner) {
-		matchres.setText("HA GANADO EL " + Winner+" \n    POR ASESINATO");
+	public void setWinnerKingKilled(Boolean equipo) {
+		matchres.setText("HA GANADO EL " + WinnerTraduction(equipo) +" \n    POR ASESINATO");
 	}
 	
 	public void setWinner() {

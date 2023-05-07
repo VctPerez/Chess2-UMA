@@ -86,7 +86,6 @@ public class GameScreen extends AbstractScreen {
 		graveyardBlack = new Graveyard(1270 - 100, 21);
 		graveyardWhite.flipImage();
 
-		// Crear mensaje emergente tras terminar partida -> porque se añade al principio? mas eficiente crear cuando vaya a verse
 		showPopup = false;
 		results = new MatchResults(stage);
 		results.Hide();
@@ -123,8 +122,6 @@ public class GameScreen extends AbstractScreen {
 		table.add(timerB).top().right().pad(80).expandX().expandY();
 		table.row();
 		table.add(surrenderButton).left().padLeft(70).expandX();
-		
-
 	}
 
 	/**
@@ -164,7 +161,7 @@ public class GameScreen extends AbstractScreen {
 				if (graveyardWhite.graveyard.get(i) instanceof King || graveyardWhite.graveyard.get(i) instanceof Midas
 						|| graveyardWhite.graveyard.get(i) instanceof Mage) {
 
-					results.setWinnerKingKilled("NEGRO");
+					results.setWinnerKingKilled(PLAYER);
 					showPopup = true;
 					whiteCheckMate = true;
 				}
@@ -174,7 +171,7 @@ public class GameScreen extends AbstractScreen {
 			for (int i = 0; i < graveyardBlack.graveyard.size(); i++) {
 				if (graveyardBlack.graveyard.get(i) instanceof King || graveyardWhite.graveyard.get(i) instanceof Midas
 						|| graveyardWhite.graveyard.get(i) instanceof Mage) {
-					results.setWinnerKingKilled("BLANCO");
+					results.setWinnerKingKilled(PLAYER);
 					showPopup = true;
 					blackCheckMate = true;
 				}
