@@ -4,6 +4,9 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import elements.DropDownMenu;
 import elements.Tile;
+import elements.pieces.King;
+import elements.pieces.Mage;
+import elements.pieces.Midas;
 import utils.Parser;
 import utils.Render;
 
@@ -15,7 +18,6 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 import utils.TextButton;
 
 public class OnlineGameScreen extends GameScreen {
-
 
 	@Override
 	public void show() {
@@ -34,7 +36,7 @@ public class OnlineGameScreen extends GameScreen {
 						Render.guest.sendMessage("EMPATE");
 					}
 
-				}catch (IOException e) {
+				} catch (IOException e) {
 					e.printStackTrace();
 				}
 				return true;
@@ -48,7 +50,9 @@ public class OnlineGameScreen extends GameScreen {
 	@Override
 	public void render(float delta) {
 		super.render(delta);
-		if(showPopup) draw.clearListeners();
+		checkGraveyard();
+		if (showPopup)
+			draw.clearListeners();
 		try {
 			if (!whiteCheckMate && !blackCheckMate)
 				updateOnlineBoard();
@@ -56,7 +60,6 @@ public class OnlineGameScreen extends GameScreen {
 			e.printStackTrace();
 		}
 	}
-
 
 	@Override
 	protected void checkPromotion(float next_x, float next_y) {
@@ -100,6 +103,41 @@ public class OnlineGameScreen extends GameScreen {
 	}
 
 	@Override
+	public void checkGraveyard() {
+		try {
+			if (!graveyardWhite.graveyard.isEmpty() && Render.hosting) {
+				for (int i = 0; i < graveyardWhite.graveyard.size(); i++) {
+					if (graveyardWhite.graveyard.get(i) instanceof King
+							|| graveyardWhite.graveyard.get(i) instanceof Midas
+							|| graveyardWhite.graveyard.get(i) instanceof Mage) {
+						
+						Render.host.sendMessage("SUICIDIO");
+						results.setWinnerKingKilled("BLANCO");
+						showPopup = true;
+						blackCheckMate = true;
+					}
+				}
+			}
+			if (!graveyardBlack.graveyard.isEmpty() && !Render.hosting) {
+				for (int i = 0; i < graveyardBlack.graveyard.size(); i++) {
+					if (graveyardBlack.graveyard.get(i) instanceof King
+							|| graveyardWhite.graveyard.get(i) instanceof Midas
+							|| graveyardWhite.graveyard.get(i) instanceof Mage) {
+						
+						Render.guest.sendMessage("SUICIDIO");
+						results.setWinnerKingKilled("NEGRO");
+						showPopup = true;
+						whiteCheckMate = true;
+					}
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	@Override
 	public void update(Tile tile) {
 		super.update(tile);
 		if (!promoting) {
@@ -139,12 +177,16 @@ public class OnlineGameScreen extends GameScreen {
 					} else if (Render.guest.getMessage().equals("EMPATE")) {
 						System.out.println("GUEST RECIBE EMPATE");
 						askDraw();
-					} else if(Render.guest.getMessage().equals("ACEPTAR")) {
+					} else if (Render.guest.getMessage().equals("ACEPTAR")) {
 						results.setDraw();
-						showPopup = true;	
-						blackCheckMate=true;
-					}else if(Render.guest.getMessage().equals("RECHAZAR")){
+						showPopup = true;
+						blackCheckMate = true;
+					} else if (Render.guest.getMessage().equals("RECHAZAR")) {
 						draw.setTouchable(Touchable.enabled);
+					} else if(Render.guest.getMessage().equals("SUICIDIO")){
+						results.setWinnerKingKilled("NEGRO");
+						showPopup = true;
+						whiteCheckMate = true;
 					}else {
 						System.out.println("movimiento de blancas: " + Render.guest.getMessage());
 						Parser.parseStringToMovement(Render.guest.getMessage());
@@ -161,15 +203,19 @@ public class OnlineGameScreen extends GameScreen {
 						results.setWinnerSurrender("BLANCO");
 						showPopup = true;
 						blackCheckMate = true;
-					} else if(Render.host.getMessage().equals("EMPATE")) {
+					} else if (Render.host.getMessage().equals("EMPATE")) {
 						System.out.println("HOST RECIBE EMPATE");
 						askDraw();
-					}else if(Render.host.getMessage().equals("ACEPTAR")) {
+					} else if (Render.host.getMessage().equals("ACEPTAR")) {
 						results.setDraw();
 						showPopup = true;
 						blackCheckMate = true;
-					}else if(Render.host.getMessage().equals("RECHAZAR")){
+					} else if (Render.host.getMessage().equals("RECHAZAR")) {
 						draw.setTouchable(Touchable.enabled);
+					} else if (Render.host.getMessage().equals("SUICIDIO")) {
+						results.setWinnerKingKilled("BLANCO");
+						showPopup = true;
+						blackCheckMate = true;
 					}else {
 						System.out.println("movimiento de negras: " + Render.host.getMessage());
 						Parser.parseStringToMovement(Render.host.getMessage());
@@ -187,13 +233,17 @@ public class OnlineGameScreen extends GameScreen {
 						results.setWinnerSurrender("NEGRO");
 						showPopup = true;
 						blackCheckMate = true;
-					}else if(Render.guest.getMessage().equals("EMPATE")) {
+					} else if (Render.guest.getMessage().equals("EMPATE")) {
 						System.out.println("GUEST RECIBE EMPATE");
 						askDraw();
-					}else if(Render.guest.getMessage().equals("ACEPTAR")) {
+					} else if (Render.guest.getMessage().equals("ACEPTAR")) {
 						results.setDraw();
 						showPopup = true;
 						blackCheckMate = true;
+					}else if(Render.guest.getMessage().equals("SUICIDIO")){
+						results.setWinnerKingKilled("NEGRO");
+						showPopup = true;
+						whiteCheckMate = true;
 					}
 				}
 				Render.guest.resetMessage();
@@ -204,11 +254,15 @@ public class OnlineGameScreen extends GameScreen {
 						results.setWinnerSurrender("Blanco");
 						showPopup = true;
 						whiteCheckMate = true;
-					}else if(Render.host.getMessage().equals("EMPATE")) {
+					} else if (Render.host.getMessage().equals("EMPATE")) {
 						System.out.println("GUEST RECIBE EMPATE");
 						askDraw();
-					}else if(Render.host.getMessage().equals("ACEPTAR")) {
+					} else if (Render.host.getMessage().equals("ACEPTAR")) {
 						results.setDraw();
+						showPopup = true;
+						blackCheckMate = true;
+					}else if (Render.host.getMessage().equals("SUICIDIO")) {
+						results.setWinnerKingKilled("BLANCO");
 						showPopup = true;
 						blackCheckMate = true;
 					}
@@ -236,7 +290,7 @@ public class OnlineGameScreen extends GameScreen {
 	/**
 	 * Establece los botones para apectar o rechazar el empate
 	 */
-	private void askDraw(){
+	private void askDraw() {
 		dbox.toFront();
 		draw.setTouchable(Touchable.disabled);
 		stage.addActor(dbox.getCheck());

@@ -177,30 +177,35 @@ public class GameScreen extends AbstractScreen {
 			}
 		}
 	}
-/*
-	public void checkGraveyard() {
-		for (int i = 0; i < graveyardWhite.graveyard.size(); i++) {
-			if (graveyardWhite.graveyard.get(i) instanceof King || graveyardWhite.graveyard.get(i) instanceof Midas
-					|| graveyardWhite.graveyard.get(i) instanceof Mage) {
 
-				results.setWinnerKingKilled("NEGRO");
-				showPopup = true;
-				whiteCheckMate = true;
+	public void checkGraveyard() {
+		if(!graveyardWhite.graveyard.isEmpty()) {
+			for (int i = 0; i < graveyardWhite.graveyard.size(); i++) {
+				if (graveyardWhite.graveyard.get(i) instanceof King || graveyardWhite.graveyard.get(i) instanceof Midas
+						|| graveyardWhite.graveyard.get(i) instanceof Mage) {
+
+					results.setWinnerKingKilled("NEGRO");
+					showPopup = true;
+					whiteCheckMate = true;
+				}
 			}
 		}
-		for (int i = 0; i < graveyardBlack.graveyard.size(); i++) {
-			if (graveyardBlack.graveyard.get(i) instanceof King || graveyardWhite.graveyard.get(i) instanceof Midas
-					|| graveyardWhite.graveyard.get(i) instanceof Mage) {
-				results.setWinnerKingKilled("BLANCO");
-				showPopup = true;
-				blackCheckMate = true;
+		if(!graveyardBlack.graveyard.isEmpty()) {
+			for (int i = 0; i < graveyardBlack.graveyard.size(); i++) {
+				if (graveyardBlack.graveyard.get(i) instanceof King || graveyardWhite.graveyard.get(i) instanceof Midas
+						|| graveyardWhite.graveyard.get(i) instanceof Mage) {
+					results.setWinnerKingKilled("BLANCO");
+					showPopup = true;
+					blackCheckMate = true;
+				}
 			}
 		}
+		
 	}
-	*/
+	
 
 	
-*/
+
 
 
 
