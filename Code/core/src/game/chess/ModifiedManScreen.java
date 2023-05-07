@@ -13,7 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane.ScrollPaneStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import interaccionFichero.LectorLineas;
+import interaccionFichero.LineReader;
 import utils.*;
 
 
@@ -24,7 +24,7 @@ public class ModifiedManScreen extends AbstractScreen{ //Literalmente copiado de
     Label title;
     Table table;
     Image fondo;
-    LectorLineas languageReader, configReader;
+    LineReader languageReader, configReader;
     ScrollPane scrollPane;
 
     @Override
@@ -35,8 +35,8 @@ public class ModifiedManScreen extends AbstractScreen{ //Literalmente copiado de
         table.setFillParent(true);
 
         //Abrir los ficheros de configuracion e idioma
-        configReader = new LectorLineas("files/config.txt"); //Lector del txt configuracion para sacar el idioma
-        languageReader = new LectorLineas("files/lang/"+ configReader.leerLinea(Settings.language) + "ModManual.txt"); //Abrimos el idioma que toca del archivo configuracion
+        configReader = new LineReader("files/config.txt"); //Lector del txt configuracion para sacar el idioma
+        languageReader = new LineReader("files/lang/"+ configReader.readLine(Settings.language) + "ModManual.txt"); //Abrimos el idioma que toca del archivo configuracion
 
         //Inicializar los elementos de la escena
         createTableElements();
@@ -77,14 +77,14 @@ public class ModifiedManScreen extends AbstractScreen{ //Literalmente copiado de
 
     private void createTableElements() {
         title = new Label("Manual", Render.skin, "TitleStyle");
-        textButton = new TextButton(languageReader.leerLinea(1));
+        textButton = new TextButton(languageReader.readLine(1));
 
         String text="";
 
-        if(configReader.leerLinea(1).equals("esp/")) {
-            text+=languageReader.leerTramo(5, 85);
+        if(configReader.readLine(1).equals("esp/")) {
+            text+=languageReader.readSection(5, 85);
         }else {
-            text+=languageReader.leerTramo(5, 87);
+            text+=languageReader.readSection(5, 87);
         }
 
         Label label = new Label(text, new Label.LabelStyle(new BitmapFont(), Color.WHITE));

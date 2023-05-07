@@ -1,7 +1,10 @@
 package game.chess;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+
+import elements.DrawBox;
 import elements.DropDownMenu;
 import elements.Tile;
 import elements.pieces.King;
@@ -18,19 +21,18 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 import utils.TextButton;
 
 public class OnlineGameScreen extends GameScreen {
-
 	@Override
-	public void show() {
-		super.show();
-		draw = new TextButton(languageReader.leerLinea(5), "SingleClickStyle");
-		draw.addListener(new ClickListener() {
+	protected void createTableElements() {
+		super.createTableElements();
+		drawButton = new TextButton(languageReader.readLine(5), "SingleClickStyle");
+		drawButton.addListener(new ClickListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				try {
 					if (Render.hosting) {
 						System.out.println("HOST ENVIA EMPATE");
 						Render.host.sendMessage("EMPATE");
-						draw.setTouchable(Touchable.disabled);
+						drawButton.setTouchable(Touchable.disabled);
 					} else {
 						System.out.println("GUEST ENVIA EMPATE");
 						Render.guest.sendMessage("EMPATE");
@@ -42,9 +44,12 @@ public class OnlineGameScreen extends GameScreen {
 				return true;
 			}
 		});
-		table.add(draw).right().padRight(47).expandX();
-		table.row();
-		stage.addActor(table);
+	}
+	
+	@Override
+	protected void setUpTable() {
+		super.setUpTable();
+		table.add(drawButton).right().padRight(47).expandX();
 	}
 
 	@Override
@@ -59,6 +64,16 @@ public class OnlineGameScreen extends GameScreen {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public void makeMove(Tile currentTile, Tile nextTile) {
+		this.currentTile = currentTile;
+		GameScreen.nextTile = nextTile;
+		currentTile_validMovements = currentTile.getPiece().getValidMovements();
+		super.makeMove(currentTile, nextTile);
+		if (Render.hosting == PLAYER)
+			moved = true;
 	}
 
 	@Override
@@ -80,26 +95,33 @@ public class OnlineGameScreen extends GameScreen {
 	}
 
 	@Override
-	public void checkSurrender() {
-		try {
-			if (super.surrender.isPressed()) {
-				if (Render.hosting) {
-					Render.host.sendMessage("RENDICION");
-					System.out.println("Rendicion Blanca");
-					results.setWinnerSurrender("NEGRO");
-					showPopup = true;
-					whiteCheckMate = true;
-				} else {
-					Render.guest.sendMessage("RENDICION");
-					System.out.println("Rendicion Negra");
-					results.setWinnerSurrender("BLANCO");
-					showPopup = true;
-					blackCheckMate = true;
+	protected void setUpSurrenderButton() {
+		surrenderButton = new TextButton(languageReader.readLine(4), "SingleClickStyle");
+		surrenderButton.getLabel().setFontScale(0.75f);
+		surrenderButton.addCaptureListener(new InputListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				try {
+					if (Render.hosting) {
+						Render.host.sendMessage("RENDICION");
+						System.out.println("Rendicion Blanca");
+						results.setWinnerSurrender(PLAYER);
+						showPopup = true;
+						whiteCheckMate = true;
+					} else {
+						Render.guest.sendMessage("RENDICION");
+						System.out.println("Rendicion Negra");
+						results.setWinnerSurrender(PLAYER);
+						showPopup = true;
+						blackCheckMate = true;
+					}
+				} catch (IOException e) {
+					e.printStackTrace();
 				}
+				
+				return true;
 			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		});
 	}
 
 	@Override
@@ -147,13 +169,9 @@ public class OnlineGameScreen extends GameScreen {
 					String movement = Parser.parseMovementToString(currentTile, nextTile);
 					if (Render.hosting) {
 						Render.host.sendMessage(movement);
-//						System.out.println("mensaje enviado from host");
-//						System.out.println("mensaje enviado con: "+ movement);
 						PLAYER = false;
 					} else {
 						Render.guest.sendMessage(movement);
-//						System.out.println("mensaje enviado from guest");
-//						System.out.println("mensaje enviado con: "+ movement);
 						PLAYER = true;
 					}
 					moved = false;
@@ -171,7 +189,7 @@ public class OnlineGameScreen extends GameScreen {
 				if (!Render.guest.getMessage().equals("")) {
 					if (Render.guest.getMessage().equals("RENDICION")) {
 						System.out.println("Rendicion Blanca");
-						results.setWinnerSurrender("NEGRO");
+						results.setWinnerSurrender(!PLAYER);
 						showPopup = true;
 						whiteCheckMate = true;
 					} else if (Render.guest.getMessage().equals("EMPATE")) {
@@ -182,7 +200,7 @@ public class OnlineGameScreen extends GameScreen {
 						showPopup = true;
 						blackCheckMate = true;
 					} else if (Render.guest.getMessage().equals("RECHAZAR")) {
-						draw.setTouchable(Touchable.enabled);
+						drawButton.setTouchable(Touchable.enabled);
 					} else if(Render.guest.getMessage().equals("SUICIDIO")){
 						results.setWinnerKingKilled("NEGRO");
 						showPopup = true;
@@ -200,7 +218,7 @@ public class OnlineGameScreen extends GameScreen {
 					if (Render.host.getMessage().equals("RENDICION")) {
 						System.out.println("Rendicion Negra");
 
-						results.setWinnerSurrender("BLANCO");
+						results.setWinnerSurrender(!PLAYER);
 						showPopup = true;
 						blackCheckMate = true;
 					} else if (Render.host.getMessage().equals("EMPATE")) {
@@ -211,7 +229,7 @@ public class OnlineGameScreen extends GameScreen {
 						showPopup = true;
 						blackCheckMate = true;
 					} else if (Render.host.getMessage().equals("RECHAZAR")) {
-						draw.setTouchable(Touchable.enabled);
+						drawButton.setTouchable(Touchable.enabled);
 					} else if (Render.host.getMessage().equals("SUICIDIO")) {
 						results.setWinnerKingKilled("BLANCO");
 						showPopup = true;
@@ -230,7 +248,7 @@ public class OnlineGameScreen extends GameScreen {
 				if (!Render.guest.getMessage().equals("")) {
 					if (Render.guest.getMessage().equals("RENDICION")) {
 						System.out.println("Rendicion Blanca");
-						results.setWinnerSurrender("NEGRO");
+						results.setWinnerSurrender(!PLAYER);
 						showPopup = true;
 						blackCheckMate = true;
 					} else if (Render.guest.getMessage().equals("EMPATE")) {
@@ -240,6 +258,7 @@ public class OnlineGameScreen extends GameScreen {
 						results.setDraw();
 						showPopup = true;
 						blackCheckMate = true;
+						drawButton.clearListeners();
 					}else if(Render.guest.getMessage().equals("SUICIDIO")){
 						results.setWinnerKingKilled("NEGRO");
 						showPopup = true;
@@ -251,7 +270,7 @@ public class OnlineGameScreen extends GameScreen {
 				if (!Render.host.getMessage().equals("")) {
 					if (Render.host.getMessage().equals("RENDICION")) {
 						System.out.println("Rendicion Negra");
-						results.setWinnerSurrender("Blanco");
+						results.setWinnerSurrender(!PLAYER);
 						showPopup = true;
 						whiteCheckMate = true;
 					} else if (Render.host.getMessage().equals("EMPATE")) {
@@ -261,6 +280,7 @@ public class OnlineGameScreen extends GameScreen {
 						results.setDraw();
 						showPopup = true;
 						blackCheckMate = true;
+						drawButton.clearListeners();
 					}else if (Render.host.getMessage().equals("SUICIDIO")) {
 						results.setWinnerKingKilled("BLANCO");
 						showPopup = true;
@@ -290,11 +310,12 @@ public class OnlineGameScreen extends GameScreen {
 	/**
 	 * Establece los botones para apectar o rechazar el empate
 	 */
-	private void askDraw() {
-		dbox.toFront();
-		draw.setTouchable(Touchable.disabled);
-		stage.addActor(dbox.getCheck());
-		stage.addActor(dbox.getCross());
+	private void askDraw(){
+		drawButtonBox = new DrawBox();
+		stage.addActor(drawButtonBox);
+		drawButton.setTouchable(Touchable.disabled);
+		stage.addActor(drawButtonBox.getCheck());
+		stage.addActor(drawButtonBox.getCross());
 	}
 
 }

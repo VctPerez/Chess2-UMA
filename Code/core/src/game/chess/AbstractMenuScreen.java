@@ -9,7 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
-import interaccionFichero.LectorLineas;
+import interaccionFichero.LineReader;
 import utils.Render;
 import utils.TextButton;
 
@@ -17,11 +17,12 @@ public abstract class AbstractMenuScreen extends AbstractScreen{
 
 	protected Stage stage;
 	protected Table table;
+	protected Label Text[];
 	
 	protected TextButton[] textButton;
     protected Label title;
     
-    protected LectorLineas configReader;
+    protected LineReader configReader;
     
     protected int activatedTextButton;
     protected boolean animationStarted;
@@ -84,10 +85,10 @@ public abstract class AbstractMenuScreen extends AbstractScreen{
     }
 	
     /**
-     * Metodo que añade la animacion de salida a los elementos de la UI.
+     * Metodo que aï¿½ade la animacion de salida a los elementos de la UI.
      * Cuando se pulsa un boton, van saliendo de la pantalla con un delay.
-     * Una vez acaba la animación se realiza la accion del botón gracias a {@link selectScreen}.
-     * @param distance Distancia en píxeles a desplazar
+     * Una vez acaba la animaciï¿½n se realiza la accion del botï¿½n gracias a {@link selectScreen}.
+     * @param distance Distancia en pï¿½xeles a desplazar
      * @param delay Retraso entre animaciones
      * @param time Tiempo que tarda en realizarse la accion
      */
@@ -102,7 +103,7 @@ public abstract class AbstractMenuScreen extends AbstractScreen{
     }
     
     /**
-     * Método que añade la animación de entrada.
+     * Mï¿½todo que aï¿½ade la animaciï¿½n de entrada.
      * Se establece el alpha a 0 y luego se incrementa con un fadeIn
      */
     protected void addEnterAnimation() {

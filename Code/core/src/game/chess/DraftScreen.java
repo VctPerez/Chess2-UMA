@@ -13,7 +13,7 @@ import com.badlogic.gdx.utils.StringBuilder;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import elements.PieceInfo;
 import elements.TileButton;
-import interaccionFichero.LectorLineas;
+import interaccionFichero.LineReader;
 import utils.*;
 
 import java.io.IOException;
@@ -36,7 +36,7 @@ public class DraftScreen extends AbstractScreen {
 
 	private int previousCont = 0;
 	private int cont = 0;
-	private LectorLineas languageReader, configReader;
+	private LineReader languageReader, configReader;
 
 	TileButton tile1, tile2;
 	private boolean draftCompleted = false; // controla que ya se han enviado ambos los drafts
@@ -57,7 +57,7 @@ public class DraftScreen extends AbstractScreen {
 		Gdx.input.setInputProcessor(stage);
 		
 		if(Render.DraftController==1) {
-			title = new Label("P1", Render.skin, "ConfigStyle");
+			title = new Label("P1", Render.skin, "TitleStyle");
 		}else if(Render.DraftController==2) {
 			title = new Label("P2", Render.skin, "ConfigStyle");
 		}else if(Render.DraftController==3) {
@@ -66,8 +66,8 @@ public class DraftScreen extends AbstractScreen {
 		
 		
 		
-		configReader = new LectorLineas("files/config.txt"); // Lector del txt configuracion para sacar el idioma
-		languageReader = new LectorLineas("files/lang/" + configReader.leerLinea(Settings.language) + "Draft-Game.txt");
+		configReader = new LineReader("files/config.txt"); // Lector del txt configuracion para sacar el idioma
+		languageReader = new LineReader("files/lang/" + configReader.readLine(Settings.language) + "Draft-Game.txt");
 
 		info = new PieceInfo();
 		info.setPosition(1280, 40);
@@ -81,10 +81,18 @@ public class DraftScreen extends AbstractScreen {
 		title.addAction(Actions.moveTo(600, 650));
 		
 		pieceDisposer = new Image(Render.app.getManager().get(Resources.PIECE_DISPOSER_PATH,Texture.class));
-		pieceDisposer.setSize(150, 700);
-		pieceDisposer.setPosition(-114, 20);
+		pieceDisposer.setSize(125, 700);
+		pieceDisposer.setPosition(-125, 10);
 		stage.addActor(pieceDisposer);
+		
+		arrow = new Image(Render.app.getManager().get(Resources.ARROW_PATH, Texture.class));
+		arrow.setSize(24, 24);
+		arrow.setPosition(-12, 110 + 100 * (5 - cont));
+		arrow.setColor(1f, 0.87f, 0.09f, 1f);
+		
+		stage.addActor(arrow);
 
+		
 		initPieceClasses();
 		initTileButtons();
 		initButtons();
@@ -205,8 +213,8 @@ public class DraftScreen extends AbstractScreen {
 			i++;
 		}
 		
-		pieceDisposer.addAction(Actions.moveBy(104, 0, 0.5f));
-	
+		pieceDisposer.addAction(Actions.moveBy(130, 0, 0.5f));
+		arrow.addAction(Actions.moveTo(135,  110 + 100 * (5 - cont), 0.5f));
 		
 		Action action = new Action() {
 			public boolean act(float delta) {
@@ -214,13 +222,11 @@ public class DraftScreen extends AbstractScreen {
 				return true;
 			}
 		};
+		changePiece();
 
 		stage.addAction(Actions.sequence(Actions.delay(0.6f), action));
 
-		arrow = new Image(Render.app.getManager().get(Resources.ARROW_PATH, Texture.class));
-		arrow.setSize(100, 100);
-		stage.addActor(arrow);
-		changePiece();
+		
 	}
 	
 	private void endDraft() {
@@ -235,7 +241,7 @@ public class DraftScreen extends AbstractScreen {
 		next.addAction(Actions.moveTo(480, -50, 0.5f));
 		back.addAction(Actions.moveTo(175, -50, 0.5f));
 		info.addAction(Actions.moveTo(1280, 40, 0.5f));
-		arrow.addAction(Actions.moveTo(325f, -168f, 0.5f));
+		arrow.addAction(Actions.moveTo(-12f, 110 + 100 * (5 - cont), 0.5f));
 	}
 
 	private void updateDraft() {
@@ -253,7 +259,7 @@ public class DraftScreen extends AbstractScreen {
 		// Botones con nombre momentaneos, se cambiara y se a�adira a los ficheros de
 		// idiomas
 
-		next = new TextButton(languageReader.leerLinea(2), "SingleClickStyle");
+		next = new TextButton(languageReader.readLine(2), "SingleClickStyle");
 		next.setPosition(480, -50);
 		next.addAction(Actions.moveTo(480, 50, 0.5f));
 		next.addCaptureListener(new InputListener() {
@@ -263,6 +269,7 @@ public class DraftScreen extends AbstractScreen {
 					previousCont=cont;
 					cont++;
 					changePiece();
+					arrow.setPosition(130, 110 + 100 * (5 - cont));
 				} else {
 					if (Render.DraftController == 1) {
 						Action draftAction = new Action() {
@@ -323,21 +330,30 @@ public class DraftScreen extends AbstractScreen {
 				}
 
 				if (cont == 5) {
-					next.setText(languageReader.leerLinea(3));
+					next.setText(languageReader.readLine(3));
 				}
 				return true;
 			}
 		});
 
-		back = new TextButton(languageReader.leerLinea(1), "SingleClickStyle");
+		back = new TextButton(languageReader.readLine(1), "SingleClickStyle");
 		back.setPosition(175, -50);
 		back.addAction(Actions.moveTo(175, 50, 0.5f));
 		back.addCaptureListener(new InputListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				if(cont==0 && Render.DraftController==1) {
+					stage.dispose();
+					Render.app.setScreen(Render.MODESCREEN);
+				}
+				if(cont==0 && Render.DraftController==2) {
+					Render.DraftController--;
+					Render.app.setScreen(Render.DRAFTSCREEN);
+				}
 				if (cont > 0) {
 					previousCont=cont;
 					cont--;
+					arrow.setPosition(130, 110 + 100 * (5 - cont));
 					changePiece();
 				}
 
@@ -361,7 +377,6 @@ public class DraftScreen extends AbstractScreen {
 		currentPieceSelection = tile1.getPiece();
 		info.getInfoFrom(currentPieceSelection);
 		updateDraft();
-		arrow.setPosition(90, 70 + 100 * (5 - cont));
 
 	}
 

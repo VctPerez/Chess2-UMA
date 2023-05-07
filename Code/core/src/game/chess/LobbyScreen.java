@@ -6,8 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import interaccionFichero.LectorLineas;
-import multiplayer.Guest;
+import interaccionFichero.LineReader;
 import multiplayer.Host;
 import multiplayer.Player;
 import utils.*;
@@ -17,7 +16,7 @@ import java.net.Inet4Address;
 
 public class LobbyScreen extends AbstractScreen{
     private Stage stage;
-    private LectorLineas configReader, languageReader;
+    private LineReader configReader, languageReader;
     private Player player1, player2;
     private TextButton match;
     private Text statusP2, p2;
@@ -37,14 +36,14 @@ public class LobbyScreen extends AbstractScreen{
         stage = new Stage(new FitViewport(1280, 720));
         Gdx.input.setInputProcessor(stage);
 
-        configReader = new LectorLineas("files/config.txt"); //Lector del txt configuracion para sacar el idioma
-        languageReader = new LectorLineas("files/lang/"+ configReader.leerLinea(Settings.language) + "lobby.txt"); //Abrimos el idioma que toca del archivo configuracion
+        configReader = new LineReader("files/config.txt"); //Lector del txt configuracion para sacar el idioma
+        languageReader = new LineReader("files/lang/"+ configReader.readLine(Settings.language) + "lobby.txt"); //Abrimos el idioma que toca del archivo configuracion
 
         Text p1;
         if(Render.hosting) {
-            p1 = new Text(languageReader.leerLinea(2) + player1.getName(), Resources.FONT_MENU_PATH, 30, Color.WHITE, 3);
+            p1 = new Text(languageReader.readLine(2) + player1.getName(), Resources.FONT_MENU_PATH, 30, Color.WHITE, 3);
             try {
-                Text invCode = new Text(languageReader.leerLinea(3) + obfuscateIP(Inet4Address.getLocalHost().getHostAddress()),
+                Text invCode = new Text(languageReader.readLine(3) + obfuscateIP(Inet4Address.getLocalHost().getHostAddress()),
                         Resources.FONT_MENU_PATH, 20, Color.WHITE,2);
                 invCode.setPosition(300,500);
                 stage.addActor(invCode);
@@ -52,18 +51,18 @@ public class LobbyScreen extends AbstractScreen{
             } catch (IOException e) {
                 throw new RuntimeException(e.getMessage());
             }
-            p2 = new Text(languageReader.leerLinea(4), Resources.FONT_MENU_PATH, 30, Color.WHITE, 3);
-            statusP2 = new Text(languageReader.leerLinea(5), Resources.FONT_MENU_PATH, 30, Color.RED, 3);
+            p2 = new Text(languageReader.readLine(4), Resources.FONT_MENU_PATH, 30, Color.WHITE, 3);
+            statusP2 = new Text(languageReader.readLine(5), Resources.FONT_MENU_PATH, 30, Color.RED, 3);
         }else{
-            p1 = new Text(languageReader.leerLinea(2) + Render.guest.getPlayer1().getName(), Resources.FONT_MENU_PATH, 30, Color.WHITE, 3);
-            p2 = new Text(languageReader.leerLinea(4) + player2.getName(), Resources.FONT_MENU_PATH, 30, Color.WHITE, 3);
-            statusP2 = new Text(languageReader.leerLinea(5), Resources.FONT_MENU_PATH, 30, Color.GREEN, 3);
+            p1 = new Text(languageReader.readLine(2) + Render.guest.getPlayer1().getName(), Resources.FONT_MENU_PATH, 30, Color.WHITE, 3);
+            p2 = new Text(languageReader.readLine(4) + player2.getName(), Resources.FONT_MENU_PATH, 30, Color.WHITE, 3);
+            statusP2 = new Text(languageReader.readLine(5), Resources.FONT_MENU_PATH, 30, Color.GREEN, 3);
 
         }
-        Text statusP1 = new Text(languageReader.leerLinea(5), Resources.FONT_MENU_PATH, 30, Color.GREEN, 3);
+        Text statusP1 = new Text(languageReader.readLine(5), Resources.FONT_MENU_PATH, 30, Color.GREEN, 3);
         //p2 = new Text("Jugador 2: ", Resources.FONT_MENU_PATH, 30, Color.WHITE, 3);
         //statusP2 = new Text("CONNECTED", Resources.FONT_MENU_PATH, 30, Color.RED, 3);
-        match = new TextButton(languageReader.leerLinea(6));
+        match = new TextButton(languageReader.readLine(6));
         match.setPosition(600,400);
         addListener();
 
@@ -138,17 +137,17 @@ public class LobbyScreen extends AbstractScreen{
             }
         }*/
         if (Render.host.isP2connected()) {
-            match.setText(languageReader.leerLinea(7));
+            match.setText(languageReader.readLine(7));
             if(!configured) {
                 statusP2.setColor(Color.GREEN);
                 //Render.host.receivePlayer2();
-                p2.setText(languageReader.leerLinea(4) + Render.host.getPlayer2().getName());
+                p2.setText(languageReader.readLine(4) + Render.host.getPlayer2().getName());
                 configured = true;
                 System.out.println("Jugador conectado");
                 //Render.host.sendPlayer1();
             }
         }else{
-            match.setText(languageReader.leerLinea(6));
+            match.setText(languageReader.readLine(6));
         }
     }
     private void cancelSearch(){
@@ -216,6 +215,7 @@ public class LobbyScreen extends AbstractScreen{
         int[] valores = new int[4];
         int cifra1,cifra2;
         for (int i = 0; i < 4; i++) {
+            if (cod.charAt(2*i) > 'P' || cod.charAt(2*i+1) < 'A') throw new IllegalArgumentException();
             cifra1 = cod.charAt(2*i) - 'A';
             cifra2 = cod.charAt(2*i+1) - 'A';
             res.append((cifra1<<4) + cifra2);

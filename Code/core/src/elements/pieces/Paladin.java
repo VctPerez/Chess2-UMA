@@ -9,7 +9,7 @@ import elements.Board;
 import elements.Piece;
 import elements.Tile;
 import game.chess.GameScreen;
-import interaccionFichero.LectorLineas;
+import interaccionFichero.LineReader;
 import utils.AnimationActor;
 import utils.Render;
 import utils.Resources;
@@ -290,15 +290,15 @@ public class Paladin extends Piece{
 
 	
 	public String getInfo() {
-		 LectorLineas Reader, configReader;
-		 configReader = new LectorLineas("files/config.txt");
-		String config = configReader.leerLinea(1);
-		Reader = new LectorLineas("files/lang/"+ config + "Modified.txt");
+		 LineReader Reader, configReader;
+		 configReader = new LineReader("files/config.txt");
+		String config = configReader.readLine(1);
+		Reader = new LineReader("files/lang/"+ config + "Modified.txt");
 		switch (config){
 			case "esp/":
-				return Reader.leerTramo(68, 73);
+				return Reader.readSection(68, 73);
 			case "eng/":
-				return Reader.leerTramo(70,75);
+				return Reader.readSection(70,75);
 			default:
 				throw new IllegalArgumentException("Configuración errónea");
 		}

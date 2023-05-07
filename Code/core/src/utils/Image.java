@@ -53,6 +53,15 @@ public class Image extends Actor {
     public void setTransparency(float t){
         sprt.setAlpha(t);
     }
+    
+    /**
+     * invierte la imagen, x e y son booleanos que indican si invertir la imagen en ese eje o no
+     * @param x
+     * @param y
+     */
+    public void flip(Boolean x, Boolean y) {
+    	sprt.flip(x, y);
+    }
 
     /**
      *  Fader de imagen.

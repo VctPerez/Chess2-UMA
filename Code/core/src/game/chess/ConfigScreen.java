@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics.DisplayMode;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -20,8 +21,8 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import elements.Background;
-import interaccionFichero.EscritorLineas;
-import interaccionFichero.LectorLineas;
+import interaccionFichero.LineWriter;
+import interaccionFichero.LineReader;
 import utils.Render;
 import utils.Resources;
 import utils.Settings;
@@ -41,8 +42,8 @@ public class ConfigScreen extends AbstractScreen {
     private Table rootTable;
     private Table optionsTable;
     
-    private LectorLineas languageReader, configReader;
-    private EscritorLineas configWriter;
+    private LineReader languageReader, configReader;
+    private LineWriter configWriter;
     
     
     @Override
@@ -60,9 +61,9 @@ public class ConfigScreen extends AbstractScreen {
 //    	optionsTable.debug();
     	
     	//Abrir los ficheros de configuracion e idioma
-    	configReader = new LectorLineas("files/config.txt"); //Lector del txt configuracion para sacar el idioma
-    	configWriter = new EscritorLineas("files/config.txt");
-    	languageReader = new LectorLineas("files/lang/"+ configReader.leerLinea(Settings.language) + "settings.txt"); //Abrimos el idioma que toca del archivo configuracion
+    	configReader = new LineReader("files/config.txt"); //Lector del txt configuracion para sacar el idioma
+    	configWriter = new LineWriter("files/config.txt");
+    	languageReader = new LineReader("files/lang/"+ configReader.readLine(Settings.language) + "settings.txt"); //Abrimos el idioma que toca del archivo configuracion
     	
     	
     	//Inicializar los elementos de la escena
@@ -97,6 +98,7 @@ public class ConfigScreen extends AbstractScreen {
     		public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
     			//Volver al menu
     			readSettings();
+    			Render.app.getManager().get(Resources.BUTTON_CLICKSOUND,Sound.class).play(Settings.sfxVolume);
     			Render.app.setScreen(new MainScreen());
     			return true;
     		}
@@ -222,13 +224,13 @@ public class ConfigScreen extends AbstractScreen {
      */
     private void readSettings() {
     	for(int i = 0; i < slider.length ; i++) {
-    		setVolume(Float.parseFloat(configReader.leerLinea(5 + i)), i);
+    		setVolume(Float.parseFloat(configReader.readLine(5 + i)), i);
     	}
     	
     	//FULLSCREEN
-    	setFullscreen(Boolean.parseBoolean(configReader.leerLinea(7)));
+    	setFullscreen(Boolean.parseBoolean(configReader.readLine(7)));
     	
-    	setLanguage(Integer.parseInt(configReader.leerLinea(8)));
+    	setLanguage(Integer.parseInt(configReader.readLine(8)));
     	
     }
     /**
@@ -270,20 +272,20 @@ public class ConfigScreen extends AbstractScreen {
      * @param value Idioma a establecer (1_ENG 2_ESP)
      */
 	private void setLanguage(int value) {
-		System.out.println("idioma: " + configReader.leerLinea(value) + "\tlinea: " + value);
-    	languageReader.setNombreFichero("files/lang/"+ configReader.leerLinea(value) + "settings.txt");
+		System.out.println("idioma: " + configReader.readLine(value) + "\tlinea: " + value);
+    	languageReader.setFileName("files/lang/"+ configReader.readLine(value) + "settings.txt");
     	
     	Settings.setLanguage(value);
 
     	for(int i = 0; i < label.length ; i++) {
-    		label[i].setText(languageReader.leerLinea(i+1));
+    		label[i].setText(languageReader.readLine(i+1));
     	}
     	
     	for(int i = 0; i < textButton.length; i++) {
-    		textButton[i].setText(languageReader.leerLinea(i+7));
+    		textButton[i].setText(languageReader.readLine(i+7));
     	}
 		System.out.println("se deberia haber cambiado el idioma");
-    	selectBox.setItems(languageReader.leerLinea(5),languageReader.leerLinea(6));
+    	selectBox.setItems(languageReader.readLine(5),languageReader.readLine(6));
     	selectBox.setSelectedIndex(value-1);
     }
 	
@@ -298,7 +300,7 @@ public class ConfigScreen extends AbstractScreen {
 		if(slider[0].getValue() != configReader.leerFLOATLinea(5) ||
 			slider[1].getValue() != configReader.leerFLOATLinea(6) ||
 				selectBox.getSelectedIndex() + 1 != configReader.leerINTLinea(8) ||
-				checkBox.isChecked() != Boolean.parseBoolean(configReader.leerLinea(7))){
+				checkBox.isChecked() != Boolean.parseBoolean(configReader.readLine(7))){
 
 			textButton[2].setVisible(true);
 		}else{

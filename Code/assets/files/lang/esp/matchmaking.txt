@@ -10,3 +10,4 @@ buscar partida
 codigo
 buscar
 cancelar
+codigo malo
