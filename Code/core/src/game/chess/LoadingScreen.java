@@ -2,6 +2,7 @@ package game.chess;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -24,7 +25,8 @@ public class LoadingScreen extends AbstractScreen{
     private Stage stage;
     private Table table;
     private Image title, logo;
-    private ArrayList<Image> images = new ArrayList<>();
+    private ArrayList<Image> images = new ArrayList<>(), backgroundAux = new ArrayList<>();
+    private Image background;
     private Color backgroundColor = Color.BLACK;
     @Override
     public void show() {
@@ -32,13 +34,26 @@ public class LoadingScreen extends AbstractScreen{
         table = new Table();
         table.setFillParent(true);
 
-        ;
         stage.addActor(Render.menuBG);
 
         title = new Image(Resources.LOADINGTITLE_PATH);
+        title.setFadeIn(true);
+        title.setFadeOut(true);
         title.setSize(800,200);
+
+        background = new Image(Resources.BLACK_BACKGROUND_PATH);
+        background.setFadeOut(true);
+        background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        background.setTransparencyConst(1);
+        backgroundAux.add(background);
+
+        stage.addActor(background);
+
         logo = new Image(Resources.PIXEL_LOGO_PATH);
+        logo.setFadeIn(true);
+        logo.setFadeOut(true);
         logo.setSize(256*2,256*2);
+
         table.add(title).row();
         table.add(logo);
         stage.addActor(table);
@@ -46,7 +61,7 @@ public class LoadingScreen extends AbstractScreen{
         images.add(title);
         images.add(logo);
 
-        Render.bgMusic = Render.app.getManager().get(Resources.MENU_THEME);
+        Render.bgMusic = Render.app.getMusicManager().get(Resources.MENU_THEME);
         Render.bgMusic.setLooping(true);
         Render.bgMusic.setVolume(Settings.musicVolume);
         Render.bgMusic.play();
@@ -56,7 +71,7 @@ public class LoadingScreen extends AbstractScreen{
 
     @Override
     public void render(float delta) {
-        Render.clearLoadingScreen(backgroundColor);
+        Render.clearScreen();
         update();
         stage.draw();
         stage.act();
@@ -64,14 +79,8 @@ public class LoadingScreen extends AbstractScreen{
 
     private void update(){
         if(Image.fader(1,0.005f, images)){
-            if(backgroundColor.r < 0.0549019f){
-                backgroundColor.r += 0.001f;
-            }
-            if(backgroundColor.g < 0.062745f){
-                backgroundColor.g += 0.001f;
-            }
-            if(backgroundColor.b < 0.2666666f){
-                backgroundColor.b += 0.001f;
+            if(Image.fader(0,0.01f, backgroundAux) && Render.app.getManager().isFinished()){
+                Render.app.setScreen(Render.MAINSCREEN);
             }
         }
     }

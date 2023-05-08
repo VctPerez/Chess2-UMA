@@ -16,6 +16,8 @@ public class Resources {
     public static final String PIXEL_LOGO_PATH = "sprites/loadingScreen/pixelLogo.png";
     public static final String LOADINGTITLE_PATH = "sprites/loadingScreen/loadingTitle.png";
 
+    public static final String BLACK_BACKGROUND_PATH = "sprites/loadingScreen/backgroundFade.png";
+
     //SONIDOS
     public static final String MENU_THEME = "sound/menuTheme.ogg";
     public static final String PIECESELECTION_SOUND = "sound/SeleccionPieza.mp3";

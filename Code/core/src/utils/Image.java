@@ -12,7 +12,7 @@ public class Image extends Actor{
     public Texture img;
     public Sprite sprt;
     private float transparencyConst;
-    private boolean fade = false;
+    private boolean fade = false, fadeIn = false, fadeOut = false;
     private float contTime = 0;
     public float getTransparencyConst() {
         return transparencyConst;
@@ -89,23 +89,24 @@ public class Image extends Actor{
         boolean end = false;
 
         for(Image img : images) {
-            if (!img.isFade()) {
+            if (!img.isFade() && img.fadeIn) {
                 img.setTransparencyConst(img.getTransparencyConst() + increase);
                 if (img.getTransparencyConst() > 1) {
                     img.setTransparencyConst( 1);
                     img.setFade(true);
                 }
-            } else {
+                img.setTransparency(img.getTransparencyConst());
+            } else if(img.fadeOut) {
                 img.setContTime(img.getContTime() + 0.05f);
                 if (img.getContTime() > wait) {
                     img.setTransparencyConst(img.getTransparencyConst() - increase);
                     if (img.getTransparencyConst() < 0) {
                         img.setTransparencyConst(0);
-                        if(images.indexOf(img) == images.size() - 1) end = true;
+                        if (images.indexOf(img) == images.size() - 1) end = true;
                     }
+                    img.setTransparency(img.getTransparencyConst());
                 }
             }
-            img.setTransparency(img.getTransparencyConst());
         }
         return end;
     }
@@ -139,6 +140,14 @@ public class Image extends Actor{
     
     public void setColor(float r, float g, float b, float alpha) {
     	sprt.setColor(r, g, b, alpha);
+    }
+
+    public void setFadeIn(boolean fadeIn) {
+        this.fadeIn = fadeIn;
+    }
+
+    public void setFadeOut(boolean fadeOut) {
+        this.fadeOut = fadeOut;
     }
 
     public void dispose(){
