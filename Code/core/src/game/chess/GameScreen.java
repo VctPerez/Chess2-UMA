@@ -141,12 +141,12 @@ public class GameScreen extends AbstractScreen {
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				if (PLAYER) {
 					System.out.println("RENDICION BLANCA");
-					results.setWinnerSurrender(PLAYER);
+					results.setWinnerSurrender(!PLAYER);
 					showPopup = true;
 					whiteCheckMate = true;
 				} else {
 					System.out.println("RENDICION NEGRA");
-					results.setWinnerSurrender(PLAYER);
+					results.setWinnerSurrender(!PLAYER);
 					showPopup = true;
 					blackCheckMate = true;
 				}
@@ -183,7 +183,7 @@ public class GameScreen extends AbstractScreen {
 
 
 
-
+	//Render.hosting==true eres el blanco
 	@Override
 	public void render(float delta) {
 		Render.clearScreen();
@@ -193,14 +193,14 @@ public class GameScreen extends AbstractScreen {
 			// ------------------------------------------------------------------------------
 			results.Show();
 			results.render();
-//			if(!statsUpdated && !drawMatch) {
-//				if(whiteCheckMate) {
-//					results.updateLocalWinner(false,PLAYER);
-//				}else {
-//					results.updateLocalWinner(true,PLAYER);
-//				}
-//				statsUpdated=true;
-//			}
+			if(!statsUpdated && !drawMatch) {
+				if(whiteCheckMate) {
+					results.updateWinner(false,Render.hosting);
+				}else {
+					results.updateWinner(true,Render.hosting);
+					}
+					statsUpdated=true;
+				}
 		} else {
 			timersRender();
 			checkTimerEnd();
@@ -235,10 +235,10 @@ public class GameScreen extends AbstractScreen {
 	 */
 	private void checkTimerEnd() {
 		if (timerB.getTimeRemaining() == 0) {
-			results.setWinner(PLAYER);
+			results.setWinner(!PLAYER);
 			showPopup = true;
 		} else if (timerW.getTimeRemaining() == 0) {
-			results.setWinner(PLAYER);
+			results.setWinner(!PLAYER);
 			showPopup = true;
 		}
 	}

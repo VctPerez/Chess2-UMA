@@ -1,6 +1,10 @@
 package game.chess;
 
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 
 import utils.*;
@@ -9,6 +13,8 @@ import interaccionFichero.*;
 public class ProfileScreen extends AbstractMenuScreen {
 	
     LineReader languageReader, configReader,dataReader;
+    LineWriter dataWriter;
+    private TextField textField;
     
     @Override
     public void show() {
@@ -16,10 +22,9 @@ public class ProfileScreen extends AbstractMenuScreen {
     	configReader = new LineReader("files/config.txt"); //Lector del txt configuracion para sacar el idioma
     	languageReader = new LineReader("files/lang/"+ configReader.readLine(Settings.language) + "Profile.txt"); //Abrimos el idioma que toca del archivo configuracion
     	dataReader = new LineReader("files/Datos.txt"); //Abrimos los datos
+    	dataWriter = new LineWriter("files/Datos.txt"); //Para escribir los datos
 
     	super.show();
-        
-    	table.debug();
     	
         Render.bgMusic = Render.app.getManager().get(Resources.MENU_THEME);
         Render.bgMusic.setLooping(true);
@@ -30,8 +35,8 @@ public class ProfileScreen extends AbstractMenuScreen {
     @Override
     protected void createTableElements() {
     	
-    	Text = new Label[8];
-    	title = new Label("chess 2", Render.skin, "TitleStyle");
+    	Text = new Label[6];
+    	title = new Label(languageReader.readLine(7), Render.skin, "TitleStyle");
     	
     	for(int i=0;i<Text.length;i++) {
     		String aux = languageReader.readLine(i+1) + " " + dataReader.readLine(i+1);
@@ -40,8 +45,8 @@ public class ProfileScreen extends AbstractMenuScreen {
     	
     	textButton = new TextButton[2];
     	
-    	textButton[0] = new TextButton("Editar","SingleClickStyle");
-    	textButton[1] = new TextButton("Volver","SingleClickStyle");
+    	textButton[1] = new TextButton(languageReader.readLine(9),"SingleClickStyle");
+    	textButton[0] = new TextButton(languageReader.readLine(8),"SingleClickStyle");
     	
     	//Si mas botones luego se pone for
     	for(int i=0;i<textButton.length;i++) {
@@ -49,6 +54,10 @@ public class ProfileScreen extends AbstractMenuScreen {
         	textButton[i].addSounds();
     	}
     	
+    	textField = new TextField(languageReader.readLine(10));
+        textField.setAlignment(Align.center);
+    	textField.setVisible(false);
+        
     }
     
     /**
@@ -58,9 +67,9 @@ public class ProfileScreen extends AbstractMenuScreen {
     @Override
     protected void selectScreen(int button) {
     	if(button == 0) {
-    		Render.app.setScreen(Render.EDITPROFILESCREEN);
-    	}else if(button == 1) {
     		Render.app.setScreen(Render.MAINSCREEN);
+    	}else if(button == 1) {
+    		textField.setVisible(true);
     	}
     }
     
@@ -68,7 +77,7 @@ public class ProfileScreen extends AbstractMenuScreen {
     protected void setupTable() {
     	table.setFillParent(true);
     	table.left().pad(50);
-    	table.defaults().left().space(40);
+    	table.defaults().left().space(30);
     	table.add(title);
     	table.row();
     	for (int i = 0 ; i < Text.length ; i++) {
@@ -78,9 +87,33 @@ public class ProfileScreen extends AbstractMenuScreen {
     		}
     	}
     	table.add(textButton[0]).padTop(100);
-    	table.row();
-    	table.add(textButton[1]);
+    	table.add(textButton[1]).padTop(100);
+    	table.add(textField).width(300).padTop(100);
     	table.row();
     }
+    
+    @Override
+	protected void addListeners() {
+		super.addListeners();
+
+		textField.addListener(new InputListener() {
+			@Override
+			public boolean keyDown(InputEvent event, int keycode) {
+				if(keycode == Input.Keys.ENTER && !textField.getText().equals("")){
+						textField.setVisible(false);
+						Label prev = Text[0];
+						dataWriter.escribirLinea(1, textField.getText()); //Nombre
+						updateName(prev);
+				}
+				return true;
+			}
+		});
+    }
+    
+    protected void updateName(Label prev) {
+		String aux = languageReader.readLine(1) + " " + dataReader.readLine(1);
+		Text[0] = new Label(aux ,Render.skin,"SmallTextStyle");
+		table.getCell(prev).setActor(Text[0]);
+	}
     
 }

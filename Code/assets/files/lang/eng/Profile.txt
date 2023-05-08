@@ -4,7 +4,7 @@ Defeats:
 Tie Games:
 Games played: 
 %WINRATE:
-Favourite Piece:
-Favourite GameMode:
-Text is too long
-Saved succesfully
+Profile
+Return
+Edit
+Name

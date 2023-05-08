@@ -22,8 +22,8 @@ public class MatchResults extends Actor{
 	
 	
 	LineReader configReader;	
-//	LineReader ProfileReader;
-//	LineWriter ProfileWriter;
+	LineReader ProfileReader;
+	LineWriter ProfileWriter;
 	private Table table;
 	private Label matchres;
 	private TextButton goMenu;
@@ -38,8 +38,8 @@ public class MatchResults extends Actor{
 		table.setBounds(350, 100, 550, 550);
 		
 		configReader = new LineReader("files/config.txt"); //Lector del txt configuracion para sacar el idioma
-//		ProfileWriter = new LineWriter("files/Datos.txt");
-//		ProfileReader = new LineReader("files/Datos.txt");
+		ProfileWriter = new LineWriter("files/Datos.txt");
+		ProfileReader = new LineReader("files/Datos.txt");
 
 		Texture texture = new Texture(Resources.RESULTS_BACKGROUND_PATH);
 		TextureRegionDrawable drawable = new TextureRegionDrawable(texture);
@@ -73,15 +73,13 @@ public class MatchResults extends Actor{
 	}
 
 	public void setWinner(Boolean equipo) {
-		equipo=!equipo;
 		String winner = WinnerTraduction(equipo);
 		matchres.setText("HA GANADO EL " + winner);
 	}
 	
 	public void setWinnerSurrender(Boolean equipo) {
-		//equipo=!equipo;
 		String winner = WinnerTraduction(equipo);
-		matchres.setText("HA GANADO EL " + winner+" \n    POR RENDICION");
+		matchres.setText("HA GANADO EL " + winner + " \n    POR RENDICION");
 	}
 	
 	public void setWinnerKingKilled(Boolean equipo) {
@@ -102,15 +100,11 @@ public class MatchResults extends Actor{
 		matchres.setText("Empate");
 		
 		//Actualizar empates
-//		int v = ProfileReader.leerINTLinea(4);
-//		v++;
-//		System.out.println("Escribo " + v);
-//		ProfileWriter.escribirLineaINT(4, v);
-//		updatePlays();
+		drawUpdate();
+		updatePlays();
 		
 		//Posible inserción de Música de Empate
 	}
-	
 	public void Show() {
 		fondo.toFront();
 		table.toFront();
@@ -136,8 +130,8 @@ public class MatchResults extends Actor{
 					Render.guest = null;
 				}
 			}
-          //Render.player1Draft = new ArrayList<>();
-		  //Render.player2Draft = new ArrayList<>();
+			//Render.player1Draft = new ArrayList<>();
+			//Render.player2Draft = new ArrayList<>();
 			Render.app.setScreen(Render.MAINSCREEN);
 		}
 	}
@@ -150,40 +144,42 @@ public class MatchResults extends Actor{
 		}
 	}
 
-//	public void updateLocalWinner(boolean b,boolean equipo) {
-//			int v;
-//			equipo=!equipo;
-//			if(b && equipo) {
-//				v = ProfileReader.leerINTLinea(2);
-//				v++;
-//				System.out.println("Escribo " + v);
-//				ProfileWriter.escribirLineaINT(2, v);
-//			}else {
-//				v = ProfileReader.leerINTLinea(3);
-//				v++;
-//				System.out.println("Escribo " + v);
-//				ProfileWriter.escribirLineaINT(3, v);
-//			}
-//			updatePlays();
-//	}
-	
-	public void updateOnlineWinner(boolean b, boolean equipo) {
-		
+	public void updateWinner(boolean b,boolean equipo) {
+			int v;
+			if(b == equipo) {
+				v = ProfileReader.leerINTLinea(2);
+				v++;
+				System.out.println("Escribo " + v);
+				ProfileWriter.escribirLineaINT(2, v);
+			}else {
+				v = ProfileReader.leerINTLinea(3);
+				v++;
+				System.out.println("Escribo " + v);
+				ProfileWriter.escribirLineaINT(3, v);
+			}
+			updatePlays();
 	}
 
-//	private void updatePlays() {
-//		int v,total;
-//		float res;
-//		total = ProfileReader.leerINTLinea(5);
-//		total++;
-//		System.out.println("Escribo " + total);
-//		ProfileWriter.escribirLineaINT(5, total);
-//		
-//		v = ProfileReader.leerINTLinea(2);
-//		res= (float)v/total*100;
-//		ProfileWriter.escribirLinea(6, res + "%");
-//		
-//		
-//	}
+	private void updatePlays() {
+		int v,total;
+		float res;
+		total = ProfileReader.leerINTLinea(5);
+		total++;
+		//System.out.println("Escribo " + total);
+		ProfileWriter.escribirLineaINT(5, total);
+		
+		v = ProfileReader.leerINTLinea(2);
+		res= (float)v/total*100;
+		ProfileWriter.escribirLinea(6, res + "%");
+
+	}
+	
+	private void drawUpdate() {
+		int v = ProfileReader.leerINTLinea(4);
+		v++;
+		System.out.println("Escribo " + v);
+		ProfileWriter.escribirLineaINT(4, v);
+	}
+
 	
 }

@@ -64,12 +64,11 @@ public class Render {
     public static AbstractScreen CLASSICMANSCREEN;
     public static AbstractScreen MODIFIEDMANSCREEN;
     public static AbstractScreen PROFILESCREEN;
-    public static AbstractScreen EDITPROFILESCREEN;
 
     public static Host host;
     public static Guest guest;
     public static OnlinePlayer player;
-    public static boolean hosting;
+    public static boolean hosting=true;
     
     public static Parser parser;
     

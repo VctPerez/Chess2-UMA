@@ -181,8 +181,6 @@ public class Chess2 extends Game {
 		Render.CREATEMATCHSCREEN = new CreateMatchScreen();
 		Render.DRAFTSCREEN = new DraftScreen();
 		Render.PROFILESCREEN = new ProfileScreen();
-		Render.EDITPROFILESCREEN = new EditProfileScreen();
-		
 		
 		Render.DraftController=1;
 		Render.GameScreen = new GameScreen();
