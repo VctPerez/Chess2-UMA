@@ -193,14 +193,14 @@ public class GameScreen extends AbstractScreen {
 			// ------------------------------------------------------------------------------
 			results.Show();
 			results.render();
-			if(!statsUpdated && !drawMatch) {
-				if(whiteCheckMate) {
-					results.updateLocalWinner(false,PLAYER);
-				}else {
-					results.updateLocalWinner(true,PLAYER);
-				}
-				statsUpdated=true;
-			}
+//			if(!statsUpdated && !drawMatch) {
+//				if(whiteCheckMate) {
+//					results.updateLocalWinner(false,PLAYER);
+//				}else {
+//					results.updateLocalWinner(true,PLAYER);
+//				}
+//				statsUpdated=true;
+//			}
 		} else {
 			timersRender();
 			checkTimerEnd();

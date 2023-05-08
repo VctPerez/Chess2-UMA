@@ -11,7 +11,7 @@ import utils.Resources;
 
 import java.util.ArrayList;
 
-public class King extends Piece{
+public class King extends Leader{
 	public King(Boolean color, int x, int y,Board board) {
 		super(color, Resources.KING_PATH, x, y,board);
 	}

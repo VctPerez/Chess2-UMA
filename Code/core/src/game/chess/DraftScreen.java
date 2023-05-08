@@ -45,12 +45,11 @@ public class DraftScreen extends AbstractScreen {
 	@Override
 	public void show() {
 		if(Render.DraftController==3) {
-			if(Render.hosting){
-				Render.host.resetMessage();
-			}else{
-				Render.guest.resetMessage();
-			}
+			Render.player.draftSent=false;
+			Render.player.resetMessage();
 		}
+		Render.player1Draft.clear();
+		Render.player2Draft.clear();
 
 		System.out.println("El modo de draft es " + Render.DraftController);
 		stage = new Stage(new FitViewport(1280, 720));
@@ -61,7 +60,7 @@ public class DraftScreen extends AbstractScreen {
 		}else if(Render.DraftController==2) {
 			title = new Label("P2", Render.skin, "ConfigStyle");
 		}else if(Render.DraftController==3) {
-			title = new Label("CAMBIAR POR NOMBRE JUGADOR", Render.skin, "ConfigStyle");
+			title = new Label("", Render.skin, "ConfigStyle");
 		}
 		
 		

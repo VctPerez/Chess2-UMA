@@ -107,7 +107,7 @@ public class LobbyScreen extends AbstractScreen{
             }else{
                 if(Render.guest.getMessage().equalsIgnoreCase("start")){
                     Render.guest.resetMessage();
-                    Render.app.setScreen(Render.DRAFTSCREEN);
+                    Render.app.setScreen(new DraftScreen());
                 }
             }
         }catch(IOException e){
@@ -230,7 +230,7 @@ public class LobbyScreen extends AbstractScreen{
                     try {
                         Render.host.sendMessage("start");
                         configured = false;
-                        Render.app.setScreen(Render.DRAFTSCREEN);
+                        Render.app.setScreen(new DraftScreen());
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }

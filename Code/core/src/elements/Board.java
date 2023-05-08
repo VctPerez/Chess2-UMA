@@ -101,13 +101,19 @@ public class Board extends Actor {
 	}
 	
 	public void animationMovement(float dest_x, float dest_y, float time) {
+		Action startAnimation = new Action() {
+			public boolean act(float delta) {
+				boardAnimation = true;
+				return true;
+			}
+		};
 		Action endAnimation = new Action() {
 			public boolean act(float delta) {
 				boardAnimation = false;
 				return true;
 			}
 		};
-		SequenceAction sequence = new SequenceAction(Actions.moveTo(dest_x, dest_y, time), endAnimation);
+		SequenceAction sequence = new SequenceAction(startAnimation, Actions.moveTo(dest_x, dest_y, time), endAnimation);
 		addAction(sequence);
 	}
 

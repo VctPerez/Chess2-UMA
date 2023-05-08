@@ -13,7 +13,7 @@ import utils.Resources;
 
 import java.util.ArrayList;
 
-public class Midas extends Piece {
+public class Midas extends Leader {
 
 	public Midas(Boolean color, int x, int y, Board board) {
 		super(color, Resources.MIDAS_PATH, x, y, board);

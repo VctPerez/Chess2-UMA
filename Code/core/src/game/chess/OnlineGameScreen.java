@@ -111,40 +111,40 @@ public class OnlineGameScreen extends GameScreen {
 		});
 	}
 
-	@Override
-	public void checkGraveyard() {
-		try {
-			if (!graveyardWhite.graveyard.isEmpty() && Render.hosting) {
-				for (int i = 0; i < graveyardWhite.graveyard.size(); i++) {
-					if (graveyardWhite.graveyard.get(i) instanceof King
-							|| graveyardWhite.graveyard.get(i) instanceof Midas
-							|| graveyardWhite.graveyard.get(i) instanceof Mage) {
-
-						Render.host.sendMessage("SUICIDIO");
-						results.setWinnerKingKilled(Render.hosting);
-						showPopup = true;
-						blackCheckMate = true;
-					}
-				}
-			}
-			if (!graveyardBlack.graveyard.isEmpty() && !Render.hosting) {
-				for (int i = 0; i < graveyardBlack.graveyard.size(); i++) {
-					if (graveyardBlack.graveyard.get(i) instanceof King
-							|| graveyardWhite.graveyard.get(i) instanceof Midas
-							|| graveyardWhite.graveyard.get(i) instanceof Mage) {
-
-						Render.guest.sendMessage("SUICIDIO");
-						results.setWinnerKingKilled(Render.hosting);
-						showPopup = true;
-						whiteCheckMate = true;
-					}
-				}
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-	}
+//	@Override
+//	public void checkGraveyard() {
+//		try {
+//			if (!graveyardWhite.graveyard.isEmpty() && Render.hosting) {
+//				for (int i = 0; i < graveyardWhite.graveyard.size(); i++) {
+//					if (graveyardWhite.graveyard.get(i) instanceof King
+//							|| graveyardWhite.graveyard.get(i) instanceof Midas
+//							|| graveyardWhite.graveyard.get(i) instanceof Mage) {
+//						
+//						Render.player.sendMessage("SUICIDIO");
+//						results.setWinnerKingKilled(Render.hosting);
+//						showPopup = true;
+//						blackCheckMate = true;
+//					}
+//				}
+//			}
+//			if (!graveyardBlack.graveyard.isEmpty() && !Render.hosting) {
+//				for (int i = 0; i < graveyardBlack.graveyard.size(); i++) {
+//					if (graveyardBlack.graveyard.get(i) instanceof King
+//							|| graveyardWhite.graveyard.get(i) instanceof Midas
+//							|| graveyardWhite.graveyard.get(i) instanceof Mage) {
+//
+//						Render.guest.sendMessage("SUICIDIO");
+//						results.setWinnerKingKilled(Render.hosting);
+//						showPopup = true;
+//						whiteCheckMate = true;
+//					}
+//				}
+//			}
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//
+//	}
 
 	@Override
 	public void update(Tile tile) {
@@ -168,11 +168,7 @@ public class OnlineGameScreen extends GameScreen {
 			System.out.println("Rendicion Blanca");
 			results.setWinnerSurrender(Render.hosting);
 			showPopup = true;
-			if (!Render.hosting) {
-				whiteCheckMate = true;
-			} else {
-				blackCheckMate = true;
-			}
+			blackCheckMate = true;	
 		} else if (Render.player.getMessage().equals("EMPATE")) {
 			askDraw();
 		} else if (Render.player.getMessage().equals("ACEPTAR")) {

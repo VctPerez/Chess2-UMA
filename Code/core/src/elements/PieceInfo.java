@@ -18,8 +18,7 @@ public class PieceInfo extends Actor{
 	public PieceInfo() {
 		background = new ShapeRenderer();
 		board=new Board(84,790,75, 5);
-        
-        
+		board.boardAnimation=true;
 	}
 	
 	public void getInfoFrom(String piecePath) { 

@@ -14,7 +14,7 @@ import utils.Resources;
 
 import java.util.ArrayList;
 
-public class Mage extends Piece {
+public class Mage extends Leader {
 
     public Mage(Boolean color, int x, int y, Board board) {
         super(color, Resources.MAGE_PATH, x, y, board);

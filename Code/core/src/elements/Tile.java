@@ -7,11 +7,13 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
-
+import elements.pieces.King;
+import elements.pieces.Leader;
 import utils.Image;
 import utils.Render;
 import utils.Resources;
 
+import java.io.IOException;
 import java.util.Objects;
 
 public class Tile extends Actor{
@@ -114,6 +116,14 @@ public class Tile extends Actor{
 	
 	public void sendPieceToGraveyard() {
 		if(piece!=null) {
+			if(Render.DraftController==3 && piece instanceof Leader) {
+				try {
+					Render.player.sendMessage("SUICIDIO");
+					Render.GameScreen.results.setWinnerKingKilled(!Render.hosting);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
 			if(piece.color) {
 				Render.GameScreen.graveyardWhite.add(piece);
 			}else {

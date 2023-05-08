@@ -1,8 +1,6 @@
 Maskuhead
-2
-16
+3
+20
 null
-23
-8.695652%
 null
-veinticinco
+8.0%
