@@ -1,7 +1,7 @@
 Nombre de Usuario:
 Victorias:
 Derrotas:
-Partidas Empatadas:
+Empates:
 Partidas Jugadas:
 %Victorias:
 Perfil

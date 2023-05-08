@@ -1,8 +1,10 @@
 package game.chess;
 
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
@@ -45,8 +47,8 @@ public class ProfileScreen extends AbstractMenuScreen {
     	
     	textButton = new TextButton[2];
     	
-    	textButton[1] = new TextButton(languageReader.readLine(9),"SingleClickStyle");
-    	textButton[0] = new TextButton(languageReader.readLine(8),"SingleClickStyle");
+    	textButton[0] = new TextButton(languageReader.readLine(9),"SingleClickStyle");
+    	textButton[1] = new TextButton(languageReader.readLine(8),"SingleClickStyle");
     	
     	//Si mas botones luego se pone for
     	for(int i=0;i<textButton.length;i++) {
@@ -68,8 +70,6 @@ public class ProfileScreen extends AbstractMenuScreen {
     protected void selectScreen(int button) {
     	if(button == 0) {
     		Render.app.setScreen(Render.MAINSCREEN);
-    	}else if(button == 1) {
-    		textField.setVisible(true);
     	}
     }
     
@@ -86,16 +86,33 @@ public class ProfileScreen extends AbstractMenuScreen {
     			table.row();
     		}
     	}
-    	table.add(textButton[0]).padTop(100);
-    	table.add(textButton[1]).padTop(100);
-    	table.add(textField).width(300).padTop(100);
+    	table.add(textButton[0]).padTop(50);
+    	table.add(textField).width(300).padTop(50);
+    	table.row();
+    	table.add(textButton[1]);
     	table.row();
     }
     
     @Override
 	protected void addListeners() {
-		super.addListeners();
-
+		
+         	textButton[1].addListener(new ClickListener() {
+         		@Override
+         		public void clicked(InputEvent event, float x, float y) {
+         			super.clicked(event, x, y);
+         			addExitAnimation(800f,0.25f,0.5f);
+         			animationStarted = true;
+         		}
+         	});
+         	
+         	textButton[0].addListener(new ClickListener() {
+         		@Override
+         		public void clicked(InputEvent event, float x, float y) {
+         			super.clicked(event, x, y);
+         			textField.setVisible(true);
+         		}
+         	});
+    	
 		textField.addListener(new InputListener() {
 			@Override
 			public boolean keyDown(InputEvent event, int keycode) {
@@ -117,3 +134,4 @@ public class ProfileScreen extends AbstractMenuScreen {
 	}
     
 }
+
