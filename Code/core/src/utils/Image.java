@@ -6,12 +6,37 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
-public class Image extends Actor {
+import java.util.List;
+
+public class Image extends Actor{
     public Texture img;
     public Sprite sprt;
     private float transparencyConst;
     private boolean fade = false;
     private float contTime = 0;
+    public float getTransparencyConst() {
+        return transparencyConst;
+    }
+
+    public boolean isFade() {
+        return fade;
+    }
+
+    public float getContTime() {
+        return contTime;
+    }
+
+    public void setTransparencyConst(float transparencyConst) {
+        this.transparencyConst = transparencyConst;
+    }
+
+    public void setFade(boolean fade) {
+        this.fade = fade;
+    }
+
+    public void setContTime(float contTime) {
+        this.contTime = contTime;
+    }
 
     /**
      * Constructor de una imagen
@@ -60,28 +85,28 @@ public class Image extends Actor {
      * @param increase constante para incrementar la opacidad de la imagen, o disminuirla.
      * @return True = imagen transparente, False = imagen opaca.
      */
-    public boolean fader(float wait, float increase){ // esto se puede hacer con el act y actions
+    public static boolean fader(float wait, float increase, List<Image> images){ // esto se puede hacer con el act y actions
         boolean end = false;
 
-
-        if(!fade){
-            transparencyConst+=increase;
-            if (transparencyConst > 1) {
-                transparencyConst = 1;
-                fade = true;
-            }
-        }
-        else{
-            contTime +=0.05f;
-            if(contTime > wait){
-                transparencyConst -= increase;
-                if(transparencyConst < 0){
-                    transparencyConst = 0;
-                    end = true;
+        for(Image img : images) {
+            if (!img.isFade()) {
+                img.setTransparencyConst(img.getTransparencyConst() + increase);
+                if (img.getTransparencyConst() > 1) {
+                    img.setTransparencyConst( 1);
+                    img.setFade(true);
+                }
+            } else {
+                img.setContTime(img.getContTime() + 0.05f);
+                if (img.getContTime() > wait) {
+                    img.setTransparencyConst(img.getTransparencyConst() - increase);
+                    if (img.getTransparencyConst() < 0) {
+                        img.setTransparencyConst(0);
+                        if(images.indexOf(img) == images.size() - 1) end = true;
+                    }
                 }
             }
+            img.setTransparency(img.getTransparencyConst());
         }
-        setTransparency(transparencyConst);
         return end;
     }
 
@@ -99,15 +124,6 @@ public class Image extends Actor {
     	sprt.setTexture(new Texture(path));
     }
 
-    /**
-     * Cambia la posicion de la imagen (siendo la posición la esquina inferior izquierda).
-     * @param x coordenada x.
-     * @param y coordenada y.
-     */
-//    public void setPosition(float x, float y){
-//    	super.setPosition(x,y);
-//        sprt.setPosition(x,y);
-//    }
 
     public Vector2 getPosition(){
         return new Vector2(sprt.getX(), sprt.getY());
@@ -128,5 +144,7 @@ public class Image extends Actor {
     public void dispose(){
         img.dispose();
     }
+
+
 }
 
