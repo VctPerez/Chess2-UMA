@@ -1,7 +1,6 @@
 package game.chess;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
@@ -15,9 +14,9 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import interaccionFichero.LineReader;
 import multiplayer.Host;
 import multiplayer.Player;
-import utils.*;
-
-import static org.mockito.ArgumentMatchers.intThat;
+import utils.Render;
+import utils.Settings;
+import utils.TextButton;
 
 import java.io.IOException;
 import java.net.Inet4Address;
@@ -104,10 +103,17 @@ public class LobbyScreen extends AbstractScreen{
         try {
             if(Render.hosting){
                 matchFinder();
+                if (Render.host.getMessage() == null || Render.host.getMessage().equalsIgnoreCase("disconnect")){
+                    matchUnfinder();
+                }
             }else{
                 if(Render.guest.getMessage().equalsIgnoreCase("start")){
                     Render.guest.resetMessage();
                     Render.app.setScreen(new DraftScreen());
+                } else if(Render.guest.getMessage().equalsIgnoreCase("disconnect")){ //Desconecta al guest
+                    Render.guest.resetMessage();
+                    Render.guest.disconnect();
+                    Render.app.setScreen(new CreateMatchScreen());
                 }
             }
         }catch(IOException e){
@@ -220,6 +226,14 @@ public class LobbyScreen extends AbstractScreen{
                 }
             }
         });
+
+        textButton[1].addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                selectScreen(0);
+            }
+        });
         
         //START BUTTON
         textButton[2].addListener(new ClickListener() {
@@ -240,8 +254,8 @@ public class LobbyScreen extends AbstractScreen{
     }
     
     /**
-     * Meodo que se llama en cada frame por el host. Una vez encontrado el oponente, actualiza sus valores
-     * y activa el boton de empezar partida
+     * Método que se llama en cada frame por el host. Una vez encontrado el oponente, actualiza sus valores
+     * y activa el botón de empezar partida
      * @throws IOException
      */
     public void matchFinder() throws IOException {
@@ -262,6 +276,27 @@ public class LobbyScreen extends AbstractScreen{
             }
         }
     }
+
+    /**
+     * Método que se llama cuando se desconecta el guest.
+     * Hace lo contrario que hace matchFinder
+     * @throws IOException
+     */
+    public void matchUnfinder() throws IOException {
+        finding = false;
+        textButton[0].setText(languageReader.readLine(6));
+        //Activa el boton de buscar
+        textButton[0].setTouchable(Touchable.enabled);
+        //Descativa el boton de empezar
+        bottomTable.setVisible(false);
+        bottomTable.addAction(Actions.sequence(Actions.alpha(0),Actions.fadeOut(0.5f)));
+        //Actualiza la lista de jugadores
+        label[5].setText("...");
+        label[5].setStyle(Render.skin.get("PlayerOFFStyle",LabelStyle.class));
+        configured = false;
+        System.out.println("Jugador desconectado");
+    }
+
     private void cancelSearch(){
         try {
             Render.host.stopFind();
@@ -331,7 +366,6 @@ public class LobbyScreen extends AbstractScreen{
      */
     public static String decodeIP(String cod){
         StringBuilder res = new StringBuilder();
-        int[] valores = new int[4];
         int cifra1,cifra2;
         for (int i = 0; i < 4; i++) {
             if (cod.charAt(2*i) > 'P' || cod.charAt(2*i+1) < 'A') throw new IllegalArgumentException();
@@ -341,5 +375,31 @@ public class LobbyScreen extends AbstractScreen{
             if (i < 3) res.append('.');
         }
         return res.toString();
+    }
+
+    private void selectScreen(int button) {
+        switch (button) {
+            case 0:
+                Render.app.setScreen(Render.CREATEMATCHSCREEN);
+                try {
+                    if (Render.hosting){
+                        if (Render.host.isP2connected()) {
+                            Render.host.sendMessage("disconnect"); //Se notifica su desconexion
+                        }
+                        Render.host.disconnect();
+                        Render.host.stopHosting();
+                        System.out.println("Miembros desconectados");
+                    } else {
+                        Render.guest.sendMessage("disconnect");
+                        Render.guest.disconnect();
+                        System.out.println("Guest desconectados");
+                    }
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                break;
+            default:
+                System.out.println("Seleccion incorrecta");
+        }
     }
 }
