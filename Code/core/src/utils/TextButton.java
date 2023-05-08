@@ -22,18 +22,17 @@ public class TextButton extends com.badlogic.gdx.scenes.scene2d.ui.TextButton{
     		@Override
     		public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
     			super.enter(event, x, y, pointer, fromActor);
-    			if(!isPressed()) {
-    				Render.app.getManager().get(Resources.BUTTON_HOVERSOUND,Sound.class).play(Settings.sfxVolume);
-    			}else {
-    				Render.app.getManager().get(Resources.BUTTON_CLICKSOUND,Sound.class).play(Settings.sfxVolume);
+    			if(!isPressed()) {		
+    				textButton.addAction(Actions.moveBy(10, 0, 0.1f));
     			}
-    			textButton.addAction(Actions.moveBy(10, 0, 0.1f));
     		}
     		
     		@Override
     		public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
     			super.exit(event, x, y, pointer, toActor);
-    			textButton.addAction(Actions.moveBy(-10, 0, 0.1f));
+    			if(!textButton.isChecked()) {
+    				textButton.addAction(Actions.moveBy(-10, 0, 0.1f));
+    			}
     		}
     	});
 

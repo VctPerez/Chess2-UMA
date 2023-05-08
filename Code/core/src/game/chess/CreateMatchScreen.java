@@ -2,6 +2,7 @@ package game.chess;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -201,10 +202,10 @@ public class CreateMatchScreen extends AbstractMenuScreen{
     @Override
     protected void selectScreen(int button) {
     	if(button == 0) {
-    		Render.LOBBYSCREEN.create("Victor", true);
+    		Render.LOBBYSCREEN.create("rotvix", true);
     		Render.app.setScreen(Render.LOBBYSCREEN);
     	}else if(button == 1) {
-            Render.guest = new Guest("Vega");
+            Render.guest = new Guest("rukia");
             activatePopUpTable();
     	}else if(button == 2) {
     		Render.app.setScreen(Render.MATCHMAKINGSCREEN);

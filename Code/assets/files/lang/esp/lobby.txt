@@ -1,7 +1,10 @@
-sala
-jugador 1:
-codigo:
-jugador 2:
+sala de espera
+jugador 1
+codigo -  
+jugador 2
 conectado
 buscar
+buscando...
+encontrado
+cancelar
 empezar

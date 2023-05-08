@@ -191,7 +191,6 @@ public class Chess2 extends Game {
 
 		this.setScreen(Render.MAINSCREEN);
 //		 this.setScreen(Render.GameScreen);
-		this.setScreen(Render.MAINSCREEN);
 
 
 

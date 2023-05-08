@@ -17,9 +17,10 @@ public class ProfileScreen extends AbstractMenuScreen {
     	languageReader = new LineReader("files/lang/"+ configReader.readLine(Settings.language) + "Profile.txt"); //Abrimos el idioma que toca del archivo configuracion
     	dataReader = new LineReader("files/Datos.txt"); //Abrimos los datos
 
-    	
     	super.show();
         
+    	table.debug();
+    	
         Render.bgMusic = Render.app.getManager().get(Resources.MENU_THEME);
         Render.bgMusic.setLooping(true);
         Render.bgMusic.setVolume(Settings.musicVolume);
@@ -34,7 +35,7 @@ public class ProfileScreen extends AbstractMenuScreen {
     	
     	for(int i=0;i<Text.length;i++) {
     		String aux = languageReader.readLine(i+1) + " " + dataReader.readLine(i+1);
-    		Text[i] = new Label(aux ,Render.skin,"default");
+    		Text[i] = new Label(aux ,Render.skin,"SmallTextStyle");
     	}
     	
     	textButton = new TextButton[2];
