@@ -102,9 +102,14 @@ public class LobbyScreen extends AbstractScreen{
         stage.draw();
         try {
             if(Render.hosting){
-                matchFinder();
-                if (Render.host.getMessage() == null || Render.host.getMessage().equalsIgnoreCase("disconnect")){
-                    matchUnfinder();
+                if (Render.host.getMessage().equalsIgnoreCase("disconnect")){ //Cuando le dicen que cierre
+                    Render.host.sendMessage("disconnect");
+                    Render.host.stopHosting();
+                    Render.host.disconnect();
+                    Render.LOBBYSCREEN = new LobbyScreen();
+                    Render.app.setScreen(Render.CREATEMATCHSCREEN);
+                } else { //Para que no encuentre y desencuentre la partida
+                    matchFinder();
                 }
             }else{
                 if(Render.guest.getMessage().equalsIgnoreCase("start")){
@@ -121,7 +126,7 @@ public class LobbyScreen extends AbstractScreen{
         }
         Render.Batch.end();
     }
-    
+
     private void createTableElements() {
     	// TITLE - INVCODE - P1 - P1NAME - P2 - P2NAME
     	label = new Label[6];
@@ -227,6 +232,7 @@ public class LobbyScreen extends AbstractScreen{
             }
         });
 
+        //CANCEL BUTTON
         textButton[1].addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -275,26 +281,6 @@ public class LobbyScreen extends AbstractScreen{
                 System.out.println("Jugador conectado");
             }
         }
-    }
-
-    /**
-     * Método que se llama cuando se desconecta el guest.
-     * Hace lo contrario que hace matchFinder
-     * @throws IOException
-     */
-    public void matchUnfinder() throws IOException {
-        finding = false;
-        textButton[0].setText(languageReader.readLine(6));
-        //Activa el boton de buscar
-        textButton[0].setTouchable(Touchable.enabled);
-        //Descativa el boton de empezar
-        bottomTable.setVisible(false);
-        bottomTable.addAction(Actions.sequence(Actions.alpha(0),Actions.fadeOut(0.5f)));
-        //Actualiza la lista de jugadores
-        label[5].setText("...");
-        label[5].setStyle(Render.skin.get("PlayerOFFStyle",LabelStyle.class));
-        configured = false;
-        System.out.println("Jugador desconectado");
     }
 
     private void cancelSearch(){
@@ -380,7 +366,6 @@ public class LobbyScreen extends AbstractScreen{
     private void selectScreen(int button) {
         switch (button) {
             case 0:
-                Render.app.setScreen(Render.CREATEMATCHSCREEN);
                 try {
                     if (Render.hosting){
                         if (Render.host.isP2connected()) {
@@ -391,12 +376,12 @@ public class LobbyScreen extends AbstractScreen{
                         System.out.println("Miembros desconectados");
                     } else {
                         Render.guest.sendMessage("disconnect");
-                        Render.guest.disconnect();
                         System.out.println("Guest desconectados");
                     }
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
+                Render.app.setScreen(Render.CREATEMATCHSCREEN);
                 break;
             default:
                 System.out.println("Seleccion incorrecta");
