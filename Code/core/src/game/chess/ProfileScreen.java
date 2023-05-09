@@ -2,6 +2,7 @@ package game.chess;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -28,7 +29,7 @@ public class ProfileScreen extends AbstractMenuScreen {
 
     	super.show();
     	
-        Render.bgMusic = Render.app.getManager().get(Resources.MENU_THEME);
+       // Render.bgMusic = Render.app.getManager().get(Resources.MENU_THEME);
         Render.bgMusic.setLooping(true);
         Render.bgMusic.setVolume(Settings.musicVolume);
         Render.bgMusic.play();
@@ -74,6 +75,12 @@ public class ProfileScreen extends AbstractMenuScreen {
     }
     
     @Override
+    protected void addExitAnimation(float distance, float delay, float time) {
+    	super.addExitAnimation(distance, delay, time);
+    	table.addAction(Actions.fadeOut(0.25f));
+    }
+    
+    @Override
     protected void setupTable() {
     	table.setFillParent(true);
     	table.left().pad(50);
@@ -87,9 +94,10 @@ public class ProfileScreen extends AbstractMenuScreen {
     		}
     	}
     	table.add(textButton[0]).padTop(50);
-    	table.add(textField).width(300).padTop(50);
     	table.row();
     	table.add(textButton[1]);
+    	table.row();
+    	table.add(textField).width(600);
     	table.row();
     }
     
@@ -116,11 +124,13 @@ public class ProfileScreen extends AbstractMenuScreen {
 		textField.addListener(new InputListener() {
 			@Override
 			public boolean keyDown(InputEvent event, int keycode) {
-				if(keycode == Input.Keys.ENTER && !textField.getText().equals("")){
+				if(keycode == Input.Keys.ENTER && !textField.getText().equals("") && !(textField.getText().length()>18)){
 						textField.setVisible(false);
 						Label prev = Text[0];
 						dataWriter.escribirLinea(1, textField.getText()); //Nombre
 						updateName(prev);
+				}else if(keycode == Input.Keys.ENTER && !textField.getText().equals("") && textField.getText().length()>18) {
+						textField.setText(languageReader.readLine(11));
 				}
 				return true;
 			}
