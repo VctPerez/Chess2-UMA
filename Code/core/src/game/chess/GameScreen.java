@@ -158,8 +158,7 @@ public class GameScreen extends AbstractScreen {
 	public void checkGraveyard() {
 		if(!graveyardWhite.graveyard.isEmpty()) {
 			for (int i = 0; i < graveyardWhite.graveyard.size(); i++) {
-				if (graveyardWhite.graveyard.get(i) instanceof King || graveyardWhite.graveyard.get(i) instanceof Midas
-						|| graveyardWhite.graveyard.get(i) instanceof Mage) {
+				if (graveyardWhite.graveyard.get(i) instanceof Leader) {
 
 					results.setWinnerKingKilled(PLAYER);
 					showPopup = true;
@@ -169,8 +168,7 @@ public class GameScreen extends AbstractScreen {
 		}
 		if(!graveyardBlack.graveyard.isEmpty()) {
 			for (int i = 0; i < graveyardBlack.graveyard.size(); i++) {
-				if (graveyardBlack.graveyard.get(i) instanceof King || graveyardWhite.graveyard.get(i) instanceof Midas
-						|| graveyardWhite.graveyard.get(i) instanceof Mage) {
+				if (graveyardBlack.graveyard.get(i) instanceof Leader) {
 					results.setWinnerKingKilled(PLAYER);
 					showPopup = true;
 					blackCheckMate = true;
@@ -187,7 +185,7 @@ public class GameScreen extends AbstractScreen {
 	@Override
 	public void render(float delta) {
 		Render.clearScreen();
-		//checkGraveyard();
+		
 		if (showPopup) {
 			surrenderButton.clearListeners();
 			// ------------------------------------------------------------------------------
@@ -440,8 +438,10 @@ public class GameScreen extends AbstractScreen {
 				}
 				mateControl();
 			}
-			if(Render.DraftController!=3)	
+			if(Render.DraftController!=3) {				
 				changeTurn();
+				checkGraveyard();
+			}
 		}
 	}
 
