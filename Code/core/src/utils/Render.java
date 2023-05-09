@@ -85,8 +85,10 @@ public class Render {
     public static void clearScreen(){
         Gdx.gl20.glClearColor(0.0549019f, 0.062745f, 0.2666666f, 1f);
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
-    }public static void clearLoadingScreen(Color color){
-        Gdx.gl20.glClearColor(color.r, color.g, color.b, 1f);
-        Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
+    }public static void playBgMusic(){
+        bgMusic = Render.app.getMusicManager().get(Resources.MENU_THEME);
+        bgMusic.setLooping(true);
+        bgMusic.setVolume(Settings.musicVolume);
+        bgMusic.play();
     }
 }

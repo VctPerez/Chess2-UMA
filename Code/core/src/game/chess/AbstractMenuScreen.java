@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import interaccionFichero.LineReader;
 import utils.Render;
+import utils.Settings;
 import utils.TextButton;
 
 public abstract class AbstractMenuScreen extends AbstractScreen{
@@ -43,6 +44,10 @@ public abstract class AbstractMenuScreen extends AbstractScreen{
         addEnterAnimation();
         
         Gdx.input.setInputProcessor(stage);
+
+		if(!Render.bgMusic.isPlaying()){
+			Render.playBgMusic();
+		}
 	}
 
 	@Override

@@ -7,4 +7,5 @@ Games played:
 Profile
 Return
 Edit
-Name
+USERNAME
+MAX 18 Characters
