@@ -2,6 +2,7 @@ package game.chess;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -71,6 +72,12 @@ public class ProfileScreen extends AbstractMenuScreen {
     	if(button == 0) {
     		Render.app.setScreen(Render.MAINSCREEN);
     	}
+    }
+    
+    @Override
+    protected void addExitAnimation(float distance, float delay, float time) {
+    	super.addExitAnimation(distance, delay, time);
+    	table.addAction(Actions.fadeOut(0.25f));
     }
     
     @Override
