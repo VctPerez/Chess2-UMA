@@ -17,6 +17,7 @@ import java.io.IOException;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import utils.TextButton;
 
@@ -25,6 +26,7 @@ public class OnlineGameScreen extends GameScreen {
 	protected void createTableElements() {
 		super.createTableElements();
 		drawButton = new TextButton(languageReader.readLine(5), "SingleClickStyle");
+		drawButton.getLabel().setFontScale(0.75f);
 		drawButton.addListener(new ClickListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -42,7 +44,7 @@ public class OnlineGameScreen extends GameScreen {
 	@Override
 	protected void setUpTable() {
 		super.setUpTable();
-		table.add(drawButton).right().padRight(47).expandX();
+		table.add(drawButton).right().padRight(60).expandX();
 	}
 
 	@Override
@@ -64,7 +66,7 @@ public class OnlineGameScreen extends GameScreen {
 		GameScreen.nextTile = nextTile;
 		currentTile_validMovements = currentTile.getPiece().getValidMovements();
 		super.makeMove(currentTile, nextTile);
-		if (Render.hosting == PLAYER)
+		if (Render.hosting == PLAYER && currentTile_validMovements.contains(new Vector2((int) nextTile.getPos().x, (int) nextTile.getPos().y)))
 			moved = true;
 	}
 
@@ -110,41 +112,6 @@ public class OnlineGameScreen extends GameScreen {
 			}
 		});
 	}
-
-//	@Override
-//	public void checkGraveyard() {
-//		try {
-//			if (!graveyardWhite.graveyard.isEmpty() && Render.hosting) {
-//				for (int i = 0; i < graveyardWhite.graveyard.size(); i++) {
-//					if (graveyardWhite.graveyard.get(i) instanceof King
-//							|| graveyardWhite.graveyard.get(i) instanceof Midas
-//							|| graveyardWhite.graveyard.get(i) instanceof Mage) {
-//						
-//						Render.player.sendMessage("SUICIDIO");
-//						results.setWinnerKingKilled(Render.hosting);
-//						showPopup = true;
-//						blackCheckMate = true;
-//					}
-//				}
-//			}
-//			if (!graveyardBlack.graveyard.isEmpty() && !Render.hosting) {
-//				for (int i = 0; i < graveyardBlack.graveyard.size(); i++) {
-//					if (graveyardBlack.graveyard.get(i) instanceof King
-//							|| graveyardWhite.graveyard.get(i) instanceof Midas
-//							|| graveyardWhite.graveyard.get(i) instanceof Mage) {
-//
-//						Render.guest.sendMessage("SUICIDIO");
-//						results.setWinnerKingKilled(Render.hosting);
-//						showPopup = true;
-//						whiteCheckMate = true;
-//					}
-//				}
-//			}
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//
-//	}
 
 	@Override
 	public void update(Tile tile) {

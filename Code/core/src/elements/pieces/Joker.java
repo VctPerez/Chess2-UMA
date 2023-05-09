@@ -24,9 +24,9 @@ public class Joker extends Piece {
 	public Joker(Boolean color, int x, int y, Board board) {
 		super(color, Resources.RND_PATH, x, y, board);
 		current = new Bishop(color, x, y, board);
-
+		mask = jokerImage(Resources.BISHOP_PATH);
 		prev = new Vector2(0, 0);
-		swap();
+		//swap();
 		
 		
 	}
@@ -44,11 +44,14 @@ public class Joker extends Piece {
 		// Caballo:20
 		// Torre:20
 
+		
+		
 		int i, tam = (int) (prev.y - prev.x);
 		i = (int) (rnd.nextInt(100 - tam) + prev.y + 1) % 100;
 
 		Piece nueva;
-
+		
+		
 		if (i >= 1 && i <= 30) {
 			nueva = Parser.getPieceFromPath(Resources.BISHOP_PATH, color, this.x, this.y, board);
 			mask = jokerImage(Resources.BISHOP_PATH);

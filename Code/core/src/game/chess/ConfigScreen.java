@@ -1,26 +1,20 @@
 package game.chess;
 
 
-import java.awt.Graphics;
-
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Graphics.DisplayMode;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
-import elements.Background;
 import interaccionFichero.LineWriter;
 import interaccionFichero.LineReader;
 import utils.Render;
@@ -44,6 +38,8 @@ public class ConfigScreen extends AbstractScreen {
     
     private LineReader languageReader, configReader;
     private LineWriter configWriter;
+    
+    private boolean animationStarted;
     
     
     @Override
@@ -70,37 +66,36 @@ public class ConfigScreen extends AbstractScreen {
     	createTableElements();
 
     	//Aï¿½adir las acciones a los botones
+    	
     	//APPLY BUTTON
     	textButton[0].addListener(new ClickListener() {
     		@Override
-    		public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+    		public void clicked(InputEvent event, float x, float y) {
+    			super.clicked(event, x, y);
     			//Aplicar cambios
     			writeSettings();
-				//configReader = new LectorLineas("files/config.txt");
 				readSettings();
 				textButton[2].setVisible(false);
-				//setLanguage(configReader.leerINTLinea(7));
-    			return true;
     		}
     	});
     	
     	//RESET BUTTON
 		textButton[2].addListener(new ClickListener(){
 			@Override
-			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+			public void clicked(InputEvent event, float x, float y) {
+				super.clicked(event, x, y);
 				readSettings();
-				return true;
 			}
 		});
+		
 		//BACK BUTTON
-    	textButton[1].addListener(new ClickListener() {
+    	textButton[1].addListener(new ClickListener() {    		
     		@Override
-    		public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-    			//Volver al menu
+    		public void clicked(InputEvent event, float x, float y) {
+    			super.clicked(event, x, y);
     			readSettings();
     			Render.app.getManager().get(Resources.BUTTON_CLICKSOUND,Sound.class).play(Settings.sfxVolume);
-    			Render.app.setScreen(new MainScreen());
-    			return true;
+    			addExitAnimation();
     		}
     	});
     	
@@ -108,10 +103,13 @@ public class ConfigScreen extends AbstractScreen {
     	
     	//Introducir los elementos en la table
     	setupTable();
-    	//Aï¿½adir todos los actores a la escena;
+    	//Añadir todos los actores a la escena;
     	addActors();
-    	//Leer y aplicar configuraciï¿½n inicial
+    	//Leer y aplicar configuracion inicial
     	readSettings();
+    	//Añade animacion de entrada
+    	addEnterAnimation();
+    	animationStarted = false;
     	
         Gdx.input.setInputProcessor(stage);
     }
@@ -137,6 +135,12 @@ public class ConfigScreen extends AbstractScreen {
         
         
         checkChanges();
+        
+        //Boton volver fue pulsado
+        if(animationStarted && !rootTable.hasActions()) {
+			Render.app.setScreen(new MainScreen());
+        }
+        
         //---------------
 
     }
@@ -242,9 +246,9 @@ public class ConfigScreen extends AbstractScreen {
 		configWriter.escribirLinea(6, String.valueOf(Settings.reconvertAudioToText(Settings.sfxVolume)));
 		configWriter.escribirLinea(7, Boolean.toString(checkBox.isChecked()));
 		configWriter.escribirLinea(8, Integer.toString(selectBox.getSelectedIndex() + 1));
+		// + 1 porque en el archivo de configuracion los idiomas se representan desde la fila 1
+		// En el archivo config.txt cada valor representa un idioma(1_ENG 2_ESP)
 	}
-    	// + 1 porque en el archivo de configuracion los idiomas se representan desde la fila 1
-    	// En el archivo config.txt cada valor representa un idioma(1_ENG 2_ESP)
 
     /**
      * Metodo para actualizar el valor de la Slider y la TextField
@@ -288,14 +292,19 @@ public class ConfigScreen extends AbstractScreen {
     	selectBox.setItems(languageReader.readLine(5),languageReader.readLine(6));
     	selectBox.setSelectedIndex(value-1);
     }
-	
+	/**
+	 * Actualiza los valores para establecer la pantalla completa
+	 * @param value booleano a establecer
+	 */
 	private void setFullscreen(boolean value) {
-		
 		checkBox.setChecked(value);
 		Settings.setFullscreen(value);
-		//PONE FULLSCREEN
 	}
-
+	
+	/**
+	 * Comprueba si ha habido alguna modificacion de las configuraciones para activar
+	 * el boton de RESET o esconderlo.
+	 */
 	private void checkChanges(){
 		if(slider[0].getValue() != configReader.leerFLOATLinea(5) ||
 			slider[1].getValue() != configReader.leerFLOATLinea(6) ||
@@ -306,6 +315,25 @@ public class ConfigScreen extends AbstractScreen {
 		}else{
 			textButton[2].setVisible(false);
 		}
+	}
+	
+	/**
+	 * Añade a los elementos de la escena su animación de salida de pantalla.
+	 * Activa el booleano de animationStarted para comprobar que no cambie de pantalla
+	 * hasta que se ha terminado la animacion.
+	 */
+	private void addExitAnimation() {
+		rootTable.addAction(Actions.fadeOut(0.25f));
+		optionsTable.addAction(Actions.fadeOut(0.25f));
+		animationStarted = true;
+	}
+	
+	/**
+	 * Añade a los elementos de la escena su animacion de salida de la pantalla.
+	 */
+	private void addEnterAnimation() {
+		rootTable.addAction(Actions.sequence(Actions.alpha(0), Actions.fadeIn(0.5f)));
+		optionsTable.addAction(Actions.sequence(Actions.alpha(0), Actions.fadeIn(0.5f)));
 	}
 
     @Override
