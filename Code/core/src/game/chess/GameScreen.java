@@ -101,7 +101,9 @@ public class GameScreen extends AbstractScreen {
 		stage.addActor(table);
 		
 		
-		testDrafts();//mover a cuando se selecciona modo clásico
+		if(Render.DraftController==1){
+			testDrafts();//mover a cuando se selecciona modo clásico
+		}
 
 		placePieces(Render.player1Draft, true);
 		placePieces(Render.player2Draft, false);
@@ -187,7 +189,7 @@ public class GameScreen extends AbstractScreen {
 	@Override
 	public void render(float delta) {
 		Render.clearScreen();
-		//checkGraveyard();
+		checkGraveyard();
 		if (showPopup) {
 			surrenderButton.clearListeners();
 			// ------------------------------------------------------------------------------
@@ -628,19 +630,19 @@ public class GameScreen extends AbstractScreen {
 	// rellena en DraftScreen) -------------------
 	public void testDrafts() {//HACER QUE ESTO SE HAGA AL SELECCIONAR MODO CLASICO -> menos codigo innecesario en GameScreen
 
-		Render.player1Draft.add(Resources.VALKYRIE_PATH);
+		Render.player1Draft.add(Resources.PAWN_PATH);
 		Render.player1Draft.add(Resources.KNIGHT_PATH);
-		Render.player1Draft.add(Resources.MINER_PATH);
-		Render.player1Draft.add(Resources.PALADIN_PATH);
-		Render.player1Draft.add(Resources.WITCH_PATH);
-		Render.player1Draft.add(Resources.MAGE_PATH);
+		Render.player1Draft.add(Resources.ROOK_PATH);
+		Render.player1Draft.add(Resources.BISHOP_PATH);
+		Render.player1Draft.add(Resources.QUEEN_PATH);
+		Render.player1Draft.add(Resources.KING_PATH);
 
 		Render.player2Draft.add(Resources.PAWN_PATH);
-		Render.player2Draft.add(Resources.RIDER_PATH);
+		Render.player2Draft.add(Resources.KNIGHT_PATH);
 		Render.player2Draft.add(Resources.ROOK_PATH);
-		Render.player2Draft.add(Resources.RND_PATH);
-		Render.player2Draft.add(Resources.WITCH_PATH);
-		Render.player2Draft.add(Resources.MIDAS_PATH);
+		Render.player2Draft.add(Resources.BISHOP_PATH);
+		Render.player2Draft.add(Resources.QUEEN_PATH);
+		Render.player2Draft.add(Resources.KING_PATH);
 	}
 
 	/**
