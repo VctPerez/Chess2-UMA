@@ -9,6 +9,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics.DisplayMode;
 import com.badlogic.gdx.Graphics.Monitor;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -83,6 +84,9 @@ public class Render {
      */
     public static void clearScreen(){
         Gdx.gl20.glClearColor(0.0549019f, 0.062745f, 0.2666666f, 1f);
+        Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
+    }public static void clearLoadingScreen(Color color){
+        Gdx.gl20.glClearColor(color.r, color.g, color.b, 1f);
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
     }
 }
