@@ -28,17 +28,18 @@ public class Chess2 extends Game {
 	public static boolean hosting;
 
 	private AssetManager manager;
+	private AssetManager musicManager;
 
 	public AssetManager getManager() {
 		return manager;
 	}
+	public AssetManager getMusicManager(){return musicManager;}
 
 	/**
 	 * Se encarga de cargar los (posibles) recursos que posteriormente utilizaremos
 	 * en le juego
 	 */
 	private void loadResources() {
-		loadLoadingScreen();
 		// CHESS PIECES
 		manager.load(Resources.PAWN_PATH, Texture.class);
 		manager.load(Resources.LANCER_PATH, Texture.class);
@@ -104,7 +105,6 @@ public class Chess2 extends Game {
 		manager.load(Resources.UNSELECTEDBAR_PATH, Texture.class);
 
 		// MUSIC & SOUNDS
-		manager.load(Resources.MENU_THEME, Music.class);
 		manager.load(Resources.PIECESELECTION_SOUND, Sound.class);
 		manager.load(Resources.PIECEMOVE_SOUND, Sound.class);
 		manager.load(Resources.EXPLOSION_SOUND, Sound.class);
@@ -125,14 +125,6 @@ public class Chess2 extends Game {
 		 */
 
 		manager.finishLoading();
-	}
-
-	private void loadLoadingScreen() {
-		manager.load(Resources.LODINGSOUND1, Sound.class);
-		manager.load(Resources.LODINGSOUND2, Sound.class);
-		manager.load(Resources.LODINGSOUND3, Sound.class);
-		manager.load(Resources.LODINGSOUND4, Sound.class);
-		manager.load(Resources.LOADINGSCREEN_PATH, Texture.class);
 	}
 	
 
@@ -155,16 +147,14 @@ public class Chess2 extends Game {
 		
 		Gdx.input.setInputProcessor(Render.inputs);
 		manager = new AssetManager();
+		musicManager = new AssetManager();
 
 		loadSettings();
-
+		musicManager.load(Resources.MENU_THEME, Music.class);
+		musicManager.finishLoading();
+		this.setScreen(new LoadingScreen());
 		loadSkin();
-
 		loadResources();
-
-		// while(!manager.isFinished());
-		Render.LOADINGSCREEN = new LoadingScreen();
-		// this.setScreen(Render.CONFIGSCREEN);
 
 		// Cargamos en Render solo pantallas que sean necesarias crear una sola vez
 		// (Para ahorrarnos tener que crear nuevas innecesariamente),
@@ -185,11 +175,6 @@ public class Chess2 extends Game {
 		Render.DraftController=1;
 		Render.GameScreen = new GameScreen();
 		Render.hosting=true;
-
-
-		this.setScreen(Render.MAINSCREEN);
-//		 this.setScreen(Render.GameScreen);
-
 
 
 	}

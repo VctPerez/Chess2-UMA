@@ -1,68 +1,88 @@
 package game.chess;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import utils.Image;
 import utils.Render;
 import utils.Resources;
+import utils.Settings;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
 
 public class LoadingScreen extends AbstractScreen{
-    Image background;
-    ArrayList<Sound> sounds;
-    int indexSound = new Random().nextInt(4);
-    float wait, increase;
+    private Stage stage;
+    private Table table;
+    private Image title, logo;
+    private ArrayList<Image> images = new ArrayList<>(), backgroundAux = new ArrayList<>();
+    private Image background;
+    private Color backgroundColor = Color.BLACK;
     @Override
     public void show() {
-        background = new Image(Render.app.getManager().get(Resources.LOADINGSCREEN_PATH, Texture.class));
-        background.setSize(Render.SCREEN_WIDTH, Render.SCREEN_HEIGHT);
-        sounds = new ArrayList<>();
-        sounds.add(Render.app.getManager().get(Resources.LODINGSOUND1, Sound.class));
-        sounds.add(Render.app.getManager().get(Resources.LODINGSOUND2, Sound.class));
-        sounds.add(Render.app.getManager().get(Resources.LODINGSOUND3, Sound.class));
-        sounds.add(Render.app.getManager().get(Resources.LODINGSOUND4, Sound.class));
-        selectParams();
-        //sounds.get(indexSound).play();
+        stage = new Stage(new FitViewport(Render.SCREEN_WIDTH, Render.SCREEN_HEIGHT));
+        table = new Table();
+        table.setFillParent(true);
+
+        stage.addActor(Render.menuBG);
+
+        title = new Image(Resources.LOADINGTITLE_PATH);
+        title.setFadeIn(true);
+        title.setFadeOut(true);
+        title.setSize(800,200);
+
+        background = new Image(Resources.BLACK_BACKGROUND_PATH);
+        background.setFadeOut(true);
+        background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        background.setTransparencyConst(1);
+        backgroundAux.add(background);
+
+        stage.addActor(background);
+
+        logo = new Image(Resources.PIXEL_LOGO_PATH);
+        logo.setFadeIn(true);
+        logo.setFadeOut(true);
+        logo.setSize(256*2,256*2);
+
+        table.add(title).row();
+        table.add(logo);
+        stage.addActor(table);
+
+        images.add(title);
+        images.add(logo);
+
+        Render.bgMusic = Render.app.getMusicManager().get(Resources.MENU_THEME);
+        Render.bgMusic.setLooping(true);
+        Render.bgMusic.setVolume(Settings.musicVolume);
+        Render.bgMusic.play();
+
+
     }
 
     @Override
     public void render(float delta) {
         Render.clearScreen();
         update();
-        Render.Batch.begin();
-        background.draw(Render.Batch, 0);
-        Render.Batch.end();
+        stage.draw();
+        stage.act();
     }
 
     private void update(){
-        if(Render.app.getManager().update() && (background.fader(wait,increase) || Render.inputs.keyDown(Input.Keys.BACKSPACE))){
-            sounds.get(indexSound).stop();
-            Render.app.setScreen(Render.MAINSCREEN);
+        if(Image.fader(1,0.005f, images)){
+            if(Image.fader(0,0.01f, backgroundAux) && Render.app.getManager().isFinished()){
+                Render.app.setScreen(Render.MAINSCREEN);
+            }
         }
-    }
-    private void selectParams(){
-        switch (indexSound){
-            case 0:
-                wait = 3;
-                increase = 0.0075f;
-                break;
-            case 1:
-                wait = 2.3f;
-                increase = 0.003f;
-                break;
-            case 2:
-                wait = 2.3f;
-                increase = 0.005f;
-                break;
-            case 3:
-                wait = 5f;
-                increase = 0.005f;
-                break;
-        }
-
     }
 
     @Override
