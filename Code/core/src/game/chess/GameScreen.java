@@ -75,15 +75,13 @@ public class GameScreen extends AbstractScreen {
 		blackCheckMate = false;
 
 		board = new Board();
-		board.setPosition(board.getX(), board.getY() + (-84 * 8));
-		board.animationMovement(board.getX(), 24, 0.5f);
 
 		whitePieces = new ArrayList<>();
 		blackPieces = new ArrayList<>();
 		
 		//separar en método que añada sus animaciones tambien
-		graveyardWhite = new Graveyard(21, 21);
-		graveyardBlack = new Graveyard(1270 - 100, 21);
+		graveyardWhite = new Graveyard(-150, 21);
+		graveyardBlack = new Graveyard(1270 + 50, 21);
 		graveyardWhite.flipImage();
 
 		showPopup = false;
@@ -100,6 +98,8 @@ public class GameScreen extends AbstractScreen {
 		setUpTable();
 		stage.addActor(table);
 		
+		addEnterAnimation();
+		
 		
 		if(Render.DraftController==1){
 			testDrafts();//mover a cuando se selecciona modo clásico
@@ -111,6 +111,14 @@ public class GameScreen extends AbstractScreen {
 		addPiecesToStage(blackPieces);
 		addTilesToStage();
 	}
+	
+	protected void addEnterAnimation() {
+		board.setPosition(board.getX(), board.getY() + (-84 * 8));
+		board.animationMovement(board.getX(), 24, 0.5f);
+    	table.addAction(Actions.sequence(Actions.alpha(0), Actions.fadeIn(0.7f)));
+    	graveyardWhite.addAction(Actions.moveTo(-10, 21, 0.5f));
+    	graveyardBlack.addAction(Actions.moveTo(1270 - 130, 21, 0.5f));
+    }
 
 	/**
 	 * configura la tabla de GameScreen

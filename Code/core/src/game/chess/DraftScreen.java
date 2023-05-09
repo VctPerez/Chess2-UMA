@@ -339,12 +339,27 @@ public class DraftScreen extends AbstractScreen {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				if(cont==0 && Render.DraftController==1) {
-					stage.dispose();
-					Render.app.setScreen(Render.MODESCREEN);
-				}
-				if(cont==0 && Render.DraftController==2) {
-					Render.DraftController--;
-					Render.app.setScreen(Render.DRAFTSCREEN);
+					Action draftAction = new Action() {
+						public boolean act(float delta) {
+							stage.dispose();
+							Render.app.setScreen(Render.MODESCREEN);
+							return true;
+						}
+					};
+					endDraft();
+					stage.addAction(Actions.delay(1f));
+					stage.addAction(Actions.after(draftAction));
+				}else if(cont==0 && Render.DraftController==2) {
+					Action draftAction = new Action() {
+						public boolean act(float delta) {
+							stage.dispose();
+							Render.app.setScreen(Render.MODESCREEN);
+							return true;
+						}
+					};
+					endDraft();
+					stage.addAction(Actions.delay(1f));
+					stage.addAction(Actions.after(draftAction));
 				}
 				if (cont > 0) {
 					previousCont=cont;

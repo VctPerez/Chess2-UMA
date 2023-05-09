@@ -24,9 +24,9 @@ public class Joker extends Piece {
 	public Joker(Boolean color, int x, int y, Board board) {
 		super(color, Resources.RND_PATH, x, y, board);
 		current = new Bishop(color, x, y, board);
+		mask = jokerImage(Resources.BISHOP_PATH);
 
 		prev = new Vector2(0, 0);
-		swap();
 		
 		
 	}
