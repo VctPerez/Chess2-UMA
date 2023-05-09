@@ -26,6 +26,7 @@ public class OnlineGameScreen extends GameScreen {
 	protected void createTableElements() {
 		super.createTableElements();
 		drawButton = new TextButton(languageReader.readLine(5), "SingleClickStyle");
+		drawButton.getLabel().setFontScale(0.75f);
 		drawButton.addListener(new ClickListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -43,7 +44,7 @@ public class OnlineGameScreen extends GameScreen {
 	@Override
 	protected void setUpTable() {
 		super.setUpTable();
-		table.add(drawButton).right().padRight(47).expandX();
+		table.add(drawButton).right().padRight(60).expandX();
 	}
 
 	@Override
