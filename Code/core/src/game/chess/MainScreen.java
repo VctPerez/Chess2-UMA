@@ -25,13 +25,6 @@ public class MainScreen extends AbstractMenuScreen {
     	languageReader = new LineReader("files/lang/"+ configReader.readLine(Settings.language) + "main.txt"); //Abrimos el idioma que toca del archivo configuracion
     	
     	super.show();
-
-
-		if(!Render.bgMusic.isPlaying()){
-			Render.bgMusic.setLooping(true);
-			Render.bgMusic.setVolume(Settings.musicVolume);
-			Render.bgMusic.play();
-		}
         
     }
     @Override

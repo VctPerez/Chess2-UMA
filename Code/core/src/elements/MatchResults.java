@@ -16,6 +16,7 @@ import utils.Settings;
 import utils.TextButton;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class MatchResults extends Actor{
@@ -133,6 +134,7 @@ public class MatchResults extends Actor{
 			//Render.player1Draft = new ArrayList<>();
 			//Render.player2Draft = new ArrayList<>();
 			Render.app.setScreen(Render.MAINSCREEN);
+			Render.hosting=true;
 		}
 	}
 	
@@ -167,10 +169,11 @@ public class MatchResults extends Actor{
 		total++;
 		//System.out.println("Escribo " + total);
 		ProfileWriter.escribirLineaINT(5, total);
-		
 		v = ProfileReader.leerINTLinea(2);
-		res= (float)v/total*100;
-		ProfileWriter.escribirLinea(6, res + "%");
+		res=(float)v/total*100;
+		DecimalFormat df = new DecimalFormat("0.00");
+		String formatted = df.format(res);
+		ProfileWriter.escribirLinea(6, formatted + "%");
 
 	}
 	

@@ -110,6 +110,8 @@ public class GameScreen extends AbstractScreen {
 		addPiecesToStage(whitePieces);
 		addPiecesToStage(blackPieces);
 		addTilesToStage();
+
+		Render.bgMusic.stop();
 	}
 
 	/**
