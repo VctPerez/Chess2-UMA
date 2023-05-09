@@ -47,16 +47,24 @@ public class DraftScreen extends AbstractScreen {
 		if(Render.DraftController==3) {
 			Render.player.draftSent=false;
 			Render.player.resetMessage();
+			Render.player1Draft.clear();
+			Render.player2Draft.clear();
 		}
-		Render.player1Draft.clear();
-		Render.player2Draft.clear();
+		if(Render.DraftController==1) {
+			Render.player1Draft.clear();
+		}
+		if(Render.DraftController==2) {
+			Render.player2Draft.clear();
+		}
+		
+		
 
 		System.out.println("El modo de draft es " + Render.DraftController);
 		stage = new Stage(new FitViewport(1280, 720));
 		Gdx.input.setInputProcessor(stage);
 		
 		if(Render.DraftController==1) {
-			title = new Label("P1", Render.skin, "TitleStyle");
+			title = new Label("P1", Render.skin, "ConfigStyle");
 		}else if(Render.DraftController==2) {
 			title = new Label("P2", Render.skin, "ConfigStyle");
 		}else if(Render.DraftController==3) {
@@ -168,12 +176,6 @@ public class DraftScreen extends AbstractScreen {
 		queens.add(Resources.QUEEN_PATH);
 		queens.add(Resources.VALKYRIE_PATH);
 		queens.add(Resources.WITCH_PATH);
-		queens.add(Resources.WITCH_PATH);
-		queens.add(Resources.WITCH_PATH);
-		queens.add(Resources.WITCH_PATH);
-		queens.add(Resources.WITCH_PATH);
-		
-
 		Collections.shuffle(queens);
 
 		kings.add(Resources.KING_PATH);
