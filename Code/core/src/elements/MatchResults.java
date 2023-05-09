@@ -134,6 +134,7 @@ public class MatchResults extends Actor{
 			//Render.player1Draft = new ArrayList<>();
 			//Render.player2Draft = new ArrayList<>();
 			Render.app.setScreen(Render.MAINSCREEN);
+			Render.hosting=true;
 		}
 	}
 	
