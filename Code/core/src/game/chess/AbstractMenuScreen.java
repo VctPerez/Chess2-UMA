@@ -46,7 +46,7 @@ public abstract class AbstractMenuScreen extends AbstractScreen{
         Gdx.input.setInputProcessor(stage);
 
 		if(!Render.bgMusic.isPlaying()){
-			Render.playBgMusic();
+			Render.playBgMusic(true);
 		}
 	}
 

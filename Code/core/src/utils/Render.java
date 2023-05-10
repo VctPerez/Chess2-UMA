@@ -33,6 +33,7 @@ public class Render {
 
     public static Audio audio;
     public static Music bgMusic;
+    public static String music = Resources.MENU_THEME; //Guarda el path de donde lee cada cancion
     public static OrthographicCamera camera;
 
     public static Viewport viewport;
@@ -85,10 +86,13 @@ public class Render {
     public static void clearScreen(){
         Gdx.gl20.glClearColor(0.0549019f, 0.062745f, 0.2666666f, 1f);
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
-    }public static void playBgMusic(){
-        bgMusic = Render.app.getMusicManager().get(Resources.MENU_THEME);
-        bgMusic.setLooping(true);
+    }public static void playBgMusic(Boolean setLooping){
+        bgMusic = Render.app.getMusicManager().get(music);
+        bgMusic.setLooping(setLooping);
         bgMusic.setVolume(Settings.musicVolume);
         bgMusic.play();
+    }public static void setMusic(String resource)
+    {
+    	music = resource;
     }
 }

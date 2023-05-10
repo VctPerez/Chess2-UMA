@@ -112,6 +112,8 @@ public class GameScreen extends AbstractScreen {
 		addTilesToStage();
 
 		Render.bgMusic.stop();
+		Render.setMusic(Resources.MATCH_MUSIC);
+		Render.playBgMusic(true);
 	}
 	
 	protected void addEnterAnimation() {
@@ -335,6 +337,7 @@ public class GameScreen extends AbstractScreen {
 				if (piece.getValidMovements().contains(blackKing)) {
 					blackCheck = true;
 					board.getTile(blackKing.x, blackKing.y).attacked = true;
+					Render.app.getManager().get(Resources.JAQUE_SOUND,Sound.class).play(Settings.sfxVolume);
 				}
 			}
 		} else if (!PLAYER) {
@@ -344,6 +347,7 @@ public class GameScreen extends AbstractScreen {
 				if (piece.getValidMovements().contains(whiteKing)) {
 					whiteCheck = true;
 					board.getTile(whiteKing.x, whiteKing.y).attacked = true;
+					Render.app.getManager().get(Resources.JAQUE_SOUND,Sound.class).play(Settings.sfxVolume);
 				}
 			}
 		}
@@ -743,7 +747,7 @@ public class GameScreen extends AbstractScreen {
 						if (!promoting) {
 							if (tile.getPiece() != null && tile.getPiece().color() == PLAYER) {
 								Sound sound = Render.app.getManager().get(Resources.PIECESELECTION_SOUND, Sound.class);
-								sound.play(0.5f);
+								sound.play(Settings.sfxVolume);
 							}
 							update(tile);
 						}

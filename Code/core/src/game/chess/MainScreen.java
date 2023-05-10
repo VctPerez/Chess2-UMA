@@ -45,6 +45,13 @@ public class MainScreen extends AbstractMenuScreen {
     		textButton[i].addAnimation();
     		textButton[i].addSounds();
     	}
+    	
+    	if(!Render.music.equals(Resources.MENU_THEME))
+    	{
+    		Render.bgMusic.stop();
+    		Render.setMusic(Resources.MENU_THEME);
+    		Render.playBgMusic(true);
+    	}
     }
     
     /**

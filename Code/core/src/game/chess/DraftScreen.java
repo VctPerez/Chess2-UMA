@@ -104,6 +104,13 @@ public class DraftScreen extends AbstractScreen {
 		initTileButtons();
 		initButtons();
 		initDraft();
+		
+		if(!Render.music.equals(Resources.SELECTOR_MUSIC))
+		{
+			Render.bgMusic.stop();
+			Render.setMusic(Resources.SELECTOR_MUSIC);
+			Render.playBgMusic(true);
+		}
 	}
 
 	private void initTileButtons() {
@@ -272,6 +279,7 @@ public class DraftScreen extends AbstractScreen {
 					changePiece();
 					arrow.setPosition(130, 110 + 100 * (5 - cont));
 				} else {
+					Render.app.getManager().get(Resources.END_DRAFT_SOUND,Sound.class).play(Settings.sfxVolume);
 					if (Render.DraftController == 1) {
 						Action draftAction = new Action() {
 							public boolean act(float delta) {

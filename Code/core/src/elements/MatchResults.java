@@ -76,25 +76,55 @@ public class MatchResults extends Actor{
 	public void setWinner(Boolean equipo) {
 		String winner = WinnerTraduction(equipo);
 		matchres.setText("HA GANADO EL " + winner);
+		if(!Render.music.equals(Resources.WIN_MUSIC))
+    	{
+    		Render.bgMusic.stop();
+    		Render.setMusic(Resources.WIN_MUSIC);
+    		Render.playBgMusic(false);
+    	}
 	}
 	
 	public void setWinnerSurrender(Boolean equipo) {
 		String winner = WinnerTraduction(equipo);
 		matchres.setText("HA GANADO EL " + winner + " \n    POR RENDICION");
+		if(!Render.music.equals(Resources.WIN_MUSIC))
+    	{
+    		Render.bgMusic.stop();
+    		Render.setMusic(Resources.WIN_MUSIC);
+    		Render.playBgMusic(false);
+    	}
 	}
 	
 	public void setWinnerKingKilled(Boolean equipo) {
 		matchres.setText("HA GANADO EL " + WinnerTraduction(equipo) +" \n    POR ASESINATO");
+		if(!Render.music.equals(Resources.WIN_MUSIC))
+    	{
+    		Render.bgMusic.stop();
+    		Render.setMusic(Resources.WIN_MUSIC);
+    		Render.playBgMusic(false);
+    	}
 	}
 	
 	public void setWinner() {
 		matchres.setText("HAS GANADO");
 		//Posible inserción de música de victoria
+		if(!Render.music.equals(Resources.WIN_MUSIC))
+    	{
+    		Render.bgMusic.stop();
+    		Render.setMusic(Resources.WIN_MUSIC);
+    		Render.playBgMusic(false);
+    	}
 	}
 	
 	public void setLooser() {
 		matchres.setText("HAS PERDIDO");
 		//Posible inserción de música de derrota
+		if(!Render.music.equals(Resources.WIN_MUSIC))
+    	{
+    		Render.bgMusic.stop();
+    		Render.setMusic(Resources.WIN_MUSIC);
+    		Render.playBgMusic(false);
+    	}
 	}
 
 	public void setDraw() {

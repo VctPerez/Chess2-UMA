@@ -19,11 +19,21 @@ public class Resources {
     public static final String BLACK_BACKGROUND_PATH = "sprites/loadingScreen/backgroundFade.png";
 
     //SONIDOS
-    public static final String MENU_THEME = "sound/menuTheme.ogg";
+    public static final String MENU_THEME = "sound/music/menuTheme.ogg";
+    public static final String LOSE_MUSIC = "sound/music/loseMusic.wav";
+    public static final String WIN_MUSIC = "sound/music/winMusic.wav";
+    public static final String SELECTOR_MUSIC = "sound/music/selectorMusic.wav";
+    public static final String MATCH_MUSIC = "sound/music/matchMusic.wav";
+    
     public static final String PIECESELECTION_SOUND = "sound/SeleccionPieza.mp3";
-    public static final String PIECEMOVE_SOUND = "sound/pieceMove.mp3";
+    //public static final String PIECEMOVE_SOUND = "sound/pieceMove.mp3";
+    public static final String PIECEMOVE_SOUND = "sound/MoverPieza.wav";
     public static final String BUTTON_CLICKSOUND = "sound/Hit_D_-30cents.wav";
-    public static final String BUTTON_HOVERSOUND = "sound/Hover_A_-30cents.wav";
+    //public static final String BUTTON_HOVERSOUND = "sound/Hover_A_-30cents.wav";
+    public static final String BUTTON_HOVERSOUND = "sound/Hover_v2.wav";
+    public static final String APLLY_SETTINGS_SOUND = "sound/SettingsApply.wav";
+    public static final String END_DRAFT_SOUND = "sound/FinalizarSeleccionPieza.wav";
+    public static final String JAQUE_SOUND = "sound/Jaque.wav";
     public static final String PALADINSWING_SOUND = "sound/paladinSwing.mp3";
     public static final String VALKYRIEFLY_SOUND = "sound/Valkyrie_flap.mp3";
     public static final String EXPLOSION_SOUND = "sound/bomberExplosion.mp3";
