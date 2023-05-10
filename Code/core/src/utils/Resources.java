@@ -68,7 +68,7 @@ public class Resources {
     public static final String BOMBER_PATH = "sprites/Pieces/Pieces Modified/White_Bomber.png";
     public static final String WARDEN_PATH = "sprites/Pieces/Pieces Modified/White_Warden.png";
     public static final String PALADIN_PATH = "sprites/Pieces/Pieces Modified/White_Paladin.png";
-    public static final String RND_PATH = "sprites/Pieces/Pieces Modified/White_Joker.png";
+    public static final String JOKER_PATH = "sprites/Pieces/Pieces Modified/White_Joker.png";
     public static final String MIDAS_PATH = "sprites/Pieces/Pieces Modified/White_Midas.png";
     public static final String MIDAS_PATH2= "sprites/Pieces/Pieces Modified/White_Midas1.png";
     public static final String MIDAS_PATH3= "sprites/Pieces/Pieces Modified/White_Midas2.png";
@@ -94,7 +94,7 @@ public class Resources {
     public static final String BLACK_BOMBER_PATH = "sprites/Pieces/Pieces Modified/Black_Bomber.png";
     public static final String BLACK_WARDEN_PATH = "sprites/Pieces/Pieces Modified/Black_Warden.png";
     public static final String BLACK_PALADIN_PATH = "sprites/Pieces/Pieces Modified/Black_Paladin.png";
-    public static final String BLACK_RND_PATH = "sprites/Pieces/Pieces Modified/Black_Joker.png";
+    public static final String BLACK_JOKER_PATH = "sprites/Pieces/Pieces Modified/Black_Joker.png";
     public static final String BLACK_MIDAS_PATH = "sprites/Pieces/Pieces Modified/Black_Midas.png";
     public static final String BLACK_MIDAS_PATH2= "sprites/Pieces/Pieces Modified/Black_Midas1.png";
     public static final String BLACK_MIDAS_PATH3= "sprites/Pieces/Pieces Modified/Black_Midas2.png";

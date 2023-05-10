@@ -64,7 +64,7 @@ public class Chess2 extends Game {
 		manager.load(Resources.WITCH_PATH, Texture.class);
 		manager.load(Resources.MAGE_PATH,Texture.class);
 		manager.load(Resources.MAGE_PATH2,Texture.class);
-		manager.load(Resources.RND_PATH,Texture.class);
+		manager.load(Resources.JOKER_PATH,Texture.class);
 		
 		manager.load(Resources.VALKYRIE_PATH, Texture.class);
 		manager.load(Resources.VALKYRIE_ANIMATION1_PATH, Texture.class);
@@ -90,7 +90,7 @@ public class Chess2 extends Game {
 		manager.load(Resources.BLACK_WITCH_PATH, Texture.class);
 		manager.load(Resources.BLACK_MAGE_PATH,Texture.class);
 		manager.load(Resources.BLACK_MAGE_PATH2,Texture.class);
-		manager.load(Resources.BLACK_RND_PATH,Texture.class);
+		manager.load(Resources.BLACK_JOKER_PATH,Texture.class);
 		
 		manager.load(Resources.BLACK_VALKYRIE_PATH, Texture.class);
 		manager.load(Resources.BLACK_VALKYRIE_ANIMATION1_PATH, Texture.class);

@@ -308,6 +308,7 @@ public class GameScreen extends AbstractScreen {
 	protected void select(Tile tile) {
 		if (tile.getPiece() != null && tile.getPiece().color() == PLAYER) {
 			currentTile_validMovements = tile.getPiece().getValidMovements();
+			System.out.println(currentTile_validMovements);
 			highlight(tile.getPiece().color());
 			isPieceSelected = true;
 		}
@@ -335,6 +336,7 @@ public class GameScreen extends AbstractScreen {
 				Piece piece = whitePieces.get(i);
 				i++;
 				if (piece.getValidMovements().contains(blackKing)) {
+					System.out.println(piece.toString() + " LE HACE JAQUE AL REY NEGRO ["+blackKing.x +" ,"+blackKing.y+"]" );
 					blackCheck = true;
 					board.getTile(blackKing.x, blackKing.y).attacked = true;
 					Render.app.getManager().get(Resources.JAQUE_SOUND,Sound.class).play(Settings.sfxVolume);
@@ -345,6 +347,7 @@ public class GameScreen extends AbstractScreen {
 				Piece piece = blackPieces.get(i);
 				i++;
 				if (piece.getValidMovements().contains(whiteKing)) {
+					System.out.println(piece.toString() + " LE HACE JAQUE AL REY BLANCO");
 					whiteCheck = true;
 					board.getTile(whiteKing.x, whiteKing.y).attacked = true;
 					Render.app.getManager().get(Resources.JAQUE_SOUND,Sound.class).play(Settings.sfxVolume);
@@ -644,19 +647,32 @@ public class GameScreen extends AbstractScreen {
 	// rellena en DraftScreen) -------------------
 	public void testDrafts() {//HACER QUE ESTO SE HAGA AL SELECCIONAR MODO CLASICO -> menos codigo innecesario en GameScreen
 
-		Render.player1Draft.add(Resources.PAWN_PATH);
+//		Render.player1Draft.add(Resources.PAWN_PATH);
+//		Render.player1Draft.add(Resources.KNIGHT_PATH);
+//		Render.player1Draft.add(Resources.ROOK_PATH);
+//		Render.player1Draft.add(Resources.BISHOP_PATH);
+//		Render.player1Draft.add(Resources.QUEEN_PATH);
+//		Render.player1Draft.add(Resources.KING_PATH);
+//
+//		Render.player2Draft.add(Resources.PAWN_PATH);
+//		Render.player2Draft.add(Resources.KNIGHT_PATH);
+//		Render.player2Draft.add(Resources.ROOK_PATH);
+//		Render.player2Draft.add(Resources.BISHOP_PATH);
+//		Render.player2Draft.add(Resources.QUEEN_PATH);
+//		Render.player2Draft.add(Resources.KING_PATH);
+		Render.player1Draft.add(Resources.LANCER_PATH);
 		Render.player1Draft.add(Resources.KNIGHT_PATH);
-		Render.player1Draft.add(Resources.ROOK_PATH);
-		Render.player1Draft.add(Resources.BISHOP_PATH);
-		Render.player1Draft.add(Resources.QUEEN_PATH);
-		Render.player1Draft.add(Resources.KING_PATH);
+		Render.player1Draft.add(Resources.MINER_PATH);
+		Render.player1Draft.add(Resources.PALADIN_PATH);
+		Render.player1Draft.add(Resources.WITCH_PATH);
+		Render.player1Draft.add(Resources.MAGE_PATH);
 
-		Render.player2Draft.add(Resources.PAWN_PATH);
-		Render.player2Draft.add(Resources.KNIGHT_PATH);
-		Render.player2Draft.add(Resources.ROOK_PATH);
-		Render.player2Draft.add(Resources.BISHOP_PATH);
-		Render.player2Draft.add(Resources.QUEEN_PATH);
-		Render.player2Draft.add(Resources.KING_PATH);
+		Render.player2Draft.add(Resources.WARDEN_PATH);
+		Render.player2Draft.add(Resources.RIDER_PATH);
+		Render.player2Draft.add(Resources.MINER_PATH);
+		Render.player2Draft.add(Resources.JOKER_PATH);
+		Render.player2Draft.add(Resources.VALKYRIE_PATH);
+		Render.player2Draft.add(Resources.MAGE_PATH);
 	}
 
 	/**

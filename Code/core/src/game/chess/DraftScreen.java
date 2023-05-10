@@ -176,7 +176,7 @@ public class DraftScreen extends AbstractScreen {
 		Collections.shuffle(rooks);
 
 		bishops.add(Resources.BISHOP_PATH);
-		bishops.add(Resources.RND_PATH);
+		bishops.add(Resources.JOKER_PATH);
 		bishops.add(Resources.PALADIN_PATH);
 		Collections.shuffle(bishops);
 

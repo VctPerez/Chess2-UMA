@@ -22,7 +22,7 @@ public class Joker extends Piece {
 	private Image mask;
 
 	public Joker(Boolean color, int x, int y, Board board) {
-		super(color, Resources.RND_PATH, x, y, board);
+		super(color, Resources.JOKER_PATH, x, y, board);
 		current = new Bishop(color, x, y, board);
 		mask = jokerImage(Resources.BISHOP_PATH);
 		prev = new Vector2(0, 0);
@@ -141,7 +141,7 @@ public class Joker extends Piece {
 	 */
 	@Override
 	public String getSpritePath() {
-		return color ? Resources.RND_PATH : Resources.BLACK_RND_PATH;
+		return color ? Resources.JOKER_PATH : Resources.BLACK_JOKER_PATH;
 	}
 
 	@Override
