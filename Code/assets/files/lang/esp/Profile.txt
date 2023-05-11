@@ -7,7 +7,8 @@ Partidas Jugadas:
 Perfil
 Volver
 Editar
-Nombre Usuario
+Nombre:
 MAX 12 Caracteres
+Tablero:
 
 

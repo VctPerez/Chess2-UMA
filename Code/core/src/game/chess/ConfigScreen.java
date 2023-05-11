@@ -103,15 +103,16 @@ public class ConfigScreen extends AbstractScreen {
     	
     	//Introducir los elementos en la table
     	setupTable();
-    	//Añadir todos los actores a la escena;
+    	//Aï¿½adir todos los actores a la escena;
     	addActors();
     	//Leer y aplicar configuracion inicial
     	readSettings();
-    	//Añade animacion de entrada
+    	//Aï¿½ade animacion de entrada
     	addEnterAnimation();
     	animationStarted = false;
     	
         Gdx.input.setInputProcessor(stage);
+        
     }
 
     @Override
@@ -319,7 +320,7 @@ public class ConfigScreen extends AbstractScreen {
 	}
 	
 	/**
-	 * Añade a los elementos de la escena su animación de salida de pantalla.
+	 * Aï¿½ade a los elementos de la escena su animaciï¿½n de salida de pantalla.
 	 * Activa el booleano de animationStarted para comprobar que no cambie de pantalla
 	 * hasta que se ha terminado la animacion.
 	 */
@@ -330,7 +331,7 @@ public class ConfigScreen extends AbstractScreen {
 	}
 	
 	/**
-	 * Añade a los elementos de la escena su animacion de salida de la pantalla.
+	 * Aï¿½ade a los elementos de la escena su animacion de salida de la pantalla.
 	 */
 	private void addEnterAnimation() {
 		rootTable.addAction(Actions.sequence(Actions.alpha(0), Actions.fadeIn(0.5f)));
