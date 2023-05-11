@@ -665,7 +665,7 @@ public class GameScreen extends AbstractScreen {
 		Render.player1Draft.add(Resources.MINER_PATH);
 		Render.player1Draft.add(Resources.PALADIN_PATH);
 		Render.player1Draft.add(Resources.WITCH_PATH);
-		Render.player1Draft.add(Resources.MAGE_PATH);
+		Render.player1Draft.add(Resources.MIDAS_PATH);
 
 		Render.player2Draft.add(Resources.WARDEN_PATH);
 		Render.player2Draft.add(Resources.RIDER_PATH);

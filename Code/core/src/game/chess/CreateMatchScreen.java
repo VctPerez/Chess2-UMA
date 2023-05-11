@@ -170,7 +170,7 @@ public class CreateMatchScreen extends AbstractMenuScreen{
         switch (button) {
             case 0:
                 Render.LOBBYSCREEN.create(ProfileReader.readLine(1), true);// nombre del perfil, nombre base es P1 y P2
-                Render.app.setScreen(Render.LOBBYSCREEN);
+                Render.app.setScreen(Render.MODESCREEN);
                 break;
             case 1:
                 Render.guest = new Guest(ProfileReader.readLine(1));
