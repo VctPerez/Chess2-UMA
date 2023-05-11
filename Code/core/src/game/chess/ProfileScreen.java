@@ -84,7 +84,7 @@ public class ProfileScreen extends AbstractMenuScreen {
     protected void setupTable() {
     	table.setFillParent(true);
     	table.left().pad(50);
-    	table.defaults().left().space(30);
+    	table.defaults().left().space(31);
     	table.add(title);
     	table.row();
     	for (int i = 0 ; i < Text.length ; i++) {
