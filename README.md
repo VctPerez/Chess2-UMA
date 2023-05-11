@@ -3,9 +3,10 @@
 
 Proyecto de Introducción a la Ingeniería del Software.
 
+Este proyecto ha sido ralizado con el framework:     [***LIBGDX***](https://libgdx.com/)
 
-
-
+- [x]  Modo Local.
+- [x]  Modo Online. 
 
 ## Authors
 -   Víctor Pérez Armenta  			
