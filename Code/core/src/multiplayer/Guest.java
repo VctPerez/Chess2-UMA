@@ -8,7 +8,6 @@ import java.net.Socket;
 import java.util.Scanner;
 
 public class Guest extends OnlinePlayer{
-    private String ipDest;
     Player player2, player1;
     private boolean connected = false;
     private boolean receiving = false;

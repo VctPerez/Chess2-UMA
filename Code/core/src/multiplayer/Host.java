@@ -83,7 +83,6 @@ public class Host extends OnlinePlayer {
     public void stopHosting() throws IOException {
         setReceiving(false);
         gameServer.close();
-
     }
 
     /**

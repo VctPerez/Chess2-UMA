@@ -92,6 +92,7 @@ public class Image extends Actor{
      *  Fader de imagen.
      * @param wait tiempo de espera cuando es totalmente opaca.
      * @param increase constante para incrementar la opacidad de la imagen, o disminuirla.
+     * @param images Lista de imagenes a fadear
      * @return True = imagen transparente, False = imagen opaca.
      */
     public static boolean fader(float wait, float increase, List<Image> images){ // esto se puede hacer con el act y actions
@@ -121,20 +122,17 @@ public class Image extends Actor{
     }
 
     /**
-     * Cambia el tamaño de la imagen segun width, height.
-     * @param width anchura.
-     * @param height altura.
+     * Cambia la imagen
+     * @param path ruta de la nueva imagen.
      */
-//    public void setSize(float width, float height){
-//    	super.setSize(width,height);
-//        sprt.setSize(width, height);
-//    }
-    
     public void setImage(String path) {
     	sprt.setTexture(new Texture(path));
     }
 
-
+    /**
+     *
+     * @return Posicion de la imagen
+     */
     public Vector2 getPosition(){
         return new Vector2(sprt.getX(), sprt.getY());
     }
