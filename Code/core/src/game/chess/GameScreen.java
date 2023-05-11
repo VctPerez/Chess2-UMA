@@ -608,6 +608,14 @@ public class GameScreen extends AbstractScreen {
 	}
 
 	/**
+	 * Devuelve true si hay algun Joker, si no devuelve false
+	 * Supone que se hace al inicio de la partida
+	 */
+	protected boolean thereIsJoker(){ //Mira las posiciones donde empiezan
+		return Render.player1Draft.contains(Resources.JOKER_PATH) || Render.player2Draft.contains(Resources.JOKER_PATH);
+	}
+
+	/**
 	 * actualiza el ultimo peon que se ha movido
 	 * 
 	 * @param next_x
