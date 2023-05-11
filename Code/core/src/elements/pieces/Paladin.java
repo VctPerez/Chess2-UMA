@@ -13,6 +13,7 @@ import interaccionFichero.LineReader;
 import utils.AnimationActor;
 import utils.Render;
 import utils.Resources;
+import utils.Settings;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -279,7 +280,7 @@ public class Paladin extends Piece{
 				swing.setSize(3*tile.getWidth(), tile.getWidth());
 				Render.GameScreen.stage.addActor(swing);
 				
-				sound.play(0.5f);
+				sound.play(Settings.sfxVolume);
 				Render.GameScreen.resetMate();
 				Render.GameScreen.mateControl();
 				return true;

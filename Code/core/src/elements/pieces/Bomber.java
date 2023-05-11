@@ -13,6 +13,7 @@ import interaccionFichero.LineReader;
 import utils.AnimationActor;
 import utils.Render;
 import utils.Resources;
+import utils.Settings;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -69,16 +70,10 @@ public class Bomber extends Piece{
 	@Override
 	public Boolean checkBomber(float next_x, float next_y) {
 		Boolean explode = false;
-		if(next_x == x && next_y == y + 1 && canExplode && board.getTile(next_x, next_y).getPiece()!=null) {
-			explode=true;
-		}else if(next_x == x && next_y == y - 1 && canExplode && board.getTile(next_x, next_y).getPiece()!=null) {
-			explode=true;
-		}else if(next_x == x + 1 && next_y == y && canExplode && board.getTile(next_x, next_y).getPiece()!=null) {
-			explode=true;
-		}else if(next_x == x - 1 && next_y == y && canExplode && board.getTile(next_x, next_y).getPiece()!=null) {
+		if(canExplode && board.getTile(next_x, next_y)!=null && board.getTile(next_x, next_y).getPiece()!=null && !sameColor(board.getTile(next_x, next_y).getPiece())) {
 			explode=true;
 		}
-	return explode;
+		return explode;
 	}
 	
 	public void explode() {
@@ -91,7 +86,7 @@ public class Bomber extends Piece{
 				explosion.setSize(3*board.getTile(x, y).getWidth(), 3*board.getTile(x, y).getWidth());
 				
 				Render.GameScreen.stage.addActor(explosion);
-				sound.play(0.5f);
+				sound.play(Settings.sfxVolume/1.5f);
 				return true;
 			}
 		};

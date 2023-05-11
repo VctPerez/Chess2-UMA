@@ -38,7 +38,6 @@ public class DraftScreen extends AbstractScreen {
 	private LineReader languageReader, configReader;
 
 	TileButton tile1, tile2;
-	private boolean draftCompleted = false; // controla que ya se han enviado ambos los drafts
 	private boolean p1Finished = false, p2Finished = false; //controla para el inicio de la partida y para no enviar el mensaje 2 veces
 
 	@Override
@@ -56,9 +55,6 @@ public class DraftScreen extends AbstractScreen {
 			Render.player2Draft.clear();
 		}
 		
-		
-		
-		System.out.println("El modo de draft es " + Render.DraftController);
 		stage = new Stage(new FitViewport(1280, 720));
 		Gdx.input.setInputProcessor(stage);
 		
@@ -69,8 +65,6 @@ public class DraftScreen extends AbstractScreen {
 		}else if(Render.DraftController==3) {
 			title = new Label("", Render.skin, "ConfigStyle");
 		}
-		
-		
 		
 		configReader = new LineReader("files/config.txt"); // Lector del txt configuracion para sacar el idioma
 		languageReader = new LineReader("files/lang/" + configReader.readLine(Settings.language) + "Draft-Game.txt");
@@ -84,7 +78,8 @@ public class DraftScreen extends AbstractScreen {
 		stage.addActor(info);
 		stage.addActor(title);
 		
-		title.addAction(Actions.moveTo(600, 650));
+		title.setPosition(600, 750);
+		title.addAction(Actions.moveTo(600, 650, 0.5f));
 		
 		pieceDisposer = new Image(Render.app.getManager().get(Resources.PIECE_DISPOSER_PATH,Texture.class));
 		pieceDisposer.setSize(125, 700);
@@ -113,6 +108,7 @@ public class DraftScreen extends AbstractScreen {
 	}
 
 	private void initTileButtons() {
+		final Sound sound = Render.app.getManager().get(Resources.PIECESELECTION_SOUND, Sound.class);
 		tile1 = new TileButton(325f, 720f, 168f);
 		tile2 = new TileButton(325f, -168f, 168f);
 		
@@ -122,7 +118,7 @@ public class DraftScreen extends AbstractScreen {
 		tile1.addCaptureListener(new InputListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-
+				sound.play(Settings.sfxVolume);
 				tile1.showFrame();
 				tile2.hideFrame();
 
@@ -136,7 +132,7 @@ public class DraftScreen extends AbstractScreen {
 		tile2.addCaptureListener(new InputListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-
+				sound.play(Settings.sfxVolume);
 				tile2.showFrame();
 				tile1.hideFrame();
 
@@ -234,7 +230,7 @@ public class DraftScreen extends AbstractScreen {
 		}
 		pieceDisposer.addAction(Actions.moveBy(-150, 0, 0.5f));
 		
-		title.addAction(Actions.moveTo(325f, 720f, 0.5f));
+		title.addAction(Actions.moveTo(600f, 750f, 0.5f));
 		tile1.addAction(Actions.moveTo(325f, 720f, 0.5f));
 		tile2.addAction(Actions.moveTo(325f, -168f, 0.5f));
 		next.addAction(Actions.moveTo(480, -50, 0.5f));
@@ -278,6 +274,7 @@ public class DraftScreen extends AbstractScreen {
 	}
 
 	private void initButtonsListeners() {
+		final Sound sound = Render.app.getManager().get(Resources.PIECESELECTION_SOUND, Sound.class);
 		next.addCaptureListener(new InputListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -286,6 +283,7 @@ public class DraftScreen extends AbstractScreen {
 					cont++;
 					changePiece();
 					arrow.setPosition(130, 110 + 100 * (5 - cont));
+					sound.play(Settings.sfxVolume);
 				} else {
 					Render.app.getManager().get(Resources.END_DRAFT_SOUND,Sound.class).play(Settings.sfxVolume);
 					if (Render.DraftController == 1) {
@@ -348,17 +346,7 @@ public class DraftScreen extends AbstractScreen {
 		back.addCaptureListener(new InputListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				if(cont==0 && Render.DraftController==1) {
-					Action draftAction = new Action() {
-						public boolean act(float delta) {
-							stage.dispose();
-							Render.app.setScreen(Render.MODESCREEN);
-							return true;
-						}
-					};
-					endDraft();
-					stage.addAction(Actions.after(draftAction));
-				}else if(cont==0 && Render.DraftController==2) {
+				if(cont==0 && Render.DraftController<3) {
 					Action draftAction = new Action() {
 						public boolean act(float delta) {
 							stage.dispose();
@@ -369,10 +357,12 @@ public class DraftScreen extends AbstractScreen {
 					endDraft();
 					stage.addAction(Actions.after(draftAction));
 				}
+				
 				if (cont > 0) {
 					previousCont=cont;
 					cont--;
 					arrow.setPosition(130, 110 + 100 * (5 - cont));
+					sound.play(Settings.sfxVolume);
 					changePiece();
 				}
 

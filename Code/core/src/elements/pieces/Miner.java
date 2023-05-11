@@ -13,6 +13,7 @@ import interaccionFichero.LineReader;
 import utils.AnimationActor;
 import utils.Render;
 import utils.Resources;
+import utils.Settings;
 
 import java.util.ArrayList;
 
@@ -40,7 +41,7 @@ public class Miner extends Piece {
 		Action digSfx = new Action() {
 			Sound sound = Render.app.getManager().get(Resources.MINER_SOUND, Sound.class);
 			public boolean act(float delta) {
-				sound.play(0.5f);
+				sound.play(Settings.sfxVolume);
 				return true;
 			}
 		};
@@ -68,7 +69,7 @@ public class Miner extends Piece {
 		Action moveSfx = new Action() {
 			Sound sound = Render.app.getManager().get(Resources.PIECEMOVE_SOUND, Sound.class);
 			public boolean act(float delta) {
-				sound.play();
+				sound.play(Settings.sfxVolume);
 				return true;
 			}
 		};

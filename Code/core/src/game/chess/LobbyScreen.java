@@ -389,6 +389,7 @@ public class LobbyScreen extends AbstractScreen{
         for (int i = 0; i < 8; i++) {
             res.append((char) ('A' + cifras[i]));
         }
+        System.out.println(res.toString());
         return res.toString();
     }
 

@@ -59,6 +59,10 @@ public class LineWriter {
 		if(!l.readSection(numeroDeLinea + 1 , l.getLinesNumber()).equals("")) {
 			modifiedText += System.lineSeparator() + l.readSection(numeroDeLinea + 1,l.getLinesNumber());
 		}
+		
+		
+		System.out.println(modifiedText);
+		
 		Gdx.files.local(ent).writeString(modifiedText, false);
 		l.update();
 
@@ -74,6 +78,13 @@ public class LineWriter {
 	public void escribirLineaINT(int numeroDeLinea,int num)
 	{
 		String texto = String.valueOf(num);
+		
+		if(texto == null) {
+			System.out.println("NULL ???????");
+		}else {
+			System.out.println("NOT NULL: "+texto);
+		}
+		
 		escribirLinea(numeroDeLinea,texto);
 	}
 	
@@ -87,6 +98,13 @@ public class LineWriter {
 	public void escribirLineaDOUBLE(int numeroDeLinea,double num)
 	{
 		String texto = String.valueOf(num);
+
+		if(texto == null) {
+			System.out.println("NULL ???????");
+		}else {
+			System.out.println("NOT NULL: "+texto);
+		}
+		
 		escribirLinea(numeroDeLinea,texto);
 	}
 	
@@ -101,6 +119,13 @@ public class LineWriter {
 	public void escribirLineaBOOLEAN(int numeroDeLinea,boolean bool)
 	{
 		String texto = String.valueOf(bool);
+
+		if(texto == null) {
+			System.out.println("NULL ???????");
+		}else {
+			System.out.println("NOT NULL: "+texto);
+		}
+		
 		escribirLinea(numeroDeLinea,texto);
 	}
 }

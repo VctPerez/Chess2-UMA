@@ -654,33 +654,19 @@ public class GameScreen extends AbstractScreen {
 	// -------------- METODO TEMPORAL PARA PROBAR LOS CONSTRUCTORES (el draft se
 	// rellena en DraftScreen) -------------------
 	public void testDrafts() {//HACER QUE ESTO SE HAGA AL SELECCIONAR MODO CLASICO -> menos codigo innecesario en GameScreen
-
-//		Render.player1Draft.add(Resources.PAWN_PATH);
-//		Render.player1Draft.add(Resources.KNIGHT_PATH);
-//		Render.player1Draft.add(Resources.ROOK_PATH);
-//		Render.player1Draft.add(Resources.BISHOP_PATH);
-//		Render.player1Draft.add(Resources.QUEEN_PATH);
-//		Render.player1Draft.add(Resources.KING_PATH);
-//
-//		Render.player2Draft.add(Resources.PAWN_PATH);
-//		Render.player2Draft.add(Resources.KNIGHT_PATH);
-//		Render.player2Draft.add(Resources.ROOK_PATH);
-//		Render.player2Draft.add(Resources.BISHOP_PATH);
-//		Render.player2Draft.add(Resources.QUEEN_PATH);
-//		Render.player2Draft.add(Resources.KING_PATH);
-		Render.player1Draft.add(Resources.LANCER_PATH);
+		Render.player1Draft.add(Resources.PAWN_PATH);
 		Render.player1Draft.add(Resources.KNIGHT_PATH);
-		Render.player1Draft.add(Resources.MINER_PATH);
-		Render.player1Draft.add(Resources.PALADIN_PATH);
-		Render.player1Draft.add(Resources.WITCH_PATH);
-		Render.player1Draft.add(Resources.MIDAS_PATH);
+		Render.player1Draft.add(Resources.ROOK_PATH);
+		Render.player1Draft.add(Resources.BISHOP_PATH);
+		Render.player1Draft.add(Resources.QUEEN_PATH);
+		Render.player1Draft.add(Resources.KING_PATH);
 
-		Render.player2Draft.add(Resources.WARDEN_PATH);
-		Render.player2Draft.add(Resources.RIDER_PATH);
-		Render.player2Draft.add(Resources.MINER_PATH);
-		Render.player2Draft.add(Resources.JOKER_PATH);
-		Render.player2Draft.add(Resources.VALKYRIE_PATH);
-		Render.player2Draft.add(Resources.MAGE_PATH);
+		Render.player2Draft.add(Resources.PAWN_PATH);
+		Render.player2Draft.add(Resources.KNIGHT_PATH);
+		Render.player2Draft.add(Resources.ROOK_PATH);
+		Render.player2Draft.add(Resources.BISHOP_PATH);
+		Render.player2Draft.add(Resources.QUEEN_PATH);
+		Render.player2Draft.add(Resources.KING_PATH);
 	}
 
 	/**

@@ -71,11 +71,11 @@ public class Lancer extends Piece{
 		
 		if(!hasBeenMoved && board.dim==8) {
 			mov = new Vector2(x + 2 , y + 2*direction);
-			if(checkBoard(board, -1, mov.x, mov.y) && board.getTile(x, y+direction).getPiece()==null) {
+			if(checkBoard(board, -1, mov.x, mov.y) &&  board.getTile(x+1, y+direction) != null && board.getTile(x+1, y+direction).getPiece()==null) {
 				movements.add(mov);
 			}
 			mov = new Vector2(x - 2 , y + 2*direction);
-			if(checkBoard(board, 1, mov.x, mov.y) && board.getTile(x, y+direction).getPiece()==null) {
+			if(checkBoard(board, 1, mov.x, mov.y) &&  board.getTile(x-1, y+direction) != null  && board.getTile(x-1, y+direction).getPiece()==null) {
 				movements.add(mov);
 			}
 		}

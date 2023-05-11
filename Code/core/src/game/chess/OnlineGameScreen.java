@@ -23,6 +23,8 @@ public class OnlineGameScreen extends GameScreen {
 	@Override
 	public void show() {
 		super.show();
+		System.out.println(Render.player1Draft);
+		System.out.println("\n"+Render.player2Draft);
 		//System.out.println(thereIsJoker());
 		if (thereIsJoker()) putJokerSeed();
 	}

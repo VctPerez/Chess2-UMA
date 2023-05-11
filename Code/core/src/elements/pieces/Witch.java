@@ -12,6 +12,7 @@ import interaccionFichero.LineReader;
 import utils.AnimationActor;
 import utils.Render;
 import utils.Resources;
+import utils.Settings;
 
 import java.util.ArrayList;
 
@@ -122,7 +123,7 @@ public class Witch extends Piece{
 				explosion.setSize(board.getTile(x, y).getWidth(), board.getTile(x, y).getWidth());
 				
 				Render.GameScreen.stage.addActor(explosion);
-				sound.play(0.5f);
+				sound.play(Settings.sfxVolume/2f);
 				return true;
 			}
 		};
