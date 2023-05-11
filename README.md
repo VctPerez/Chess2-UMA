@@ -21,9 +21,6 @@ Este proyecto ha sido ralizado con el framework:     [***LIBGDX***](https://libg
 -   José Ángel Bueno Ruiz
 
 
-![Termux Logo](https://i.imgur.com/ZqeEfQR.png#gh-dark-mode-only)
-![Termux Logo](https://i.imgur.com/fiNfJgw.png#gh-light-mode-only)
-
 ![Logo](https://i.imgur.com/ZqeEfQR.png#gh-dark-mode-only)
-![Logo](https://i.imgur.com/fiNfJgw.png#gh-light-mode-only)
+![Logo]([https://i.imgur.com/fiNfJgw.png](https://img.freepik.com/fotos-premium/fondo-negro-abstracto-textura-primer-plano-color-negro_41969-11523.jpg)#gh-light-mode-only)
 
