@@ -64,7 +64,7 @@ public class Chess2 extends Game {
 		manager.load(Resources.WITCH_PATH, Texture.class);
 		manager.load(Resources.MAGE_PATH,Texture.class);
 		manager.load(Resources.MAGE_PATH2,Texture.class);
-		manager.load(Resources.RND_PATH,Texture.class);
+		manager.load(Resources.JOKER_PATH,Texture.class);
 		
 		manager.load(Resources.VALKYRIE_PATH, Texture.class);
 		manager.load(Resources.VALKYRIE_ANIMATION1_PATH, Texture.class);
@@ -90,7 +90,7 @@ public class Chess2 extends Game {
 		manager.load(Resources.BLACK_WITCH_PATH, Texture.class);
 		manager.load(Resources.BLACK_MAGE_PATH,Texture.class);
 		manager.load(Resources.BLACK_MAGE_PATH2,Texture.class);
-		manager.load(Resources.BLACK_RND_PATH,Texture.class);
+		manager.load(Resources.BLACK_JOKER_PATH,Texture.class);
 		
 		manager.load(Resources.BLACK_VALKYRIE_PATH, Texture.class);
 		manager.load(Resources.BLACK_VALKYRIE_ANIMATION1_PATH, Texture.class);
@@ -113,6 +113,9 @@ public class Chess2 extends Game {
 		manager.load(Resources.MINER_SOUND, Sound.class);
 		manager.load(Resources.BUTTON_HOVERSOUND, Sound.class);
 		manager.load(Resources.BUTTON_CLICKSOUND, Sound.class);
+		manager.load(Resources.APLLY_SETTINGS_SOUND, Sound.class);
+		manager.load(Resources.END_DRAFT_SOUND, Sound.class);
+		manager.load(Resources.JAQUE_SOUND, Sound.class);
 
 		// ETC
 		manager.load(Resources.LOGO_PATH, Texture.class);
@@ -151,7 +154,12 @@ public class Chess2 extends Game {
 
 		loadSettings();
 		musicManager.load(Resources.MENU_THEME, Music.class);
+		musicManager.load(Resources.MATCH_MUSIC, Music.class);
+		musicManager.load(Resources.WIN_MUSIC, Music.class);
+		musicManager.load(Resources.LOSE_MUSIC, Music.class);
+		musicManager.load(Resources.SELECTOR_MUSIC, Music.class);		
 		musicManager.finishLoading();
+		
 		this.setScreen(new LoadingScreen());
 		loadSkin();
 		loadResources();

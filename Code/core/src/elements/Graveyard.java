@@ -46,7 +46,7 @@ public class Graveyard extends Actor {
 		}
 
 		ParallelAction par = new ParallelAction();
-		par.addAction(Actions.moveTo(getX() + 23, getY() + (38 * index) + 20, 0.6f));
+		par.addAction(Actions.moveTo(getX() + 54, getY() + (38 * index) + 25, 0.6f));
 		par.addAction(Actions.sizeTo(42, 42, 0.6f));
 
 		piece.addAction(Actions.sequence(Actions.sizeTo(84, 84), Actions.delay(0.2f), par));
@@ -85,11 +85,9 @@ public class Graveyard extends Actor {
 	}
 
 	public void draw(Batch batch, float parentAlpha) {
-		batch.end();
-		batch.begin();
+		grave.setPosition(getX(), getY());
 		grave.draw(batch, parentAlpha);
-		batch.end();
-		batch.begin();
+		
 
 		for (int i = 0; i < graveyard.size(); i++) {
 			graveyard.get(i).draw(batch, parentAlpha);

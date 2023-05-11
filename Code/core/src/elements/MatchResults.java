@@ -16,6 +16,7 @@ import utils.Settings;
 import utils.TextButton;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class MatchResults extends Actor{
@@ -75,25 +76,55 @@ public class MatchResults extends Actor{
 	public void setWinner(Boolean equipo) {
 		String winner = WinnerTraduction(equipo);
 		matchres.setText("HA GANADO EL " + winner);
+		if(!Render.music.equals(Resources.WIN_MUSIC))
+    	{
+    		Render.bgMusic.stop();
+    		Render.setMusic(Resources.WIN_MUSIC);
+    		Render.playBgMusic(false);
+    	}
 	}
 	
 	public void setWinnerSurrender(Boolean equipo) {
 		String winner = WinnerTraduction(equipo);
 		matchres.setText("HA GANADO EL " + winner + " \n    POR RENDICION");
+		if(!Render.music.equals(Resources.WIN_MUSIC))
+    	{
+    		Render.bgMusic.stop();
+    		Render.setMusic(Resources.WIN_MUSIC);
+    		Render.playBgMusic(false);
+    	}
 	}
 	
 	public void setWinnerKingKilled(Boolean equipo) {
 		matchres.setText("HA GANADO EL " + WinnerTraduction(equipo) +" \n    POR ASESINATO");
+		if(!Render.music.equals(Resources.WIN_MUSIC))
+    	{
+    		Render.bgMusic.stop();
+    		Render.setMusic(Resources.WIN_MUSIC);
+    		Render.playBgMusic(false);
+    	}
 	}
 	
 	public void setWinner() {
 		matchres.setText("HAS GANADO");
 		//Posible inserción de música de victoria
+		if(!Render.music.equals(Resources.WIN_MUSIC))
+    	{
+    		Render.bgMusic.stop();
+    		Render.setMusic(Resources.WIN_MUSIC);
+    		Render.playBgMusic(false);
+    	}
 	}
 	
 	public void setLooser() {
 		matchres.setText("HAS PERDIDO");
 		//Posible inserción de música de derrota
+		if(!Render.music.equals(Resources.WIN_MUSIC))
+    	{
+    		Render.bgMusic.stop();
+    		Render.setMusic(Resources.WIN_MUSIC);
+    		Render.playBgMusic(false);
+    	}
 	}
 
 	public void setDraw() {
@@ -133,6 +164,7 @@ public class MatchResults extends Actor{
 			//Render.player1Draft = new ArrayList<>();
 			//Render.player2Draft = new ArrayList<>();
 			Render.app.setScreen(Render.MAINSCREEN);
+			Render.hosting=true;
 		}
 	}
 	
@@ -167,10 +199,11 @@ public class MatchResults extends Actor{
 		total++;
 		//System.out.println("Escribo " + total);
 		ProfileWriter.escribirLineaINT(5, total);
-		
 		v = ProfileReader.leerINTLinea(2);
-		res= (float)v/total*100;
-		ProfileWriter.escribirLinea(6, res + "%");
+		res=(float)v/total*100;
+		DecimalFormat df = new DecimalFormat("0.00");
+		String formatted = df.format(res);
+		ProfileWriter.escribirLinea(6, formatted + "%");
 
 	}
 	

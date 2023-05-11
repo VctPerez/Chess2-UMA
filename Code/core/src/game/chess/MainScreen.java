@@ -25,13 +25,6 @@ public class MainScreen extends AbstractMenuScreen {
     	languageReader = new LineReader("files/lang/"+ configReader.readLine(Settings.language) + "main.txt"); //Abrimos el idioma que toca del archivo configuracion
     	
     	super.show();
-
-
-		if(!Render.bgMusic.isPlaying()){
-			Render.bgMusic.setLooping(true);
-			Render.bgMusic.setVolume(Settings.musicVolume);
-			Render.bgMusic.play();
-		}
         
     }
     @Override
@@ -51,6 +44,13 @@ public class MainScreen extends AbstractMenuScreen {
     	for(int i = 0; i < textButton.length; i++) {
     		textButton[i].addAnimation();
     		textButton[i].addSounds();
+    	}
+    	
+    	if(!Render.music.equals(Resources.MENU_THEME))
+    	{
+    		Render.bgMusic.stop();
+    		Render.setMusic(Resources.MENU_THEME);
+    		Render.playBgMusic(true);
     	}
     }
     

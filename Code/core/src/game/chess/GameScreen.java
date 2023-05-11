@@ -75,15 +75,13 @@ public class GameScreen extends AbstractScreen {
 		blackCheckMate = false;
 
 		board = new Board();
-		board.setPosition(board.getX(), board.getY() + (-84 * 8));
-		board.animationMovement(board.getX(), 24, 0.5f);
 
 		whitePieces = new ArrayList<>();
 		blackPieces = new ArrayList<>();
 		
 		//separar en método que añada sus animaciones tambien
-		graveyardWhite = new Graveyard(21, 21);
-		graveyardBlack = new Graveyard(1270 - 100, 21);
+		graveyardWhite = new Graveyard(-150, 21);
+		graveyardBlack = new Graveyard(1270 + 50, 21);
 		graveyardWhite.flipImage();
 
 		showPopup = false;
@@ -100,6 +98,8 @@ public class GameScreen extends AbstractScreen {
 		setUpTable();
 		stage.addActor(table);
 		
+		addEnterAnimation();
+		
 		
 		if(Render.DraftController==1 || Render.LobbyController==0){
 			testDrafts();//mover a cuando se selecciona modo clásico
@@ -110,7 +110,19 @@ public class GameScreen extends AbstractScreen {
 		addPiecesToStage(whitePieces);
 		addPiecesToStage(blackPieces);
 		addTilesToStage();
+
+		Render.bgMusic.stop();
+		Render.setMusic(Resources.MATCH_MUSIC);
+		Render.playBgMusic(true);
 	}
+	
+	protected void addEnterAnimation() {
+		board.setPosition(board.getX(), board.getY() + (-84 * 8));
+		board.animationMovement(board.getX(), 24, 0.5f);
+    	table.addAction(Actions.sequence(Actions.alpha(0), Actions.fadeIn(0.7f)));
+    	graveyardWhite.addAction(Actions.moveTo(-10, 21, 0.5f));
+    	graveyardBlack.addAction(Actions.moveTo(1270 - 130, 21, 0.5f));
+    }
 
 	/**
 	 * configura la tabla de GameScreen
@@ -296,6 +308,7 @@ public class GameScreen extends AbstractScreen {
 	protected void select(Tile tile) {
 		if (tile.getPiece() != null && tile.getPiece().color() == PLAYER) {
 			currentTile_validMovements = tile.getPiece().getValidMovements();
+			System.out.println(currentTile_validMovements);
 			highlight(tile.getPiece().color());
 			isPieceSelected = true;
 		}
@@ -323,8 +336,10 @@ public class GameScreen extends AbstractScreen {
 				Piece piece = whitePieces.get(i);
 				i++;
 				if (piece.getValidMovements().contains(blackKing)) {
+					System.out.println(piece.toString() + " LE HACE JAQUE AL REY NEGRO ["+blackKing.x +" ,"+blackKing.y+"]" );
 					blackCheck = true;
 					board.getTile(blackKing.x, blackKing.y).attacked = true;
+					Render.app.getManager().get(Resources.JAQUE_SOUND,Sound.class).play(Settings.sfxVolume);
 				}
 			}
 		} else if (!PLAYER) {
@@ -332,8 +347,10 @@ public class GameScreen extends AbstractScreen {
 				Piece piece = blackPieces.get(i);
 				i++;
 				if (piece.getValidMovements().contains(whiteKing)) {
+					System.out.println(piece.toString() + " LE HACE JAQUE AL REY BLANCO");
 					whiteCheck = true;
 					board.getTile(whiteKing.x, whiteKing.y).attacked = true;
+					Render.app.getManager().get(Resources.JAQUE_SOUND,Sound.class).play(Settings.sfxVolume);
 				}
 			}
 		}
@@ -630,19 +647,32 @@ public class GameScreen extends AbstractScreen {
 	// rellena en DraftScreen) -------------------
 	public void testDrafts() {//HACER QUE ESTO SE HAGA AL SELECCIONAR MODO CLASICO -> menos codigo innecesario en GameScreen
 
-		Render.player1Draft.add(Resources.PAWN_PATH);
+//		Render.player1Draft.add(Resources.PAWN_PATH);
+//		Render.player1Draft.add(Resources.KNIGHT_PATH);
+//		Render.player1Draft.add(Resources.ROOK_PATH);
+//		Render.player1Draft.add(Resources.BISHOP_PATH);
+//		Render.player1Draft.add(Resources.QUEEN_PATH);
+//		Render.player1Draft.add(Resources.KING_PATH);
+//
+//		Render.player2Draft.add(Resources.PAWN_PATH);
+//		Render.player2Draft.add(Resources.KNIGHT_PATH);
+//		Render.player2Draft.add(Resources.ROOK_PATH);
+//		Render.player2Draft.add(Resources.BISHOP_PATH);
+//		Render.player2Draft.add(Resources.QUEEN_PATH);
+//		Render.player2Draft.add(Resources.KING_PATH);
+		Render.player1Draft.add(Resources.LANCER_PATH);
 		Render.player1Draft.add(Resources.KNIGHT_PATH);
-		Render.player1Draft.add(Resources.ROOK_PATH);
-		Render.player1Draft.add(Resources.BISHOP_PATH);
-		Render.player1Draft.add(Resources.QUEEN_PATH);
-		Render.player1Draft.add(Resources.KING_PATH);
+		Render.player1Draft.add(Resources.MINER_PATH);
+		Render.player1Draft.add(Resources.PALADIN_PATH);
+		Render.player1Draft.add(Resources.WITCH_PATH);
+		Render.player1Draft.add(Resources.MAGE_PATH);
 
-		Render.player2Draft.add(Resources.PAWN_PATH);
-		Render.player2Draft.add(Resources.KNIGHT_PATH);
-		Render.player2Draft.add(Resources.ROOK_PATH);
-		Render.player2Draft.add(Resources.BISHOP_PATH);
-		Render.player2Draft.add(Resources.QUEEN_PATH);
-		Render.player2Draft.add(Resources.KING_PATH);
+		Render.player2Draft.add(Resources.WARDEN_PATH);
+		Render.player2Draft.add(Resources.RIDER_PATH);
+		Render.player2Draft.add(Resources.MINER_PATH);
+		Render.player2Draft.add(Resources.JOKER_PATH);
+		Render.player2Draft.add(Resources.VALKYRIE_PATH);
+		Render.player2Draft.add(Resources.MAGE_PATH);
 	}
 
 	/**
@@ -733,7 +763,7 @@ public class GameScreen extends AbstractScreen {
 						if (!promoting) {
 							if (tile.getPiece() != null && tile.getPiece().color() == PLAYER) {
 								Sound sound = Render.app.getManager().get(Resources.PIECESELECTION_SOUND, Sound.class);
-								sound.play(0.5f);
+								sound.play(Settings.sfxVolume);
 							}
 							update(tile);
 						}

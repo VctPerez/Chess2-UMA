@@ -37,17 +37,9 @@ public class CreateMatchScreen extends AbstractMenuScreen{
     	popUpTable.setFillParent(true);
     	popUpTable.setVisible(false);
     	
-//    	popUpTable.debug();
-    	
     	searchStarted = false;
     	
     	super.show();
-        
-//        Image logo = new Image(Resources.LOGO_PATH);
-//        logo.setPosition(800,-50);
-//        logo.setSize(500, 500);
-//        logo.setTransparency(0.25f);
-//        stage.addActor(logo);
 
         Gdx.input.setInputProcessor(stage);
 
@@ -78,18 +70,6 @@ public class CreateMatchScreen extends AbstractMenuScreen{
      * @throws InterruptedException
      */
     public void update() throws IOException, InterruptedException {
-    /*
-        if(create.isPressed()){
-            Render.LOBBYSCREEN.create("Victor", true);
-            Render.app.setScreen(Render.LOBBYSCREEN);
-        } else if (join.isPressed() && !finding) {
-            finding = true;
-            System.out.println();
-            Render.guest.start();
-        }
-        if(join.isPressed()){
-            System.out.println(Render.guest.getStatus());
-        }*/
         if(found) {
             if (Render.guest.isConnected()) {
             	Render.guest.setReceiving(true);
@@ -147,20 +127,6 @@ public class CreateMatchScreen extends AbstractMenuScreen{
     @Override
     protected void addListeners(){
     	super.addListeners();
-//        textField.addListener(new InputListener(){
-//            @Override
-//            public boolean keyDown(InputEvent event, int keycode) {
-//                if(keycode == Input.Keys.ENTER && !textField.getText().equals("")){
-//                    try {
-//                        Render.guest.connect(LobbyScreen.decodeIP(textField.getText().toUpperCase()));
-//                        found = true;
-//                    } catch (IOException e) {
-//                        throw new RuntimeException(e);
-//                    }
-//                }
-//                return true;
-//            }
-//        });
     	
         //Boton de buscar
         popUpButtons[0].addListener(new ClickListener() {
@@ -200,13 +166,14 @@ public class CreateMatchScreen extends AbstractMenuScreen{
     
     @Override
     protected void selectScreen(int button) {
+    	LineReader ProfileReader = new LineReader("files/Datos.txt");
         switch (button) {
             case 0:
-                Render.LOBBYSCREEN.create("rotvix", true);
-                Render.app.setScreen(Render.MODESCREEN);
+                Render.LOBBYSCREEN.create(ProfileReader.readLine(1), true);// nombre del perfil, nombre base es P1 y P2
+                Render.app.setScreen(Render.LOBBYSCREEN);
                 break;
             case 1:
-                Render.guest = new Guest("rukia");
+                Render.guest = new Guest(ProfileReader.readLine(1));
                 activatePopUpTable();
                 break;
             case 2:
