@@ -21,5 +21,6 @@ Este proyecto ha sido ralizado con el framework:     [***LIBGDX***](https://libg
 -   José Ángel Bueno Ruiz
 
 
-![Logo](https://i.imgur.com/ZqeEfQR.png)
+![Logo](https://i.imgur.com/ZqeEfQR.png#gh-dark-mode-only)
+![Logo](https://i.imgur.com/fiNfJgw.png#gh-light-mode-only)
 
