@@ -22,5 +22,5 @@ Este proyecto ha sido ralizado con el framework:     [***LIBGDX***](https://libg
 
 
 ![Logo](https://i.imgur.com/ZqeEfQR.png#gh-dark-mode-only)
-![Logo](https://img.freepik.com/fotos-premium/fondo-negro-abstracto-textura-primer-plano-color-negro_41969-11523.jpg#gh-light-mode-only)
+![Logo](https://img.freepik.com/fotos-premium/fondo-negro-abstracto-textura-primer-plano-color-negro_41969-11523.jpg)
 
