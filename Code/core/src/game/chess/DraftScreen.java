@@ -104,6 +104,13 @@ public class DraftScreen extends AbstractScreen {
 		initTileButtons();
 		initButtons();
 		initDraft();
+		
+		if(!Render.music.equals(Resources.SELECTOR_MUSIC))
+		{
+			Render.bgMusic.stop();
+			Render.setMusic(Resources.SELECTOR_MUSIC);
+			Render.playBgMusic(true);
+		}
 	}
 
 	private void initTileButtons() {
@@ -169,7 +176,7 @@ public class DraftScreen extends AbstractScreen {
 		Collections.shuffle(rooks);
 
 		bishops.add(Resources.BISHOP_PATH);
-		bishops.add(Resources.RND_PATH);
+		bishops.add(Resources.JOKER_PATH);
 		bishops.add(Resources.PALADIN_PATH);
 		Collections.shuffle(bishops);
 
@@ -272,6 +279,7 @@ public class DraftScreen extends AbstractScreen {
 					changePiece();
 					arrow.setPosition(130, 110 + 100 * (5 - cont));
 				} else {
+					Render.app.getManager().get(Resources.END_DRAFT_SOUND,Sound.class).play(Settings.sfxVolume);
 					if (Render.DraftController == 1) {
 						Action draftAction = new Action() {
 							public boolean act(float delta) {
@@ -339,12 +347,27 @@ public class DraftScreen extends AbstractScreen {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				if(cont==0 && Render.DraftController==1) {
-					stage.dispose();
-					Render.app.setScreen(Render.MODESCREEN);
-				}
-				if(cont==0 && Render.DraftController==2) {
-					Render.DraftController--;
-					Render.app.setScreen(Render.DRAFTSCREEN);
+					Action draftAction = new Action() {
+						public boolean act(float delta) {
+							stage.dispose();
+							Render.app.setScreen(Render.MODESCREEN);
+							return true;
+						}
+					};
+					endDraft();
+					stage.addAction(Actions.delay(1f));
+					stage.addAction(Actions.after(draftAction));
+				}else if(cont==0 && Render.DraftController==2) {
+					Action draftAction = new Action() {
+						public boolean act(float delta) {
+							stage.dispose();
+							Render.app.setScreen(Render.MODESCREEN);
+							return true;
+						}
+					};
+					endDraft();
+					stage.addAction(Actions.delay(1f));
+					stage.addAction(Actions.after(draftAction));
 				}
 				if (cont > 0) {
 					previousCont=cont;

@@ -25,7 +25,7 @@ public class Parser {
 		case Resources.LANCER_PATH:
 			piece = new Lancer(color, x, y, board);
 			break;
-		case Resources.RND_PATH:
+		case Resources.JOKER_PATH:
 			piece = new Joker(color,x,y,board);
 			break;
 		case Resources.KNIGHT_PATH:
@@ -90,10 +90,12 @@ public class Parser {
 	}
 	
 	public static String parseMovementToString(Tile currentTile, Tile nextTile) {
+
 		return currentTile.getPos().x + "," + currentTile.getPos().y + "-" + nextTile.getPos().x + "," + nextTile.getPos().y;
 	}
 	
 	public static void parseStringToMovement(String movement){
+		System.out.println("Parsed "+movement);
 		final String[] params = movement.split("-");
 		String[] ogTile = params[0].split(",");
 		String[] nxtTile = params[1].split(",");

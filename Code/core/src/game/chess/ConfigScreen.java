@@ -248,6 +248,7 @@ public class ConfigScreen extends AbstractScreen {
 		configWriter.escribirLinea(8, Integer.toString(selectBox.getSelectedIndex() + 1));
 		// + 1 porque en el archivo de configuracion los idiomas se representan desde la fila 1
 		// En el archivo config.txt cada valor representa un idioma(1_ENG 2_ESP)
+		Render.app.getManager().get(Resources.APLLY_SETTINGS_SOUND,Sound.class).play(Settings.sfxVolume);
 	}
 
     /**

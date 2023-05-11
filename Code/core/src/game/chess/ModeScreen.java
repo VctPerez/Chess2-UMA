@@ -26,9 +26,7 @@ public class ModeScreen extends AbstractMenuScreen{
         		@Override
         		public void clicked(InputEvent event, float x, float y) {
         			super.clicked(event, x, y);	
-        			if(activatedTextButton == 0) {
-        				Render.DraftController = 1;
-        			}
+        	
         		}
         	});
         }
@@ -58,11 +56,24 @@ public class ModeScreen extends AbstractMenuScreen{
     		Render.player1Draft.clear();
     		Render.player2Draft.clear();
     		Render.DRAFTSCREEN=new DraftScreen();
-    		Render.app.setScreen(Render.DRAFTSCREEN);
+    		if(Render.DraftController==3){
+    			Render.LobbyController=1;
+    			Render.app.setScreen(Render.LOBBYSCREEN);
+    		}else {
+    			Render.app.setScreen(Render.DRAFTSCREEN);
+    		}
+    		
+    		
     	}else if(button == 1) {
     		Render.player1Draft.clear();
     		Render.player2Draft.clear();
-    		Render.app.setScreen(new GameScreen());
+    		if(Render.DraftController==3) {
+    			Render.LobbyController=0;
+    			Render.app.setScreen(Render.LOBBYSCREEN);
+    		}else {
+    			Render.app.setScreen(new GameScreen());
+    		}
+    		
     	}else if(button == 2) {
     		Render.app.setScreen(Render.MATCHMAKINGSCREEN);
     	}

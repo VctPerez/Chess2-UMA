@@ -25,7 +25,7 @@ public class LoadingScreen extends AbstractScreen{
         initializeElements();
         setupDataStructures();
 
-        Render.playBgMusic();
+        Render.playBgMusic(true);
     }
 
     @Override
