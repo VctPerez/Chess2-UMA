@@ -80,7 +80,7 @@ public class Witch extends Piece{
 		Action fireBall = new Action() {
 			public boolean act(float delta) {
 				Tile tile = board.getTile(next_x, next_y);
-				AnimationActor attack= new AnimationActor(0.13f, "fireBall.png", 5);
+				AnimationActor attack= new AnimationActor(0.13f, Resources.FIREBALL_PATH, 5);
 				attack.setOrigin(attack.getWidth()/2, attack.getHeight()/2);
 		
 				float rotation = (float) Math.atan((tile.getY() -  getY())/(tile.getX() - getX()));
@@ -117,7 +117,7 @@ public class Witch extends Piece{
 
 			public boolean act(float delta) {
 				Tile tile = board.getTile(next_x, next_y);
-				AnimationActor explosion= new AnimationActor(0.16f, "explosion.png", 5);
+				AnimationActor explosion= new AnimationActor(0.16f, Resources.EXPLOSION_PATH, 5);
 				explosion.setPosition(tile.getX(), tile.getY());
 				explosion.setSize(board.getTile(x, y).getWidth(), board.getTile(x, y).getWidth());
 				

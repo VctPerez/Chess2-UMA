@@ -243,7 +243,7 @@ public class Paladin extends Piece{
 			
 			public boolean act(float delta) {
 				Tile tile = board.getTile(next_x, next_y);
-				AnimationActor swing= new AnimationActor(0.13f, "sword-swing.png", 4);
+				AnimationActor swing= new AnimationActor(0.13f, Resources.SWORD_SWING_PATH, 4);
 				
 				
 				if(Render.hosting) {

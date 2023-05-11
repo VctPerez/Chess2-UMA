@@ -5,20 +5,16 @@ package utils;
  * en nuestro proyecto; como imágenes, fuentes de letras, música, videos, etc...
  */
 public class Resources {
+	//LOADING AND MENU SCREEN
     public static final String LOADINGSCREEN_PATH = "sprites/loadingScreen.jpg";
-    public static final String MENU_BACKGROUND_PATH = "sprites/BackgroundImageDM.png";
-    public static final String PIECE_DISPOSER_PATH = "sprites/PieceDisposer.png";
-    public static final String GRAVEYARD_PATH = "sprites/Graveyard.png";
+    public static final String MENU_BACKGROUND_PATH = "sprites/Background/BackgroundImageDM.png";
     public static final String BLACK_OPACITY_PATH = "sprites/Black.png";
-    public static final String RESULTS_BACKGROUND_PATH = "sprites/resultBackground.png";
-    public static final String FONT_MENU_PATH = "fonts/Arial.ttf";
     public static final String LOGO_PATH="logo_blanco.png";
     public static final String PIXEL_LOGO_PATH = "sprites/loadingScreen/pixelLogo.png";
     public static final String LOADINGTITLE_PATH = "sprites/loadingScreen/loadingTitle.png";
-
     public static final String BLACK_BACKGROUND_PATH = "sprites/loadingScreen/backgroundFade.png";
 
-    //SONIDOS
+    //SOUNDS
     public static final String MENU_THEME = "sound/music/menuTheme.ogg";
     public static final String LOSE_MUSIC = "sound/music/loseMusic.wav";
     public static final String WIN_MUSIC = "sound/music/winMusic.wav";
@@ -26,10 +22,8 @@ public class Resources {
     public static final String MATCH_MUSIC = "sound/music/matchMusic.wav";
     
     public static final String PIECESELECTION_SOUND = "sound/SeleccionPieza.mp3";
-    //public static final String PIECEMOVE_SOUND = "sound/pieceMove.mp3";
     public static final String PIECEMOVE_SOUND = "sound/MoverPieza.wav";
     public static final String BUTTON_CLICKSOUND = "sound/Hit_D_-30cents.wav";
-    //public static final String BUTTON_HOVERSOUND = "sound/Hover_A_-30cents.wav";
     public static final String BUTTON_HOVERSOUND = "sound/Hover_v2.wav";
     public static final String APLLY_SETTINGS_SOUND = "sound/SettingsApply.wav";
     public static final String END_DRAFT_SOUND = "sound/FinalizarSeleccionPieza.wav";
@@ -43,17 +37,9 @@ public class Resources {
     public static final String LODINGSOUND3 = "sound/LoadingScreen/loading3.mp3";
     public static final String LODINGSOUND4 = "sound/LoadingScreen/loading4.mp3";
 
-    //BOTONES
-    public static final String CHECK_PATH = "sprites/Testing-Pieces/Testing-Pawn.png";
-    public static final String SLIDER_PATH = "sprites/volumeBar/volumeBar_bar(x2Size).png";
-    public static final String SELECTEDBAR_PATH = "sprites/volumeBar/volumeBar_selected(x2Size).png";
-    public static final String UNSELECTEDBAR_PATH = "sprites/volumeBar/volumeBar_unselected(x2Size).png";
-
-//    public static final String CHECKBOX_SELECTED = "sprites/checkBox/checkBox_selected.png";
-//    public static final String CHECKBOX_UNSELECTED = "sprites/checkBox/checkBox_unselected.png";
-    //public static final String CHECK_PATH = "sprites/Testing-Pieces/Testing-Pawn.png";
-
+    //SKIN
     public static final String SKIN_PATH = "Skin Composer/UIStyle.json";
+    public static final String FONT_MENU_PATH = "Skin Composer/Arial.ttf";
 
     // RECURSOS PARTIDA
     public static final String PAWN_PATH = "sprites/Pieces/Pieces Base Form/White_Pawn.png";
@@ -108,10 +94,22 @@ public class Resources {
     public static final String BLACK_MAGE_PATH = "sprites/Pieces/Pieces Modified/Black_Mage.png";
     public static final String BLACK_MAGE_PATH2 = "sprites/Pieces/Pieces Modified/Black_Mage2.png";
     
+    //ANIMATIONS
+    public static final String MINER_DIG_PATH = "sprites/animations/dig.png";
+    public static final String MINER_DIG_ANIMATION_PATH = "sprites/animations/digAnimation.png";
+    public static final String EXPLOSION_PATH = "sprites/animations/explosion.png";
+    public static final String FIREBALL_PATH = "sprites/animations/fireball.png";
+    public static final String MAGE_ANIMATION_PATH = "sprites/animations/MageAnimation.png";
+    public static final String SWORD_SWING_PATH = "sprites/animations/sword-swing.png";
+    
+    //AUX
     public static final String FRAME_PATH = "sprites/selectionFrame.png";
     public static final String ARROW_PATH = "sprites/Arrow.png";
-    public static final String CROSS_PATH = "Cross.png";
-    public static final String TICK_PATH = "Tick.png";
+    public static final String CROSS_PATH = "sprites/Button/Cross.png";
+    public static final String TICK_PATH = "sprites/Button/Tick.png";
+    public static final String PIECE_DISPOSER_PATH = "sprites/PieceDisposer.png";
+    public static final String GRAVEYARD_PATH = "sprites/Graveyard.png";
+    public static final String RESULTS_BACKGROUND_PATH = "sprites/resultBackground.png";
     
     
 }

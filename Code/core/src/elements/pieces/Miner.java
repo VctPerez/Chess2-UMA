@@ -26,7 +26,7 @@ public class Miner extends Piece {
 	protected void updateXY(int dest_x, int dest_y) {
 		Action dig = new Action() {
 			public boolean act(float delta) {
-				AnimationActor dig= new AnimationActor(0.13f, "dig.png", 3);
+				AnimationActor dig= new AnimationActor(0.13f, Resources.MINER_DIG_PATH, 3);
 				dig.setPosition(getX(), getY());
 				dig.setSize(board.getTile(x, y).getWidth(), board.getTile(x, y).getWidth());
 				
@@ -48,7 +48,7 @@ public class Miner extends Piece {
 		
 		Action digAnimation = new Action() {
 			public boolean act(float delta) {
-				AnimationActor digAnimation= new AnimationActor(0.13f, "digAnimation.png", 3);
+				AnimationActor digAnimation= new AnimationActor(0.13f, Resources.MINER_DIG_ANIMATION_PATH, 3);
 				digAnimation.setPosition(getX(), getY());
 				digAnimation.setSize(board.getTile(x, y).getWidth(), board.getTile(x, y).getWidth());
 				

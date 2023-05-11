@@ -86,7 +86,7 @@ public class Bomber extends Piece{
 			Sound sound = Render.app.getManager().get(Resources.EXPLOSION_SOUND, Sound.class);
 
 			public boolean act(float delta) {
-				AnimationActor explosion= new AnimationActor(0.13f, "explosion.png", 5);
+				AnimationActor explosion= new AnimationActor(0.13f, Resources.EXPLOSION_PATH, 5);
 				explosion.setPosition(getX()-board.getTile(x, y).getWidth(), getY()-board.getTile(x, y).getWidth());
 				explosion.setSize(3*board.getTile(x, y).getWidth(), 3*board.getTile(x, y).getWidth());
 				

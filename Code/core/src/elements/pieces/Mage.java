@@ -42,7 +42,7 @@ public class Mage extends Leader {
 
         Action tpAnimation = new Action() {
 			public boolean act(float delta) {
-				AnimationActor mageAnimation= new AnimationActor(0.13f, "MageAnimation.png", 3);
+				AnimationActor mageAnimation= new AnimationActor(0.13f, Resources.MAGE_ANIMATION_PATH, 3);
 				mageAnimation.rotateBy(90);
 				mageAnimation.setPosition(getX()+board.getTile(x,y).getWidth(), getY());
 				mageAnimation.setSize(board.getTile(x, y).getWidth(), board.getTile(x, y).getWidth());
@@ -59,7 +59,7 @@ public class Mage extends Leader {
         
         Action tp = new Action() {
 			public boolean act(float delta) {
-				AnimationActor mageAnimation= new AnimationActor(0.13f, "MageAnimation.png", 3);
+				AnimationActor mageAnimation= new AnimationActor(0.13f, Resources.MAGE_ANIMATION_PATH, 3);
 				mageAnimation.rotateBy(90);
 				mageAnimation.setPosition(getX()+board.getTile(x,y).getWidth(), getY());
 				mageAnimation.setSize(board.getTile(x, y).getWidth(), board.getTile(x, y).getWidth());
