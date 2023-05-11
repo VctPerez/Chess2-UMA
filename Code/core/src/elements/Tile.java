@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import elements.pieces.King;
 import elements.pieces.Leader;
+import interaccionFichero.LineReader;
 import utils.Image;
 import utils.Render;
 import utils.Resources;
@@ -22,15 +23,18 @@ public class Tile extends Actor{
 	public Piece piece;
 	public Boolean highlight,attacked;
 	private Image frame;
+	LineReader dataReader;
 	
 	public Tile(int matrix_x, int matrix_y, float coord_x, float coord_y, float tileSize, int color) {
+		
+		dataReader = new LineReader("files/Datos.txt"); //Abrimos los datos
 		
 		pos = new Vector2(matrix_x, matrix_y);
 		tile = new ShapeRenderer();
 		setPosition(coord_x, coord_y);
 		setSize(tileSize, tileSize);
 		if(color == 1) {
-			setColor(new Color(0.1745f, 0.23f, 0.3f,1f));//color azul apagado que queda bastante bien
+			setColor(new Color(dataReader.leerFLOATLinea(7),dataReader.leerFLOATLinea(8),dataReader.leerFLOATLinea(9),dataReader.leerFLOATLinea(10)));//color azul apagado que queda bastante bien
 			//setColor(new Color(0.1745f, 0.1745f, 0.1745f,1f)); //color gris mas oscuro que las piezas
 			
 		}else {
