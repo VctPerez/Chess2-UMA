@@ -22,7 +22,7 @@ Este proyecto ha sido ralizado con el framework:     [***LIBGDX***](https://libg
 
 
 ![Termux Logo](https://i.imgur.com/ZqeEfQR.png#gh-dark-mode-only)
-![Termux Logo]((https://i.imgur.com/fiNfJgw.png#gh-light-mode-only)
+![Termux Logo](https://i.imgur.com/fiNfJgw.png#gh-light-mode-only)
 
 ![Logo](https://i.imgur.com/ZqeEfQR.png#gh-dark-mode-only)
 ![Logo](https://i.imgur.com/fiNfJgw.png#gh-light-mode-only)
