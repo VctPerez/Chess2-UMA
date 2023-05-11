@@ -1,27 +1,32 @@
 package game.chess;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-
 import elements.DrawBox;
 import elements.DropDownMenu;
+import elements.Piece;
 import elements.Tile;
-import elements.pieces.King;
-import elements.pieces.Mage;
-import elements.pieces.Midas;
+import elements.pieces.Joker;
 import utils.Parser;
 import utils.Render;
-
-import java.io.IOException;
-
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
 import utils.TextButton;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 public class OnlineGameScreen extends GameScreen {
+
+	@Override
+	public void show() {
+		super.show();
+		//System.out.println(thereIsJoker());
+		if (thereIsJoker()) putJokerSeed();
+	}
+
 	@Override
 	protected void createTableElements() {
 		super.createTableElements();
@@ -45,6 +50,28 @@ public class OnlineGameScreen extends GameScreen {
 	protected void setUpTable() {
 		super.setUpTable();
 		table.add(drawButton).right().padRight(60).expandX();
+
+	}
+
+	private void putJokerSeed() {
+		//Se inicializan para que trengan la misma longitud y, con suerte, los mismos elementos
+		List<String> subDraft1 = new ArrayList<>(Render.player1Draft).subList(0,6),
+				subDraft2 = new ArrayList<>(Render.player2Draft).subList(0,6);
+		System.out.println(subDraft1);
+		long semilla1 = subDraft1.hashCode(), semilla2 = subDraft2.hashCode();
+		//System.out.println(Render.player1Draft.size());
+		Piece aux = board.getTile(3,1).piece;
+		if (aux instanceof Joker){ //Si uno es joker, el otro lo es
+			((Joker) aux).setSeed(semilla1);
+			((Joker) board.getTile(6,1).piece).setSeed(~semilla1);
+			System.out.printf("Semilla1: %X",semilla1);
+		}
+		aux = board.getTile(3,8).piece;
+		if (aux instanceof Joker){
+			((Joker) aux).setSeed(semilla2);
+			((Joker) board.getTile(6,8).piece).setSeed(~semilla2);
+			System.out.printf("Semilla2: %X",semilla2);
+		}
 	}
 
 	@Override

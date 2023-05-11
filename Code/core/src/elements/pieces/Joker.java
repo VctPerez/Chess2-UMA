@@ -47,8 +47,6 @@ public class Joker extends Piece {
 		i = (int) (rnd.nextInt(100 - tam) + prev.y + 1) % 100;
 
 		Piece nueva;
-		
-		
 		if (i >= 1 && i <= 30) {
 			nueva = Parser.getPieceFromPath(Resources.BISHOP_PATH, color, this.x, this.y, board);
 			mask = jokerImage(Resources.BISHOP_PATH);
@@ -90,7 +88,7 @@ public class Joker extends Piece {
 	}
 
 	/**
-	 * A�ade a movements todos los movimientos posibles del caballo
+	 * Añade a movements todos los movimientos posibles del caballo
 	 *
 	 */
 
@@ -132,6 +130,14 @@ public class Joker extends Piece {
 			default:
 				throw new IllegalArgumentException("Configuración errónea");
 		}
+	}
+
+	/**
+	 * Crea un nuevo random para el Joker
+	 * @param i
+	 */
+	public void setSeed(long i){
+		rnd = new Random(i);
 	}
 
 	/**
