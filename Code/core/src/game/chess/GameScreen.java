@@ -33,7 +33,7 @@ public class GameScreen extends AbstractScreen {
 	private Timer timerW, timerB;
 
 	// CONTROL JAQUE
-	public static Vector2 whiteKing = new Vector2(5, 1), blackKing = new Vector2(5, 8);
+	public static Vector2 whiteKing, blackKing;
 	protected static boolean whiteCheck, blackCheck, whiteCheckMate, blackCheckMate;
 	public static ArrayList<Piece> whitePieces, blackPieces;
 
@@ -69,6 +69,8 @@ public class GameScreen extends AbstractScreen {
 
 		PLAYER = true;
 
+		whiteKing = new Vector2(5, 1);
+		blackKing = new Vector2(5, 8);
 		whiteCheck = false;
 		blackCheck = false;
 		whiteCheckMate = false;
@@ -336,7 +338,6 @@ public class GameScreen extends AbstractScreen {
 				Piece piece = whitePieces.get(i);
 				i++;
 				if (piece.getValidMovements().contains(blackKing)) {
-					System.out.println(piece.toString() + " LE HACE JAQUE AL REY NEGRO ["+blackKing.x +" ,"+blackKing.y+"]" );
 					blackCheck = true;
 					board.getTile(blackKing.x, blackKing.y).attacked = true;
 					Render.app.getManager().get(Resources.JAQUE_SOUND,Sound.class).play(Settings.sfxVolume);
@@ -347,7 +348,6 @@ public class GameScreen extends AbstractScreen {
 				Piece piece = blackPieces.get(i);
 				i++;
 				if (piece.getValidMovements().contains(whiteKing)) {
-					System.out.println(piece.toString() + " LE HACE JAQUE AL REY BLANCO");
 					whiteCheck = true;
 					board.getTile(whiteKing.x, whiteKing.y).attacked = true;
 					Render.app.getManager().get(Resources.JAQUE_SOUND,Sound.class).play(Settings.sfxVolume);

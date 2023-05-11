@@ -34,8 +34,7 @@ public class DraftScreen extends AbstractScreen {
 	
 	private Image arrow,pieceDisposer;
 
-	private int previousCont = 0;
-	private int cont = 0;
+	private int cont, previousCont;
 	private LineReader languageReader, configReader;
 
 	TileButton tile1, tile2;
@@ -58,7 +57,7 @@ public class DraftScreen extends AbstractScreen {
 		}
 		
 		
-
+		
 		System.out.println("El modo de draft es " + Render.DraftController);
 		stage = new Stage(new FitViewport(1280, 720));
 		Gdx.input.setInputProcessor(stage);
@@ -78,7 +77,7 @@ public class DraftScreen extends AbstractScreen {
 
 		info = new PieceInfo();
 		info.setPosition(1280, 40);
-		info.addAction(Actions.moveTo(750, 40, 0.5f));
+		info.addAction(Actions.moveTo(750, 40, 0.5f));		
 
 		// -------------------------------
 		stage.addActor(Render.menuBG);
@@ -213,28 +212,20 @@ public class DraftScreen extends AbstractScreen {
 			piece.setName(key);
 			piece.setSize(84, 84);
 			piece.setPosition(-84, 85 + ((5 - i) * 100));
-			piece.addAction(Actions.moveBy(104, 0, 0.5f));
-
+			piece.addAction(Actions.moveTo(20, 85 + ((5 - i) * 100), 0.5f));
 			pieces.add(piece);
 			stage.addActor(piece);
 
 			i++;
 		}
 		
-		pieceDisposer.addAction(Actions.moveBy(130, 0, 0.5f));
+		pieceDisposer.addAction(Actions.moveTo(5, 0, 0.5f));
 		arrow.addAction(Actions.moveTo(135,  110 + 100 * (5 - cont), 0.5f));
 		
-		Action action = new Action() {
-			public boolean act(float delta) {
-				pieces.get(cont).addAction(Actions.moveBy(20, 0, 0.3f));
-				return true;
-			}
-		};
-		changePiece();
-
-		stage.addAction(Actions.sequence(Actions.delay(0.6f), action));
-
 		
+		pieces.get(cont).addAction(Actions.sequence(Actions.delay(0.55f), Actions.moveTo(40, 85 + ((5 - cont) * 100), 0.3f)));
+		
+		changePiece();
 	}
 	
 	private void endDraft() {
@@ -250,6 +241,7 @@ public class DraftScreen extends AbstractScreen {
 		back.addAction(Actions.moveTo(175, -50, 0.5f));
 		info.addAction(Actions.moveTo(1280, 40, 0.5f));
 		arrow.addAction(Actions.moveTo(-12f, 110 + 100 * (5 - cont), 0.5f));
+		stage.addAction(Actions.delay(0.6f));
 	}
 
 	private void updateDraft() {
@@ -264,12 +256,28 @@ public class DraftScreen extends AbstractScreen {
 	 * o se envian y reciben los drafts con otro jugador
 	 */
 	private void initButtons() {
-		// Botones con nombre momentaneos, se cambiara y se a�adira a los ficheros de
-		// idiomas
-
 		next = new TextButton(languageReader.readLine(2), "SingleClickStyle");
 		next.setPosition(480, -50);
 		next.addAction(Actions.moveTo(480, 50, 0.5f));
+		
+		Action initListeners = new Action() {
+			public boolean act(float delta) {
+				initButtonsListeners();
+				return true;
+			}
+		};
+		
+		next.addAction(Actions.sequence(Actions.delay(0.6f), initListeners));
+		
+		back = new TextButton(languageReader.readLine(1), "SingleClickStyle");
+		back.setPosition(175, -50);
+		back.addAction(Actions.moveTo(175, 50, 0.5f));
+
+		stage.addActor(next);
+		stage.addActor(back);
+	}
+
+	private void initButtonsListeners() {
 		next.addCaptureListener(new InputListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -291,7 +299,6 @@ public class DraftScreen extends AbstractScreen {
 							}
 						};
 						endDraft();
-						stage.addAction(Actions.delay(1f));
 						stage.addAction(Actions.after(draftAction));
 					} else if (Render.DraftController == 2) {
 						Action draftAction = new Action() {
@@ -303,7 +310,6 @@ public class DraftScreen extends AbstractScreen {
 							}
 						};
 						endDraft();
-						stage.addAction(Actions.delay(1f));
 						stage.addAction(Actions.after(draftAction));
 
 					} else if (Render.DraftController == 3) {
@@ -327,7 +333,6 @@ public class DraftScreen extends AbstractScreen {
 							}
 						};
 						endDraft();
-						stage.addAction(Actions.delay(1f));
 						stage.addAction(Actions.after(draftAction));
 					}
 
@@ -339,10 +344,7 @@ public class DraftScreen extends AbstractScreen {
 				return true;
 			}
 		});
-
-		back = new TextButton(languageReader.readLine(1), "SingleClickStyle");
-		back.setPosition(175, -50);
-		back.addAction(Actions.moveTo(175, 50, 0.5f));
+		
 		back.addCaptureListener(new InputListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -355,7 +357,6 @@ public class DraftScreen extends AbstractScreen {
 						}
 					};
 					endDraft();
-					stage.addAction(Actions.delay(1f));
 					stage.addAction(Actions.after(draftAction));
 				}else if(cont==0 && Render.DraftController==2) {
 					Action draftAction = new Action() {
@@ -366,7 +367,6 @@ public class DraftScreen extends AbstractScreen {
 						}
 					};
 					endDraft();
-					stage.addAction(Actions.delay(1f));
 					stage.addAction(Actions.after(draftAction));
 				}
 				if (cont > 0) {
@@ -377,14 +377,11 @@ public class DraftScreen extends AbstractScreen {
 				}
 
 				if (cont == 4) {
-					next.setText("Siguiente");
+					next.setText(languageReader.readLine(2));
 				}
 				return true;
 			}
 		});
-
-		stage.addActor(next);
-		stage.addActor(back);
 	}
 
 	private void updateTileButtons(ArrayList<String> pieceClass) {
@@ -396,7 +393,6 @@ public class DraftScreen extends AbstractScreen {
 		currentPieceSelection = tile1.getPiece();
 		info.getInfoFrom(currentPieceSelection);
 		updateDraft();
-
 	}
 
 	public void changePiece() {
@@ -420,8 +416,10 @@ public class DraftScreen extends AbstractScreen {
 				updateTileButtons(kings);
 				break;
 		}
-		pieces.get(previousCont).addAction(Actions.moveBy(-20f, 0, 0.3f));
-		pieces.get(cont).addAction(Actions.moveBy(20f, 0, 0.3f));
+		if(previousCont>=0) {
+			pieces.get(previousCont).addAction(Actions.moveBy(-20,0, 0.3f));			
+		}
+		pieces.get(cont).addAction(Actions.moveBy(20,0, 0.3f));
 		
 	}
 

@@ -30,7 +30,7 @@ public class TextButton extends com.badlogic.gdx.scenes.scene2d.ui.TextButton{
     		@Override
     		public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
     			super.exit(event, x, y, pointer, toActor);
-    			if(!textButton.isChecked()) {
+    			if(!textButton.isPressed()) {
     				textButton.addAction(Actions.moveBy(-10, 0, 0.1f));
     			}
     		}

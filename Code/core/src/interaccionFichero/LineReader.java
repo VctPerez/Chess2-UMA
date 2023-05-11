@@ -103,6 +103,7 @@ public class LineReader
 	public int leerINTLinea(int numeroDeLinea) //Para funcionar necesita que en la linea solo este el numero
 	{
 		String n = readLine(numeroDeLinea);
+		if(n==null) return 0;
 		return (int) Integer.parseInt(n);
 	}
 	
@@ -117,6 +118,7 @@ public class LineReader
 	public double leerDOUBLELinea(int numeroDeLinea) //Para funcionar necesita que en la linea solo este el numero
 	{
 		String n = readLine(numeroDeLinea);
+		if(n==null) return 0;
 		return (double) Double.parseDouble(n);
 	}
 	
@@ -131,6 +133,7 @@ public class LineReader
 	public float leerFLOATLinea(int numeroDeLinea) //Para funcionar necesita que en la linea solo este el numero
 	{
 		String n = readLine(numeroDeLinea);
+		if(n==null) return 0;
 		return (float) Float.parseFloat(n);
 	}
 	
@@ -147,6 +150,7 @@ public class LineReader
 	public boolean leerBOOLEANLinea(int numeroDeLinea) //Para funcionar necesita que en la linea solo este el boolean ("true" para que devuelva true; "loQueSea" para que devuelva false)
 	{
 		String n = readLine(numeroDeLinea);
+		if(n==null) return false;
 		return (boolean) Boolean.parseBoolean(n);
 	}
 }

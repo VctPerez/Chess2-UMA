@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
@@ -22,6 +23,7 @@ public class ProfileScreen extends AbstractMenuScreen {
     LineWriter dataWriter;
     private TextField textField;
     private SelectBox<String> selectBox;
+    private Table editTable;
     
     @Override
     public void show() {
@@ -31,8 +33,11 @@ public class ProfileScreen extends AbstractMenuScreen {
     	dataReader = new LineReader("files/Datos.txt"); //Abrimos los datos
     	dataWriter = new LineWriter("files/Datos.txt"); //Para escribir los datos
 
+    	editTable = new Table();
+    	editTable.setFillParent(true);
+    	
     	super.show();
-    	//table.debug();
+    	//editTable.debug();
     	
        // Render.bgMusic = Render.app.getManager().get(Resources.MENU_THEME);
         Render.bgMusic.setLooping(true);
@@ -43,7 +48,7 @@ public class ProfileScreen extends AbstractMenuScreen {
     @Override
     protected void createTableElements() {
     	
-    	Text = new Label[7];
+    	Text = new Label[8];
     	title = new Label(languageReader.readLine(7), Render.skin, "TitleStyle");
     	
     	for(int i=0;i<Text.length-1;i++) {
@@ -51,8 +56,10 @@ public class ProfileScreen extends AbstractMenuScreen {
     		Text[i] = new Label(aux ,Render.skin,"SmallTextStyle");
     	}
     	
-    	Text[6] = new Label("Tablero: ",Render.skin,"SmallTextStyle");
+    	Text[6] = new Label(languageReader.readLine(12),Render.skin,"SmallTextStyle");
     	Text[6].setVisible(false);
+    	Text[7] = new Label(languageReader.readLine(10),Render.skin,"SmallTextStyle");
+    	Text[7].setVisible(false);
     	
     	textButton = new TextButton[2];
     	
@@ -61,21 +68,25 @@ public class ProfileScreen extends AbstractMenuScreen {
     	
     	//Si mas botones luego se pone for
     	for(int i=0;i<textButton.length;i++) {
-    		textButton[i].addAnimation();
         	textButton[i].addSounds();
     	}
     	
-    	textField = new TextField(languageReader.readLine(10));
+    	textField = new TextField(dataReader.readLine(1));
         textField.setAlignment(Align.center);
     	textField.setVisible(false);
     	
     	//SELECTBOX
-    	String[] items = {"Azul", "Negro", "Rojo"};
+    	String[] items = {"Azul", "Negro", "Rojo","Verde"};
     	selectBox = new SelectBox<String>(Render.skin);
     	selectBox.setItems(items);
     	selectBox.setVisible(false);
     	selectBox.setAlignment(Align.center);
         
+    }
+    
+    protected void addActors() {
+    	super.addActors();
+    	super.stage.addActor(editTable);
     }
     
     /**
@@ -91,7 +102,7 @@ public class ProfileScreen extends AbstractMenuScreen {
     
     @Override
     protected void addExitAnimation(float distance, float delay, float time) {
-    	super.addExitAnimation(distance, delay, time);
+    	editTable.addAction(Actions.fadeOut(0.25f));
     	table.addAction(Actions.fadeOut(0.25f));
     }
     
@@ -108,14 +119,19 @@ public class ProfileScreen extends AbstractMenuScreen {
     			table.row();
     		}
     	}
-    	table.add(textButton[0]).padTop(50);
-    	table.add(Text[6]).padTop(50);
-    	table.row();
-    	table.add(textButton[1]);
-    	table.add(selectBox).space(25).fillX().colspan(3);
-    	table.row();
-    	table.add(textField).width(500);
-    	table.row();
+    	table.padBottom(300);
+    	
+    	editTable.left().bottom().padBottom(50).padLeft(50);
+    	editTable.add(Text[6]).padBottom(150);
+    	editTable.add(selectBox).space(25).fillX().colspan(3).padBottom(130).padLeft(15);
+    	editTable.add(Text[7]).padBottom(150).padLeft(50);
+    	editTable.add(textField).width(450).padBottom(150).padLeft(15);
+    	editTable.row();
+    	editTable.add(textButton[1]);
+    	editTable.add(textButton[0]).padLeft(15);
+    	editTable.row();
+
+    	
     }
     
     @Override
@@ -137,6 +153,7 @@ public class ProfileScreen extends AbstractMenuScreen {
          			textField.setVisible(true);
          			selectBox.setVisible(true);
          			Text[6].setVisible(true);
+         			Text[7].setVisible(true);
          		}
          	});
     	
@@ -147,6 +164,7 @@ public class ProfileScreen extends AbstractMenuScreen {
 						textField.setVisible(false);
 						selectBox.setVisible(false);
 						Text[6].setVisible(false);
+						Text[7].setVisible(false);
 						Label prev = Text[0];
 						dataWriter.escribirLinea(1, textField.getText()); //Nombre
 						updateName(prev);
@@ -160,26 +178,32 @@ public class ProfileScreen extends AbstractMenuScreen {
 		selectBox.addListener(new ChangeListener() {
 		    @Override
 		    public void changed(ChangeEvent event, Actor actor) {
-		        String selectedOption = selectBox.getSelected();
-		        if(selectedOption.equals("Azul")) {
+		        //String selectedOption = selectBox.getSelected();
+		        if(selectBox.getSelectedIndex()==0) {
 		        	dataWriter.escribirLinea(7, "0.1745f");
 		        	dataWriter.escribirLinea(8, "0.23f");
 		        	dataWriter.escribirLinea(9, "0.3f" );
 		        	dataWriter.escribirLinea(10, "1f");
-		        }else if(selectedOption.equals("Negro")) {
+		        }else if(selectBox.getSelectedIndex()==1) {
 		        	dataWriter.escribirLinea(7, "0f");
 		        	dataWriter.escribirLinea(8, "0f");
 		        	dataWriter.escribirLinea(9, "0f" );
 		        	dataWriter.escribirLinea(10, "1f");
-		        }else {
+		        }else if(selectBox.getSelectedIndex()==2){
 		        	dataWriter.escribirLinea(7, "0.5");
 		        	dataWriter.escribirLinea(8, "0.23f");
+		        	dataWriter.escribirLinea(9, "0.3f" );
+		        	dataWriter.escribirLinea(10, "1f");
+		        }else{
+		        	dataWriter.escribirLinea(7, "0.1745f");
+		        	dataWriter.escribirLinea(8, "0.5f");
 		        	dataWriter.escribirLinea(9, "0.3f" );
 		        	dataWriter.escribirLinea(10, "1f");
 		        }
 		        selectBox.setVisible(false);
 		        textField.setVisible(false);
 		        Text[6].setVisible(false);
+		        Text[7].setVisible(false);
 		    }
 		});
     }
