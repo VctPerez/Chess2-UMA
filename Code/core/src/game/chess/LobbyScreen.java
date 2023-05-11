@@ -20,7 +20,13 @@ import utils.TextButton;
 
 import java.io.IOException;
 import java.net.Inet4Address;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.Iterator;
 
 public class LobbyScreen extends AbstractScreen{
     private Stage stage;
@@ -206,8 +212,8 @@ public class LobbyScreen extends AbstractScreen{
     		label[3].setText(player1.getName());
     		label[5].setText("...");
     		label[5].setStyle(Render.skin.get("PlayerOFFStyle",LabelStyle.class));
-    		label[1].setText(languageReader.readLine(3) + obfuscateIP(Inet4Address.getLocalHost().getHostAddress()));
-    		System.out.println(Inet4Address.getLocalHost().getHostAddress());
+    		Inet4Address ipAddress = getIp();
+    		label[1].setText(languageReader.readLine(3) + obfuscateIP(ipAddress.toString().split("/")[1]));
     	}else {
     		textButton[0].setText(languageReader.readLine(5));
     		textButton[0].setChecked(true);
@@ -220,7 +226,35 @@ public class LobbyScreen extends AbstractScreen{
     	textButton[2].setText(languageReader.readLine(10));
     }
     
-    private void addListener(){
+    private Inet4Address getIp() {
+    	Enumeration<NetworkInterface> ips = null;
+		try {
+			ips = NetworkInterface.getNetworkInterfaces(); //Obtiene todas las interfaces
+		} catch (SocketException e) {
+			System.out.println("Error encontrando interfaces de red");
+			e.printStackTrace();
+		}
+    	ArrayList<Inet4Address> lista = new ArrayList<>();
+    	Enumeration<InetAddress> aux;
+    	InetAddress ipAux;
+    	while (ips.hasMoreElements()) {
+    		aux = ips.nextElement().getInetAddresses();
+    		while (aux.hasMoreElements()) {
+    			ipAux = aux.nextElement();
+				if (ipAux instanceof Inet4Address) {
+					if (!ipAux.toString().split("/")[1].equals("192.168.56.1")
+						&& ipAux.isSiteLocalAddress()) { //No es makidiab y es local
+					lista.add((Inet4Address)ipAux);
+					}
+				}
+				
+			}
+		}
+    	System.out.println(lista);
+		return lista.get(0);
+	}
+
+	private void addListener(){
     	//SEARCH BUTTON
         textButton[0].addListener(new ClickListener(){
             @Override
