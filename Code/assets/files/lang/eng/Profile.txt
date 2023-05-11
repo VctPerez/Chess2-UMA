@@ -8,4 +8,4 @@ Profile
 Return
 Edit
 USERNAME
-MAX 18 Characters
+MAX 12 Characters

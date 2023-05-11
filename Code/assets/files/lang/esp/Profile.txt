@@ -8,6 +8,6 @@ Perfil
 Volver
 Editar
 Nombre Usuario
-MAX 18 Caracteres
+MAX 12 Caracteres
 
 
