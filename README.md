@@ -20,7 +20,9 @@ Este proyecto ha sido ralizado con el framework:     [***LIBGDX***](https://libg
 -   Pablo Miguel Aguilar Blanco 	 		
 -   José Ángel Bueno Ruiz
 
-
-![Logo](https://i.imgur.com/ZqeEfQR.png#gh-dark-mode-only)
-![Logo](https://i.imgur.com/fiNfJgw.png#gh-light-mode-only)
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://i.imgur.com/ZqeEfQR.png">
+  <source media="(prefers-color-scheme: light)" srcset="https://i.imgur.com/fiNfJgw.png">
+  <img alt="Shows a black logo in light color mode and a white one in dark color mode." src="https://user-images.githubusercontent.com/25423296/163456779-a8556205-d0a5-45e2-ac17-42d089e3c3f8.png">
+</picture>
 

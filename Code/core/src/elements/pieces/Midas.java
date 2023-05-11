@@ -14,6 +14,8 @@ import utils.Resources;
 import java.util.ArrayList;
 
 public class Midas extends Leader {
+	
+	private boolean validDirection;
 
 	public Midas(Boolean color, int x, int y, Board board) {
 		super(color, Resources.MIDAS_PATH, x, y, board);
@@ -82,28 +84,30 @@ public class Midas extends Leader {
 			direction = -1;
 		}
 
-		if (super.ate >= 0) {
-			addMovement(x, y + direction, board, movements);
-			addMovement(x, y - direction, board, movements);
-			addMovement(x + direction, y, board, movements);
-			addMovement(x - direction, y, board, movements);
-		}
-		if (super.ate >= 1) {
-			addMovement(x + direction, y + direction, board, movements);
-			addMovement(x - direction, y - direction, board, movements);
-			addMovement(x + direction, y - direction, board, movements);
-			addMovement(x - direction, y + direction, board, movements);
-			
-		}
-		if (super.ate >= 3) {
-			addMovement(x, y + 2*direction, board, movements);
-			addMovement(x, y - 2*direction, board, movements);
-			addMovement(x + 2*direction, y, board, movements);
-			addMovement(x - 2*direction, y, board, movements);
-			addMovement(x + 2*direction, y + 2*direction, board, movements);
-			addMovement(x - 2*direction, y - 2*direction, board, movements);
-			addMovement(x + 2*direction, y - 2*direction, board, movements);
-			addMovement(x - 2*direction, y + 2*direction, board, movements);
+		if (super.ate == 0) {
+			checkDirection(x,y,0,1,1,movements);
+			checkDirection(x,y,0,-1,1,movements);
+			checkDirection(x,y,1,0,1,movements);
+			checkDirection(x,y,-1,0,1,movements);
+		}else if (super.ate == 1 || super.ate == 2) {
+			checkDirection(x,y,0,1,1,movements);
+			checkDirection(x,y,0,-1,1,movements);
+			checkDirection(x,y,1,0,1,movements);
+			checkDirection(x,y,-1,0,1,movements);
+			checkDirection(x,y,1,1,1,movements);
+			checkDirection(x,y,-1,-1,1,movements);
+			checkDirection(x,y,-1,1,1,movements);
+			checkDirection(x,y,1,-1,1,movements);	
+		}else if (super.ate >= 3) {
+			checkDirection(x,y,0,1,2,movements);
+			checkDirection(x,y,0,-1,2,movements);
+			checkDirection(x,y,1,0,2,movements);
+			checkDirection(x,y,-1,0,2,movements);
+			checkDirection(x,y,1,1,2,movements);
+			checkDirection(x,y,-1,-1,2,movements);
+			checkDirection(x,y,-1,1,2,movements);
+			checkDirection(x,y,1,-1,2,movements);
+	
 			
 		}
 
@@ -114,6 +118,38 @@ public class Midas extends Leader {
 		if (board.getTile(x, y) != null && !sameColor(board.getTile(x, y).getPiece())) {
 			movements.add(new Vector2(x, y));
 		}
+	}
+	
+	private void checkDirection(float x, float y, int i, int j,int n, ArrayList<Vector2> movements) {
+		validDirection = true;
+		Vector2 mov;
+		int k = 1;
+		
+		while(validDirection && k<=n) {
+			mov = new Vector2(x + i*k, y + j*k);
+			if(checkBoard(board, mov.x, mov.y)) {
+				movements.add(mov);
+			}
+			k++;
+		}
+	}
+	
+	private Boolean checkBoard(Board board, float x, float y) {
+		Boolean res = true;
+		
+		if(board.getTile(x, y)==null) {
+			res = false;
+			validDirection = false;
+		}else {
+			if(board.getTile(x, y).getPiece()!=null && sameColor(board.getTile(x, y).getPiece())) {
+				res = false;
+				validDirection = false;
+			}else if(board.getTile(x, y).getPiece()!=null && !sameColor(board.getTile(x, y).getPiece())) {
+				res = true;
+				validDirection = false;
+			}
+		}
+		return res;
 	}
 
 	public void dispose() {

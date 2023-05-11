@@ -207,6 +207,7 @@ public class LobbyScreen extends AbstractScreen{
     		label[5].setText("...");
     		label[5].setStyle(Render.skin.get("PlayerOFFStyle",LabelStyle.class));
     		label[1].setText(languageReader.readLine(3) + obfuscateIP(Inet4Address.getLocalHost().getHostAddress()));
+    		System.out.println(Inet4Address.getLocalHost().getHostAddress());
     	}else {
     		textButton[0].setText(languageReader.readLine(5));
     		textButton[0].setChecked(true);
