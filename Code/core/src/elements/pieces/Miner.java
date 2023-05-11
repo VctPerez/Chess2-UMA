@@ -144,7 +144,7 @@ public class Miner extends Piece {
 
 	public void addMovement(float x, float y, Board board, ArrayList<Vector2> movements) {
 		
-		if (!hasBeenMoved && board.getTile(x, y) != null && !sameColor(board.getTile(x, y).getPiece()) && board.getTile(x, y).getPiece()==null ) {
+		if (!hasBeenMoved && board.getTile(x, y) != null && board.getTile(x, y).getPiece()==null ) {
 			movements.add(new Vector2(x,y) );
 		}else if (board.getTile(x, y) != null && !sameColor(board.getTile(x, y).getPiece()) && hasBeenMoved){
 			movements.add(new Vector2(x, y));

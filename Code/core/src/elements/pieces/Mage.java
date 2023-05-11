@@ -53,9 +53,6 @@ public class Mage extends Leader {
 		};
         
         
-        updateSprite(kiCharge);
-        this.x = dest_x;
-		this.y = dest_y;
         
         Action tp = new Action() {
 			public boolean act(float delta) {
@@ -69,12 +66,18 @@ public class Mage extends Leader {
 			}
 		};
         
-        SequenceAction sequence = new SequenceAction();
-        sequence.addAction(Actions.parallel(tpAnimation,Actions.fadeOut(0.6f)));
-        sequence.addAction(Actions.parallel(Actions.moveTo(board.getTile(x, y).getX(), board.getTile(x, y).getY(), 0.6f)));
-		sequence.addAction(Actions.parallel(Actions.fadeIn(0.6f), tp));
+		if(this.x!=dest_x && this.y!=dest_y) {
+			this.x = dest_x;
+			this.y = dest_y;
+			SequenceAction sequence = new SequenceAction();
+			sequence.addAction(Actions.parallel(tpAnimation,Actions.fadeOut(0.6f)));
+			sequence.addAction(Actions.parallel(Actions.moveTo(board.getTile(x, y).getX(), board.getTile(x, y).getY(), 0.6f)));
+			sequence.addAction(Actions.parallel(Actions.fadeIn(0.6f), tp));
+			addAction(sequence);
+		}
 		
-		addAction(sequence);
+		updateSprite(kiCharge);
+		
 
         if(color) {
             GameScreen.whiteKing.set(dest_x, dest_y);
