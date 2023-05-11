@@ -203,7 +203,7 @@ public class CreateMatchScreen extends AbstractMenuScreen{
         switch (button) {
             case 0:
                 Render.LOBBYSCREEN.create("rotvix", true);
-                Render.app.setScreen(Render.LOBBYSCREEN);
+                Render.app.setScreen(Render.MODESCREEN);
                 break;
             case 1:
                 Render.guest = new Guest("rukia");

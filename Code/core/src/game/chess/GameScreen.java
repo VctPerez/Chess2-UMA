@@ -101,7 +101,7 @@ public class GameScreen extends AbstractScreen {
 		stage.addActor(table);
 		
 		
-		if(Render.DraftController==1){
+		if(Render.DraftController==1 || Render.LobbyController==0){
 			testDrafts();//mover a cuando se selecciona modo clásico
 		}
 

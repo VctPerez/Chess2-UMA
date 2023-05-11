@@ -119,6 +119,7 @@ public class OnlineGameScreen extends GameScreen {
 		if (!promoting) {
 			try {
 				if (Render.hosting == PLAYER && moved) {
+					System.out.println("EEEEEEEEEEEEE");
 					String movement = Parser.parseMovementToString(currentTile, nextTile);
 					Render.player.sendMessage(movement);
 					PLAYER = !PLAYER;

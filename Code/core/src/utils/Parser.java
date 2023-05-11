@@ -90,10 +90,12 @@ public class Parser {
 	}
 	
 	public static String parseMovementToString(Tile currentTile, Tile nextTile) {
+
 		return currentTile.getPos().x + "," + currentTile.getPos().y + "-" + nextTile.getPos().x + "," + nextTile.getPos().y;
 	}
 	
 	public static void parseStringToMovement(String movement){
+		System.out.println("Parsed "+movement);
 		final String[] params = movement.split("-");
 		String[] ogTile = params[0].split(",");
 		String[] nxtTile = params[1].split(",");

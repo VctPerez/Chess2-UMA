@@ -63,8 +63,10 @@ public class MatchMakingScreen extends AbstractMenuScreen{
     @Override
     protected void selectScreen(int button) {
     	if(button == 0) {
+    		Render.DraftController=3;
     		Render.app.setScreen(Render.CREATEMATCHSCREEN);
     	}else if(button == 1) {
+    		Render.DraftController=1;
     		Render.app.setScreen(Render.MODESCREEN);
     	}else if(button == 2) {
     		Render.app.setScreen(Render.MAINSCREEN);

@@ -112,13 +112,17 @@ public class LobbyScreen extends AbstractScreen{
                     matchFinder();
                 }
             }else{
-                if(Render.guest.getMessage().equalsIgnoreCase("start")){
+                if(Render.guest.getMessage().equalsIgnoreCase("startc")){
                     Render.guest.resetMessage();
-                    Render.app.setScreen(new DraftScreen());
+                    Render.GameScreen=new OnlineGameScreen();
+                    Render.app.setScreen( Render.GameScreen);
                 } else if(Render.guest.getMessage().equalsIgnoreCase("disconnect")){ //Desconecta al guest
                     Render.guest.resetMessage();
                     Render.guest.disconnect();
                     Render.app.setScreen(new CreateMatchScreen());
+                }else if(Render.guest.getMessage().equalsIgnoreCase("startd")){
+                	 Render.guest.resetMessage();
+                     Render.app.setScreen(new DraftScreen());
                 }
             }
         }catch(IOException e){
@@ -248,9 +252,17 @@ public class LobbyScreen extends AbstractScreen{
         		super.clicked(event, x, y);
         		if(Render.host.isP2connected()){
                     try {
-                        Render.host.sendMessage("start");
+                      
                         configured = false;
-                        Render.app.setScreen(new DraftScreen());
+                        if(Render.LobbyController==0) {
+                        	  Render.host.sendMessage("startc");
+                        	  Render.GameScreen=new OnlineGameScreen();
+                        	  Render.app.setScreen(Render.GameScreen);
+                        }else {
+                        	Render.host.sendMessage("startd");
+                        	 Render.app.setScreen(new DraftScreen());
+                        }
+                       
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }

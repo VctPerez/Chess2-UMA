@@ -78,6 +78,7 @@ public class Render {
     public static ArrayList<String> player2Draft = new ArrayList<>();
     public static GameScreen GameScreen;
     public static int DraftController=3;
+    public static int LobbyController=0;
 
     /**
      * Este metodo se encarga de limpiar la pantalla al principio de cada Render.
