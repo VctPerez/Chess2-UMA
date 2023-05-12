@@ -192,6 +192,10 @@ public abstract class Piece extends Actor {
 	public Boolean checkWitchAttack(float next_x, float next_y) {
 		return false;
 	}
+	
+	public void setJokerSeed(long l) {
+		
+	}
 
 	/**
 	 * Filtra todos los posibles movimientos de una pieza y solo permite aquellos

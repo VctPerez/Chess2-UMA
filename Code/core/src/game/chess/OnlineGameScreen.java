@@ -23,10 +23,6 @@ public class OnlineGameScreen extends GameScreen {
 	@Override
 	public void show() {
 		super.show();
-		System.out.println(Render.player1Draft);
-		System.out.println("\n"+Render.player2Draft);
-		//System.out.println(thereIsJoker());
-		if (thereIsJoker()) putJokerSeed();
 	}
 
 	@Override
@@ -55,31 +51,13 @@ public class OnlineGameScreen extends GameScreen {
 
 	}
 
-	private void putJokerSeed() {
-		//Se inicializan para que trengan la misma longitud y, con suerte, los mismos elementos
-		List<String> subDraft1 = new ArrayList<>(Render.player1Draft).subList(0,6),
-				subDraft2 = new ArrayList<>(Render.player2Draft).subList(0,6);
-		System.out.println(subDraft1);
-		long semilla1 = subDraft1.hashCode(), semilla2 = subDraft2.hashCode();
-		//System.out.println(Render.player1Draft.size());
-		Piece aux = board.getTile(3,1).piece;
-		if (aux instanceof Joker){ //Si uno es joker, el otro lo es
-			((Joker) aux).setSeed(semilla1);
-			((Joker) board.getTile(6,1).piece).setSeed(~semilla1);
-			System.out.printf("Semilla1: %X",semilla1);
-		}
-		aux = board.getTile(3,8).piece;
-		if (aux instanceof Joker){
-			((Joker) aux).setSeed(semilla2);
-			((Joker) board.getTile(6,8).piece).setSeed(~semilla2);
-			System.out.printf("Semilla2: %X",semilla2);
-		}
-	}
-
 	@Override
 	public void render(float delta) {
+		
+		System.out.println(Render.player1Draft);
+		System.out.println("\n"+Render.player2Draft);
+		
 		super.render(delta);
-		checkGraveyard();
 		try {
 			if (!whiteCheckMate && !blackCheckMate && !Render.player.getMessage().equals("")) {
 				updateOnlineBoard();
@@ -127,11 +105,11 @@ public class OnlineGameScreen extends GameScreen {
 				try {
 					Render.player.sendMessage("RENDICION");
 					results.setWinnerSurrender(!Render.hosting);
-					showPopup = true;
+					
 					if (Render.hosting) {
-						whiteCheckMate = true;
+						setWin("WHITE");
 					} else {
-						blackCheckMate = true;
+						setWin("BLACK");
 					}
 				} catch (IOException e) {
 					e.printStackTrace();
@@ -148,7 +126,6 @@ public class OnlineGameScreen extends GameScreen {
 		if (!promoting) {
 			try {
 				if (Render.hosting == PLAYER && moved) {
-					System.out.println("EEEEEEEEEEEEE");
 					String movement = Parser.parseMovementToString(currentTile, nextTile);
 					Render.player.sendMessage(movement);
 					PLAYER = !PLAYER;
@@ -162,23 +139,19 @@ public class OnlineGameScreen extends GameScreen {
 
 	private void updateOnlineBoard() throws IOException {
 		if (Render.player.getMessage().equals("RENDICION")) {
-			System.out.println("Rendicion Blanca");
 			results.setWinnerSurrender(Render.hosting);
-			showPopup = true;
-			blackCheckMate = true;	
+			setWin("BLACK");	
 		} else if (Render.player.getMessage().equals("EMPATE")) {
 			askDraw();
 		} else if (Render.player.getMessage().equals("ACEPTAR")) {
 			results.setDraw();
-			showPopup = true;
-			blackCheckMate = true;
+			setWin("WHITE");
 			drawButton.clearListeners();
 		} else if (Render.player.getMessage().equals("RECHAZAR")) {
 			drawButton.setTouchable(Touchable.enabled);
 		} else if (Render.player.getMessage().equals("SUICIDIO")) {
 			results.setWinnerKingKilled(Render.hosting);
-			showPopup = true;
-			blackCheckMate = true;
+			setWin("WHITE");
 		} else if (Render.hosting != PLAYER) {
 			System.out.println("movimiento de blancas: " + Render.player.getMessage());
 			Parser.parseStringToMovement(Render.player.getMessage());

@@ -136,8 +136,9 @@ public class Joker extends Piece {
 	 * Crea un nuevo random para el Joker
 	 * @param i
 	 */
-	public void setSeed(long i){
-		rnd = new Random(i);
+	@Override
+	public void setJokerSeed(long l){
+		rnd = new Random(l);
 	}
 
 	/**

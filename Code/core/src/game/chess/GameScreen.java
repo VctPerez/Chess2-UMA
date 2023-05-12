@@ -14,6 +14,7 @@ import interaccionFichero.LineReader;
 import utils.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class GameScreen extends AbstractScreen {
 	public static Stage stage;
@@ -112,6 +113,7 @@ public class GameScreen extends AbstractScreen {
 		addPiecesToStage(whitePieces);
 		addPiecesToStage(blackPieces);
 		addTilesToStage();
+		putJokerSeed();
 
 		Render.bgMusic.stop();
 		Render.setMusic(Resources.MATCH_MUSIC);
@@ -158,13 +160,11 @@ public class GameScreen extends AbstractScreen {
 				if (PLAYER) {
 					System.out.println("RENDICION BLANCA");
 					results.setWinnerSurrender(!PLAYER);
-					showPopup = true;
-					whiteCheckMate = true;
+					setWin("BLACK");
 				} else {
 					System.out.println("RENDICION NEGRA");
 					results.setWinnerSurrender(!PLAYER);
-					showPopup = true;
-					blackCheckMate = true;
+					setWin("WHITE");
 				}
 				return true;
 			}
@@ -177,8 +177,7 @@ public class GameScreen extends AbstractScreen {
 				if (graveyardWhite.graveyard.get(i) instanceof Leader) {
 
 					results.setWinnerKingKilled(PLAYER);
-					showPopup = true;
-					whiteCheckMate = true;
+					setWin("WHITE");
 				}
 			}
 		}
@@ -186,12 +185,20 @@ public class GameScreen extends AbstractScreen {
 			for (int i = 0; i < graveyardBlack.graveyard.size(); i++) {
 				if (graveyardBlack.graveyard.get(i) instanceof Leader) {
 					results.setWinnerKingKilled(PLAYER);
-					showPopup = true;
-					blackCheckMate = true;
+					setWin("BLACK");
 				}
 			}
 		}
 		
+	}
+	
+	protected static void setWin(String s) {
+		if(s.equalsIgnoreCase("WHITE")) {
+			whiteCheckMate = true;
+		}else if(s.equalsIgnoreCase("BLACK")){
+			blackCheckMate = true;
+		}
+		showPopup = true;
 	}
 	
 
@@ -250,10 +257,10 @@ public class GameScreen extends AbstractScreen {
 	private void checkTimerEnd() {
 		if (timerB.getTimeRemaining() == 0) {
 			results.setWinner(!PLAYER);
-			showPopup = true;
+			setWin("WHITE");
 		} else if (timerW.getTimeRemaining() == 0) {
 			results.setWinner(!PLAYER);
-			showPopup = true;
+			setWin("BLACK");
 		}
 	}
 
@@ -405,11 +412,11 @@ public class GameScreen extends AbstractScreen {
 			if (whiteCheckMate) {
 				System.out.println("JAQUE MATE AL REY BLANCO");
 				results.setWinner(PLAYER);
-				showPopup = true;
+				setWin("BLACK");
 			} else if (blackCheckMate) {
 				System.out.println("JAQUE MATE AL REY NEGRO");
 				results.setWinner(PLAYER);
-				showPopup = true;
+				setWin("WHITE");
 			}
 		}
 		stalemateControl();
@@ -608,14 +615,6 @@ public class GameScreen extends AbstractScreen {
 	}
 
 	/**
-	 * Devuelve true si hay algun Joker, si no devuelve false
-	 * Supone que se hace al inicio de la partida
-	 */
-	protected boolean thereIsJoker(){ //Mira las posiciones donde empiezan
-		return Render.player1Draft.contains(Resources.JOKER_PATH) || Render.player2Draft.contains(Resources.JOKER_PATH);
-	}
-
-	/**
 	 * actualiza el ultimo peon que se ha movido
 	 * 
 	 * @param next_x
@@ -629,6 +628,24 @@ public class GameScreen extends AbstractScreen {
 			lastPawn = nextTile.getPiece();
 			lastPawn.isPassantable = true;
 		}
+	}
+	/**
+	 * Inicializa las semillas de los Jokers, ambos jugadores tendran la misma semilla para que su ciclo sea el mismo.
+	 * No se comprueba si hay Jokers o no porque si es otra pieca el metodo setJokerSeed no hace nada
+	 */
+	private void putJokerSeed() {
+		List<String> subDraft1 = new ArrayList<>(Render.player1Draft).subList(0,6),
+				subDraft2 = new ArrayList<>(Render.player2Draft).subList(0,6);
+		
+		long seed = subDraft1.hashCode() + subDraft2.hashCode();
+	
+		board.getTile(3,1).getPiece().setJokerSeed(seed);
+		board.getTile(6,1).getPiece().setJokerSeed(seed);
+		System.out.printf("Semilla1: %X",seed);
+		
+		board.getTile(3,8).getPiece().setJokerSeed(seed);
+		board.getTile(6,8).getPiece().setJokerSeed(seed);
+		System.out.printf("Semilla2: %X",seed);
 	}
 
 	/**
