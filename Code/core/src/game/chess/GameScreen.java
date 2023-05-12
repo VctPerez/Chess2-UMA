@@ -104,7 +104,9 @@ public class GameScreen extends AbstractScreen {
 		addEnterAnimation();
 		
 		
-		if(Render.DraftController==1 || Render.LobbyController==0){
+		if(Render.DraftController==1 || (Render.hosting && Render.DraftController==3 && Render.LobbyController==0)){
+			Render.player1Draft.clear();
+			Render.player2Draft.clear();
 			testDrafts();//mover a cuando se selecciona modo clásico
 		}
 
@@ -324,7 +326,7 @@ public class GameScreen extends AbstractScreen {
 	}
 
 	private boolean kiCharge() {
-		return currentTile.piece instanceof Mage && currentTile.equals(nextTile);
+		return currentTile.getPiece() instanceof Mage && currentTile.equals(nextTile);
 	}
 
 	/**
@@ -634,18 +636,12 @@ public class GameScreen extends AbstractScreen {
 	 * No se comprueba si hay Jokers o no porque si es otra pieca el metodo setJokerSeed no hace nada
 	 */
 	private void putJokerSeed() {
-		List<String> subDraft1 = new ArrayList<>(Render.player1Draft).subList(0,6),
-				subDraft2 = new ArrayList<>(Render.player2Draft).subList(0,6);
-		
-		long seed = subDraft1.hashCode() + subDraft2.hashCode();
-	
+		long seed = Render.player1Draft.hashCode() + Render.player2Draft.hashCode();
 		board.getTile(3,1).getPiece().setJokerSeed(seed);
 		board.getTile(6,1).getPiece().setJokerSeed(seed);
-		System.out.printf("Semilla1: %X",seed);
 		
 		board.getTile(3,8).getPiece().setJokerSeed(seed);
 		board.getTile(6,8).getPiece().setJokerSeed(seed);
-		System.out.printf("Semilla2: %X",seed);
 	}
 
 	/**

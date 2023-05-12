@@ -53,10 +53,6 @@ public class OnlineGameScreen extends GameScreen {
 
 	@Override
 	public void render(float delta) {
-		
-		System.out.println(Render.player1Draft);
-		System.out.println("\n"+Render.player2Draft);
-		
 		super.render(delta);
 		try {
 			if (!whiteCheckMate && !blackCheckMate && !Render.player.getMessage().equals("")) {

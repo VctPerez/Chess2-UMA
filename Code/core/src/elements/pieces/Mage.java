@@ -35,40 +35,39 @@ public class Mage extends Leader {
         board.getTile(this.x, this.y).attacked = false;
 
         if (dest_x == this.x && dest_y == this.y){
-            kiCharge = 2;
+            kiCharge = 1;
         } else {
             kiCharge = 0;
         }
 
         Action tpAnimation = new Action() {
-			public boolean act(float delta) {
-				AnimationActor mageAnimation= new AnimationActor(0.13f, Resources.MAGE_ANIMATION_PATH, 3);
-				mageAnimation.rotateBy(90);
-				mageAnimation.setPosition(getX()+board.getTile(x,y).getWidth(), getY());
-				mageAnimation.setSize(board.getTile(x, y).getWidth(), board.getTile(x, y).getWidth());
-				
-				Render.GameScreen.stage.addActor(mageAnimation);
-				return true;
-			}
-		};
+        	public boolean act(float delta) {
+        		AnimationActor mageAnimation= new AnimationActor(0.13f, Resources.MAGE_ANIMATION_PATH, 3);
+        		mageAnimation.rotateBy(90);
+        		mageAnimation.setPosition(getX()+board.getTile(x,y).getWidth(), getY());
+        		mageAnimation.setSize(board.getTile(x, y).getWidth(), board.getTile(x, y).getWidth());
+        		
+        		Render.GameScreen.stage.addActor(mageAnimation);
+        		return true;
+        	}
+        };
         
-        
-        
-        Action tp = new Action() {
-			public boolean act(float delta) {
-				AnimationActor mageAnimation= new AnimationActor(0.13f, Resources.MAGE_ANIMATION_PATH, 3);
-				mageAnimation.rotateBy(90);
-				mageAnimation.setPosition(getX()+board.getTile(x,y).getWidth(), getY());
-				mageAnimation.setSize(board.getTile(x, y).getWidth(), board.getTile(x, y).getWidth());
-				
-				Render.GameScreen.stage.addActor(mageAnimation);
-				return true;
-			}
-		};
-        
-		if(this.x!=dest_x && this.y!=dest_y) {
+		if(this.x!=dest_x || this.y!=dest_y) {
 			this.x = dest_x;
 			this.y = dest_y;
+			
+			
+			Action tp = new Action() {
+				public boolean act(float delta) {
+					AnimationActor mageAnimation= new AnimationActor(0.13f, Resources.MAGE_ANIMATION_PATH, 3);
+					mageAnimation.rotateBy(90);
+					mageAnimation.setPosition(getX()+board.getTile(x,y).getWidth(), getY());
+					mageAnimation.setSize(board.getTile(x, y).getWidth(), board.getTile(x, y).getWidth());
+					
+					Render.GameScreen.stage.addActor(mageAnimation);
+					return true;
+				}
+			};
 			SequenceAction sequence = new SequenceAction();
 			sequence.addAction(Actions.parallel(tpAnimation,Actions.fadeOut(0.6f)));
 			sequence.addAction(Actions.parallel(Actions.moveTo(board.getTile(x, y).getX(), board.getTile(x, y).getY(), 0.6f)));
@@ -84,7 +83,6 @@ public class Mage extends Leader {
         }else {
             GameScreen.blackKing.set(dest_x, dest_y);
         }
-        
     }
 
     /**
