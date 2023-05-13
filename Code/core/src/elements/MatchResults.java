@@ -179,15 +179,15 @@ public class MatchResults extends Actor{
 	public void updateWinner(boolean b,boolean equipo) {
 			int v;
 			if(b == equipo) {
-				v = ProfileReader.leerINTLinea(2);
+				v = Integer.parseInt(ProfileReader.readLine(2));
 				v++;
 				System.out.println("Escribo " + v);
-				ProfileWriter.escribirLineaINT(2, v);
+				ProfileWriter.escribirLinea(2, "" + v);
 			}else {
-				v = ProfileReader.leerINTLinea(3);
+				v = Integer.parseInt(ProfileReader.readLine(3)); 
 				v++;
 				System.out.println("Escribo " + v);
-				ProfileWriter.escribirLineaINT(3, v);
+				ProfileWriter.escribirLinea(3, "" + v);
 			}
 			updatePlays();
 	}
@@ -195,11 +195,11 @@ public class MatchResults extends Actor{
 	private void updatePlays() {
 		int v,total;
 		float res;
-		total = ProfileReader.leerINTLinea(5);
+		total =  Integer.parseInt(ProfileReader.readLine(5)); 
 		total++;
 		//System.out.println("Escribo " + total);
-		ProfileWriter.escribirLineaINT(5, total);
-		v = ProfileReader.leerINTLinea(2);
+		ProfileWriter.escribirLinea(5,"" + total);
+		v = Integer.parseInt(ProfileReader.readLine(2));
 		res=(float)v/total*100;
 		DecimalFormat df = new DecimalFormat("0.00");
 		String formatted = df.format(res);
@@ -208,10 +208,10 @@ public class MatchResults extends Actor{
 	}
 	
 	private void drawUpdate() {
-		int v = ProfileReader.leerINTLinea(4);
+		int v = Integer.parseInt(ProfileReader.readLine(4));
 		v++;
 		System.out.println("Escribo " + v);
-		ProfileWriter.escribirLineaINT(4, v);
+		ProfileWriter.escribirLinea(4,"" + v);
 	}
 
 	

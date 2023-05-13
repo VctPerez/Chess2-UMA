@@ -34,7 +34,7 @@ public class Tile extends Actor{
 		setPosition(coord_x, coord_y);
 		setSize(tileSize, tileSize);
 		if(color == 1) {
-			setColor(new Color(dataReader.leerFLOATLinea(7),dataReader.leerFLOATLinea(8),dataReader.leerFLOATLinea(9),dataReader.leerFLOATLinea(10)));//color azul apagado que queda bastante bien
+			setColor(new Color(Float.parseFloat(dataReader.readLine(7)),Float.parseFloat(dataReader.readLine(8)),Float.parseFloat(dataReader.readLine(9)),Float.parseFloat(dataReader.readLine(10))));//color azul apagado que queda bastante bien
 			//setColor(new Color(0.1745f, 0.1745f, 0.1745f,1f)); //color gris mas oscuro que las piezas
 			
 		}else {
