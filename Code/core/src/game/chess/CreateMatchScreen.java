@@ -95,6 +95,7 @@ public class CreateMatchScreen extends AbstractMenuScreen{
         
         textButton[2] = new TextButton(languageReader.readLine(4));
         textButton[2].addAnimation();
+        textButton[2].addSounds();
         
         
         //POPUP TABLE

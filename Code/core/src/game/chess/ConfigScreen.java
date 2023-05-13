@@ -94,7 +94,6 @@ public class ConfigScreen extends AbstractScreen {
     		public void clicked(InputEvent event, float x, float y) {
     			super.clicked(event, x, y);
     			readSettings();
-    			Render.app.getManager().get(Resources.BUTTON_CLICKSOUND,Sound.class).play(Settings.sfxVolume);
     			addExitAnimation();
     		}
     	});

@@ -383,7 +383,7 @@ jsonData: {
 		{
 			class: com.ray3k.skincomposer.data.FreeTypeFontData
 			name: Default_Label
-			file: C:/Users/adrid/Documents/GitHub/Chess2-UMA/Code/assets/fonts/upheavtt.ttf
+			file: C:/Users/adrid/Documents/GitHub/Chess2-UMA/Code/assets/Skin Composer/upheavtt.ttf
 			previewTTF: IBMPlexSerif-Medium
 			useCustomSerializer: true
 			size: 20
@@ -412,7 +412,7 @@ jsonData: {
 		{
 			class: com.ray3k.skincomposer.data.FreeTypeFontData
 			name: Default_TextButton
-			file: C:/Users/adrid/Documents/GitHub/Chess2-UMA/Code/assets/fonts/upheavtt.ttf
+			file: C:/Users/adrid/Documents/GitHub/Chess2-UMA/Code/assets/Skin Composer/upheavtt.ttf
 			previewTTF: IBMPlexSerif-Medium
 			useCustomSerializer: true
 			size: 60
@@ -441,7 +441,7 @@ jsonData: {
 		{
 			class: com.ray3k.skincomposer.data.FreeTypeFontData
 			name: Default_TextField
-			file: C:/Users/adrid/Documents/GitHub/Chess2-UMA/Code/assets/fonts/upheavtt.ttf
+			file: C:/Users/adrid/Documents/GitHub/Chess2-UMA/Code/assets/Skin Composer/upheavtt.ttf
 			previewTTF: IBMPlexSerif-Medium
 			useCustomSerializer: true
 			size: 46
@@ -470,7 +470,7 @@ jsonData: {
 		{
 			class: com.ray3k.skincomposer.data.FreeTypeFontData
 			name: DraftStyle_Label
-			file: C:/Users/adrid/Documents/GitHub/Chess2-UMA/Code/assets/fonts/Retro Gaming.ttf
+			file: C:/Users/adrid/Documents/GitHub/Chess2-UMA/Code/assets/Skin Composer/Retro Gaming.ttf
 			previewTTF: IBMPlexSerif-Medium
 			useCustomSerializer: true
 			size: 21
@@ -499,7 +499,7 @@ jsonData: {
 		{
 			class: com.ray3k.skincomposer.data.FreeTypeFontData
 			name: SingleClickStyle_TextButton
-			file: C:/Users/adrid/Documents/GitHub/Chess2-UMA/Code/assets/fonts/upheavtt.ttf
+			file: C:/Users/adrid/Documents/GitHub/Chess2-UMA/Code/assets/Skin Composer/upheavtt.ttf
 			previewTTF: IBMPlexSerif-Medium
 			useCustomSerializer: true
 			size: 40
@@ -528,7 +528,7 @@ jsonData: {
 		{
 			class: com.ray3k.skincomposer.data.FreeTypeFontData
 			name: SmallTextStyle_Label
-			file: C:/Users/adrid/Documents/GitHub/Chess2-UMA/Code/assets/fonts/upheavtt.ttf
+			file: C:/Users/adrid/Documents/GitHub/Chess2-UMA/Code/assets/Skin Composer/upheavtt.ttf
 			previewTTF: IBMPlexSerif-Medium
 			useCustomSerializer: true
 			size: 36
@@ -557,7 +557,7 @@ jsonData: {
 		{
 			class: com.ray3k.skincomposer.data.FreeTypeFontData
 			name: TitleStyle_Label
-			file: C:/Users/adrid/Documents/GitHub/Chess2-UMA/Code/assets/fonts/upheavtt.ttf
+			file: C:/Users/adrid/Documents/GitHub/Chess2-UMA/Code/assets/Skin Composer/upheavtt.ttf
 			previewTTF: IBMPlexSerif-Medium
 			useCustomSerializer: true
 			size: 120
