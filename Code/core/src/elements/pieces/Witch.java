@@ -78,6 +78,14 @@ public class Witch extends Piece{
 	}
 	
 	public void attack(final float next_x, final float next_y) {
+		Action fireballSound = new Action() {
+			public boolean act(float delta) {
+				Sound fireballSound = Render.app.getManager().get(Resources.FIREBALL_SOUND, Sound.class);
+				fireballSound.play(Settings.sfxVolume/2);
+				return true;
+			}
+		};
+		
 		Action fireBall = new Action() {
 			public boolean act(float delta) {
 				Tile tile = board.getTile(next_x, next_y);
@@ -136,6 +144,7 @@ public class Witch extends Piece{
 				return true;
 			}
 		};
+		addAction(Actions.sequence(fireballSound, Actions.delay(0.5f)));
 		addAction(Actions.after(fireBall));
 		addAction(Actions.sequence(Actions.delay(1.5f), explosionSfx));
 		addAction(Actions.after(attackTile));
