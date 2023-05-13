@@ -32,6 +32,7 @@ public class Resources {
     public static final String VALKYRIEFLY_SOUND = "sound/Valkyrie_flap.mp3";
     public static final String EXPLOSION_SOUND = "sound/bomberExplosion.mp3";
     public static final String MINER_SOUND = "sound/MinerMovement.mp3";
+    public static final String MAGE_SOUND = "sound/mageTeleport.mp3";
     public static final String LODINGSOUND1 = "sound/LoadingScreen/loading1.mp3";
     public static final String LODINGSOUND2 = "sound/LoadingScreen/loading2.mp3";
     public static final String LODINGSOUND3 = "sound/LoadingScreen/loading3.mp3";

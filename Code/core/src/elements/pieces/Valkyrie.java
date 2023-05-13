@@ -53,7 +53,7 @@ public class Valkyrie extends Piece {
 		Action flySfx = new Action() {
 			Sound sound = Render.app.getManager().get(Resources.VALKYRIEFLY_SOUND, Sound.class);
 			public boolean act(float delta) {
-				sound.play(Settings.sfxVolume*2);
+				sound.play(Settings.sfxVolume*4);
 				return true;
 			}
 		};
@@ -61,7 +61,7 @@ public class Valkyrie extends Piece {
 		Action moveSfx = new Action() {
 			Sound sound = Render.app.getManager().get(Resources.PIECEMOVE_SOUND, Sound.class);
 			public boolean act(float delta) {
-				sound.play(Settings.sfxVolume*2);
+				sound.play(Settings.sfxVolume*4);
 				return true;
 			}
 		};

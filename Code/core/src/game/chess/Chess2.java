@@ -111,6 +111,7 @@ public class Chess2 extends Game {
 		manager.load(Resources.APLLY_SETTINGS_SOUND, Sound.class);
 		manager.load(Resources.END_DRAFT_SOUND, Sound.class);
 		manager.load(Resources.JAQUE_SOUND, Sound.class);
+		manager.load(Resources.MAGE_SOUND, Sound.class);
 
 		// ETC
 		manager.load(Resources.LOGO_PATH, Texture.class);

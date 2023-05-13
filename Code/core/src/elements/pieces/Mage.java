@@ -1,5 +1,6 @@
 package elements.pieces;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
@@ -16,6 +17,7 @@ import utils.AnimationActor;
 import utils.Image;
 import utils.Render;
 import utils.Resources;
+import utils.Settings;
 
 import java.util.ArrayList;
 
@@ -39,6 +41,8 @@ public class Mage extends Leader {
         } else {
             kiCharge = 0;
         }
+        
+        final Sound sound = Render.app.getManager().get(Resources.MAGE_SOUND, Sound.class);
 
         Action tpAnimation = new Action() {
         	public boolean act(float delta) {
@@ -46,7 +50,7 @@ public class Mage extends Leader {
         		mageAnimation.rotateBy(90);
         		mageAnimation.setPosition(getX()+board.getTile(x,y).getWidth(), getY());
         		mageAnimation.setSize(board.getTile(x, y).getWidth(), board.getTile(x, y).getWidth());
-        		
+        		sound.play(Settings.sfxVolume);		
         		Render.GameScreen.stage.addActor(mageAnimation);
         		return true;
         	}
@@ -63,7 +67,7 @@ public class Mage extends Leader {
 					mageAnimation.rotateBy(90);
 					mageAnimation.setPosition(getX()+board.getTile(x,y).getWidth(), getY());
 					mageAnimation.setSize(board.getTile(x, y).getWidth(), board.getTile(x, y).getWidth());
-					
+					sound.play(Settings.sfxVolume);		
 					Render.GameScreen.stage.addActor(mageAnimation);
 					return true;
 				}
@@ -74,10 +78,7 @@ public class Mage extends Leader {
 			sequence.addAction(Actions.parallel(Actions.fadeIn(0.6f), tp));
 			addAction(sequence);
 		}
-		
 		updateSprite(kiCharge);
-		
-
         if(color) {
             GameScreen.whiteKing.set(dest_x, dest_y);
         }else {

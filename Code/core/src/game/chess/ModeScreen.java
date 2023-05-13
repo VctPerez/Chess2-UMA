@@ -60,6 +60,7 @@ public class ModeScreen extends AbstractMenuScreen{
     			Render.LobbyController=1;
     			Render.app.setScreen(Render.LOBBYSCREEN);
     		}else {
+    			Render.DraftController=1;
     			Render.app.setScreen(Render.DRAFTSCREEN);
     		}
     		
@@ -71,6 +72,7 @@ public class ModeScreen extends AbstractMenuScreen{
     			Render.LobbyController=0;
     			Render.app.setScreen(Render.LOBBYSCREEN);
     		}else {
+    			Render.DraftController=1;
     			Render.app.setScreen(new GameScreen());
     		}
     		

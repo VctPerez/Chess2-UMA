@@ -82,8 +82,8 @@ public class DraftScreen extends AbstractScreen {
 		title.addAction(Actions.moveTo(600, 650, 0.5f));
 		
 		pieceDisposer = new Image(Render.app.getManager().get(Resources.PIECE_DISPOSER_PATH,Texture.class));
-		pieceDisposer.setSize(125, 700);
-		pieceDisposer.setPosition(-125, 10);
+		pieceDisposer.setSize(125, 620);
+		pieceDisposer.setPosition(-125, 65);
 		stage.addActor(pieceDisposer);
 		
 		arrow = new Image(Render.app.getManager().get(Resources.ARROW_PATH, Texture.class));
@@ -214,8 +214,7 @@ public class DraftScreen extends AbstractScreen {
 
 			i++;
 		}
-		
-		pieceDisposer.addAction(Actions.moveTo(5, 0, 0.5f));
+		pieceDisposer.addAction(Actions.moveTo(5, 65, 0.5f));
 		arrow.addAction(Actions.moveTo(135,  110 + 100 * (5 - cont), 0.5f));
 		
 		
@@ -350,6 +349,7 @@ public class DraftScreen extends AbstractScreen {
 					Action draftAction = new Action() {
 						public boolean act(float delta) {
 							stage.dispose();
+							Render.DraftController=1;
 							Render.app.setScreen(Render.MODESCREEN);
 							return true;
 						}
