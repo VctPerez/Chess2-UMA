@@ -51,8 +51,10 @@ public class OnlineGameScreen extends GameScreen {
 	public void render(float delta) {
 		super.render(delta);
 		try {
-			if (!whiteCheckMate && !blackCheckMate && !Render.player.getMessage().equals("")) {
-				updateOnlineBoard();
+			if(Render.player != null){
+				if (!whiteCheckMate && !blackCheckMate && !Render.player.getMessage().equals("")) {
+					updateOnlineBoard();
+				}
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

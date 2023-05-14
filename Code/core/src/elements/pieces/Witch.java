@@ -1,6 +1,7 @@
 package elements.pieces;
 
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Action;
@@ -89,7 +90,8 @@ public class Witch extends Piece{
 		Action fireBall = new Action() {
 			public boolean act(float delta) {
 				Tile tile = board.getTile(next_x, next_y);
-				AnimationActor attack= new AnimationActor(0.13f, Resources.FIREBALL_PATH, 5);
+				AnimationActor attack= new AnimationActor(0.13f,
+						Render.app.getManager().get(Resources.FIREBALL_PATH, Texture.class), 5);
 				attack.setOrigin(attack.getWidth()/2, attack.getHeight()/2);
 		
 				float rotation = (float) Math.atan((tile.getY() -  getY())/(tile.getX() - getX()));

@@ -98,6 +98,8 @@ public class Chess2 extends Game {
 
 		manager.load(Resources.FRAME_PATH, Texture.class);
 
+		manager.load(Resources.FIREBALL_PATH, Texture.class);
+
 
 		// MUSIC & SOUNDS
 		manager.load(Resources.PIECESELECTION_SOUND, Sound.class);

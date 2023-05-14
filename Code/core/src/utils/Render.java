@@ -56,9 +56,7 @@ public class Render {
 	public static AbstractScreen LANGUAGESCREEN;
 	public static AbstractScreen CONFIGSCREEN;
     public static LobbyScreen LOBBYSCREEN;
-    public static LoadingScreen LOADINGSCREEN;
     public static CreateMatchScreen CREATEMATCHSCREEN;
-    public static OnlineGameScreen ONLINEGAMESCREEN;
 
     public static DraftScreen DRAFTSCREEN;
     public static AbstractScreen MATCHMAKINGSCREEN;

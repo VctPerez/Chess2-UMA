@@ -315,7 +315,7 @@ public class LobbyScreen extends AbstractScreen{
         finding = Render.host.isServerOpen();
         if (Render.host.isP2connected()) {
             textButton[0].setText(languageReader.readLine(5));
-            if(!configured) {
+            if(!configured && Render.host.getPlayer2() != null) {
             	//Desactiva el boton de buscar
         		textButton[0].setTouchable(Touchable.disabled);
         		//Activa el boton de empezar

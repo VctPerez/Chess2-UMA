@@ -6,7 +6,6 @@ package utils;
  */
 public class Resources {
 	//LOADING AND MENU SCREEN
-    public static final String LOADINGSCREEN_PATH = "sprites/loadingScreen.jpg";
     public static final String MENU_BACKGROUND_PATH = "sprites/Background/BackgroundImageDM.png";
     public static final String BLACK_OPACITY_PATH = "sprites/Black.png";
     public static final String LOGO_PATH="logo_blanco.png";
@@ -34,10 +33,6 @@ public class Resources {
     public static final String FIREBALL_SOUND = "sound/fireBallSound.mp3";
     public static final String MINER_SOUND = "sound/MinerMovement.mp3";
     public static final String MAGE_SOUND = "sound/mageTeleport.mp3";
-    public static final String LODINGSOUND1 = "sound/LoadingScreen/loading1.mp3";
-    public static final String LODINGSOUND2 = "sound/LoadingScreen/loading2.mp3";
-    public static final String LODINGSOUND3 = "sound/LoadingScreen/loading3.mp3";
-    public static final String LODINGSOUND4 = "sound/LoadingScreen/loading4.mp3";
 
     //SKIN
     public static final String SKIN_PATH = "Skin Composer/UIStyle.json";
@@ -100,7 +95,7 @@ public class Resources {
     public static final String MINER_DIG_PATH = "sprites/animations/dig.png";
     public static final String MINER_DIG_ANIMATION_PATH = "sprites/animations/digAnimation.png";
     public static final String EXPLOSION_PATH = "sprites/animations/explosion.png";
-    public static final String FIREBALL_PATH = "sprites/animations/fireball.png";
+    public static final String FIREBALL_PATH = "sprites/animations/fireBall.png";
     public static final String MAGE_ANIMATION_PATH = "sprites/animations/MageAnimation.png";
     public static final String SWORD_SWING_PATH = "sprites/animations/sword-swing.png";
     

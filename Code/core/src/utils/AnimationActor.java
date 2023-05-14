@@ -39,7 +39,21 @@ public class AnimationActor extends Actor{
 		}
 		animation = new Animation(frameDuration, frames);
 	}
-	
+
+	public AnimationActor(float frameDuration, Texture texture, int framesNumber){
+		this.texture = texture;
+		region = new TextureRegion(texture, texture.getWidth(), texture.getHeight());
+		TextureRegion[][] temp = region.split(texture.getWidth()/framesNumber, texture.getHeight());
+		frames = new TextureRegion[temp.length * temp[0].length];
+
+		int index = 0;
+		for(int i = 0; i<temp.length;i++) {
+			for(int j=0; j<temp[0].length; j++) {
+				frames[index++] = temp[i][j];
+			}
+		}
+		animation = new Animation(frameDuration, frames);
+	}
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		this.toFront();
