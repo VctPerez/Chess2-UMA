@@ -120,6 +120,7 @@ public class LobbyScreen extends AbstractScreen{
             }else{
                 if(Render.guest.getMessage().equalsIgnoreCase("startc")){
                     Render.guest.resetMessage();
+                    Render.LobbyController=0;
                     Render.GameScreen=new OnlineGameScreen();
                     Render.app.setScreen( Render.GameScreen);
                 } else if(Render.guest.getMessage().equalsIgnoreCase("disconnect")){ //Desconecta al guest
@@ -128,6 +129,7 @@ public class LobbyScreen extends AbstractScreen{
                     Render.app.setScreen(new CreateMatchScreen());
                 }else if(Render.guest.getMessage().equalsIgnoreCase("startd")){
                 	 Render.guest.resetMessage();
+                     Render.LobbyController=1;
                      Render.app.setScreen(new DraftScreen());
                 }
             }
