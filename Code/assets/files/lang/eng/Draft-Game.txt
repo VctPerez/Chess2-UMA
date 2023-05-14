@@ -3,3 +3,6 @@ Next
 End
 Surrender
 Draw
+Wins
+Forfeited
+Murdered their king

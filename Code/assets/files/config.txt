@@ -2,7 +2,7 @@ eng/
 esp/
 0
 //SETTINGS
-50.0
+0.0
 50.0
 false
-1
+2

@@ -1,4 +1,5 @@
 package elements;
+
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -6,11 +7,10 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-
-import elements.pieces.King;
 import elements.pieces.Leader;
 import interaccionFichero.LineReader;
 import utils.Image;
+import utils.Parser;
 import utils.Render;
 import utils.Resources;
 
@@ -34,7 +34,7 @@ public class Tile extends Actor{
 		setPosition(coord_x, coord_y);
 		setSize(tileSize, tileSize);
 		if(color == 1) {
-			setColor(new Color(Float.parseFloat(dataReader.readLine(7)),Float.parseFloat(dataReader.readLine(8)),Float.parseFloat(dataReader.readLine(9)),Float.parseFloat(dataReader.readLine(10))));//color azul apagado que queda bastante bien
+			setColor(Parser.parseStringToColor(dataReader.readLine(7))); //Coge la linea del color
 			//setColor(new Color(0.1745f, 0.1745f, 0.1745f,1f)); //color gris mas oscuro que las piezas
 			
 		}else {

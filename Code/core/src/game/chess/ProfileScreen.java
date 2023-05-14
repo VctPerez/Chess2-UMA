@@ -1,8 +1,6 @@
 package game.chess;
 
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -13,9 +11,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
-
-import utils.*;
-import interaccionFichero.*;
+import interaccionFichero.LineReader;
+import interaccionFichero.LineWriter;
+import utils.Render;
+import utils.Settings;
+import utils.TextButton;
+import utils.TextField;
 
 public class ProfileScreen extends AbstractMenuScreen {
 	
@@ -180,25 +181,13 @@ public class ProfileScreen extends AbstractMenuScreen {
 		    public void changed(ChangeEvent event, Actor actor) {
 		        //String selectedOption = selectBox.getSelected();
 		        if(selectBox.getSelectedIndex()==0) {
-		        	dataWriter.escribirLinea(7, "0.1745f");
-		        	dataWriter.escribirLinea(8, "0.23f");
-		        	dataWriter.escribirLinea(9, "0.3f" );
-		        	dataWriter.escribirLinea(10, "1f");
+					dataWriter.escribirLinea(7, "BLUE"); //0.1745;0,23;0,3;1
 		        }else if(selectBox.getSelectedIndex()==1) {
-		        	dataWriter.escribirLinea(7, "0f");
-		        	dataWriter.escribirLinea(8, "0f");
-		        	dataWriter.escribirLinea(9, "0f" );
-		        	dataWriter.escribirLinea(10, "1f");
+		        	dataWriter.escribirLinea(7, "BLACK"); //0,0,0,1
 		        }else if(selectBox.getSelectedIndex()==2){
-		        	dataWriter.escribirLinea(7, "0.5");
-		        	dataWriter.escribirLinea(8, "0.23f");
-		        	dataWriter.escribirLinea(9, "0.3f" );
-		        	dataWriter.escribirLinea(10, "1f");
+		        	dataWriter.escribirLinea(7, "RED"); //0,5;0,23;0,3;1
 		        }else{
-		        	dataWriter.escribirLinea(7, "0.1745f");
-		        	dataWriter.escribirLinea(8, "0.5f");
-		        	dataWriter.escribirLinea(9, "0.3f" );
-		        	dataWriter.escribirLinea(10, "1f");
+		        	dataWriter.escribirLinea(7, "GREEN"); //0,1745;0,5;0,3;1
 		        }
 		        selectBox.setVisible(false);
 		        textField.setVisible(false);

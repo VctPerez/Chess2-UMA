@@ -1,5 +1,8 @@
-Atras
+Atrás
 Siguiente
 Finalizar
 Rendirse
 Empate
+Gana
+Abandonó
+Asesinó a su rey

@@ -14,7 +14,6 @@ import interaccionFichero.LineReader;
 import utils.*;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class GameScreen extends AbstractScreen {
 	public static Stage stage;
@@ -403,9 +402,6 @@ public class GameScreen extends AbstractScreen {
 
 	/**
 	 * controla el mate al hacer un movimiento
-	 * 
-	 * @param next_x
-	 * @param next_y
 	 */
 	public static void mateControl() {
 		if (updateCheck()) {
@@ -684,8 +680,6 @@ public class GameScreen extends AbstractScreen {
 
 	/**
 	 * Coloca las piezas en playerDraft en el lado del jugador correspondiente
-	 * 
-	 * @param player1Draft
 	 */
 	public void placePieces(ArrayList<String> playerDraft, Boolean player) {
 		ArrayList<Piece> pieces = new ArrayList<>();

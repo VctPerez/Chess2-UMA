@@ -6,23 +6,18 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-
-import interaccionFichero.LineWriter;
 import interaccionFichero.LineReader;
-import utils.Image;
-import utils.Render;
-import utils.Resources;
-import utils.Settings;
-import utils.TextButton;
+import interaccionFichero.LineWriter;
+import utils.*;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 
 public class MatchResults extends Actor{
 	
 	
-	LineReader configReader;	
+	LineReader configReader;
+	LineReader inGameReader;
 	LineReader ProfileReader;
 	LineWriter ProfileWriter;
 	private Table table;
@@ -31,14 +26,20 @@ public class MatchResults extends Actor{
 	private Stage stage;
 	private Image fondo;
 	
-	
-	
+	private String p1,p2; //p1 son las blancas y p2 las negras
+
+	public MatchResults(Stage stage ,String p1, String p2) {
+		this(stage);
+		setPlayers(p1,p2);
+	}
+
 	public MatchResults(Stage stage) {
 		this.stage=stage;
 		table = new Table();
 		table.setBounds(350, 100, 550, 550);
 		
 		configReader = new LineReader("files/config.txt"); //Lector del txt configuracion para sacar el idioma
+		inGameReader = new LineReader("files/lang/" + configReader.readLine(Settings.language) + "Draft-Game.txt");
 		ProfileWriter = new LineWriter("files/Datos.txt");
 		ProfileReader = new LineReader("files/Datos.txt");
 
@@ -53,7 +54,26 @@ public class MatchResults extends Actor{
     	createTableElements();
 	    setupTable();
     	addActors();
+
+		String p1 = "",p2 = "";
+		switch (configReader.readLine(Settings.language)){
+			case "eng/":
+				p1 = "White";
+				p2 = "Black";
+				break;
+			case "esp/":
+				p1 = "Blanco";
+				p2 = "Negro";
+				break;
+		}
+		setPlayers(p1,p2);
 	}
+
+	private void setPlayers(String player1, String  player2) {
+		p1 = player1;
+		p2 = player2;
+	}
+
 
 	private void addActors() {
 		stage.addActor(fondo);
@@ -74,8 +94,9 @@ public class MatchResults extends Actor{
 	}
 
 	public void setWinner(Boolean equipo) {
-		String winner = WinnerTraduction(equipo);
-		matchres.setText("HA GANADO EL " + winner);
+		String winner = p1;
+		if (!equipo) winner = p2;
+		matchres.setText(winner + " " + inGameReader.readLine(6)); //WINS, completa WINNER Wins
 		if(!Render.music.equals(Resources.WIN_MUSIC))
     	{
     		Render.bgMusic.stop();
@@ -85,8 +106,9 @@ public class MatchResults extends Actor{
 	}
 	
 	public void setWinnerSurrender(Boolean equipo) {
-		String winner = WinnerTraduction(equipo);
-		matchres.setText("HA GANADO EL " + winner + " \n    POR RENDICION");
+		String winner = equipo?p1:p2,loser = equipo?p2:p1;
+		matchres.setText(winner + " " + inGameReader.readLine(6) + "\n" + //Frase completa WINNER Wins LOSER Forfeited
+				loser + " " + inGameReader.readLine(7)); //Forfeited
 		if(!Render.music.equals(Resources.WIN_MUSIC))
     	{
     		Render.bgMusic.stop();
@@ -96,7 +118,9 @@ public class MatchResults extends Actor{
 	}
 	
 	public void setWinnerKingKilled(Boolean equipo) {
-		matchres.setText("HA GANADO EL " + WinnerTraduction(equipo) +" \n    POR ASESINATO");
+		String winner = equipo?p1:p2,loser = equipo?p2:p1;
+		matchres.setText(winner + " " + inGameReader.readLine(6) + "\n" + //WINNER Wins LOSER Murdered their king
+				loser + " " + inGameReader.readLine(6)); //Murdered their king
 		if(!Render.music.equals(Resources.WIN_MUSIC))
     	{
     		Render.bgMusic.stop();
@@ -128,7 +152,7 @@ public class MatchResults extends Actor{
 	}
 
 	public void setDraw() {
-		matchres.setText("Empate");
+		matchres.setText(inGameReader.readLine(5)); //Draw
 		
 		//Actualizar empates
 		drawUpdate();

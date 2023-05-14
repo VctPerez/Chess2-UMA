@@ -7,16 +7,12 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import elements.DrawBox;
 import elements.DropDownMenu;
-import elements.Piece;
 import elements.Tile;
-import elements.pieces.Joker;
 import utils.Parser;
 import utils.Render;
 import utils.TextButton;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class OnlineGameScreen extends GameScreen {
 

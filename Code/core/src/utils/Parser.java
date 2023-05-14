@@ -1,5 +1,6 @@
 package utils;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
@@ -118,6 +119,29 @@ public class Parser {
 				}
 			};
 			nextTile.addAction(Actions.delay(0.5f, promote));
+		}
+	}
+
+	/**
+	 * Devuelve un color según el string indicado
+	 * <p>Soporta rojo,verde,azul y negro en inglés</p>
+	 * <p>Si {@code str} no esta soportado, devuelve {@code null}</p>
+	 * @param str nombre del color
+	 * @return objeto de la clase {@code Color}
+	 */
+	public static Color parseStringToColor(String str){
+		switch (str){
+			case "RED":
+				//Significado de los bits:--rrggbbaa
+				return new Color(0x7f3a4cff);
+			case "GREEN":
+				return new Color(0x2c7f4cff);
+			case "BLUE":
+				return new Color(0x2c314cff);
+			case "BLACK":
+				return new Color(0x000000ff);
+			default:
+				return null;
 		}
 	}
 	
