@@ -103,7 +103,7 @@ public class GameScreen extends AbstractScreen {
 		addEnterAnimation();
 		
 		
-		if(Render.DraftController==1 || (Render.hosting && Render.DraftController==3 && Render.LobbyController==0)){
+		if(Render.DraftController==1 || (Render.DraftController==3 && Render.LobbyController==0)){
 			Render.player1Draft.clear();
 			Render.player2Draft.clear();
 			testDrafts();//mover a cuando se selecciona modo clásico
